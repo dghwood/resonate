@@ -1,0 +1,82 @@
+/* Common Resonate Protos 
+
+    * Create User 
+    * Search Podcasts 
+    * Show podcast details & episodes 
+    * Subscribe to podcast 
+    * Show subscription list 
+    * Subscribed episodes show up in feed 
+    * Listen to episodes 
+    * Log episodes as listened
+    * Search for users 
+    * Show listened episodes & subscriptions
+    * Follow users 
+*/ 
+syntax = "proto3";
+
+package resonate; 
+
+message PodcastMessage {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string url = 4;
+    string image_url = 5;
+    string author = 6;
+    // this is optional 
+    repeated EpisodeMessage episodes = 7;
+}
+
+message EpisodeMessage {
+    string id = 1;
+    string podcast_id = 2;
+    string title = 3;
+    string description = 4;
+    string audio_url = 5;
+    string image_url = 6;
+    int64 publish_timestamp = 8;
+    int64 duration_seconds = 9;
+    int64 episode_number = 10;
+    bool explicit = 11;
+}
+
+message UserMessage {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string image_url = 4;
+    repeated UserSubscriptionMessage subscriptions = 5;
+    repeated UserListenMessage listens = 6;
+    repeated UserFollowMessage following = 7;
+    int64 num_followers = 8; 
+}
+
+message UserFollowMessage {
+    string user_id = 1; 
+    string followed_user_id = 2;
+}
+
+message UserSubscriptionMessage {
+    string user_id = 1;
+    string podcast_id = 2;
+}
+
+message UserListenMessage {
+    string user_id = 1;
+    string episode_id = 2;
+    int64 listen_timestamp = 3;
+    int64 seconds = 4;
+    bool completed = 5;
+    EpisodeMessage episode = 6; // this is optional, used for feed items
+}
+
+message UserFeedItemMessage {
+    EpisodeMessage episode = 1;
+    UserListenMessage listen = 2; 
+}
+
+message UserFeedMessage {
+    string user_id = 1; 
+    repeated UserFeedItemMessage items = 2;
+}
+
