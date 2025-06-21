@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package resonate.api; 
+
+import "proto/common.proto";
+
+message ResponseInfo {
+    bool success = 1; 
+    string error_message = 2; 
+}
+message RequestInfo {
+    string user_id = 1; 
+}
+
+message CreateUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserMessage user = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        UserMessage user = 2;
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message GetUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        UserMessage user = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message UpdateUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserMessage user = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        UserMessage user = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message SearchMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string query = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated PodcastMessage podcasts = 2; 
+        repeated UserMessage users = 3; 
+        repeated EpisodeMessage episodes = 4;
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message GetPodcastMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string podcast_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        PodcastMessage podcast = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message GetEpisodeMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string episode_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        EpisodeMessage episode = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message AddSubscriptionMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserSubscriptionMessage subscription = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        UserSubscriptionMessage subscription = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+message RemoveSubscriptionMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserSubscriptionMessage subscription = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        UserSubscriptionMessage subscription = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+

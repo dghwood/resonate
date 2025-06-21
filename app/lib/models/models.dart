@@ -1,16 +1,27 @@
 /* Wrappers around Proto message 
 
 */
+import 'dart:typed_data';
+
+import 'package:protobuf/protobuf.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 
 // Define a base class for common functionality
-abstract class BaseModel<T> {
+class BaseModel<T extends GeneratedMessage> {
   final T _message;
 
   BaseModel(this._message);
 
   T toMessage() => _message;
+
+  fromBuffer(Uint8List buffer) {
+    _message.mergeFromBuffer(buffer);
+  }
+
+  String get id =>
+      throw UnimplementedError('id must be implemented by subclasses');
+  Uint8List writeToBuffer() => _message.writeToBuffer();
 }
 
 class Podcast extends BaseModel<PodcastMessage> {
@@ -36,6 +47,7 @@ class Podcast extends BaseModel<PodcastMessage> {
 
   Podcast.fromMessage(super.message);
 
+  @override
   String get id => _message.id;
   String get title => _message.title;
   String? get description => _message.description;
@@ -80,6 +92,7 @@ class Episode extends BaseModel<EpisodeMessage> {
 
   Episode.fromMessage(super.message);
 
+  @override
   String get id => _message.id;
   String get podcastId => _message.podcastId;
   String get title => _message.title;
@@ -118,6 +131,7 @@ class User extends BaseModel<UserMessage> {
 
   User.fromMessage(super.message);
 
+  @override
   String get id => _message.id;
   String get name => _message.name;
   String get email => _message.email;
@@ -139,6 +153,8 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
 
   UserSubscription.fromMessage(super.message);
 
+  @override
+  String get id => '$userId-$podcastId';
   String get userId => _message.userId;
   String get podcastId => _message.podcastId;
 }
@@ -164,6 +180,8 @@ class UserListen extends BaseModel<UserListenMessage> {
 
   UserListen.fromMessage(super.message);
 
+  @override
+  String get id => '$userId-$episodeId';
   String get userId => _message.userId;
   String get episodeId => _message.episodeId;
   int get listenTimestamp => _message.listenTimestamp.toInt();
@@ -179,6 +197,8 @@ class UserFollow extends BaseModel<UserFollowMessage> {
 
   UserFollow.fromMessage(super.message);
 
+  @override
+  String get id => '$userId-$followedUserId';
   String get userId => _message.userId;
   String get followedUserId => _message.followedUserId;
 }

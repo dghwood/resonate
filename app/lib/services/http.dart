@@ -1,24 +1,72 @@
+import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
 
-/// A wrapper around the http client to allow for easier mocking in tests.
-class HttpService {
-  final http.Client _client;
+abstract class AbstractHttpService {
+  Future<Uint8List> post(Uri url, {Map<String, String>? headers, Object? body});
+}
 
-  HttpService({http.Client? client}) : _client = client ?? http.Client();
+class HttpService implements AbstractHttpService {
+  HttpService();
 
-  Future<http.Response> get(Uri url, {Map<String, String>? headers}) {
-    return _client.get(url, headers: headers);
-  }
-
-  Future<http.Response> post(
+  @override
+  Future<Uint8List> post(
     Uri url, {
     Map<String, String>? headers,
     Object? body,
-  }) {
-    return _client.post(url, headers: headers, body: body);
+  }) async {
+    try {
+      var response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode != 200) {
+        throw HttpServiceException(
+          'Failed to post to $url: ${response.statusCode} ${response.reasonPhrase}',
+        );
+      }
+      return response.bodyBytes;
+    } catch (e) {
+      throw HttpServiceException('Failed to post to $url: $e');
+    }
   }
+}
 
-  void close() {
-    _client.close();
+class MockHttpService implements AbstractHttpService {
+  MockHttpService(this.response);
+  Map<String, Uint8List> response = {};
+
+  @override
+  Future<Uint8List> post(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+  }) async {
+    if (response.containsKey(url.path)) {
+      return response[url.path]!;
+    } else {
+      throw HttpServiceNotFoundException(url.path);
+    }
+  }
+}
+
+/* Errors */
+
+class HttpServiceNotFoundException implements Exception {
+  final String message;
+
+  HttpServiceNotFoundException(this.message);
+
+  @override
+  String toString() {
+    return 'HttpServiceNotFoundException: $message';
+  }
+}
+
+class HttpServiceException implements Exception {
+  final String message;
+
+  HttpServiceException(this.message);
+
+  @override
+  String toString() {
+    return 'HttpServiceException: $message';
   }
 }
