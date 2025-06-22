@@ -3,9 +3,12 @@
 */
 import 'dart:typed_data';
 
+import 'package:protobuf_google/protobuf_google.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
+import 'package:resonate/proto/common.pbjson.dart';
+import 'package:resonate/services/database.dart';
 
 // Define a base class for common functionality
 class BaseModel<T extends GeneratedMessage> {
@@ -15,8 +18,60 @@ class BaseModel<T extends GeneratedMessage> {
 
   T toMessage() => _message;
 
+  fromMessage(T message) {
+    _message.mergeFromMessage(message);
+  }
+
   fromBuffer(Uint8List buffer) {
     _message.mergeFromBuffer(buffer);
+  }
+
+  Uint8List get descriptor =>
+      throw UnimplementedError('descriptor must be implemented by subclasses');
+
+  DatabaseStoreType toStore() {
+    final Map<String, Object> storeMap = {};
+    DescriptorProto descriptorPb = DescriptorProto.fromBuffer(descriptor);
+    for (var field in descriptorPb.field) {
+      if (!_message.hasField(field.number)) {
+        continue; // Skip fields that are not set
+      }
+      if (field.label == FieldDescriptorProto_Label.LABEL_REPEATED) {
+        if (_message.getField(field.number) is List &&
+            (_message.getField(field.number) as List).isEmpty) {
+          continue; // Skip fields that are empty arrays
+        }
+        throw UnimplementedError(
+          'Repeated field handling not implemented for field: ${field.name}',
+        );
+      }
+      switch (field.type) {
+        case FieldDescriptorProto_Type.TYPE_STRING:
+        case FieldDescriptorProto_Type.TYPE_INT64:
+        case FieldDescriptorProto_Type.TYPE_BOOL:
+          storeMap['field_${field.number}'] = _message.getField(field.number);
+          break;
+        case FieldDescriptorProto_Type.TYPE_MESSAGE:
+          // Handle nested messages
+          throw UnimplementedError(
+            'Nested message handling not implemented for field: ${field.name}',
+          );
+        default:
+          throw UnimplementedError(
+            'toStore handling not implemented for field: ${field.name}',
+          );
+      }
+    }
+    return storeMap;
+  }
+
+  fromStore(DatabaseStoreType storeMap) {
+    DescriptorProto descriptorPb = DescriptorProto.fromBuffer(descriptor);
+    for (var field in descriptorPb.field) {
+      if (storeMap.containsKey('field_${field.number}')) {
+        _message.setField(field.number, storeMap['field_${field.number}']!);
+      }
+    }
   }
 
   String get id =>
@@ -27,7 +82,7 @@ class BaseModel<T extends GeneratedMessage> {
 class Podcast extends BaseModel<PodcastMessage> {
   Podcast({
     required String id,
-    required String title,
+    String? title,
     String? description,
     String? url,
     String? imageUrl,
@@ -48,6 +103,9 @@ class Podcast extends BaseModel<PodcastMessage> {
   Podcast.fromMessage(super.message);
 
   @override
+  Uint8List get descriptor => podcastMessageDescriptor;
+
+  @override
   String get id => _message.id;
   String get title => _message.title;
   String? get description => _message.description;
@@ -56,13 +114,18 @@ class Podcast extends BaseModel<PodcastMessage> {
   String? get author => _message.author;
   List<Episode> get episodes =>
       _message.episodes.map((e) => Episode.fromMessage(e)).toList();
+
+  setEpisodes(Iterable<Episode> episodes) {
+    _message.episodes.clear();
+    _message.episodes.addAll(episodes.map((e) => e.toMessage()));
+  }
 }
 
 class Episode extends BaseModel<EpisodeMessage> {
   Episode({
     required String id,
     required String podcastId,
-    required String title,
+    String? title,
     String? description,
     String? audioUrl,
     String? imageUrl,
@@ -91,6 +154,9 @@ class Episode extends BaseModel<EpisodeMessage> {
        );
 
   Episode.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => episodeMessageDescriptor;
 
   @override
   String get id => _message.id;
@@ -132,6 +198,9 @@ class User extends BaseModel<UserMessage> {
   User.fromMessage(super.message);
 
   @override
+  Uint8List get descriptor => userMessageDescriptor;
+
+  @override
   String get id => _message.id;
   String get name => _message.name;
   String get email => _message.email;
@@ -152,6 +221,9 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
     : super(UserSubscriptionMessage(userId: userId, podcastId: podcastId));
 
   UserSubscription.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userSubscriptionMessageDescriptor;
 
   @override
   String get id => '$userId-$podcastId';
@@ -178,6 +250,8 @@ class UserListen extends BaseModel<UserListenMessage> {
          ),
        );
 
+  @override
+  Uint8List get descriptor => userListenMessageDescriptor;
   UserListen.fromMessage(super.message);
 
   @override
@@ -196,6 +270,9 @@ class UserFollow extends BaseModel<UserFollowMessage> {
     : super(UserFollowMessage(userId: userId, followedUserId: followedUserId));
 
   UserFollow.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userFollowMessageDescriptor;
 
   @override
   String get id => '$userId-$followedUserId';

@@ -203,6 +203,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  protobuf_google:
+    dependency: "direct main"
+    description:
+      name: protobuf_google
+      sha256: "796ccda56f90ac4415fc515adaff6f1950373e84d1f5283988c96a8b15b9d4be"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sembast:
     dependency: transitive
     description:

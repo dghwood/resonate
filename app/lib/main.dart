@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:idb_sqflite/idb_sqflite.dart' as idb;
+import 'package:sqflite/sqflite.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,13 +60,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _counter += 1;
     });
+  }
+
+  idb.Database? _db;
+  Future<void> initDb() async {
+    print('initDb');
+    if (_db != null) {
+      return; // Already initialized
+    }
+    print('Opening database');
+    var factory = idb.idbFactoryNative;
+    // var factory = idb.getIdbFactorySqflite(databaseFactory);
+    print('Factory created: $factory');
+    _db = await factory
+        .open(
+          'test.db',
+          version: 1,
+          onBlocked: (event) {
+            print('$event');
+          },
+          onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
+            print(
+              'Upgrading database to version ${versionChangeEvent.oldVersion} -> ${versionChangeEvent.newVersion}',
+            );
+            var db = versionChangeEvent.database;
+            var store =
+                db.createObjectStore('testStore')
+                  ..createIndex('id', 'id', unique: true)
+                  ..createIndex('podcastId', 'podcastId', unique: false);
+
+            for (var i = 0; i < 10; i++) {
+              // await store.put(i, {'id': '$i', 'podcastId': '${i % 2}'});
+            }
+          },
+        )
+        .catchError((e) {
+          print('Error opening database: $e');
+        });
+    print('Database opened successfully');
   }
 
   @override
@@ -88,28 +123,23 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: FutureBuilder(
+          future: initDb(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print('Database initialized successfully');
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('You have pushed the button this many times:'),
+                Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ],
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(

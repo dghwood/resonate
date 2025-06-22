@@ -1,40 +1,51 @@
 import 'dart:typed_data';
 
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
+import 'package:protobuf/protobuf.dart';
 import 'package:resonate/models/models.dart';
 import 'package:sqflite/sqflite.dart';
 
 typedef UpgradeFunction =
     Future<void> Function(idb.VersionChangeEvent versionChangeEvent);
 
+typedef DatabaseStoreType = Map<String, Object?>;
+
 abstract class AbstractDatabaseService {
   Future<void> init();
-  Future<void> setValue(String storeName, String key, Uint8List value);
-  Future<Uint8List> getValue(String storeName, String key);
+  Future<void> setValue(String storeName, String key, DatabaseStoreType value);
+  Future<void> setValues(
+    String storeName,
+    Map<String, DatabaseStoreType> values,
+  );
+  Future<DatabaseStoreType> getValue(String storeName, String key);
   Future<void> deleteValue(String storeName, String key);
-  Future<List<Uint8List>> getAllValues(String storeName);
-  Future<List<Uint8List>> getAllValuesFromIndex(
+  Future<Iterable<DatabaseStoreType>> getAllValues(String storeName);
+  Future<Iterable<DatabaseStoreType>> getAllValuesFromIndex(
     String storeName,
     String indexName,
     String value,
   );
   Future<void> clear(String storeName);
-  void registerStore(UpgradeFunction upgradeFunction);
+  void registerStore(String storeName, UpgradeFunction upgradeFunction);
 }
 
 /* Implementation */
 class DatabaseService implements AbstractDatabaseService {
-  DatabaseService();
+  DatabaseService(idb.IdbFactory factory) : _factory = factory;
+  // eg. idb.getIdbFactorySqflite(databaseFactory);
+  final idb.IdbFactory _factory;
   late idb.Database _db;
+
+  idb.Database get testAccessDb => _db;
   bool isInitialized = false;
-  final List<UpgradeFunction> _upgradeFunctions = [];
+  final Map<String, UpgradeFunction> _upgradeFunctions = {};
 
   final String databaseName = 'resonate.db';
   final int databaseVersion = 1;
 
   @override
-  void registerStore(UpgradeFunction upgradeFunction) {
-    _upgradeFunctions.add(upgradeFunction);
+  void registerStore(String storeName, UpgradeFunction upgradeFunction) {
+    _upgradeFunctions[storeName] = upgradeFunction;
   }
 
   @override
@@ -42,12 +53,14 @@ class DatabaseService implements AbstractDatabaseService {
     if (isInitialized) {
       return;
     }
-    var factory = idb.getIdbFactorySqflite(databaseFactory);
-    _db = await factory.open(
+
+    _db = await _factory.open(
       databaseName,
       version: databaseVersion,
       onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
-        for (var upgradeFunction in _upgradeFunctions) {
+        print('running onUpgradeNeeded::${_upgradeFunctions.length}');
+        for (var upgradeFunction in _upgradeFunctions.values) {
+          print('registering store');
           await upgradeFunction(versionChangeEvent);
         }
       },
@@ -56,15 +69,16 @@ class DatabaseService implements AbstractDatabaseService {
   }
 
   @override
-  Future<List<Uint8List>> getAllValues(String storeName) async {
+  Future<Iterable<DatabaseStoreType>> getAllValues(String storeName) async {
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
-    var cursor = store.openCursor();
+    var cursor = store.openCursor(autoAdvance: true);
 
-    var values = <Uint8List>[];
+    var values = <DatabaseStoreType>[];
+
     await for (var c in cursor) {
-      if (c.value is Uint8List) {
-        values.add(c.value as Uint8List);
+      if (c.value is DatabaseStoreType) {
+        values.add(c.value as DatabaseStoreType);
       }
     }
     await txn.completed;
@@ -72,19 +86,22 @@ class DatabaseService implements AbstractDatabaseService {
   }
 
   @override
-  Future<List<Uint8List>> getAllValuesFromIndex(
+  Future<List<DatabaseStoreType>> getAllValuesFromIndex(
     String storeName,
     String indexName,
-    String value,
+    Object value,
   ) async {
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var index = store.index(indexName);
-    var cursor = index.openCursor(range: idb.KeyRange.only(value));
-    var values = <Uint8List>[];
+    var cursor = index.openCursor(
+      range: idb.KeyRange.only(value),
+      autoAdvance: true,
+    );
+    var values = <DatabaseStoreType>[];
     await cursor.forEach((c) {
-      if (c.value is Uint8List) {
-        values.add(c.value as Uint8List);
+      if (c.value is DatabaseStoreType) {
+        values.add(c.value as DatabaseStoreType);
       }
     });
     await txn.completed;
@@ -92,15 +109,33 @@ class DatabaseService implements AbstractDatabaseService {
   }
 
   @override
-  Future<void> setValue(String storeName, String key, Uint8List value) async {
+  Future<void> setValue(
+    String storeName,
+    String key,
+    DatabaseStoreType value,
+  ) async {
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
-    await store.put(value, key);
+    print(value);
+    await store.put(value);
     await txn.completed;
   }
 
   @override
-  Future<Uint8List> getValue(String storeName, String key) async {
+  Future<void> setValues(
+    String storeName,
+    Map<String, DatabaseStoreType> values,
+  ) async {
+    var txn = _db.transaction(storeName, 'readwrite');
+    var store = txn.objectStore(storeName);
+    for (var entry in values.entries) {
+      await store.put(entry.value);
+    }
+    await txn.completed;
+  }
+
+  @override
+  Future<DatabaseStoreType> getValue(String storeName, String key) async {
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var value = await store.getObject(key);
@@ -108,7 +143,7 @@ class DatabaseService implements AbstractDatabaseService {
     if (value == null) {
       throw DatabaseNotFoundException('Key $key not found in store $storeName');
     }
-    return value as Uint8List;
+    return value as DatabaseStoreType;
   }
 
   @override
@@ -140,115 +175,72 @@ class DatabaseNotFoundException implements Exception {
   }
 }
 
-/* Mock */
-class MockDatabaseService implements AbstractDatabaseService {
-  final Map<String, Map<String, Uint8List>> _mockDatabase = {};
-
-  @override
-  Future<void> init() async {
-    // Mock initialization logic
-  }
-
-  @override
-  Future<void> setValue(String storeName, String key, Uint8List value) async {
-    _mockDatabase.putIfAbsent(storeName, () => {});
-    _mockDatabase[storeName]![key] = value;
-  }
-
-  @override
-  Future<Uint8List> getValue(String storeName, String key) async {
-    if (!_mockDatabase.containsKey(storeName) ||
-        !_mockDatabase[storeName]!.containsKey(key)) {
-      throw DatabaseNotFoundException('Key $key not found in store $storeName');
-    }
-    return _mockDatabase[storeName]![key]!;
-  }
-
-  @override
-  Future<void> deleteValue(String storeName, String key) async {
-    if (_mockDatabase.containsKey(storeName)) {
-      _mockDatabase[storeName]!.remove(key);
-    }
-  }
-
-  @override
-  Future<List<Uint8List>> getAllValues(String storeName) async {
-    if (!_mockDatabase.containsKey(storeName)) {
-      return [];
-    }
-    return _mockDatabase[storeName]!.values.toList();
-  }
-
-  @override
-  Future<List<Uint8List>> getAllValuesFromIndex(
-    String storeName,
-    String indexName,
-    String value,
-  ) async {
-    throw UnimplementedError(
-      'getAllValuesFromIndex is not implemented in MockDatabaseService',
-    );
-  }
-
-  @override
-  Future<void> clear(String storeName) async {
-    _mockDatabase[storeName]?.clear();
-  }
-
-  final List<UpgradeFunction> upgradeFunctions = [];
-  @override
-  void registerStore(UpgradeFunction upgradeFunction) {
-    upgradeFunctions.add(upgradeFunction);
-    print('Registering upgrade function: ${upgradeFunctions.length}');
-  }
-}
-
-abstract class AbstractProtoModelDatabase<T extends BaseModel> {
-  // Future<void> init();
+abstract class AbstractProtoModelDatabase<
+  K extends GeneratedMessage,
+  T extends BaseModel<K>
+> {
+  T newInstance();
   Future<void> put(T model);
-  Future<T> get(T model);
+  Future<void> putAll(Iterable<T> models);
+  Future<void> get(T model);
   Future<Iterable<T>> list();
   Future<Iterable<T>> listFromIndex(String indexName, String value);
-  T converter(Uint8List value);
+
+  T onBeforePut(T model);
   void upgradeFunction(idb.VersionChangeEvent versionChangeEvent);
 }
 
-class ProtoModelDatabase<T extends BaseModel>
-    implements AbstractProtoModelDatabase<T> {
+class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
+    implements AbstractProtoModelDatabase<K, T> {
   ProtoModelDatabase(this.databaseService);
 
   @override
-  T converter(Uint8List value) {
-    throw UnimplementedError('converter must be implemented by subclasses');
-  }
+  T newInstance() =>
+      throw UnimplementedError('newInstance must be implemented by subclasses');
 
   final AbstractDatabaseService databaseService;
 
-  final String storeName = 'default_store';
+  String get storeName =>
+      throw UnimplementedError('storeName must be implemented by subclasses');
+
+  @override
+  T onBeforePut(T model) => model;
 
   @override
   Future<void> put(T model) async {
     if (model.id.isEmpty) {
       throw ArgumentError('Model must have a non-null id');
     }
-    final key = model.id;
-    final value = model.writeToBuffer();
-    await databaseService.setValue(storeName, key, value);
+    await databaseService.setValue(
+      storeName,
+      model.id,
+      onBeforePut(model).toStore(),
+    );
   }
 
   @override
-  Future<T> get(T model) async {
-    if (model.id.isEmpty) {
-      throw ArgumentError('ID must not be empty');
+  Future<void> putAll(Iterable<T> models) {
+    Map<String, DatabaseStoreType> values = {};
+    for (var model in models) {
+      if (model.id.isEmpty) {
+        throw ArgumentError('Model must have a non-null id');
+      }
+      values[model.id] = onBeforePut(model).toStore();
     }
+    return databaseService.setValues(storeName, values);
+  }
+
+  @override
+  Future<void> get(T model) async {
     final value = await databaseService.getValue(storeName, model.id);
-    return converter(value);
+    model.fromStore(value);
   }
 
   @override
   Future<Iterable<T>> list() async {
     final values = await databaseService.getAllValues(storeName);
-    return values.map((value) => converter(value));
+    print('list::${values.length}');
+    return values.map((value) => newInstance()..fromStore(value));
   }
 
   @override
@@ -258,7 +250,7 @@ class ProtoModelDatabase<T extends BaseModel>
       indexName,
       value,
     );
-    return values.map((v) => converter(v));
+    return values.map((v) => newInstance()..fromStore(v));
   }
 
   @override

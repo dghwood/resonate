@@ -4,23 +4,20 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 
-class EpisodeDatabase extends ProtoModelDatabase<Episode> {
+class EpisodeDatabase extends ProtoModelDatabase<EpisodeMessage, Episode> {
   EpisodeDatabase(super.databaseService) {
-    super.databaseService.registerStore(upgradeFunction);
+    super.databaseService.registerStore(storeName, upgradeFunction);
   }
 
   @override
   String get storeName => 'EpisodeMessage';
-
   @override
-  Episode converter(Uint8List value) {
-    final message = EpisodeMessage.fromBuffer(value);
-    return Episode.fromMessage(message);
-  }
+  Episode newInstance() => Episode.fromMessage(EpisodeMessage());
 
-  Future<Iterable<Episode>> fromPodcast(Podcast podcast) async {
+  Future<void> populatePodcastEpisodes(Podcast podcast) async {
     var results = await listFromIndex('podcastId', podcast.id);
-    return results;
+    if (results.isEmpty) return;
+    podcast.setEpisodes(results);
   }
 
   @override
@@ -28,8 +25,8 @@ class EpisodeDatabase extends ProtoModelDatabase<Episode> {
     idb.VersionChangeEvent versionChangeEvent,
   ) async {
     final db = versionChangeEvent.database;
-    db.createObjectStore(storeName, keyPath: 'id')
-      ..createIndex('id', 'id', unique: true)
-      ..createIndex('podcastId', 'podcastId', unique: false);
+    db
+        .createObjectStore(storeName, keyPath: 'field_1')
+        .createIndex('podcastId', 'field_2', unique: false);
   }
 }

@@ -1,10 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/result.dart';
+import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
-import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/storage/episode.dart';
+import 'package:resonate/storage/podcast.dart';
 
 class GetPodcastApiRequest extends ApiRequest<GetPodcastMessage_Request> {
   GetPodcastApiRequest() : super(GetPodcastMessage_Request());
@@ -35,46 +38,47 @@ class GetPodcastApiServer
       );
 }
 
-// class GetPodcastApiLocal
-//     extends Api<GetPodcastApiRequest, GetPodcastApiResponse> {
-//   GetPodcastApiLocal({AbstractDatabaseService? databaseService})
-//     : _databaseService = databaseService ?? DatabaseService('podcast'),
-//       super(GetPodcastApiRequest(), GetPodcastApiResponse());
+class GetPodcastApi {
+  GetPodcastApi({
+    required AbstractHttpService httpService,
+    required AbstractDatabaseService databaseService,
+  }) : _server = GetPodcastApiServer(client: httpService),
+       _database = PodcastDatabase(databaseService),
+       // TODO(duncanwood): The upgrade function will be called twice!
+       _episodeDatabase = EpisodeDatabase(databaseService);
 
-//   final AbstractDatabaseService _databaseService;
+  final GetPodcastApiServer _server;
+  final PodcastDatabase _database;
+  final EpisodeDatabase _episodeDatabase;
 
-//   @override
-//   Future<void> execute(
-//     GetPodcastApiRequest request,
-//     GetPodcastApiResponse response,
-//   ) async {
-//     await _databaseService.init();
-//     var resp = await _databaseService.getValue(request.requestPb.podcastId);
-//     response.fromPodcastBuffer(resp);
-//   }
-// }
+  Stream<ApiResult<Podcast>> get(String podcastId) async* {
+    var request = GetPodcastApiRequest();
+    var response = GetPodcastApiResponse();
+    var podcast = Podcast(id: podcastId);
+    try {
+      await _database.get(podcast);
+      await _episodeDatabase.populatePodcastEpisodes(podcast);
 
-// class GetPodcastApi extends Api<GetPodcastApiRequest, GetPodcastApiResponse> {
-//   GetPodcastApi(
-//     Api<GetPodcastApiRequest, GetPodcastApiResponse> localApi,
-//     Api<GetPodcastApiRequest, GetPodcastApiResponse> serverApi,
-//   ) : _localApi = localApi,
-//       _serverApi = serverApi,
-//       super(GetPodcastApiRequest(), GetPodcastApiResponse());
+      yield ApiResult.ok(podcast);
+    } on Exception catch (_) {
+      // Do I return this?
+      // yield ApiResult.error(e);
+    }
+    // TODO(duncan): Check if the database is stale and only request then.
+    try {
+      await _server.execute(request, response);
+      podcast.fromMessage(response.responsePb.podcast);
 
-//   final Api<GetPodcastApiRequest, GetPodcastApiResponse> _localApi;
-//   final Api<GetPodcastApiRequest, GetPodcastApiResponse> _serverApi;
+      await _database.put(podcast);
+      await _episodeDatabase.putAll(
+        response.responsePb.podcast.episodes
+            .map((e) => Episode.fromMessage(e))
+            .toList(),
+      );
 
-//   @override
-//   Future<void> execute(
-//     GetPodcastApiRequest request,
-//     GetPodcastApiResponse response,
-//   ) async {
-//     try {
-//       await _localApi.execute(request, response);
-//     } catch (e) {
-//       await _serverApi.execute(request, response);
-//       response.responsePb.podcast;
-//     }
-//   }
-// }
+      yield ApiResult.ok(podcast);
+    } on Exception catch (e) {
+      yield ApiResult.error(e);
+    }
+  }
+}
