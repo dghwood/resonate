@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/proto/api.pb.dart';
-import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 
 class ApiException implements Exception {
@@ -64,6 +63,8 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
 
   @override
   Future<void> execute(Req request, Res response) async {
+    // TODO(duncan): implement userId & auth header..
+    request.requestInfo.userId = '123';
     final url = Uri.parse('$_baseUrl/$_path');
     var resp = await _client.post(
       url,

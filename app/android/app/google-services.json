@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "977538971052",
+    "project_id": "resonate-app-6f0fb",
+    "storage_bucket": "resonate-app-6f0fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977538971052:android:88230efbe1d5d2df847609",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsFMzpX_NOMsk9oWLn4jYWN3jV82ZN2Js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977538971052:android:27eda9374cc22e45847609",
+        "android_client_info": {
+          "package_name": "com.example.resonate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsFMzpX_NOMsk9oWLn4jYWN3jV82ZN2Js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

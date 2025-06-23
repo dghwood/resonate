@@ -1,152 +1,68 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:idb_sqflite/idb_sqflite.dart' as idb;
-import 'package:sqflite/sqflite.dart';
+import 'package:idb_sqflite/idb_sqflite.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:resonate/api/podcast.dart';
+import 'package:resonate/router/routes.dart';
+import 'package:resonate/services/database.dart';
+import 'package:resonate/services/http.dart';
+import 'firebase_options.dart';
 
-void main() {
+// import 'ui/scaffold.dart';
+// import 'models/player.dart';
+// import 'providers/backend.dart';
+
+void main() async {
+  // https://pub.dev/packages/just_audio_background
+  // Requires more setup in .xml
+  // await JustAudioBackground.init(
+  //   androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+  //   androidNotificationChannelName: 'Audio playback',
+  //   androidNotificationOngoing: true,
+  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Ideal time to initialize
+  // firebase emualators:start
+  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.loggerName}: ${record.message}');
+  });
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter += 1;
-    });
-  }
-
-  idb.Database? _db;
-  Future<void> initDb() async {
-    print('initDb');
-    if (_db != null) {
-      return; // Already initialized
-    }
-    print('Opening database');
-    var factory = idb.idbFactoryNative;
-    // var factory = idb.getIdbFactorySqflite(databaseFactory);
-    print('Factory created: $factory');
-    _db = await factory
-        .open(
-          'test.db',
-          version: 1,
-          onBlocked: (event) {
-            print('$event');
-          },
-          onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
-            print(
-              'Upgrading database to version ${versionChangeEvent.oldVersion} -> ${versionChangeEvent.newVersion}',
-            );
-            var db = versionChangeEvent.database;
-            var store =
-                db.createObjectStore('testStore')
-                  ..createIndex('id', 'id', unique: true)
-                  ..createIndex('podcastId', 'podcastId', unique: false);
-
-            for (var i = 0; i < 10; i++) {
-              // await store.put(i, {'id': '$i', 'podcastId': '${i % 2}'});
-            }
-          },
-        )
-        .catchError((e) {
-          print('Error opening database: $e');
-        });
-    print('Database opened successfully');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: FutureBuilder(
-          future: initDb(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print('Database initialized successfully');
-            }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('You have pushed the button this many times:'),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ],
-            );
-          },
+    return MultiProvider(
+      // Provider needs to be above MaterialApp
+      providers: [
+        Provider<GetPodcastApi>(
+          create:
+              (context) => GetPodcastApi(
+                httpService: MockHttpService({}),
+                databaseService: DatabaseService(idbFactoryMemory),
+              ),
         ),
+      ],
+      child: MaterialApp.router(
+        theme: ThemeData(
+          useMaterial3: true,
+          // brightness: Brightness.dark,
+          colorScheme: ColorScheme.fromSeed(
+            brightness: Brightness.dark,
+            seedColor: Colors.blue,
+          ),
+        ),
+        routerConfig: appRouter,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

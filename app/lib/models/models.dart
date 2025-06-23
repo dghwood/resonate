@@ -124,7 +124,7 @@ class Podcast extends BaseModel<PodcastMessage> {
 class Episode extends BaseModel<EpisodeMessage> {
   Episode({
     required String id,
-    required String podcastId,
+    String? podcastId,
     String? title,
     String? description,
     String? audioUrl,

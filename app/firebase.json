@@ -1,0 +1,33 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "resonate-app-6f0fb",
+          "appId": "1:977538971052:android:27eda9374cc22e45847609",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "resonate-app-6f0fb",
+          "configurations": {
+            "android": "1:977538971052:android:27eda9374cc22e45847609",
+            "ios": "1:977538971052:ios:200cd0dc5bbcd2b6847609",
+            "web": "1:977538971052:web:f4aba8cb12204f3b847609"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "singleProjectMode": true,
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true,
+      "port": 9089
+    }
+  }
+}

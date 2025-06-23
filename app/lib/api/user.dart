@@ -1,6 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:resonate/api/base.dart';
 import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
+
+class UserNotSignedInError implements Exception {
+  UserNotSignedInError(this.messsage);
+  final String message;
+}
+
+class UserApi {
+  UserApi({
+    required AbstractHttpService httpService,
+    required AbstractDatabaseService databaseService,
+  }) : _httpService = httpService,
+       _databaseService = databaseService;
+
+  final AbstractHttpService _httpService;
+  final AbstractDatabaseService _databaseService;
+
+  auth.User? get _firebaseUser => auth.FirebaseAuth.instance.currentUser;
+
+  bool get isSignedIn => _firebaseUser != null;
+
+  Future<String> authToken() async {
+    if (!isSignedIn) return;
+    var user = _firebaseUser!;
+    var token = await user.getIdToken(true);
+    if (token != null) return token;
+  }
+}
 
 class CreateUserApiRequest extends ApiRequest<CreateUserMessage_Request> {
   CreateUserApiRequest(super.requestPb);
