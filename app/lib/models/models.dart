@@ -173,9 +173,9 @@ class Episode extends BaseModel<EpisodeMessage> {
 
 class User extends BaseModel<UserMessage> {
   User({
-    required String id,
-    required String name,
-    required String email,
+    String? id,
+    String? name,
+    String? email,
     String? imageUrl,
     List<UserSubscription>? subscriptions,
     List<UserListen>? listens,
