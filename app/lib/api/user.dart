@@ -1,68 +1,37 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 
-class UserNotSignedInError implements Exception {
-  UserNotSignedInError();
-
-  @override
-  String toString() => 'User not signed in';
-}
+final Logger _log = Logger('UserApi');
 
 class UserApi {
   UserApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
+    required User user,
   }) : _databaseService = databaseService,
-       _getUserApi = GetUserApi(client: httpService),
-       _createUserApi = CreateUserApi(client: httpService);
+       _getUserApi = GetUserApi(client: httpService, user: user),
+       _createUserApi = CreateUserApi(client: httpService, user: user);
 
   // This should be a UserDatabase
   final AbstractDatabaseService _databaseService;
   final CreateUserApi _createUserApi;
   final GetUserApi _getUserApi;
 
-  User? _user;
-  User? get user => isSignedIn ? _user : null;
-
-  auth.User? get _firebaseUser => auth.FirebaseAuth.instance.currentUser;
-
-  bool get isSignedIn => _firebaseUser != null;
-
-  Future<String> authToken() async {
-    if (!isSignedIn) throw UserNotSignedInError();
-
-    var user = _firebaseUser!;
-    var token = await user.getIdToken(true);
-    if (token != null) return token;
-    // This probably makes sense.
-    throw UserNotSignedInError();
-  }
-
-  User _fromFirebaseUser(auth.User user) {
-    return User(
-      id: 'firebase::${user.uid}',
-      name: user.displayName,
-      email: user.email,
-      imageUrl: user.photoURL,
-    );
-  }
-
   Stream<ApiResult<User>> create() async* {
-    if (!isSignedIn) throw UserNotSignedInError();
     var request = CreateUserApiRequest();
-    request.requestPb.user = _fromFirebaseUser(_firebaseUser!).toMessage();
-
     var response = CreateUserApiResponse();
     try {
       await _createUserApi.execute(request, response);
-      _user = User.fromMessage(response.responsePb.user);
-      yield ApiResult.ok(_user!);
+      var user = User.fromMessage(response.responsePb.user);
+      yield ApiResult.ok(user!);
       // TODO(duncanwood): Store in DB?
     } on Exception catch (e) {
       yield ApiResult.error(e);
@@ -71,7 +40,6 @@ class UserApi {
 
   Stream<ApiResult<User>> get(String userId) async* {
     var request = GetUserApiRequest();
-    request.requestPb.userId = userId;
     var response = GetUserApiResponse();
     try {
       await _getUserApi.execute(request, response);
@@ -84,10 +52,14 @@ class UserApi {
 }
 
 class CreateUserApiRequest extends ApiRequest<CreateUserMessage_Request> {
-  CreateUserApiRequest() : super(CreateUserMessage_Request());
+  CreateUserApiRequest()
+    : super(CreateUserMessage_Request(requestInfo: RequestInfo()));
 
   @override
-  RequestInfo get requestInfo => requestPb.requestInfo;
+  set requestInfo(RequestInfo info) {
+    _log.info('Setting requestInfo');
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
 }
 
 class CreateUserApiResponse extends ApiResponse<CreateUserMessage_Response> {
@@ -99,24 +71,27 @@ class CreateUserApiResponse extends ApiResponse<CreateUserMessage_Response> {
 
 class CreateUserApi
     extends ServerApi<CreateUserApiRequest, CreateUserApiResponse> {
-  CreateUserApi({AbstractHttpService? client})
+  CreateUserApi({AbstractHttpService? client, required User user})
     : super(
         CreateUserApiRequest(),
         CreateUserApiResponse(),
         'api/user/create',
+        user,
         client: client,
       );
 }
 
 class UpdateUserApiRequest extends ApiRequest<UpdateUserMessage_Request> {
-  UpdateUserApiRequest(super.requestPb);
+  UpdateUserApiRequest()
+    : super(UpdateUserMessage_Request(requestInfo: RequestInfo()));
 
   @override
-  RequestInfo get requestInfo => requestPb.requestInfo;
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
 }
 
 class UpdateUserApiResponse extends ApiResponse<UpdateUserMessage_Response> {
-  UpdateUserApiResponse(super.requestPb);
+  UpdateUserApiResponse() : super(UpdateUserMessage_Response());
 
   @override
   ResponseInfo get responseInfo => responsePb.responseInfo;
@@ -124,20 +99,23 @@ class UpdateUserApiResponse extends ApiResponse<UpdateUserMessage_Response> {
 
 class UpdateUserApi
     extends ServerApi<UpdateUserApiRequest, UpdateUserApiResponse> {
-  UpdateUserApi({AbstractHttpService? client})
+  UpdateUserApi({AbstractHttpService? client, required User user})
     : super(
-        UpdateUserApiRequest(UpdateUserMessage_Request()),
-        UpdateUserApiResponse(UpdateUserMessage_Response()),
+        UpdateUserApiRequest(),
+        UpdateUserApiResponse(),
         'api/user/update',
+        user,
         client: client,
       );
 }
 
 class GetUserApiRequest extends ApiRequest<GetUserMessage_Request> {
-  GetUserApiRequest() : super(GetUserMessage_Request());
+  GetUserApiRequest()
+    : super(GetUserMessage_Request(requestInfo: RequestInfo()));
 
   @override
-  RequestInfo get requestInfo => requestPb.requestInfo;
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
 }
 
 class GetUserApiResponse extends ApiResponse<GetUserMessage_Response> {
@@ -148,11 +126,12 @@ class GetUserApiResponse extends ApiResponse<GetUserMessage_Response> {
 }
 
 class GetUserApi extends ServerApi<GetUserApiRequest, GetUserApiResponse> {
-  GetUserApi({AbstractHttpService? client})
+  GetUserApi({AbstractHttpService? client, required User user})
     : super(
         GetUserApiRequest(),
         GetUserApiResponse(),
         'api/user/get',
+        user,
         client: client,
       );
 }

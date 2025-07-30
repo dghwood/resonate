@@ -39,6 +39,7 @@ class MockHttpService implements AbstractHttpService {
     Map<String, String>? headers,
     Object? body,
   }) async {
+    await Future.delayed(Duration(seconds: 2));
     if (response.containsKey(url.path)) {
       return response[url.path]!;
     } else {

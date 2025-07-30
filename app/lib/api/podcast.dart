@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
@@ -9,11 +10,16 @@ import 'package:resonate/services/http.dart';
 import 'package:resonate/storage/episode.dart';
 import 'package:resonate/storage/podcast.dart';
 
+Logger _log = Logger('PodcastApi');
+
 class GetPodcastApiRequest extends ApiRequest<GetPodcastMessage_Request> {
-  GetPodcastApiRequest() : super(GetPodcastMessage_Request());
+  GetPodcastApiRequest()
+    : super(GetPodcastMessage_Request(requestInfo: RequestInfo()));
 
   @override
-  RequestInfo get requestInfo => requestPb.requestInfo;
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
 }
 
 class GetPodcastApiResponse extends ApiResponse<GetPodcastMessage_Response> {
@@ -29,11 +35,12 @@ class GetPodcastApiResponse extends ApiResponse<GetPodcastMessage_Response> {
 
 class GetPodcastApiServer
     extends ServerApi<GetPodcastApiRequest, GetPodcastApiResponse> {
-  GetPodcastApiServer({AbstractHttpService? client})
+  GetPodcastApiServer({AbstractHttpService? client, required User user})
     : super(
         GetPodcastApiRequest(),
         GetPodcastApiResponse(),
         'api/podcast/get',
+        user,
         client: client,
       );
 }
@@ -42,7 +49,8 @@ class GetPodcastApi {
   GetPodcastApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
-  }) : _server = GetPodcastApiServer(client: httpService),
+    required User user,
+  }) : _server = GetPodcastApiServer(client: httpService, user: user),
        _database = PodcastDatabase(databaseService),
        // TODO(duncanwood): The upgrade function will be called twice!
        _episodeDatabase = EpisodeDatabase(databaseService);

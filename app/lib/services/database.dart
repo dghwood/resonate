@@ -2,8 +2,13 @@ import 'dart:typed_data';
 
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
-import 'package:sqflite/sqflite.dart';
+// import 'package:sqflite/sqflite.dart';
+
+import 'package:logging/logging.dart';
+
+final _log = Logger('database');
 
 typedef UpgradeFunction =
     Future<void> Function(idb.VersionChangeEvent versionChangeEvent);
@@ -31,9 +36,12 @@ abstract class AbstractDatabaseService {
 
 /* Implementation */
 class DatabaseService implements AbstractDatabaseService {
-  DatabaseService(idb.IdbFactory factory) : _factory = factory;
+  DatabaseService(idb.IdbFactory factory, User user)
+    : _factory = factory,
+      _user = user;
   // eg. idb.getIdbFactorySqflite(databaseFactory);
   final idb.IdbFactory _factory;
+  final User _user;
   late idb.Database _db;
 
   idb.Database get testAccessDb => _db;
@@ -53,14 +61,11 @@ class DatabaseService implements AbstractDatabaseService {
     if (isInitialized) {
       return;
     }
-
     _db = await _factory.open(
-      databaseName,
+      '${_user.id}.$databaseName',
       version: databaseVersion,
       onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
-        print('running onUpgradeNeeded::${_upgradeFunctions.length}');
         for (var upgradeFunction in _upgradeFunctions.values) {
-          print('registering store');
           await upgradeFunction(versionChangeEvent);
         }
       },
@@ -70,6 +75,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<Iterable<DatabaseStoreType>> getAllValues(String storeName) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var cursor = store.openCursor(autoAdvance: true);
@@ -91,6 +97,7 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object value,
   ) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var index = store.index(indexName);
@@ -114,9 +121,10 @@ class DatabaseService implements AbstractDatabaseService {
     String key,
     DatabaseStoreType value,
   ) async {
+    _log.info('setValue::$storeName::$key for $_user (${_user.isSignedIn})');
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
-    print(value);
     await store.put(value);
     await txn.completed;
   }
@@ -126,6 +134,7 @@ class DatabaseService implements AbstractDatabaseService {
     String storeName,
     Map<String, DatabaseStoreType> values,
   ) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     for (var entry in values.entries) {
@@ -136,6 +145,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<DatabaseStoreType> getValue(String storeName, String key) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var value = await store.getObject(key);
@@ -148,6 +158,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> deleteValue(String storeName, String key) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.delete(key);
@@ -156,6 +167,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> clear(String storeName) async {
+    if (!_user.isSignedIn) throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.clear();

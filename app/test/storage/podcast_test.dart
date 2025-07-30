@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
+import 'package:logging/logging.dart';
+import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
@@ -9,9 +11,15 @@ import 'package:resonate/storage/podcast.dart';
 void main() {
   late DatabaseService mockDatabaseService;
   late PodcastDatabase podcastDatabase;
+  late TestUser user;
 
   setUp(() async {
-    mockDatabaseService = DatabaseService(idbFactoryMemory);
+    Logger.root.level = Level.ALL;
+    Logger.root.onRecord.listen((record) {
+      print('${record.level.name}: ${record.loggerName}: ${record.message}');
+    });
+    user = TestUser(id: 'user_id_123');
+    mockDatabaseService = DatabaseService(idbFactoryMemory, user);
     podcastDatabase = PodcastDatabase(mockDatabaseService);
     // this needs to come after you register the PodcastDatabase
     await mockDatabaseService.init();
@@ -29,6 +37,27 @@ void main() {
             .keyPath,
         'field_1',
       );
+    });
+
+    test('should have database shared by user id', () async {
+      expect(mockDatabaseService.testAccessDb.name, 'user_id_123.resonate.db');
+    });
+
+    test('expect signed out error when user signed out', () async {
+      user.signOut();
+      expect(user.isSignedIn, false);
+      final podcastMessage =
+          PodcastMessage()
+            ..id = '123'
+            ..title = 'Test Podcast';
+      final podcast = Podcast.fromMessage(podcastMessage);
+
+      try {
+        await podcastDatabase.put(podcast);
+        fail('put should throw an error when use signed out');
+      } on Exception catch (e) {
+        expect(e is UserNotSignedInError, true);
+      }
     });
 
     test('Should store and retrieve a podcast', () async {

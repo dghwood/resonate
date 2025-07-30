@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
@@ -8,9 +9,15 @@ import 'package:resonate/storage/episode.dart';
 void main() {
   late DatabaseService mockDatabaseService;
   late EpisodeDatabase episodeDatabase;
+  late TestUser user;
 
   setUp(() async {
-    mockDatabaseService = DatabaseService(idbFactoryMemory);
+    Logger.root.level = Level.ALL;
+    Logger.root.onRecord.listen((record) {
+      print('${record.level.name}: ${record.loggerName}: ${record.message}');
+    });
+    user = TestUser(id: 'user_id_123');
+    mockDatabaseService = DatabaseService(idbFactoryMemory, user);
     episodeDatabase = EpisodeDatabase(mockDatabaseService);
     await mockDatabaseService.init();
   });

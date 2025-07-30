@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
@@ -13,11 +14,17 @@ import 'package:resonate/storage/podcast.dart';
 
 void main() {
   group('GetPodcastApi', () {
+    late TestUser user;
     late MockHttpService mockHttpService;
     late DatabaseService mockDatabaseService;
     late GetPodcastApi getPodcastApi;
 
     setUp(() async {
+      Logger.root.level = Level.ALL;
+      Logger.root.onRecord.listen((record) {
+        print('${record.level.name}: ${record.loggerName}: ${record.message}');
+      });
+      user = TestUser(id: '321');
       mockHttpService = MockHttpService({
         '/api/podcast/get':
             GetPodcastMessage_Response(
@@ -35,10 +42,11 @@ void main() {
               ),
             ).writeToBuffer(),
       });
-      mockDatabaseService = DatabaseService(idbFactoryMemory);
+      mockDatabaseService = DatabaseService(idbFactoryMemory, user);
       getPodcastApi = GetPodcastApi(
         httpService: mockHttpService,
         databaseService: mockDatabaseService,
+        user: user,
       );
       // Needs to be after the Api is set up
       await mockDatabaseService.init();

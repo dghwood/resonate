@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/http.dart';
 
@@ -22,7 +23,7 @@ class ApiRequest<Req extends GeneratedMessage> {
     return requestPb.writeToBuffer();
   }
 
-  RequestInfo get requestInfo {
+  set requestInfo(RequestInfo info) {
     throw UnimplementedError('requestInfo must be implemented by subclasses');
   }
 }
@@ -53,22 +54,29 @@ class Api<Req extends ApiRequest, Res extends ApiResponse> {
 
 class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     extends Api<Req, Res> {
-  ServerApi(super.request, super.response, path, {AbstractHttpService? client})
-    : _client = client ?? HttpService(),
-      _path = path;
+  ServerApi(
+    super.request,
+    super.response,
+    path,
+    User user, {
+    AbstractHttpService? client,
+  }) : _client = client ?? HttpService(),
+       _path = path,
+       _user = user;
 
+  final User _user;
   final AbstractHttpService _client;
   final String _path;
   final String _baseUrl = 'http://localhost:8080';
 
   @override
   Future<void> execute(Req request, Res response) async {
-    // TODO(duncan): implement userId & auth header..
-    request.requestInfo.userId = '123';
+    request.requestInfo = RequestInfo(userId: _user.id);
     final url = Uri.parse('$_baseUrl/$_path');
+    var authToken = await _user.generateAuthToken();
     var resp = await _client.post(
       url,
-      headers: {'Resonate': 'its me, Mario!'},
+      headers: {'Resonate': 'its me, Mario!', 'Authorization': authToken},
       body: request.writeToBuffer(),
     );
     response.fromBuffer(resp);

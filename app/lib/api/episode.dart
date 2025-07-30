@@ -9,10 +9,12 @@ import 'package:resonate/services/http.dart';
 import 'package:resonate/storage/episode.dart';
 
 class GetEpisodeApiRequest extends ApiRequest<GetEpisodeMessage_Request> {
-  GetEpisodeApiRequest() : super(GetEpisodeMessage_Request());
+  GetEpisodeApiRequest()
+    : super(GetEpisodeMessage_Request(requestInfo: RequestInfo()));
 
   @override
-  RequestInfo get requestInfo => requestPb.requestInfo;
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
 }
 
 class GetEpisodeApiResponse extends ApiResponse<GetEpisodeMessage_Response> {
@@ -28,11 +30,12 @@ class GetEpisodeApiResponse extends ApiResponse<GetEpisodeMessage_Response> {
 
 class GetEpisodeApiServer
     extends ServerApi<GetEpisodeApiRequest, GetEpisodeApiResponse> {
-  GetEpisodeApiServer({AbstractHttpService? client})
+  GetEpisodeApiServer({AbstractHttpService? client, required User user})
     : super(
         GetEpisodeApiRequest(),
         GetEpisodeApiResponse(),
         'api/episode/get',
+        user,
         client: client,
       );
 }
@@ -41,7 +44,8 @@ class GetEpisodeApi {
   GetEpisodeApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
-  }) : _server = GetEpisodeApiServer(client: httpService),
+    required User user,
+  }) : _server = GetEpisodeApiServer(client: httpService, user: user),
        _database = EpisodeDatabase(databaseService);
 
   final GetEpisodeApiServer _server;
