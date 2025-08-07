@@ -32,12 +32,132 @@ const RequestInfo$json = {
   '1': 'RequestInfo',
   '2': [
     {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'access_token', '3': 2, '4': 1, '5': 9, '10': 'accessToken'},
   ],
 };
 
 /// Descriptor for `RequestInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List requestInfoDescriptor = $convert.base64Decode(
-    'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQ=');
+    'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSIQoMYWNjZXNzX3Rva2VuGA'
+    'IgASgJUgthY2Nlc3NUb2tlbg==');
+
+@$core.Deprecated('Use refreshAuthMessageDescriptor instead')
+const RefreshAuthMessage$json = {
+  '1': 'RefreshAuthMessage',
+  '2': [
+    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RefreshAuthMessage.Request', '10': 'request'},
+    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.RefreshAuthMessage.Response', '10': 'response'},
+  ],
+  '3': [RefreshAuthMessage_Request$json, RefreshAuthMessage_Response$json],
+};
+
+@$core.Deprecated('Use refreshAuthMessageDescriptor instead')
+const RefreshAuthMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {'1': 'refresh_token', '3': 2, '4': 1, '5': 9, '10': 'refreshToken'},
+  ],
+};
+
+@$core.Deprecated('Use refreshAuthMessageDescriptor instead')
+const RefreshAuthMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+    {'1': 'access_token', '3': 2, '4': 1, '5': 9, '10': 'accessToken'},
+  ],
+};
+
+/// Descriptor for `RefreshAuthMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List refreshAuthMessageDescriptor = $convert.base64Decode(
+    'ChJSZWZyZXNoQXV0aE1lc3NhZ2USQgoHcmVxdWVzdBgBIAEoCzIoLnJlc29uYXRlLmFwaS5SZW'
+    'ZyZXNoQXV0aE1lc3NhZ2UuUmVxdWVzdFIHcmVxdWVzdBJFCghyZXNwb25zZRgCIAEoCzIpLnJl'
+    'c29uYXRlLmFwaS5SZWZyZXNoQXV0aE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmwKB1JlcX'
+    'Vlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgty'
+    'ZXF1ZXN0SW5mbxIjCg1yZWZyZXNoX3Rva2VuGAIgASgJUgxyZWZyZXNoVG9rZW4abgoIUmVzcG'
+    '9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9S'
+    'DHJlc3BvbnNlSW5mbxIhCgxhY2Nlc3NfdG9rZW4YAiABKAlSC2FjY2Vzc1Rva2Vu');
+
+@$core.Deprecated('Use loginRequestMessageDescriptor instead')
+const LoginRequestMessage$json = {
+  '1': 'LoginRequestMessage',
+  '2': [
+    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.LoginRequestMessage.Request', '10': 'request'},
+    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.LoginRequestMessage.Response', '10': 'response'},
+  ],
+  '3': [LoginRequestMessage_Request$json, LoginRequestMessage_Response$json],
+};
+
+@$core.Deprecated('Use loginRequestMessageDescriptor instead')
+const LoginRequestMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
+  ],
+};
+
+@$core.Deprecated('Use loginRequestMessageDescriptor instead')
+const LoginRequestMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+  ],
+};
+
+/// Descriptor for `LoginRequestMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List loginRequestMessageDescriptor = $convert.base64Decode(
+    'ChNMb2dpblJlcXVlc3RNZXNzYWdlEkMKB3JlcXVlc3QYASABKAsyKS5yZXNvbmF0ZS5hcGkuTG'
+    '9naW5SZXF1ZXN0TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
+    'cmVzb25hdGUuYXBpLkxvZ2luUmVxdWVzdE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGl0KB1'
+    'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
+    'UgtyZXF1ZXN0SW5mbxIUCgVlbWFpbBgCIAEoCVIFZW1haWwaSwoIUmVzcG9uc2USPwoNcmVzcG'
+    '9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5m'
+    'bw==');
+
+@$core.Deprecated('Use loginUserMessageDescriptor instead')
+const LoginUserMessage$json = {
+  '1': 'LoginUserMessage',
+  '2': [
+    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.LoginUserMessage.Request', '10': 'request'},
+    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.LoginUserMessage.Response', '10': 'response'},
+  ],
+  '3': [LoginUserMessage_Request$json, LoginUserMessage_Response$json],
+};
+
+@$core.Deprecated('Use loginUserMessageDescriptor instead')
+const LoginUserMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
+  ],
+};
+
+@$core.Deprecated('Use loginUserMessageDescriptor instead')
+const LoginUserMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+    {'1': 'access_token', '3': 2, '4': 1, '5': 9, '10': 'accessToken'},
+    {'1': 'refresh_token', '3': 3, '4': 1, '5': 9, '10': 'refreshToken'},
+    {'1': 'user', '3': 4, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `LoginUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List loginUserMessageDescriptor = $convert.base64Decode(
+    'ChBMb2dpblVzZXJNZXNzYWdlEkAKB3JlcXVlc3QYASABKAsyJi5yZXNvbmF0ZS5hcGkuTG9naW'
+    '5Vc2VyTWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkMKCHJlc3BvbnNlGAIgASgLMicucmVzb25h'
+    'dGUuYXBpLkxvZ2luVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnkKB1JlcXVlc3QSPA'
+    'oMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0'
+    'SW5mbxIUCgVlbWFpbBgCIAEoCVIFZW1haWwSGgoIcGFzc3dvcmQYAyABKAlSCHBhc3N3b3JkGr'
+    '4BCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3Bv'
+    'bnNlSW5mb1IMcmVzcG9uc2VJbmZvEiEKDGFjY2Vzc190b2tlbhgCIAEoCVILYWNjZXNzVG9rZW'
+    '4SIwoNcmVmcmVzaF90b2tlbhgDIAEoCVIMcmVmcmVzaFRva2VuEikKBHVzZXIYBCABKAsyFS5y'
+    'ZXNvbmF0ZS5Vc2VyTWVzc2FnZVIEdXNlcg==');
 
 @$core.Deprecated('Use createUserMessageDescriptor instead')
 const CreateUserMessage$json = {

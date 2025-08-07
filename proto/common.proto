@@ -16,6 +16,8 @@ syntax = "proto3";
 
 package resonate; 
 
+option go_package = "github.com/dghwood/resonate/proto"; 
+
 message PodcastMessage {
     string id = 1;
     string title = 2;

@@ -25,7 +25,7 @@ class SearchApi extends ServerApi<SearchApiRequest, SearchApiResponse> {
         SearchApiRequest(SearchMessage_Request()),
         SearchApiResponse(SearchMessage_Response()),
         'api/search',
-        user,
+        user: user,
         client: client,
       );
 }

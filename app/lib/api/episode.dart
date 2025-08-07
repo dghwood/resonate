@@ -35,8 +35,8 @@ class GetEpisodeApiServer
         GetEpisodeApiRequest(),
         GetEpisodeApiResponse(),
         'api/episode/get',
-        user,
         client: client,
+        user: user,
       );
 }
 

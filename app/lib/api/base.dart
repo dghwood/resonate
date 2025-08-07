@@ -57,23 +57,28 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   ServerApi(
     super.request,
     super.response,
-    path,
-    User user, {
+    path, {
+    User? user,
     AbstractHttpService? client,
   }) : _client = client ?? HttpService(),
        _path = path,
        _user = user;
 
-  final User _user;
+  final User? _user;
   final AbstractHttpService _client;
   final String _path;
   final String _baseUrl = 'http://localhost:8080';
 
   @override
   Future<void> execute(Req request, Res response) async {
-    request.requestInfo = RequestInfo(userId: _user.id);
+    var requestInfo = RequestInfo();
     final url = Uri.parse('$_baseUrl/$_path');
-    var authToken = await _user.generateAuthToken();
+    var authToken = "";
+    if (_user != null) {
+      authToken = await _user.generateAuthToken();
+      requestInfo.userId = _user.id;
+    }
+    request.requestInfo = requestInfo;
     var resp = await _client.post(
       url,
       headers: {'Resonate': 'its me, Mario!', 'Authorization': authToken},

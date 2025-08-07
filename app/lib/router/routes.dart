@@ -27,7 +27,9 @@ final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(
 
 final providers = [EmailAuthProvider()];
 
-// Function(BuildContext, GoRouterState)
+/* TODO(duncan): Fix the redirection or move it. 
+
+*/
 String? _signInRedirect(BuildContext context, GoRouterState state) {
   var user = Provider.of<User>(context, listen: false);
   var redirectPath = state.uri.queryParameters['redirect'];

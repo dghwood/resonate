@@ -76,7 +76,7 @@ class CreateUserApi
         CreateUserApiRequest(),
         CreateUserApiResponse(),
         'api/user/create',
-        user,
+        user: user,
         client: client,
       );
 }
@@ -104,7 +104,7 @@ class UpdateUserApi
         UpdateUserApiRequest(),
         UpdateUserApiResponse(),
         'api/user/update',
-        user,
+        user: user,
         client: client,
       );
 }
@@ -131,7 +131,7 @@ class GetUserApi extends ServerApi<GetUserApiRequest, GetUserApiResponse> {
         GetUserApiRequest(),
         GetUserApiResponse(),
         'api/user/get',
-        user,
+        user: user,
         client: client,
       );
 }

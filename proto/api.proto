@@ -4,12 +4,58 @@ package resonate.api;
 
 import "proto/common.proto";
 
+option go_package = "github.com/dghwood/resonate/proto";
+
 message ResponseInfo {
     bool success = 1; 
     string error_message = 2; 
 }
 message RequestInfo {
     string user_id = 1; 
+    string access_token = 2; 
+}
+
+// Used to refresh access tokens
+message RefreshAuthMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string refresh_token = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        string access_token = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+// Used to request login password 
+message LoginRequestMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string email = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message LoginUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string email = 2; 
+        string password = 3; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        string access_token = 2; 
+        string refresh_token = 3;
+        UserMessage user = 4; 
+    }
+    Request request = 1;
+    Response response = 2;
 }
 
 message CreateUserMessage {

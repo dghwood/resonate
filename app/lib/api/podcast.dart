@@ -40,7 +40,7 @@ class GetPodcastApiServer
         GetPodcastApiRequest(),
         GetPodcastApiResponse(),
         'api/podcast/get',
-        user,
+        user: user,
         client: client,
       );
 }

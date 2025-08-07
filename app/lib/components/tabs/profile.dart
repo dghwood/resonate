@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/components/common/addPhoto.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -50,10 +51,7 @@ class ProfileComponent extends StatelessWidget {
             children: [
               SizedBox(
                 height: 200,
-                child: Text(
-                  'Profile Header',
-                  // style: Theme.of(context).textTheme.headline6,
-                ),
+                child: Column(children: [ProfilePhotoComponent()]),
               ),
             ],
           ),

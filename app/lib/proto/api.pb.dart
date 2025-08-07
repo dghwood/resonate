@@ -84,10 +84,14 @@ class ResponseInfo extends $pb.GeneratedMessage {
 class RequestInfo extends $pb.GeneratedMessage {
   factory RequestInfo({
     $core.String? userId,
+    $core.String? accessToken,
   }) {
     final $result = create();
     if (userId != null) {
       $result.userId = userId;
+    }
+    if (accessToken != null) {
+      $result.accessToken = accessToken;
     }
     return $result;
   }
@@ -97,6 +101,7 @@ class RequestInfo extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequestInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'userId')
+    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
     ..hasRequiredFields = false
   ;
 
@@ -129,6 +134,647 @@ class RequestInfo extends $pb.GeneratedMessage {
   $core.bool hasUserId() => $_has(0);
   @$pb.TagNumber(1)
   void clearUserId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get accessToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set accessToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessToken() => $_clearField(2);
+}
+
+class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
+  factory RefreshAuthMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? refreshToken,
+  }) {
+    final $result = create();
+    if (requestInfo != null) {
+      $result.requestInfo = requestInfo;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
+    }
+    return $result;
+  }
+  RefreshAuthMessage_Request._() : super();
+  factory RefreshAuthMessage_Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RefreshAuthMessage_Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RefreshAuthMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'refreshToken')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage_Request clone() => RefreshAuthMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage_Request copyWith(void Function(RefreshAuthMessage_Request) updates) => super.copyWith((message) => updates(message as RefreshAuthMessage_Request)) as RefreshAuthMessage_Request;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage_Request create() => RefreshAuthMessage_Request._();
+  RefreshAuthMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<RefreshAuthMessage_Request> createRepeated() => $pb.PbList<RefreshAuthMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage_Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RefreshAuthMessage_Request>(create);
+  static RefreshAuthMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get refreshToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set refreshToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRefreshToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRefreshToken() => $_clearField(2);
+}
+
+class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
+  factory RefreshAuthMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.String? accessToken,
+  }) {
+    final $result = create();
+    if (responseInfo != null) {
+      $result.responseInfo = responseInfo;
+    }
+    if (accessToken != null) {
+      $result.accessToken = accessToken;
+    }
+    return $result;
+  }
+  RefreshAuthMessage_Response._() : super();
+  factory RefreshAuthMessage_Response.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RefreshAuthMessage_Response.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RefreshAuthMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage_Response clone() => RefreshAuthMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage_Response copyWith(void Function(RefreshAuthMessage_Response) updates) => super.copyWith((message) => updates(message as RefreshAuthMessage_Response)) as RefreshAuthMessage_Response;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage_Response create() => RefreshAuthMessage_Response._();
+  RefreshAuthMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<RefreshAuthMessage_Response> createRepeated() => $pb.PbList<RefreshAuthMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage_Response getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RefreshAuthMessage_Response>(create);
+  static RefreshAuthMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get accessToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set accessToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessToken() => $_clearField(2);
+}
+
+/// Used to refresh access tokens
+class RefreshAuthMessage extends $pb.GeneratedMessage {
+  factory RefreshAuthMessage({
+    RefreshAuthMessage_Request? request,
+    RefreshAuthMessage_Response? response,
+  }) {
+    final $result = create();
+    if (request != null) {
+      $result.request = request;
+    }
+    if (response != null) {
+      $result.response = response;
+    }
+    return $result;
+  }
+  RefreshAuthMessage._() : super();
+  factory RefreshAuthMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RefreshAuthMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RefreshAuthMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RefreshAuthMessage_Request>(1, _omitFieldNames ? '' : 'request', subBuilder: RefreshAuthMessage_Request.create)
+    ..aOM<RefreshAuthMessage_Response>(2, _omitFieldNames ? '' : 'response', subBuilder: RefreshAuthMessage_Response.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage clone() => RefreshAuthMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RefreshAuthMessage copyWith(void Function(RefreshAuthMessage) updates) => super.copyWith((message) => updates(message as RefreshAuthMessage)) as RefreshAuthMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage create() => RefreshAuthMessage._();
+  RefreshAuthMessage createEmptyInstance() => create();
+  static $pb.PbList<RefreshAuthMessage> createRepeated() => $pb.PbList<RefreshAuthMessage>();
+  @$core.pragma('dart2js:noInline')
+  static RefreshAuthMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RefreshAuthMessage>(create);
+  static RefreshAuthMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RefreshAuthMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(RefreshAuthMessage_Request v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RefreshAuthMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  RefreshAuthMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(RefreshAuthMessage_Response v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  RefreshAuthMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class LoginRequestMessage_Request extends $pb.GeneratedMessage {
+  factory LoginRequestMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? email,
+  }) {
+    final $result = create();
+    if (requestInfo != null) {
+      $result.requestInfo = requestInfo;
+    }
+    if (email != null) {
+      $result.email = email;
+    }
+    return $result;
+  }
+  LoginRequestMessage_Request._() : super();
+  factory LoginRequestMessage_Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginRequestMessage_Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginRequestMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'email')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage_Request clone() => LoginRequestMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage_Request copyWith(void Function(LoginRequestMessage_Request) updates) => super.copyWith((message) => updates(message as LoginRequestMessage_Request)) as LoginRequestMessage_Request;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage_Request create() => LoginRequestMessage_Request._();
+  LoginRequestMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<LoginRequestMessage_Request> createRepeated() => $pb.PbList<LoginRequestMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage_Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginRequestMessage_Request>(create);
+  static LoginRequestMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get email => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set email($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEmail() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEmail() => $_clearField(2);
+}
+
+class LoginRequestMessage_Response extends $pb.GeneratedMessage {
+  factory LoginRequestMessage_Response({
+    ResponseInfo? responseInfo,
+  }) {
+    final $result = create();
+    if (responseInfo != null) {
+      $result.responseInfo = responseInfo;
+    }
+    return $result;
+  }
+  LoginRequestMessage_Response._() : super();
+  factory LoginRequestMessage_Response.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginRequestMessage_Response.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginRequestMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage_Response clone() => LoginRequestMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage_Response copyWith(void Function(LoginRequestMessage_Response) updates) => super.copyWith((message) => updates(message as LoginRequestMessage_Response)) as LoginRequestMessage_Response;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage_Response create() => LoginRequestMessage_Response._();
+  LoginRequestMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<LoginRequestMessage_Response> createRepeated() => $pb.PbList<LoginRequestMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage_Response getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginRequestMessage_Response>(create);
+  static LoginRequestMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+}
+
+/// Used to request login password
+class LoginRequestMessage extends $pb.GeneratedMessage {
+  factory LoginRequestMessage({
+    LoginRequestMessage_Request? request,
+    LoginRequestMessage_Response? response,
+  }) {
+    final $result = create();
+    if (request != null) {
+      $result.request = request;
+    }
+    if (response != null) {
+      $result.response = response;
+    }
+    return $result;
+  }
+  LoginRequestMessage._() : super();
+  factory LoginRequestMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginRequestMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginRequestMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<LoginRequestMessage_Request>(1, _omitFieldNames ? '' : 'request', subBuilder: LoginRequestMessage_Request.create)
+    ..aOM<LoginRequestMessage_Response>(2, _omitFieldNames ? '' : 'response', subBuilder: LoginRequestMessage_Response.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage clone() => LoginRequestMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginRequestMessage copyWith(void Function(LoginRequestMessage) updates) => super.copyWith((message) => updates(message as LoginRequestMessage)) as LoginRequestMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage create() => LoginRequestMessage._();
+  LoginRequestMessage createEmptyInstance() => create();
+  static $pb.PbList<LoginRequestMessage> createRepeated() => $pb.PbList<LoginRequestMessage>();
+  @$core.pragma('dart2js:noInline')
+  static LoginRequestMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginRequestMessage>(create);
+  static LoginRequestMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LoginRequestMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(LoginRequestMessage_Request v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  LoginRequestMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  LoginRequestMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(LoginRequestMessage_Response v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  LoginRequestMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class LoginUserMessage_Request extends $pb.GeneratedMessage {
+  factory LoginUserMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? email,
+    $core.String? password,
+  }) {
+    final $result = create();
+    if (requestInfo != null) {
+      $result.requestInfo = requestInfo;
+    }
+    if (email != null) {
+      $result.email = email;
+    }
+    if (password != null) {
+      $result.password = password;
+    }
+    return $result;
+  }
+  LoginUserMessage_Request._() : super();
+  factory LoginUserMessage_Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginUserMessage_Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginUserMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'email')
+    ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage_Request clone() => LoginUserMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage_Request copyWith(void Function(LoginUserMessage_Request) updates) => super.copyWith((message) => updates(message as LoginUserMessage_Request)) as LoginUserMessage_Request;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage_Request create() => LoginUserMessage_Request._();
+  LoginUserMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<LoginUserMessage_Request> createRepeated() => $pb.PbList<LoginUserMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage_Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginUserMessage_Request>(create);
+  static LoginUserMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get email => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set email($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEmail() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEmail() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get password => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set password($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPassword() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPassword() => $_clearField(3);
+}
+
+class LoginUserMessage_Response extends $pb.GeneratedMessage {
+  factory LoginUserMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.String? accessToken,
+    $core.String? refreshToken,
+    $0.UserMessage? user,
+  }) {
+    final $result = create();
+    if (responseInfo != null) {
+      $result.responseInfo = responseInfo;
+    }
+    if (accessToken != null) {
+      $result.accessToken = accessToken;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
+    }
+    if (user != null) {
+      $result.user = user;
+    }
+    return $result;
+  }
+  LoginUserMessage_Response._() : super();
+  factory LoginUserMessage_Response.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginUserMessage_Response.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginUserMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
+    ..aOS(3, _omitFieldNames ? '' : 'refreshToken')
+    ..aOM<$0.UserMessage>(4, _omitFieldNames ? '' : 'user', subBuilder: $0.UserMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage_Response clone() => LoginUserMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage_Response copyWith(void Function(LoginUserMessage_Response) updates) => super.copyWith((message) => updates(message as LoginUserMessage_Response)) as LoginUserMessage_Response;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage_Response create() => LoginUserMessage_Response._();
+  LoginUserMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<LoginUserMessage_Response> createRepeated() => $pb.PbList<LoginUserMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage_Response getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginUserMessage_Response>(create);
+  static LoginUserMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get accessToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set accessToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessToken() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get refreshToken => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set refreshToken($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRefreshToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRefreshToken() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $0.UserMessage get user => $_getN(3);
+  @$pb.TagNumber(4)
+  set user($0.UserMessage v) { $_setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUser() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUser() => $_clearField(4);
+  @$pb.TagNumber(4)
+  $0.UserMessage ensureUser() => $_ensure(3);
+}
+
+class LoginUserMessage extends $pb.GeneratedMessage {
+  factory LoginUserMessage({
+    LoginUserMessage_Request? request,
+    LoginUserMessage_Response? response,
+  }) {
+    final $result = create();
+    if (request != null) {
+      $result.request = request;
+    }
+    if (response != null) {
+      $result.response = response;
+    }
+    return $result;
+  }
+  LoginUserMessage._() : super();
+  factory LoginUserMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoginUserMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginUserMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<LoginUserMessage_Request>(1, _omitFieldNames ? '' : 'request', subBuilder: LoginUserMessage_Request.create)
+    ..aOM<LoginUserMessage_Response>(2, _omitFieldNames ? '' : 'response', subBuilder: LoginUserMessage_Response.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage clone() => LoginUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoginUserMessage copyWith(void Function(LoginUserMessage) updates) => super.copyWith((message) => updates(message as LoginUserMessage)) as LoginUserMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage create() => LoginUserMessage._();
+  LoginUserMessage createEmptyInstance() => create();
+  static $pb.PbList<LoginUserMessage> createRepeated() => $pb.PbList<LoginUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static LoginUserMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginUserMessage>(create);
+  static LoginUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LoginUserMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(LoginUserMessage_Request v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  LoginUserMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  LoginUserMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(LoginUserMessage_Response v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  LoginUserMessage_Response ensureResponse() => $_ensure(1);
 }
 
 class CreateUserMessage_Request extends $pb.GeneratedMessage {
