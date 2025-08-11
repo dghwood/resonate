@@ -86,10 +86,10 @@ final List<RouteBase> sharedRoutes = [
   ),
 ];
 
-GoRouter appRouter(User user) => GoRouter(
-  // redirect: _signInRedirect,
+GoRouter appRouter(AuthUser authUser) => GoRouter(
+  redirect: _signInRedirect,
   // Listen to updates from User to refresh the redirects
-  // refreshListenable: user,
+  refreshListenable: authUser,
   navigatorKey: _rootNavigatorKey,
   initialLocation: Routes.signIn,
   routes: <RouteBase>[
