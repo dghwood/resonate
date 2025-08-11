@@ -59,15 +59,14 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     super.request,
     super.response,
     path, {
+    // Setting this means
     AuthUser? authUser,
-    User? user,
     AbstractHttpService? client,
+    bool requiresLogin = true,
   }) : _client = client ?? HttpService(),
        _path = path,
-       _user = user,
        _authUser = authUser;
 
-  final User? _user;
   final AuthUser? _authUser;
   final AbstractHttpService _client;
   final String _path;

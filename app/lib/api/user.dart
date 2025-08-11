@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
@@ -15,10 +15,10 @@ class UserApi {
   UserApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
-    required User user,
+    required AuthUser authUser,
   }) : _databaseService = databaseService,
-       _getUserApi = GetUserApi(client: httpService, user: user),
-       _createUserApi = CreateUserApi(client: httpService, user: user);
+       _getUserApi = GetUserApi(client: httpService, authUser: authUser),
+       _createUserApi = CreateUserApi(client: httpService, authUser: authUser);
 
   // This should be a UserDatabase
   final AbstractDatabaseService _databaseService;
@@ -71,12 +71,12 @@ class CreateUserApiResponse extends ApiResponse<CreateUserMessage_Response> {
 
 class CreateUserApi
     extends ServerApi<CreateUserApiRequest, CreateUserApiResponse> {
-  CreateUserApi({AbstractHttpService? client, required User user})
+  CreateUserApi({AbstractHttpService? client, required AuthUser authUser})
     : super(
         CreateUserApiRequest(),
         CreateUserApiResponse(),
         'api/user/create',
-        user: user,
+        authUser: authUser,
         client: client,
       );
 }
@@ -99,12 +99,12 @@ class UpdateUserApiResponse extends ApiResponse<UpdateUserMessage_Response> {
 
 class UpdateUserApi
     extends ServerApi<UpdateUserApiRequest, UpdateUserApiResponse> {
-  UpdateUserApi({AbstractHttpService? client, required User user})
+  UpdateUserApi({AbstractHttpService? client, required AuthUser authUser})
     : super(
         UpdateUserApiRequest(),
         UpdateUserApiResponse(),
         'api/user/update',
-        user: user,
+        authUser: authUser,
         client: client,
       );
 }
@@ -126,12 +126,12 @@ class GetUserApiResponse extends ApiResponse<GetUserMessage_Response> {
 }
 
 class GetUserApi extends ServerApi<GetUserApiRequest, GetUserApiResponse> {
-  GetUserApi({AbstractHttpService? client, required User user})
+  GetUserApi({AbstractHttpService? client, required AuthUser authUser})
     : super(
         GetUserApiRequest(),
         GetUserApiResponse(),
         'api/user/get',
-        user: user,
+        authUser: authUser,
         client: client,
       );
 }

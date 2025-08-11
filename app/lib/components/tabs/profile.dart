@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/components/common/addPhoto.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
@@ -42,8 +43,7 @@ class ProfileComponent extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.logout),
-                onPressed:
-                    () => Provider.of<User>(context, listen: false).signout(),
+                onPressed: () => context.read<AuthUser>().signout(),
               ),
             ],
           ),

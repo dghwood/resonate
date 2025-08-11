@@ -119,6 +119,10 @@ class LoginApi {
 
 enum AuthUserStatus { signedIn, signedOut, loading }
 
+/* AuthUser 
+
+  This is the primary entity for the user of the app. 
+*/
 class AuthUser extends ChangeNotifier {
   AuthUser({
     required AbstractHttpService httpService,
@@ -140,8 +144,7 @@ class AuthUser extends ChangeNotifier {
       // These error out if they doesn't exist
       var userId = await _secureDatabase.readKey('user');
       await _secureDatabase.read(userId, _userStorage);
-      await _databaseService.init(this);
-      _status = AuthUserStatus.signedIn;
+      await _setupPostLogin();
     } on Exception catch (_) {
       _status = AuthUserStatus.signedOut;
       return;
@@ -172,6 +175,24 @@ class AuthUser extends ChangeNotifier {
 
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
 
+  Future<void> _setupPostLogin() async {
+    await _databaseService.init(this);
+    _status = AuthUserStatus.signedIn;
+  }
+
+  Future<ApiResult<bool>> signout() async {
+    _log.info('signout');
+    try {
+      var userId = _userStorage.user.id;
+      await _secureDatabase.delete(userId);
+      _userStorage.reset();
+      _status = AuthUserStatus.signedOut;
+      return ApiResult.ok(true);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
   Future<ApiResult<bool>> login(String email, String password) async {
     _log.info('login');
     _status = AuthUserStatus.loading;
@@ -180,8 +201,7 @@ class AuthUser extends ChangeNotifier {
       case ApiOk():
         _log.info('loggedIn');
         _userStorage.fromMessage(result.value.toMessage());
-        _databaseService.init(this);
-        _status = AuthUserStatus.signedIn;
+        await _setupPostLogin();
         return ApiResult.ok(true);
       case ApiError():
         _log.info('loggedInError');

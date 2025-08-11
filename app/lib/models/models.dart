@@ -4,12 +4,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:protobuf_google/protobuf_google.dart' hide Duration;
 import 'package:protobuf/protobuf.dart';
-import 'package:resonate/api/user.dart';
-import 'package:resonate/errors/errors.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:resonate/proto/common.pbjson.dart';
@@ -28,6 +25,10 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
 
   void fromMessage(T message) {
     _message.mergeFromMessage(message);
+  }
+
+  void reset() {
+    _message.clear();
   }
 
   void fromBuffer(Uint8List buffer) {
@@ -82,7 +83,7 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
     return storeMap;
   }
 
-  fromStore(DatabaseStoreType storeMap) {
+  void fromStore(DatabaseStoreType storeMap) {
     DescriptorProto descriptorPb = DescriptorProto.fromBuffer(descriptor);
     for (var field in descriptorPb.field) {
       if (storeMap.containsKey('field_${field.number}')) {
@@ -256,9 +257,7 @@ class User extends BaseModel<UserMessage> {
            numFollowers:
                numFollowers != null ? $fixnum.Int64(numFollowers) : null,
          ),
-       ) {
-    _listenToAuthChanges();
-  }
+       );
 
   User.fromMessage(super.message);
 
@@ -279,79 +278,6 @@ class User extends BaseModel<UserMessage> {
   List<UserFollow> get following =>
       _message.following.map((f) => UserFollow.fromMessage(f)).toList();
   int? get numFollowers => _message.numFollowers.toInt();
-
-  /* Firebase User Utils */
-  auth.User? get _getFirebaseUser => auth.FirebaseAuth.instance.currentUser;
-
-  void _listenToAuthChanges() async {
-    // _loadUser();
-    // Notify listeners when the auth state changes?
-    await for (var _ in auth.FirebaseAuth.instance.authStateChanges()) {
-      // _log.info('auth state changed: $state');
-      _log.info('auth state changed');
-      await _loadUser();
-      _log.info('auth state changed: $_signedInStatus');
-      //notifyListeners();
-    }
-  }
-
-  void signout() {
-    auth.FirebaseAuth.instance.signOut();
-    // This triggers the _listToAuthChanges above
-  }
-
-  _loadUser() async {
-    var user = _getFirebaseUser;
-    if (user == null) {
-      _signedInStatus = UserLoginStatus.signedOut;
-      notifyListeners();
-      return;
-    }
-    _signedInStatus = UserLoginStatus.loading;
-    _message.id = 'firebase::${user.uid}';
-    notifyListeners();
-  }
-
-  // You envoke this externaly
-  loadFromServer(User user) {
-    fromMessage(user.toMessage());
-    _signedInStatus = UserLoginStatus.signedIn;
-    notifyListeners();
-  }
-
-  UserLoginStatus _signedInStatus = UserLoginStatus.signedOut;
-  UserLoginStatus get signedInStatus {
-    return _signedInStatus;
-  }
-
-  bool get isSignedIn {
-    var user = _getFirebaseUser;
-    // Need to keep the id generation seperate
-    return user != null && id == 'firebase::${user.uid}';
-  }
-
-  Future<String> generateAuthToken() async {
-    if (!isSignedIn) throw UserNotSignedInError();
-    var user = _getFirebaseUser!;
-    var token = await user.getIdToken(true);
-    if (token != null) return token;
-    // This probably makes sense.
-    throw UserNotSignedInError();
-  }
-}
-
-class TestUser extends User {
-  TestUser({required String id}) : super(id: id);
-
-  @override
-  void _listenToAuthChanges() {}
-
-  bool _isSignedIn = true;
-  void signOut() => _isSignedIn = false;
-  @override
-  bool get isSignedIn => _isSignedIn;
-  @override
-  Future<String> generateAuthToken() async => '';
 }
 
 class UserSubscription extends BaseModel<UserSubscriptionMessage> {

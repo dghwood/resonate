@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
@@ -30,13 +31,13 @@ class GetEpisodeApiResponse extends ApiResponse<GetEpisodeMessage_Response> {
 
 class GetEpisodeApiServer
     extends ServerApi<GetEpisodeApiRequest, GetEpisodeApiResponse> {
-  GetEpisodeApiServer({AbstractHttpService? client, required User user})
+  GetEpisodeApiServer({AbstractHttpService? client, required AuthUser authUser})
     : super(
         GetEpisodeApiRequest(),
         GetEpisodeApiResponse(),
         'api/episode/get',
         client: client,
-        user: user,
+        authUser: authUser,
       );
 }
 
@@ -44,8 +45,8 @@ class GetEpisodeApi {
   GetEpisodeApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
-    required User user,
-  }) : _server = GetEpisodeApiServer(client: httpService, user: user),
+    required AuthUser authUser,
+  }) : _server = GetEpisodeApiServer(client: httpService, authUser: authUser),
        _database = EpisodeDatabase(databaseService);
 
   final GetEpisodeApiServer _server;

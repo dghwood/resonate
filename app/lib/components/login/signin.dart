@@ -223,10 +223,11 @@ class _SignInValidateComponentState extends State<SignInValidateComponent> {
             widget.authUser.login(widget.loginInfo.email, value).then((result) {
               switch (result) {
                 case ApiOk():
-                  widget.pageController.nextPage(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
+                  _log.info('logged in, hopefully this redirects');
+                  // widget.pageController.nextPage(
+                  //   duration: Duration(milliseconds: 500),
+                  //   curve: Curves.easeInOut,
+                  // );
                   break;
                 case ApiError():
                   _log.info(result.error);

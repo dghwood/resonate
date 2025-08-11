@@ -1,3 +1,4 @@
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
@@ -20,12 +21,12 @@ class SearchApiResponse extends ApiResponse<SearchMessage_Response> {
 }
 
 class SearchApi extends ServerApi<SearchApiRequest, SearchApiResponse> {
-  SearchApi({AbstractHttpService? client, required User user})
+  SearchApi({AbstractHttpService? client, required AuthUser authUser})
     : super(
         SearchApiRequest(SearchMessage_Request()),
         SearchApiResponse(SearchMessage_Response()),
         'api/search',
-        user: user,
+        authUser: authUser,
         client: client,
       );
 }
