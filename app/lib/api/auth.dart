@@ -168,6 +168,7 @@ class AuthUser extends ChangeNotifier {
   }
 
   AuthUserStatus get _status => __status;
+  AuthUserStatus get status => __status;
 
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
 

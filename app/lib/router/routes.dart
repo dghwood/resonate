@@ -34,7 +34,7 @@ final providers = [EmailAuthProvider()];
 */
 
 String? _signInRedirect(BuildContext context, GoRouterState state) {
-  var authUser = context.read();
+  AuthUser authUser = context.read();
   switch (authUser.status) {
     case AuthUserStatus.loading:
       return Routes.loading;

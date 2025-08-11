@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/result.dart';
-import 'package:resonate/router/navigation.dart';
-import 'package:resonate/services/database.dart';
 
 /* Flow 
 

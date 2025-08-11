@@ -92,16 +92,21 @@ class MyApp extends StatelessWidget {
               ),
         ),
       ],
-      child: MaterialApp.router(
-        theme: ThemeData(
-          useMaterial3: true,
-          // brightness: Brightness.dark,
-          colorScheme: ColorScheme.fromSeed(
-            brightness: Brightness.light,
-            seedColor: Colors.blue,
-          ),
-        ),
-        routerConfig: appRouter(),
+      child: Builder(
+        builder: (context) {
+          AuthUser authUser = context.read<AuthUser>();
+          return MaterialApp.router(
+            theme: ThemeData(
+              useMaterial3: true,
+              // brightness: Brightness.dark,
+              colorScheme: ColorScheme.fromSeed(
+                brightness: Brightness.light,
+                seedColor: Colors.blue,
+              ),
+            ),
+            routerConfig: appRouter(authUser),
+          );
+        },
       ),
     );
   }
