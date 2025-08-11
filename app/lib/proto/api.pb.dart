@@ -84,7 +84,7 @@ class ResponseInfo extends $pb.GeneratedMessage {
 class RequestInfo extends $pb.GeneratedMessage {
   factory RequestInfo({
     $core.String? userId,
-    $core.String? accessToken,
+    $0.TokenMessage? accessToken,
   }) {
     final $result = create();
     if (userId != null) {
@@ -101,7 +101,7 @@ class RequestInfo extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequestInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'userId')
-    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
+    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken', subBuilder: $0.TokenMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -136,19 +136,21 @@ class RequestInfo extends $pb.GeneratedMessage {
   void clearUserId() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get accessToken => $_getSZ(1);
+  $0.TokenMessage get accessToken => $_getN(1);
   @$pb.TagNumber(2)
-  set accessToken($core.String v) { $_setString(1, v); }
+  set accessToken($0.TokenMessage v) { $_setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasAccessToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearAccessToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.TokenMessage ensureAccessToken() => $_ensure(1);
 }
 
 class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
   factory RefreshAuthMessage_Request({
     RequestInfo? requestInfo,
-    $core.String? refreshToken,
+    $0.TokenMessage? refreshToken,
   }) {
     final $result = create();
     if (requestInfo != null) {
@@ -165,7 +167,7 @@ class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RefreshAuthMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
-    ..aOS(2, _omitFieldNames ? '' : 'refreshToken')
+    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'refreshToken', subBuilder: $0.TokenMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -202,19 +204,21 @@ class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
   RequestInfo ensureRequestInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get refreshToken => $_getSZ(1);
+  $0.TokenMessage get refreshToken => $_getN(1);
   @$pb.TagNumber(2)
-  set refreshToken($core.String v) { $_setString(1, v); }
+  set refreshToken($0.TokenMessage v) { $_setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasRefreshToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearRefreshToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.TokenMessage ensureRefreshToken() => $_ensure(1);
 }
 
 class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
   factory RefreshAuthMessage_Response({
     ResponseInfo? responseInfo,
-    $core.String? accessToken,
+    $0.TokenMessage? accessToken,
   }) {
     final $result = create();
     if (responseInfo != null) {
@@ -231,7 +235,7 @@ class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RefreshAuthMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
-    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
+    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken', subBuilder: $0.TokenMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -268,13 +272,15 @@ class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
   ResponseInfo ensureResponseInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get accessToken => $_getSZ(1);
+  $0.TokenMessage get accessToken => $_getN(1);
   @$pb.TagNumber(2)
-  set accessToken($core.String v) { $_setString(1, v); }
+  set accessToken($0.TokenMessage v) { $_setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasAccessToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearAccessToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.TokenMessage ensureAccessToken() => $_ensure(1);
 }
 
 /// Used to refresh access tokens
@@ -616,8 +622,8 @@ class LoginUserMessage_Request extends $pb.GeneratedMessage {
 class LoginUserMessage_Response extends $pb.GeneratedMessage {
   factory LoginUserMessage_Response({
     ResponseInfo? responseInfo,
-    $core.String? accessToken,
-    $core.String? refreshToken,
+    $0.TokenMessage? accessToken,
+    $0.TokenMessage? refreshToken,
     $0.UserMessage? user,
   }) {
     final $result = create();
@@ -641,8 +647,8 @@ class LoginUserMessage_Response extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginUserMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
-    ..aOS(2, _omitFieldNames ? '' : 'accessToken')
-    ..aOS(3, _omitFieldNames ? '' : 'refreshToken')
+    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken', subBuilder: $0.TokenMessage.create)
+    ..aOM<$0.TokenMessage>(3, _omitFieldNames ? '' : 'refreshToken', subBuilder: $0.TokenMessage.create)
     ..aOM<$0.UserMessage>(4, _omitFieldNames ? '' : 'user', subBuilder: $0.UserMessage.create)
     ..hasRequiredFields = false
   ;
@@ -680,22 +686,26 @@ class LoginUserMessage_Response extends $pb.GeneratedMessage {
   ResponseInfo ensureResponseInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get accessToken => $_getSZ(1);
+  $0.TokenMessage get accessToken => $_getN(1);
   @$pb.TagNumber(2)
-  set accessToken($core.String v) { $_setString(1, v); }
+  set accessToken($0.TokenMessage v) { $_setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasAccessToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearAccessToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.TokenMessage ensureAccessToken() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.String get refreshToken => $_getSZ(2);
+  $0.TokenMessage get refreshToken => $_getN(2);
   @$pb.TagNumber(3)
-  set refreshToken($core.String v) { $_setString(2, v); }
+  set refreshToken($0.TokenMessage v) { $_setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasRefreshToken() => $_has(2);
   @$pb.TagNumber(3)
   void clearRefreshToken() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $0.TokenMessage ensureRefreshToken() => $_ensure(2);
 
   @$pb.TagNumber(4)
   $0.UserMessage get user => $_getN(3);

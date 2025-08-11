@@ -42,6 +42,18 @@ message EpisodeMessage {
     bool explicit = 11;
 }
 
+message TokenMessage {
+    string token = 1; 
+    // timestamp in seconds, UTC time
+    int64 expiry_utc_timestamp = 2; 
+}
+
+message UserStorageMessage {
+    UserMessage user = 1; 
+    TokenMessage access_token = 2; 
+    TokenMessage refresh_token = 3; 
+}
+
 message UserMessage {
     string id = 1;
     string name = 2;

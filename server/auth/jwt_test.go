@@ -13,6 +13,7 @@ func TestGetAccessToken(t *testing.T) {
 		Name: "Test User",
 	}
 	accessToken, err := GetAccessToken(user, 1*time.Hour)
+	// t.Error(accessToken)
 	if err != nil {
 		t.Fatalf("Failed to get access token: %v", err)
 	}

@@ -55,7 +55,11 @@ func (f Login) Execute(request *pb.LoginUserMessage_Request, response *pb.LoginU
 		Success: true,
 	}
 	response.AccessToken = accessToken
-	response.RefreshToken = generateUniqueID() // This needs to be stored in the database
+	// This needs to be stored in the database
+	response.RefreshToken = &pb.TokenMessage{
+		Token: generateUniqueID(),
+		// Should this have an expiry?
+	}
 	response.User = user
 	return
 }

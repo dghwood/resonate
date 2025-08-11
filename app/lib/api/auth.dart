@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/secure_database.dart';
+
+Logger _log = Logger('api/auth');
 
 class LoginRequestApiRequest extends ApiRequest<LoginRequestMessage_Request> {
   LoginRequestApiRequest()
@@ -64,14 +68,14 @@ class LoginUserApiServer
 class LoginApi {
   LoginApi({
     required AbstractHttpService httpService,
-    required AbstractSecureDatabase secureDatabase,
+    required SecureProtoDatabase secureDatabase,
   }) : _requestServer = LoginRequestApiServer(client: httpService),
        _userServer = LoginUserApiServer(client: httpService),
        _secureDatabase = secureDatabase;
 
   final LoginRequestApiServer _requestServer;
   final LoginUserApiServer _userServer;
-  final AbstractSecureDatabase _secureDatabase;
+  final SecureProtoDatabase _secureDatabase;
 
   Future<ApiResult<bool>> request(String email) async {
     var request = LoginRequestApiRequest();
@@ -86,7 +90,7 @@ class LoginApi {
     return ApiResult.ok(true);
   }
 
-  Future<ApiResult<User>> login(String email, String password) async {
+  Future<ApiResult<UserStorage>> login(String email, String password) async {
     var request = LoginUserApiRequest();
     request.requestPb.email = email;
     request.requestPb.password = password;
@@ -94,13 +98,19 @@ class LoginApi {
     var response = LoginUserApiResponse();
     try {
       await _userServer.execute(request, response);
-      var accessToken = response.responsePb.accessToken;
-      var refreshToken = response.responsePb.refreshToken;
+      var user = User.fromMessage(response.responsePb.user);
+      var userStorage = UserStorage(
+        user: User.fromMessage(response.responsePb.user),
+        accessToken: Token.fromMessage(response.responsePb.accessToken),
+        refreshToken: Token.fromMessage(response.responsePb.refreshToken),
+      );
+      await _secureDatabase.writeKey("user", user.id);
       // Do i need this to be able to support multiple users.
-      await _secureDatabase.write("accessToken", accessToken);
-      await _secureDatabase.write("refreshKey", refreshToken);
+      // This should have ~16mb of space, so should be good enough.
+      await _secureDatabase.write(userStorage.id, userStorage);
+
       // Store them in the secureStorage
-      return ApiResult.ok(User.fromMessage(response.responsePb.user));
+      return ApiResult.ok(userStorage);
     } on Exception catch (e) {
       return ApiResult.error(e);
     }
@@ -109,46 +119,73 @@ class LoginApi {
 
 enum AuthUserStatus { signedIn, signedOut, loading }
 
-class AuthUser {
+class AuthUser extends ChangeNotifier {
   AuthUser({
-    required LoginApi loginApi,
-    required AbstractSecureDatabase secureDatabase,
-  }) : _loginApi = loginApi,
+    required AbstractHttpService httpService,
+    required SecureProtoDatabase secureDatabase,
+    required AbstractDatabaseService databaseService,
+  }) : _loginApi = LoginApi(
+         httpService: httpService,
+         secureDatabase: secureDatabase,
+       ),
+       _databaseService = databaseService,
        _secureDatabase = secureDatabase {
     loadFromStorage();
   }
 
   // load from secure storage
-  void loadFromStorage() async {
+  Future<void> loadFromStorage() async {
     try {
-      var accessToken = await _secureDatabase.read("accessToken");
-      var refreshToken = await _secureDatabase.read("refreshKey");
-      if (accessToken == null || refreshToken == null) return;
-      _status = AuthUserStatus.signedIn; // signin
-      // Where do I load the user from?
+      _status = AuthUserStatus.loading;
+      // These error out if they doesn't exist
+      var userId = await _secureDatabase.readKey('user');
+      await _secureDatabase.read(userId, _userStorage);
+      await _databaseService.init(this);
+      _status = AuthUserStatus.signedIn;
     } on Exception catch (_) {
+      _status = AuthUserStatus.signedOut;
       return;
     }
   }
 
   final LoginApi _loginApi;
-  final AbstractSecureDatabase _secureDatabase;
-  User? _user;
+  final SecureProtoDatabase _secureDatabase;
+  final AbstractDatabaseService _databaseService;
 
-  AuthUserStatus _status = AuthUserStatus.signedOut;
+  final UserStorage _userStorage = UserStorage();
+  User? get user =>
+      _status == AuthUserStatus.signedIn ? _userStorage.user : null;
+  Token? get accessToken =>
+      _status == AuthUserStatus.signedIn ? _userStorage.accessToken : null;
+  Token? get refreshToken =>
+      _status == AuthUserStatus.signedIn ? _userStorage.refreshToken : null;
+
+  AuthUserStatus __status = AuthUserStatus.signedOut;
+  set _status(AuthUserStatus newStatus) {
+    if (_status == newStatus) return; // No change
+    __status = newStatus;
+    notifyListeners();
+  }
+
+  AuthUserStatus get _status => __status;
+
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
 
-  Future<ApiResult<User>> login(String email, String password) async {
+  Future<ApiResult<bool>> login(String email, String password) async {
+    _log.info('login');
     _status = AuthUserStatus.loading;
     var result = await _loginApi.login(email, password);
     switch (result) {
       case ApiOk():
-        _user = result.value;
+        _log.info('loggedIn');
+        _userStorage.fromMessage(result.value.toMessage());
+        _databaseService.init(this);
         _status = AuthUserStatus.signedIn;
-        return result;
+        return ApiResult.ok(true);
       case ApiError():
+        _log.info('loggedInError');
         _status = AuthUserStatus.signedOut;
-        return result;
+        return ApiResult.error(result.error);
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/user.dart';
 import 'package:resonate/mock_http.dart';
@@ -12,6 +13,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/router/routes.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/services/secure_database.dart';
 import 'firebase_options.dart';
 
 // import 'ui/scaffold.dart';
@@ -49,12 +51,30 @@ class MyApp extends StatelessWidget {
     var user = User();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<User>(create: (context) => user),
+        Provider<AbstractHttpService>(create: (context) => mockHttpService),
+        Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
+        Provider<SecureProtoDatabase>(
+          create:
+              (context) => SecureProtoDatabase(secureDatabase: context.read()),
+        ),
         Provider<AbstractDatabaseService>(
           create:
-              (context) => DatabaseService(idbFactoryMemory, context.read()),
+              (context) => DatabaseService(
+                idbFactoryMemory,
+                // authUser: context.read(),
+                // user: context.read(),
+              ),
         ),
-        Provider<AbstractHttpService>(create: (context) => mockHttpService),
+        ChangeNotifierProvider<AuthUser>(
+          create:
+              (context) => AuthUser(
+                secureDatabase: context.read(),
+                httpService: context.read(),
+                databaseService: context.read(),
+              ),
+        ),
+        ChangeNotifierProvider<User>(create: (context) => user),
+
         Provider<UserApi>(
           create:
               (context) => UserApi(
@@ -81,7 +101,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.blue,
           ),
         ),
-        routerConfig: appRouter(user),
+        routerConfig: appRouter(),
       ),
     );
   }

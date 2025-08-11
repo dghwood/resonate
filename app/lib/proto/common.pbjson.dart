@@ -60,6 +60,37 @@ final $typed_data.Uint8List episodeMessageDescriptor = $convert.base64Decode(
     'EikKEGR1cmF0aW9uX3NlY29uZHMYCSABKANSD2R1cmF0aW9uU2Vjb25kcxIlCg5lcGlzb2RlX2'
     '51bWJlchgKIAEoA1INZXBpc29kZU51bWJlchIaCghleHBsaWNpdBgLIAEoCFIIZXhwbGljaXQ=');
 
+@$core.Deprecated('Use tokenMessageDescriptor instead')
+const TokenMessage$json = {
+  '1': 'TokenMessage',
+  '2': [
+    {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
+    {'1': 'expiry_utc_timestamp', '3': 2, '4': 1, '5': 3, '10': 'expiryUtcTimestamp'},
+  ],
+};
+
+/// Descriptor for `TokenMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tokenMessageDescriptor = $convert.base64Decode(
+    'CgxUb2tlbk1lc3NhZ2USFAoFdG9rZW4YASABKAlSBXRva2VuEjAKFGV4cGlyeV91dGNfdGltZX'
+    'N0YW1wGAIgASgDUhJleHBpcnlVdGNUaW1lc3RhbXA=');
+
+@$core.Deprecated('Use userStorageMessageDescriptor instead')
+const UserStorageMessage$json = {
+  '1': 'UserStorageMessage',
+  '2': [
+    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {'1': 'access_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'accessToken'},
+    {'1': 'refresh_token', '3': 3, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'refreshToken'},
+  ],
+};
+
+/// Descriptor for `UserStorageMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userStorageMessageDescriptor = $convert.base64Decode(
+    'ChJVc2VyU3RvcmFnZU1lc3NhZ2USKQoEdXNlchgBIAEoCzIVLnJlc29uYXRlLlVzZXJNZXNzYW'
+    'dlUgR1c2VyEjkKDGFjY2Vzc190b2tlbhgCIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVIL'
+    'YWNjZXNzVG9rZW4SOwoNcmVmcmVzaF90b2tlbhgDIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2'
+    'FnZVIMcmVmcmVzaFRva2Vu');
+
 @$core.Deprecated('Use userMessageDescriptor instead')
 const UserMessage$json = {
   '1': 'UserMessage',

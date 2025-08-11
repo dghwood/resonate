@@ -321,6 +321,155 @@ class EpisodeMessage extends $pb.GeneratedMessage {
   void clearExplicit() => $_clearField(11);
 }
 
+class TokenMessage extends $pb.GeneratedMessage {
+  factory TokenMessage({
+    $core.String? token,
+    $fixnum.Int64? expiryUtcTimestamp,
+  }) {
+    final $result = create();
+    if (token != null) {
+      $result.token = token;
+    }
+    if (expiryUtcTimestamp != null) {
+      $result.expiryUtcTimestamp = expiryUtcTimestamp;
+    }
+    return $result;
+  }
+  TokenMessage._() : super();
+  factory TokenMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TokenMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TokenMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'token')
+    ..aInt64(2, _omitFieldNames ? '' : 'expiryUtcTimestamp')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TokenMessage clone() => TokenMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TokenMessage copyWith(void Function(TokenMessage) updates) => super.copyWith((message) => updates(message as TokenMessage)) as TokenMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static TokenMessage create() => TokenMessage._();
+  TokenMessage createEmptyInstance() => create();
+  static $pb.PbList<TokenMessage> createRepeated() => $pb.PbList<TokenMessage>();
+  @$core.pragma('dart2js:noInline')
+  static TokenMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TokenMessage>(create);
+  static TokenMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get token => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set token($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToken() => $_clearField(1);
+
+  /// timestamp in seconds, UTC time
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get expiryUtcTimestamp => $_getI64(1);
+  @$pb.TagNumber(2)
+  set expiryUtcTimestamp($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasExpiryUtcTimestamp() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExpiryUtcTimestamp() => $_clearField(2);
+}
+
+class UserStorageMessage extends $pb.GeneratedMessage {
+  factory UserStorageMessage({
+    UserMessage? user,
+    TokenMessage? accessToken,
+    TokenMessage? refreshToken,
+  }) {
+    final $result = create();
+    if (user != null) {
+      $result.user = user;
+    }
+    if (accessToken != null) {
+      $result.accessToken = accessToken;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
+    }
+    return $result;
+  }
+  UserStorageMessage._() : super();
+  factory UserStorageMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserStorageMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserStorageMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOM<UserMessage>(1, _omitFieldNames ? '' : 'user', subBuilder: UserMessage.create)
+    ..aOM<TokenMessage>(2, _omitFieldNames ? '' : 'accessToken', subBuilder: TokenMessage.create)
+    ..aOM<TokenMessage>(3, _omitFieldNames ? '' : 'refreshToken', subBuilder: TokenMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserStorageMessage clone() => UserStorageMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserStorageMessage copyWith(void Function(UserStorageMessage) updates) => super.copyWith((message) => updates(message as UserStorageMessage)) as UserStorageMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserStorageMessage create() => UserStorageMessage._();
+  UserStorageMessage createEmptyInstance() => create();
+  static $pb.PbList<UserStorageMessage> createRepeated() => $pb.PbList<UserStorageMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UserStorageMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserStorageMessage>(create);
+  static UserStorageMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  UserMessage get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user(UserMessage v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => $_clearField(1);
+  @$pb.TagNumber(1)
+  UserMessage ensureUser() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  TokenMessage get accessToken => $_getN(1);
+  @$pb.TagNumber(2)
+  set accessToken(TokenMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  TokenMessage ensureAccessToken() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  TokenMessage get refreshToken => $_getN(2);
+  @$pb.TagNumber(3)
+  set refreshToken(TokenMessage v) { $_setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRefreshToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRefreshToken() => $_clearField(3);
+  @$pb.TagNumber(3)
+  TokenMessage ensureRefreshToken() => $_ensure(2);
+}
+
 class UserMessage extends $pb.GeneratedMessage {
   factory UserMessage({
     $core.String? id,

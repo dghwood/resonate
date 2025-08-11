@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
 // import 'package:sqflite/sqflite.dart';
@@ -16,7 +17,7 @@ typedef UpgradeFunction =
 typedef DatabaseStoreType = Map<String, Object?>;
 
 abstract class AbstractDatabaseService {
-  Future<void> init();
+  Future<void> init(AuthUser user);
   Future<void> setValue(String storeName, String key, DatabaseStoreType value);
   Future<void> setValues(
     String storeName,
@@ -36,12 +37,11 @@ abstract class AbstractDatabaseService {
 
 /* Implementation */
 class DatabaseService implements AbstractDatabaseService {
-  DatabaseService(idb.IdbFactory factory, User user)
-    : _factory = factory,
-      _user = user;
+  DatabaseService(idb.IdbFactory factory) : _factory = factory;
   // eg. idb.getIdbFactorySqflite(databaseFactory);
   final idb.IdbFactory _factory;
-  final User _user;
+
+  AuthUser? _authUser;
   late idb.Database _db;
 
   idb.Database get testAccessDb => _db;
@@ -57,12 +57,14 @@ class DatabaseService implements AbstractDatabaseService {
   }
 
   @override
-  Future<void> init() async {
+  Future<void> init(AuthUser authUser) async {
     if (isInitialized) {
       return;
     }
+    _authUser = authUser;
+    var userId = _authUser?.user?.id ?? '';
     _db = await _factory.open(
-      '${_user.id}.$databaseName',
+      '$userId.$databaseName',
       version: databaseVersion,
       onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
         for (var upgradeFunction in _upgradeFunctions.values) {
@@ -75,7 +77,9 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<Iterable<DatabaseStoreType>> getAllValues(String storeName) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn) {
+      throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var cursor = store.openCursor(autoAdvance: true);
@@ -97,7 +101,8 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object value,
   ) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn)
+      throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var index = store.index(indexName);
@@ -121,8 +126,9 @@ class DatabaseService implements AbstractDatabaseService {
     String key,
     DatabaseStoreType value,
   ) async {
-    _log.info('setValue::$storeName::$key for $_user (${_user.isSignedIn})');
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    _log.info('setValue::$storeName::$key');
+    if (_authUser == null || !_authUser!.isSignedIn)
+      throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.put(value);
@@ -134,7 +140,8 @@ class DatabaseService implements AbstractDatabaseService {
     String storeName,
     Map<String, DatabaseStoreType> values,
   ) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn)
+      throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     for (var entry in values.entries) {
@@ -145,7 +152,8 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<DatabaseStoreType> getValue(String storeName, String key) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn)
+      throw UserNotSignedInError();
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var value = await store.getObject(key);
@@ -158,7 +166,9 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> deleteValue(String storeName, String key) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn) {
+      throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.delete(key);
@@ -167,23 +177,13 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> clear(String storeName) async {
-    if (!_user.isSignedIn) throw UserNotSignedInError();
+    if (_authUser == null || !_authUser!.isSignedIn) {
+      throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.clear();
     await txn.completed;
-  }
-}
-
-/* Errors */
-class DatabaseNotFoundException implements Exception {
-  final String message;
-
-  DatabaseNotFoundException(this.message);
-
-  @override
-  String toString() {
-    return 'DatabaseNotFoundException: $message';
   }
 }
 

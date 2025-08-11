@@ -1,6 +1,7 @@
 /* Wrappers around Proto message 
 
 */
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -25,12 +26,21 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
 
   T toMessage() => _message;
 
-  fromMessage(T message) {
+  void fromMessage(T message) {
     _message.mergeFromMessage(message);
   }
 
-  fromBuffer(Uint8List buffer) {
+  void fromBuffer(Uint8List buffer) {
     _message.mergeFromBuffer(buffer);
+  }
+
+  String toStringStore() {
+    // Should this be hex?
+    return latin1.decode(_message.writeToBuffer());
+  }
+
+  void fromStringStore(String storeMessage) {
+    _message.mergeFromBuffer(latin1.encode(storeMessage));
   }
 
   Uint8List get descriptor =>
@@ -176,6 +186,50 @@ class Episode extends BaseModel<EpisodeMessage> {
   int? get durationSeconds => _message.durationSeconds?.toInt();
   int? get episodeNumber => _message.episodeNumber?.toInt();
   bool? get explicit => _message.explicit;
+}
+
+class Token extends BaseModel<TokenMessage> {
+  Token({String? token, int? expiry})
+    : super(
+        TokenMessage(
+          token: token,
+          expiryUtcTimestamp: expiry != null ? $fixnum.Int64(expiry) : null,
+        ),
+      );
+
+  Token.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => tokenMessageDescriptor;
+
+  String? get token => _message.token;
+  int? get expiryUtcTimestamp => _message.expiryUtcTimestamp.toInt();
+}
+
+class UserStorage extends BaseModel<UserStorageMessage> {
+  UserStorage({
+    User? user,
+    Token? accessToken,
+    Token? refreshToken,
+    int? tokenExpiry,
+  }) : super(
+         UserStorageMessage(
+           user: user?.toMessage(),
+           accessToken: accessToken?.toMessage(),
+           refreshToken: refreshToken?.toMessage(),
+         ),
+       );
+
+  UserStorage.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userStorageMessageDescriptor;
+
+  @override
+  String get id => _message.user.id;
+  User get user => User.fromMessage(_message.user);
+  Token? get accessToken => Token.fromMessage(_message.accessToken);
+  Token? get refreshToken => Token.fromMessage(_message.refreshToken);
 }
 
 enum UserLoginStatus { signedOut, loading, signedIn }

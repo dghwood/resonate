@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/http.dart';
@@ -58,13 +59,16 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     super.request,
     super.response,
     path, {
+    AuthUser? authUser,
     User? user,
     AbstractHttpService? client,
   }) : _client = client ?? HttpService(),
        _path = path,
-       _user = user;
+       _user = user,
+       _authUser = authUser;
 
   final User? _user;
+  final AuthUser? _authUser;
   final AbstractHttpService _client;
   final String _path;
   final String _baseUrl = 'http://localhost:8080';
@@ -74,9 +78,9 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     var requestInfo = RequestInfo();
     final url = Uri.parse('$_baseUrl/$_path');
     var authToken = "";
-    if (_user != null) {
-      authToken = await _user.generateAuthToken();
-      requestInfo.userId = _user.id;
+    if (_authUser != null) {
+      authToken = _authUser.accessToken?.token ?? '';
+      requestInfo.userId = _authUser.user?.id ?? '';
     }
     request.requestInfo = requestInfo;
     var resp = await _client.post(

@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
+
+Logger _log = Logger('http');
 
 abstract class AbstractHttpService {
   Future<Uint8List> post(Uri url, {Map<String, String>? headers, Object? body});
@@ -39,6 +42,7 @@ class MockHttpService implements AbstractHttpService {
     Map<String, String>? headers,
     Object? body,
   }) async {
+    _log.info(url);
     await Future.delayed(Duration(seconds: 2));
     if (response.containsKey(url.path)) {
       return response[url.path]!;

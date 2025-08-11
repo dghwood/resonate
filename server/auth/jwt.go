@@ -16,26 +16,31 @@ type tokenClaims struct {
 	jwt.RegisteredClaims
 }
 
-func NewTokenClaim(user *pb.UserMessage, expireIn time.Duration) *tokenClaims {
+func NewTokenClaim(user *pb.UserMessage, expiresAt time.Time) *tokenClaims {
 	return &tokenClaims{
 		UserId: user.Id,
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt: jwt.NewNumericDate(time.Now()),
 			// Issued for 24 hours
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expireIn)),
+			ExpiresAt: jwt.NewNumericDate(expiresAt),
 			Issuer:    "resonate",
 		},
 	}
 }
 
-func GetAccessToken(user *pb.UserMessage, expireIn time.Duration) (accessToken string, err error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, NewTokenClaim(user, expireIn))
-	accessToken, err = token.SignedString([]byte(secret))
+func GetAccessToken(user *pb.UserMessage, expireIn time.Duration) (tokenPb *pb.TokenMessage, err error) {
+	expiresAt := time.Now().Add(expireIn)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, NewTokenClaim(user, expiresAt))
+	accessToken, err := token.SignedString([]byte(secret))
+	tokenPb = &pb.TokenMessage{
+		Token:              accessToken,
+		ExpiryUtcTimestamp: expiresAt.UTC().Unix(),
+	}
 	return
 }
 
-func ValidateAccessToken(accessToken string, user *pb.UserMessage) (err error) {
-	claim, err := decodeAccessToken(accessToken)
+func ValidateAccessToken(tokenPb *pb.TokenMessage, user *pb.UserMessage) (err error) {
+	claim, err := decodeAccessToken(tokenPb.Token)
 	if err != nil {
 		return
 	}
