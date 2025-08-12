@@ -25,25 +25,28 @@ Future<Uint8List> cropImage(
   var width = image.width;
   var height = image.height;
 
-  // but the scale of the transformed image is 300x300
-  var ratio = 1.0;
+  // but this gets scaled and constrained in the viewer to 300x300
+  // So there is extra height | width not in the original image.
+  var coordRatio = 1.0;
+  var longestSide = width;
   if (width > height) {
-    ratio = width / 300.0;
+    coordRatio = width / 300.0;
   } else {
-    ratio = height / 300.0;
+    coordRatio = height / 300.0;
+    longestSide = height;
   }
 
   print('image dimensions: $width, $height');
 
   final Rect transformedRect = Rect.fromLTWH(
-    -dx * ratio,
-    -dy * ratio,
-    width / scale,
-    height / scale,
+    -dx * coordRatio,
+    -dy * coordRatio,
+    300 * coordRatio / scale,
+    300 * coordRatio / scale,
   );
 
   print(
-    'transformedRect: $dx, $dy, ${transformedRect.width}, ${transformedRect.height}',
+    'transformedRect: ${transformedRect.left}, ${transformedRect.top}, ${transformedRect.width}, ${transformedRect.height}',
   );
 
   final ui.PictureRecorder recorder = ui.PictureRecorder();
@@ -214,152 +217,6 @@ class ProfilePhotoComponent extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class AddPhotoComponent extends StatefulWidget {
-  final Function(String) onPhotoSelected;
-
-  const AddPhotoComponent({super.key, required this.onPhotoSelected});
-
-  @override
-  _AddPhotoState createState() => _AddPhotoState();
-}
-
-class _AddPhotoState extends State<AddPhotoComponent> {
-  String? _imagePath;
-  Uint8List? _imageBytes;
-
-  Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    // You can read as bytes here and upload to server.
-    if (image != null) {
-      _imageBytes = await image.readAsBytes();
-      setState(() {
-        _imagePath = image.path;
-      });
-      widget.onPhotoSelected(image.path);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Image? image;
-    // if (_imagePath != null) {
-    //   if (kIsWeb) {
-    //     image = Image.network(
-    //       _imagePath!,
-    //       height: 150,
-    //       width: 150,
-    //       fit: BoxFit.cover,
-    //     );
-    //   } else {
-    //     // For mobile platforms, use File
-    //     image = Image.file(
-    //       File(_imagePath!),
-    //       height: 150,
-    //       width: 150,
-    //       fit: BoxFit.cover,
-    //     );
-    //   }
-    // }
-    return Column(
-      children: [
-        if (_imageBytes != null)
-          CropImageComponent(
-            imageBytes: _imageBytes!,
-            onCropComplete: (Uint8List croppedBytes) {
-              // Handle the cropped image bytes
-              widget.onPhotoSelected('Cropped Image');
-            },
-          ),
-        ElevatedButton(onPressed: _pickImage, child: Text('Upload Photo')),
-      ],
-    );
-  }
-}
-
-class CropImageComponent extends StatefulWidget {
-  final Uint8List imageBytes;
-  final Function(Uint8List) onCropComplete;
-
-  const CropImageComponent({
-    super.key,
-    required this.imageBytes,
-    required this.onCropComplete,
-  });
-
-  @override
-  _CropImageComponentState createState() => _CropImageComponentState();
-}
-
-class _CropImageComponentState extends State<CropImageComponent> {
-  late TransformationController _transformationController;
-  late Rect _cropRect;
-
-  @override
-  void initState() {
-    super.initState();
-    _transformationController = TransformationController();
-    _cropRect = Rect.fromLTWH(50, 50, 200, 200); // Default crop area
-  }
-
-  Future<void> _cropImage() async {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final Offset offset = renderBox.localToGlobal(Offset.zero);
-    final Matrix4 matrix = _transformationController.value;
-
-    final double scale = matrix.getMaxScaleOnAxis();
-    final double dx = matrix.getTranslation().x / scale;
-    final double dy = matrix.getTranslation().y / scale;
-
-    final Rect transformedRect = Rect.fromLTWH(
-      _cropRect.left - dx,
-      _cropRect.top - dy,
-      _cropRect.width / scale,
-      _cropRect.height / scale,
-    );
-
-    final ByteData? byteData = await widget.imageBytes.buffer.asByteData();
-    if (byteData != null) {
-      final Uint8List croppedBytes = byteData.buffer.asUint8List(
-        transformedRect.left.toInt(),
-        transformedRect.width.toInt(),
-      );
-      widget.onCropComplete(croppedBytes);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        InteractiveViewer(
-          transformationController: _transformationController,
-          boundaryMargin: EdgeInsets.all(20),
-          minScale: 1.0,
-          maxScale: 4.0,
-          child: Image.memory(widget.imageBytes, fit: BoxFit.cover),
-        ),
-        Positioned.fromRect(
-          rect: _cropRect,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.red, width: 2),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 20,
-          right: 20,
-          child: ElevatedButton(
-            onPressed: _cropImage,
-            child: Text('Crop Image'),
-          ),
-        ),
-      ],
     );
   }
 }
