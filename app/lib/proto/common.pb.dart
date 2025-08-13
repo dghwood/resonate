@@ -976,6 +976,136 @@ class UserFeedMessage extends $pb.GeneratedMessage {
   $pb.PbList<UserFeedItemMessage> get items => $_getList(1);
 }
 
+/// Search Results
+class SearchResultMessage extends $pb.GeneratedMessage {
+  factory SearchResultMessage({
+    PodcastMessage? podcast,
+    UserMessage? user,
+    EpisodeMessage? episode,
+  }) {
+    final $result = create();
+    if (podcast != null) {
+      $result.podcast = podcast;
+    }
+    if (user != null) {
+      $result.user = user;
+    }
+    if (episode != null) {
+      $result.episode = episode;
+    }
+    return $result;
+  }
+  SearchResultMessage._() : super();
+  factory SearchResultMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SearchResultMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SearchResultMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOM<PodcastMessage>(1, _omitFieldNames ? '' : 'podcast', subBuilder: PodcastMessage.create)
+    ..aOM<UserMessage>(2, _omitFieldNames ? '' : 'user', subBuilder: UserMessage.create)
+    ..aOM<EpisodeMessage>(3, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SearchResultMessage clone() => SearchResultMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchResultMessage copyWith(void Function(SearchResultMessage) updates) => super.copyWith((message) => updates(message as SearchResultMessage)) as SearchResultMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchResultMessage create() => SearchResultMessage._();
+  SearchResultMessage createEmptyInstance() => create();
+  static $pb.PbList<SearchResultMessage> createRepeated() => $pb.PbList<SearchResultMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SearchResultMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SearchResultMessage>(create);
+  static SearchResultMessage? _defaultInstance;
+
+  /// Only one of these should be filled out
+  @$pb.TagNumber(1)
+  PodcastMessage get podcast => $_getN(0);
+  @$pb.TagNumber(1)
+  set podcast(PodcastMessage v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPodcast() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPodcast() => $_clearField(1);
+  @$pb.TagNumber(1)
+  PodcastMessage ensurePodcast() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  UserMessage get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user(UserMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => $_clearField(2);
+  @$pb.TagNumber(2)
+  UserMessage ensureUser() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  EpisodeMessage get episode => $_getN(2);
+  @$pb.TagNumber(3)
+  set episode(EpisodeMessage v) { $_setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEpisode() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEpisode() => $_clearField(3);
+  @$pb.TagNumber(3)
+  EpisodeMessage ensureEpisode() => $_ensure(2);
+}
+
+class SearchResultsMessage extends $pb.GeneratedMessage {
+  factory SearchResultsMessage({
+    $core.Iterable<SearchResultMessage>? results,
+  }) {
+    final $result = create();
+    if (results != null) {
+      $result.results.addAll(results);
+    }
+    return $result;
+  }
+  SearchResultsMessage._() : super();
+  factory SearchResultsMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SearchResultsMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SearchResultsMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..pc<SearchResultMessage>(1, _omitFieldNames ? '' : 'results', $pb.PbFieldType.PM, subBuilder: SearchResultMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SearchResultsMessage clone() => SearchResultsMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchResultsMessage copyWith(void Function(SearchResultsMessage) updates) => super.copyWith((message) => updates(message as SearchResultsMessage)) as SearchResultsMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchResultsMessage create() => SearchResultsMessage._();
+  SearchResultsMessage createEmptyInstance() => create();
+  static $pb.PbList<SearchResultsMessage> createRepeated() => $pb.PbList<SearchResultsMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SearchResultsMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SearchResultsMessage>(create);
+  static SearchResultsMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<SearchResultMessage> get results => $_getList(0);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

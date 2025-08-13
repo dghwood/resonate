@@ -7,6 +7,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:protobuf_google/protobuf_google.dart' hide Duration;
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/components/tabs/search.dart';
+import 'package:resonate/proto/api.pbserver.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:resonate/proto/common.pbjson.dart';
@@ -126,10 +128,10 @@ class Podcast extends BaseModel<PodcastMessage> {
   @override
   String get id => _message.id;
   String get title => _message.title;
-  String? get description => _message.description;
-  String? get url => _message.url;
-  String? get imageUrl => _message.imageUrl;
-  String? get author => _message.author;
+  String get description => _message.description;
+  String get url => _message.url;
+  String get imageUrl => _message.imageUrl;
+  String get author => _message.author;
   List<Episode> get episodes =>
       _message.episodes.map((e) => Episode.fromMessage(e)).toList();
 
@@ -342,4 +344,31 @@ class UserFollow extends BaseModel<UserFollowMessage> {
   String get id => '$userId-$followedUserId';
   String get userId => _message.userId;
   String get followedUserId => _message.followedUserId;
+}
+
+// Search Results
+class SearchResults extends BaseModel<SearchResultsMessage> {
+  SearchResults() : super(SearchResultsMessage());
+
+  SearchResults.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => searchResultsMessageDescriptor;
+  List<SearchResult> get results =>
+      _message.results.map((r) => SearchResult.fromMessage(r)).toList();
+}
+
+class SearchResult extends BaseModel<SearchResultMessage> {
+  SearchResult() : super(SearchResultMessage());
+
+  SearchResult.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => searchResultMessageDescriptor;
+
+  Podcast? get podcast =>
+      _message.hasPodcast() ? Podcast.fromMessage(_message.podcast) : null;
+  Episode? get episode =>
+      _message.hasEpisode() ? Episode.fromMessage(_message.episode) : null;
+  User? get user => _message.hasUser() ? User.fromMessage(_message.user) : null;
 }

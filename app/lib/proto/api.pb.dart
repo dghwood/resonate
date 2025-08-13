@@ -1466,22 +1466,14 @@ class SearchMessage_Request extends $pb.GeneratedMessage {
 class SearchMessage_Response extends $pb.GeneratedMessage {
   factory SearchMessage_Response({
     ResponseInfo? responseInfo,
-    $core.Iterable<$0.PodcastMessage>? podcasts,
-    $core.Iterable<$0.UserMessage>? users,
-    $core.Iterable<$0.EpisodeMessage>? episodes,
+    $0.SearchResultsMessage? searchResults,
   }) {
     final $result = create();
     if (responseInfo != null) {
       $result.responseInfo = responseInfo;
     }
-    if (podcasts != null) {
-      $result.podcasts.addAll(podcasts);
-    }
-    if (users != null) {
-      $result.users.addAll(users);
-    }
-    if (episodes != null) {
-      $result.episodes.addAll(episodes);
+    if (searchResults != null) {
+      $result.searchResults = searchResults;
     }
     return $result;
   }
@@ -1491,9 +1483,7 @@ class SearchMessage_Response extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SearchMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
-    ..pc<$0.PodcastMessage>(2, _omitFieldNames ? '' : 'podcasts', $pb.PbFieldType.PM, subBuilder: $0.PodcastMessage.create)
-    ..pc<$0.UserMessage>(3, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $0.UserMessage.create)
-    ..pc<$0.EpisodeMessage>(4, _omitFieldNames ? '' : 'episodes', $pb.PbFieldType.PM, subBuilder: $0.EpisodeMessage.create)
+    ..aOM<$0.SearchResultsMessage>(2, _omitFieldNames ? '' : 'searchResults', subBuilder: $0.SearchResultsMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -1530,13 +1520,15 @@ class SearchMessage_Response extends $pb.GeneratedMessage {
   ResponseInfo ensureResponseInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $pb.PbList<$0.PodcastMessage> get podcasts => $_getList(1);
-
-  @$pb.TagNumber(3)
-  $pb.PbList<$0.UserMessage> get users => $_getList(2);
-
-  @$pb.TagNumber(4)
-  $pb.PbList<$0.EpisodeMessage> get episodes => $_getList(3);
+  $0.SearchResultsMessage get searchResults => $_getN(1);
+  @$pb.TagNumber(2)
+  set searchResults($0.SearchResultsMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSearchResults() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSearchResults() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.SearchResultsMessage ensureSearchResults() => $_ensure(1);
 }
 
 class SearchMessage extends $pb.GeneratedMessage {

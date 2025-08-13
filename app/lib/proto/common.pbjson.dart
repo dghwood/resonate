@@ -193,3 +193,33 @@ final $typed_data.Uint8List userFeedMessageDescriptor = $convert.base64Decode(
     'Cg9Vc2VyRmVlZE1lc3NhZ2USFwoHdXNlcl9pZBgBIAEoCVIGdXNlcklkEjMKBWl0ZW1zGAIgAy'
     'gLMh0ucmVzb25hdGUuVXNlckZlZWRJdGVtTWVzc2FnZVIFaXRlbXM=');
 
+@$core.Deprecated('Use searchResultMessageDescriptor instead')
+const SearchResultMessage$json = {
+  '1': 'SearchResultMessage',
+  '2': [
+    {'1': 'podcast', '3': 1, '4': 1, '5': 11, '6': '.resonate.PodcastMessage', '10': 'podcast'},
+    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {'1': 'episode', '3': 3, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
+  ],
+};
+
+/// Descriptor for `SearchResultMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchResultMessageDescriptor = $convert.base64Decode(
+    'ChNTZWFyY2hSZXN1bHRNZXNzYWdlEjIKB3BvZGNhc3QYASABKAsyGC5yZXNvbmF0ZS5Qb2RjYX'
+    'N0TWVzc2FnZVIHcG9kY2FzdBIpCgR1c2VyGAIgASgLMhUucmVzb25hdGUuVXNlck1lc3NhZ2VS'
+    'BHVzZXISMgoHZXBpc29kZRgDIAEoCzIYLnJlc29uYXRlLkVwaXNvZGVNZXNzYWdlUgdlcGlzb2'
+    'Rl');
+
+@$core.Deprecated('Use searchResultsMessageDescriptor instead')
+const SearchResultsMessage$json = {
+  '1': 'SearchResultsMessage',
+  '2': [
+    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.resonate.SearchResultMessage', '10': 'results'},
+  ],
+};
+
+/// Descriptor for `SearchResultsMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchResultsMessageDescriptor = $convert.base64Decode(
+    'ChRTZWFyY2hSZXN1bHRzTWVzc2FnZRI3CgdyZXN1bHRzGAEgAygLMh0ucmVzb25hdGUuU2Vhcm'
+    'NoUmVzdWx0TWVzc2FnZVIHcmVzdWx0cw==');
+

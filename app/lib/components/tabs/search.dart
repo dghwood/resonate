@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:resonate/components/pages/base.dart';
-import 'package:resonate/router/navigation.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
+import 'package:resonate/api/result.dart';
+import 'package:resonate/api/search.dart';
+
+final Logger _log = Logger('components/tabs/search');
 
 class SearchComponent extends StatelessWidget {
   SearchComponent({super.key});
@@ -67,7 +71,9 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
   void initState() {
     super.initState();
     widget.query.addListener(() {
-      setState(() {});
+      setState(() {
+        _log.info('${widget.query.value}');
+      });
     });
   }
 
@@ -81,16 +87,46 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
 
   @override
   Widget build(BuildContext context) {
-    // return Text('Query: ${widget.query.value}');
-    return ListView.builder(
-      itemCount: widget.query.value == '' ? 0 : 10,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${widget.query.value} number $index'),
-          onTap: () {
-            Navigate(context).toPodcast('$index');
-          },
-        );
+    if (widget.query.value == '') return Text('waiting');
+    _log.info('build');
+    return FutureBuilder(
+      future: context.read<SearchApi>().search(widget.query.value),
+      builder: (context, snapshot) {
+        _log.info('builder::${snapshot.connectionState}');
+
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Center(
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        var result = snapshot.data!;
+        switch (result) {
+          case ApiOk():
+            var searchResults = result.value;
+            return ListView.builder(
+              itemCount: searchResults.results.length,
+              itemBuilder: (context, index) {
+                var item = searchResults.results[index];
+                // TODO(duncan): Handle other types
+                var podcast = item.podcast!;
+                return ListTile(
+                  leading: Image.network(podcast.imageUrl),
+                  title: Text(podcast.title),
+                  subtitle: Text(
+                    podcast.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                );
+              },
+            );
+          case ApiError():
+            return Text('error ${result.error}');
+        }
       },
     );
   }

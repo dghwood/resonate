@@ -1394,9 +1394,7 @@ func (x *SearchMessage_Request) GetQuery() string {
 type SearchMessage_Response struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Podcasts      []*PodcastMessage      `protobuf:"bytes,2,rep,name=podcasts,proto3" json:"podcasts,omitempty"`
-	Users         []*UserMessage         `protobuf:"bytes,3,rep,name=users,proto3" json:"users,omitempty"`
-	Episodes      []*EpisodeMessage      `protobuf:"bytes,4,rep,name=episodes,proto3" json:"episodes,omitempty"`
+	SearchResults *SearchResultsMessage  `protobuf:"bytes,2,opt,name=search_results,json=searchResults,proto3" json:"search_results,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1438,23 +1436,9 @@ func (x *SearchMessage_Response) GetResponseInfo() *ResponseInfo {
 	return nil
 }
 
-func (x *SearchMessage_Response) GetPodcasts() []*PodcastMessage {
+func (x *SearchMessage_Response) GetSearchResults() *SearchResultsMessage {
 	if x != nil {
-		return x.Podcasts
-	}
-	return nil
-}
-
-func (x *SearchMessage_Response) GetUsers() []*UserMessage {
-	if x != nil {
-		return x.Users
-	}
-	return nil
-}
-
-func (x *SearchMessage_Response) GetEpisodes() []*EpisodeMessage {
-	if x != nil {
-		return x.Episodes
+		return x.SearchResults
 	}
 	return nil
 }
@@ -1941,18 +1925,16 @@ const file_proto_api_proto_rawDesc = "" +
 	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\x1av\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12)\n" +
-	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\"\xd6\x03\n" +
+	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\"\x84\x03\n" +
 	"\rSearchMessage\x12=\n" +
 	"\arequest\x18\x01 \x01(\v2#.resonate.api.SearchMessage.RequestR\arequest\x12@\n" +
 	"\bresponse\x18\x02 \x01(\v2$.resonate.api.SearchMessage.ResponseR\bresponse\x1a]\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x14\n" +
-	"\x05query\x18\x02 \x01(\tR\x05query\x1a\xe4\x01\n" +
+	"\x05query\x18\x02 \x01(\tR\x05query\x1a\x92\x01\n" +
 	"\bResponse\x12?\n" +
-	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x124\n" +
-	"\bpodcasts\x18\x02 \x03(\v2\x18.resonate.PodcastMessageR\bpodcasts\x12+\n" +
-	"\x05users\x18\x03 \x03(\v2\x15.resonate.UserMessageR\x05users\x124\n" +
-	"\bepisodes\x18\x04 \x03(\v2\x18.resonate.EpisodeMessageR\bepisodes\"\x85\x03\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12E\n" +
+	"\x0esearch_results\x18\x02 \x01(\v2\x1e.resonate.SearchResultsMessageR\rsearchResults\"\x85\x03\n" +
 	"\x11GetPodcastMessage\x12A\n" +
 	"\arequest\x18\x01 \x01(\v2'.resonate.api.GetPodcastMessage.RequestR\arequest\x12D\n" +
 	"\bresponse\x18\x02 \x01(\v2(.resonate.api.GetPodcastMessage.ResponseR\bresponse\x1af\n" +
@@ -2043,9 +2025,10 @@ var file_proto_api_proto_goTypes = []any{
 	(*RemoveSubscriptionMessage_Response)(nil), // 34: resonate.api.RemoveSubscriptionMessage.Response
 	(*TokenMessage)(nil),                       // 35: resonate.TokenMessage
 	(*UserMessage)(nil),                        // 36: resonate.UserMessage
-	(*PodcastMessage)(nil),                     // 37: resonate.PodcastMessage
-	(*EpisodeMessage)(nil),                     // 38: resonate.EpisodeMessage
-	(*UserSubscriptionMessage)(nil),            // 39: resonate.UserSubscriptionMessage
+	(*SearchResultsMessage)(nil),               // 37: resonate.SearchResultsMessage
+	(*PodcastMessage)(nil),                     // 38: resonate.PodcastMessage
+	(*EpisodeMessage)(nil),                     // 39: resonate.EpisodeMessage
+	(*UserSubscriptionMessage)(nil),            // 40: resonate.UserSubscriptionMessage
 }
 var file_proto_api_proto_depIdxs = []int32{
 	35, // 0: resonate.api.RequestInfo.access_token:type_name -> resonate.TokenMessage
@@ -2095,28 +2078,26 @@ var file_proto_api_proto_depIdxs = []int32{
 	36, // 44: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
 	1,  // 45: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
 	0,  // 46: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	37, // 47: resonate.api.SearchMessage.Response.podcasts:type_name -> resonate.PodcastMessage
-	36, // 48: resonate.api.SearchMessage.Response.users:type_name -> resonate.UserMessage
-	38, // 49: resonate.api.SearchMessage.Response.episodes:type_name -> resonate.EpisodeMessage
-	1,  // 50: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 51: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	37, // 52: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	1,  // 53: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 54: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	38, // 55: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
-	1,  // 56: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	39, // 57: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 58: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	39, // 59: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,  // 60: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	39, // 61: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 62: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	39, // 63: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	64, // [64:64] is the sub-list for method output_type
-	64, // [64:64] is the sub-list for method input_type
-	64, // [64:64] is the sub-list for extension type_name
-	64, // [64:64] is the sub-list for extension extendee
-	0,  // [0:64] is the sub-list for field type_name
+	37, // 47: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	1,  // 48: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 49: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	38, // 50: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	1,  // 51: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 52: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	39, // 53: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
+	1,  // 54: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	40, // 55: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 56: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	40, // 57: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,  // 58: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	40, // 59: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 60: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	40, // 61: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	62, // [62:62] is the sub-list for method output_type
+	62, // [62:62] is the sub-list for method input_type
+	62, // [62:62] is the sub-list for extension type_name
+	62, // [62:62] is the sub-list for extension extendee
+	0,  // [0:62] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }

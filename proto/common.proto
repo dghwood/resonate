@@ -94,3 +94,14 @@ message UserFeedMessage {
     repeated UserFeedItemMessage items = 2;
 }
 
+// Search Results 
+message SearchResultMessage {
+    // Only one of these should be filled out
+    PodcastMessage podcast = 1; 
+    UserMessage user = 2; 
+    EpisodeMessage episode = 3; 
+}
+message SearchResultsMessage {
+    repeated SearchResultMessage results = 1;
+    // int64 num_results = 2; 
+}

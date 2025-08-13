@@ -301,9 +301,7 @@ const SearchMessage_Response$json = {
   '1': 'Response',
   '2': [
     {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'podcasts', '3': 2, '4': 3, '5': 11, '6': '.resonate.PodcastMessage', '10': 'podcasts'},
-    {'1': 'users', '3': 3, '4': 3, '5': 11, '6': '.resonate.UserMessage', '10': 'users'},
-    {'1': 'episodes', '3': 4, '4': 3, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episodes'},
+    {'1': 'search_results', '3': 2, '4': 1, '5': 11, '6': '.resonate.SearchResultsMessage', '10': 'searchResults'},
   ],
 };
 
@@ -313,11 +311,10 @@ final $typed_data.Uint8List searchMessageDescriptor = $convert.base64Decode(
     'Vzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkAKCHJlc3BvbnNlGAIgASgLMiQucmVzb25hdGUuYXBp'
     'LlNlYXJjaE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGl0KB1JlcXVlc3QSPAoMcmVxdWVzdF'
     '9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIUCgVx'
-    'dWVyeRgCIAEoCVIFcXVlcnka5AEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi'
-    '5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SNAoIcG9kY2FzdHMYAiAD'
-    'KAsyGC5yZXNvbmF0ZS5Qb2RjYXN0TWVzc2FnZVIIcG9kY2FzdHMSKwoFdXNlcnMYAyADKAsyFS'
-    '5yZXNvbmF0ZS5Vc2VyTWVzc2FnZVIFdXNlcnMSNAoIZXBpc29kZXMYBCADKAsyGC5yZXNvbmF0'
-    'ZS5FcGlzb2RlTWVzc2FnZVIIZXBpc29kZXM=');
+    'dWVyeRgCIAEoCVIFcXVlcnkakgEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi'
+    '5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SRQoOc2VhcmNoX3Jlc3Vs'
+    'dHMYAiABKAsyHi5yZXNvbmF0ZS5TZWFyY2hSZXN1bHRzTWVzc2FnZVINc2VhcmNoUmVzdWx0cw'
+    '==');
 
 @$core.Deprecated('Use getPodcastMessageDescriptor instead')
 const GetPodcastMessage$json = {

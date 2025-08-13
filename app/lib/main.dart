@@ -4,9 +4,11 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/search.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/router/routes.dart';
 import 'package:resonate/services/database.dart';
+import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/secure_database.dart';
 
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<ErrorService>(create: (context) => ErrorService()),
         Provider<AbstractHttpService>(create: (context) => mockHttpService),
         Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
         Provider<SecureProtoDatabase>(
@@ -61,6 +64,13 @@ class MyApp extends StatelessWidget {
                 httpService: context.read(),
                 databaseService: context.read(),
               ),
+        ),
+
+        // API
+        Provider<SearchApi>(
+          create:
+              (context) =>
+                  SearchApi(authUser: context.read(), client: context.read()),
         ),
       ],
       child: Builder(

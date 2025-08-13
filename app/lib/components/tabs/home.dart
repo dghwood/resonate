@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/router/navigation.dart';
+import 'package:resonate/api/errors.dart';
 
 final Logger _log = Logger('HomePage');
 
@@ -36,9 +38,10 @@ class HomePage extends TabComponent {
           child: Text('Show Bottom Sheet'),
         ),
         TextButton(
-          child: Text('loading'),
+          child: Text('show error'),
           onPressed: () {
-            // Navigate(context).toLoading();
+            var errorService = context.read<ErrorService>();
+            errorService.report(context, Exception('This is an error'));
           },
         ),
       ],

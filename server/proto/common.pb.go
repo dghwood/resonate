@@ -749,6 +749,112 @@ func (x *UserFeedMessage) GetItems() []*UserFeedItemMessage {
 	return nil
 }
 
+// Search Results
+type SearchResultMessage struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Only one of these should be filled out
+	Podcast       *PodcastMessage `protobuf:"bytes,1,opt,name=podcast,proto3" json:"podcast,omitempty"`
+	User          *UserMessage    `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	Episode       *EpisodeMessage `protobuf:"bytes,3,opt,name=episode,proto3" json:"episode,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SearchResultMessage) Reset() {
+	*x = SearchResultMessage{}
+	mi := &file_proto_common_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchResultMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchResultMessage) ProtoMessage() {}
+
+func (x *SearchResultMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchResultMessage.ProtoReflect.Descriptor instead.
+func (*SearchResultMessage) Descriptor() ([]byte, []int) {
+	return file_proto_common_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SearchResultMessage) GetPodcast() *PodcastMessage {
+	if x != nil {
+		return x.Podcast
+	}
+	return nil
+}
+
+func (x *SearchResultMessage) GetUser() *UserMessage {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *SearchResultMessage) GetEpisode() *EpisodeMessage {
+	if x != nil {
+		return x.Episode
+	}
+	return nil
+}
+
+type SearchResultsMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Results       []*SearchResultMessage `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"` // int64 num_results = 2;
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SearchResultsMessage) Reset() {
+	*x = SearchResultsMessage{}
+	mi := &file_proto_common_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchResultsMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchResultsMessage) ProtoMessage() {}
+
+func (x *SearchResultsMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchResultsMessage.ProtoReflect.Descriptor instead.
+func (*SearchResultsMessage) Descriptor() ([]byte, []int) {
+	return file_proto_common_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *SearchResultsMessage) GetResults() []*SearchResultMessage {
+	if x != nil {
+		return x.Results
+	}
+	return nil
+}
+
 var File_proto_common_proto protoreflect.FileDescriptor
 
 const file_proto_common_proto_rawDesc = "" +
@@ -811,7 +917,13 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x06listen\x18\x02 \x01(\v2\x1b.resonate.UserListenMessageR\x06listen\"_\n" +
 	"\x0fUserFeedMessage\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x123\n" +
-	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05itemsB#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05items\"\xa8\x01\n" +
+	"\x13SearchResultMessage\x122\n" +
+	"\apodcast\x18\x01 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\x12)\n" +
+	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\x122\n" +
+	"\aepisode\x18\x03 \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\"O\n" +
+	"\x14SearchResultsMessage\x127\n" +
+	"\aresults\x18\x01 \x03(\v2\x1d.resonate.SearchResultMessageR\aresultsB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_common_proto_rawDescOnce sync.Once
@@ -825,7 +937,7 @@ func file_proto_common_proto_rawDescGZIP() []byte {
 	return file_proto_common_proto_rawDescData
 }
 
-var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_common_proto_goTypes = []any{
 	(*PodcastMessage)(nil),          // 0: resonate.PodcastMessage
 	(*EpisodeMessage)(nil),          // 1: resonate.EpisodeMessage
@@ -837,6 +949,8 @@ var file_proto_common_proto_goTypes = []any{
 	(*UserListenMessage)(nil),       // 7: resonate.UserListenMessage
 	(*UserFeedItemMessage)(nil),     // 8: resonate.UserFeedItemMessage
 	(*UserFeedMessage)(nil),         // 9: resonate.UserFeedMessage
+	(*SearchResultMessage)(nil),     // 10: resonate.SearchResultMessage
+	(*SearchResultsMessage)(nil),    // 11: resonate.SearchResultsMessage
 }
 var file_proto_common_proto_depIdxs = []int32{
 	1,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
@@ -850,11 +964,15 @@ var file_proto_common_proto_depIdxs = []int32{
 	1,  // 8: resonate.UserFeedItemMessage.episode:type_name -> resonate.EpisodeMessage
 	7,  // 9: resonate.UserFeedItemMessage.listen:type_name -> resonate.UserListenMessage
 	8,  // 10: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	11, // [11:11] is the sub-list for method output_type
-	11, // [11:11] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	0,  // 11: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	4,  // 12: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	1,  // 13: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	10, // 14: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	15, // [15:15] is the sub-list for method output_type
+	15, // [15:15] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }
@@ -868,7 +986,7 @@ func file_proto_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
