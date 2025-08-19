@@ -4,6 +4,7 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/router/routes.dart';
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
         Provider<AbstractDatabaseService>(
           create:
               (context) => DatabaseService(
-                idbFactoryMemory,
+                idbFactoryNative,
+                // idbFactoryNative,
                 // authUser: context.read(),
                 // user: context.read(),
               ),
@@ -71,6 +73,18 @@ class MyApp extends StatelessWidget {
           create:
               (context) =>
                   SearchApi(authUser: context.read(), client: context.read()),
+        ),
+        Provider<PodcastApi>(
+          // Needed this so that the DB is setup
+          lazy: false,
+          create: (context) {
+            print('Creating PodcastApi');
+            return PodcastApi(
+              authUser: context.read(),
+              httpService: context.read(),
+              databaseService: context.read(),
+            );
+          },
         ),
       ],
       child: Builder(

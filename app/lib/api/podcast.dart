@@ -46,15 +46,17 @@ class GetPodcastApiServer
       );
 }
 
-class GetPodcastApi {
-  GetPodcastApi({
+class PodcastApi {
+  PodcastApi({
     required AbstractHttpService httpService,
     required AbstractDatabaseService databaseService,
     required AuthUser authUser,
   }) : _server = GetPodcastApiServer(client: httpService, authUser: authUser),
        _database = PodcastDatabase(databaseService),
        // TODO(duncanwood): The upgrade function will be called twice!
-       _episodeDatabase = EpisodeDatabase(databaseService);
+       _episodeDatabase = EpisodeDatabase(databaseService) {
+    _log.info('PodcastApi created');
+  }
 
   final GetPodcastApiServer _server;
   final PodcastDatabase _database;

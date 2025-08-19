@@ -1,9 +1,10 @@
-import 'dart:typed_data';
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
+import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
-import 'package:resonate/storage/episode.dart';
+
+Logger _log = Logger('PodcastDatabase');
 
 /* TODO(duncanwood):
 
@@ -12,6 +13,8 @@ import 'package:resonate/storage/episode.dart';
 */
 class PodcastDatabase extends ProtoModelDatabase<PodcastMessage, Podcast> {
   PodcastDatabase(super.databaseService) {
+    _log.info('PodcastDatabase created');
+    print('PodcastDatabase created');
     super.databaseService.registerStore(storeName, upgradeFunction);
   }
 
@@ -35,9 +38,9 @@ class PodcastDatabase extends ProtoModelDatabase<PodcastMessage, Podcast> {
   Future<void> upgradeFunction(
     idb.VersionChangeEvent versionChangeEvent,
   ) async {
-    print('registering PodcastMessage store');
+    _log.info('registering PodcastMessage store');
     final db = versionChangeEvent.database;
     db.createObjectStore(storeName, keyPath: 'field_1');
-    print('storeCreated');
+    _log.info('storeCreated');
   }
 }

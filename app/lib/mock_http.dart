@@ -5,8 +5,11 @@ import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/http.dart';
 
-PodcastMessage mockPodcastMessage() => PodcastMessage(
-  title: 'Pod Save America',
+PodcastMessage mockPodcastMessage({
+  String title = 'Pod Save America',
+  bool includeEpisodes = false,
+}) => PodcastMessage(
+  title: title,
   id: '123',
   author: 'Crooked Media',
   description:
@@ -22,18 +25,37 @@ and subscribe at crooked.com/friends or on Apple Podcasts. For a transcript of a
 episode of Pod Save America, please email transcripts@crooked.com''',
   imageUrl:
       'https://image.simplecastcdn.com/images/3b29236c-8a35-4012-9d27-62c02dd189a8/c750eec7-c202-404d-a5bc-eee317e2ce3d/3000x3000/uploads-2f1595947484360-nc4atf9w7ur-dbbaa7ee07a1ee325ec48d2e666ac261-2fpodsave100daysfinal1800.jpg?aid=rss_feed',
+  episodes:
+      includeEpisodes
+          ? List.generate(
+            10,
+            (i) => EpisodeMessage(
+              id: 'episode-$i',
+              title: 'Episode $i',
+              description: 'Description for episode $i',
+              audioUrl: 'https://example.com/episode-$i.mp3',
+            ),
+          )
+          : [],
 );
 
 var mockHttpService = MockHttpService({
+  '/api/podcast/get':
+      () =>
+          GetPodcastMessage_Response(
+            responseInfo: ResponseInfo(success: true),
+            podcast: mockPodcastMessage(),
+          ).writeToBuffer(),
   '/api/search':
       () =>
           SearchMessage_Response(
             responseInfo: ResponseInfo(success: true),
             searchResults: SearchResultsMessage(
-              results: List.filled(
-                5,
-                0,
-              ).map((_) => SearchResultMessage(podcast: mockPodcastMessage())),
+              results: List.generate(20, (i) => i).map(
+                (i) => SearchResultMessage(
+                  podcast: mockPodcastMessage(title: 'Pod Save America $i'),
+                ),
+              ),
             ),
           ).writeToBuffer(),
   '/api/login/request':

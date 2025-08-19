@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
-import 'package:resonate/components/common/addPhoto.dart';
+import 'package:resonate/components/common/add_photo.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';

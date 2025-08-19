@@ -49,7 +49,7 @@ class DatabaseService implements AbstractDatabaseService {
   final Map<String, UpgradeFunction> _upgradeFunctions = {};
 
   final String databaseName = 'resonate.db';
-  final int databaseVersion = 1;
+  final int databaseVersion = 2;
 
   @override
   void registerStore(String storeName, UpgradeFunction upgradeFunction) {
@@ -61,14 +61,22 @@ class DatabaseService implements AbstractDatabaseService {
     if (isInitialized) {
       return;
     }
+    _log.info('Initializing DatabaseService::${_upgradeFunctions.length}');
     _authUser = authUser;
     var userId = _authUser?.user?.id ?? '';
     _db = await _factory.open(
       '$userId.$databaseName',
       version: databaseVersion,
       onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
+        _log.info('onUpgradeNeeded');
         for (var upgradeFunction in _upgradeFunctions.values) {
-          await upgradeFunction(versionChangeEvent);
+          _log.info('Running upgrade function for store');
+          try {
+            await upgradeFunction(versionChangeEvent);
+          } on Exception catch (e) {
+            _log.severe('Error during upgrade: $e');
+            throw e; // Rethrow to handle it in the caller
+          }
         }
       },
     );

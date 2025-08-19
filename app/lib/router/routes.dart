@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/podcast.dart';
 import 'package:resonate/components/login/signin.dart';
 import 'package:resonate/components/tabs/home.dart';
 import 'package:resonate/components/tabs/pages/podcast.dart';
@@ -42,7 +43,22 @@ String? _signInRedirect(BuildContext context, GoRouterState state) {
 }
 
 final List<RouteBase> sharedRoutes = [
-  GoRoute(path: Routes.podcast, builder: (context, state) => PodcastPage()),
+  GoRoute(
+    path: Routes.podcast,
+    builder: (context, state) {
+      _log.info('podcast ${state.pathParameters}');
+      var podcastId = state.pathParameters['id'];
+      if (podcastId == null) {
+        // TODO: Handle 404
+        return Text('Podcast ID is required');
+      }
+      var podcastApi = context.read<PodcastApi>();
+      return PodcastPage(
+        podcastId: state.pathParameters['id']!,
+        podcastApi: podcastApi,
+      );
+    },
+  ),
   GoRoute(path: Routes.settings, builder: (context, state) => SettingsPage()),
 ];
 
@@ -54,7 +70,7 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
   initialLocation: Routes.signIn,
   routes: <RouteBase>[
     GoRoute(
-      path: '/loading',
+      path: Routes.loading,
       builder: (context, state) {
         return Scaffold(body: Center(child: CircularProgressIndicator()));
       },
