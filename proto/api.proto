@@ -123,6 +123,20 @@ message GetPodcastMessage {
     Response response = 2;
 }
 
+// Used to list the podcast episodes
+message ListPodcastEpisodesMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string podcast_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated EpisodeMessage episodes = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
 message GetEpisodeMessage {
     message Request {
         RequestInfo request_info = 1; 

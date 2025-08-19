@@ -511,8 +511,9 @@ func (x *UserFollowMessage) GetFollowedUserId() string {
 
 type UserSubscriptionMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	PodcastId     string                 `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	PodcastId     string                 `protobuf:"bytes,3,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -545,6 +546,13 @@ func (x *UserSubscriptionMessage) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UserSubscriptionMessage.ProtoReflect.Descriptor instead.
 func (*UserSubscriptionMessage) Descriptor() ([]byte, []int) {
 	return file_proto_common_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UserSubscriptionMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
 }
 
 func (x *UserSubscriptionMessage) GetUserId() string {
@@ -899,11 +907,12 @@ const file_proto_common_proto_rawDesc = "" +
 	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\"V\n" +
 	"\x11UserFollowMessage\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12(\n" +
-	"\x10followed_user_id\x18\x02 \x01(\tR\x0efollowedUserId\"Q\n" +
-	"\x17UserSubscriptionMessage\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1d\n" +
+	"\x10followed_user_id\x18\x02 \x01(\tR\x0efollowedUserId\"a\n" +
+	"\x17UserSubscriptionMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
 	"\n" +
-	"podcast_id\x18\x02 \x01(\tR\tpodcastId\"\xe2\x01\n" +
+	"podcast_id\x18\x03 \x01(\tR\tpodcastId\"\xe2\x01\n" +
 	"\x11UserListenMessage\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1d\n" +
 	"\n" +

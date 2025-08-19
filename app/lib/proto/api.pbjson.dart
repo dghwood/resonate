@@ -355,6 +355,45 @@ final $typed_data.Uint8List getPodcastMessageDescriptor = $convert.base64Decode(
     'SW5mbxIyCgdwb2RjYXN0GAIgASgLMhgucmVzb25hdGUuUG9kY2FzdE1lc3NhZ2VSB3BvZGNhc3'
     'Q=');
 
+@$core.Deprecated('Use listPodcastEpisodesMessageDescriptor instead')
+const ListPodcastEpisodesMessage$json = {
+  '1': 'ListPodcastEpisodesMessage',
+  '2': [
+    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ListPodcastEpisodesMessage.Request', '10': 'request'},
+    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.ListPodcastEpisodesMessage.Response', '10': 'response'},
+  ],
+  '3': [ListPodcastEpisodesMessage_Request$json, ListPodcastEpisodesMessage_Response$json],
+};
+
+@$core.Deprecated('Use listPodcastEpisodesMessageDescriptor instead')
+const ListPodcastEpisodesMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {'1': 'podcast_id', '3': 2, '4': 1, '5': 9, '10': 'podcastId'},
+  ],
+};
+
+@$core.Deprecated('Use listPodcastEpisodesMessageDescriptor instead')
+const ListPodcastEpisodesMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+    {'1': 'episodes', '3': 2, '4': 3, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episodes'},
+  ],
+};
+
+/// Descriptor for `ListPodcastEpisodesMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listPodcastEpisodesMessageDescriptor = $convert.base64Decode(
+    'ChpMaXN0UG9kY2FzdEVwaXNvZGVzTWVzc2FnZRJKCgdyZXF1ZXN0GAEgASgLMjAucmVzb25hdG'
+    'UuYXBpLkxpc3RQb2RjYXN0RXBpc29kZXNNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSTQoIcmVz'
+    'cG9uc2UYAiABKAsyMS5yZXNvbmF0ZS5hcGkuTGlzdFBvZGNhc3RFcGlzb2Rlc01lc3NhZ2UuUm'
+    'VzcG9uc2VSCHJlc3BvbnNlGmYKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVz'
+    'b25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIdCgpwb2RjYXN0X2lkGAIgASgJUg'
+    'lwb2RjYXN0SWQagQEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0'
+    'ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SNAoIZXBpc29kZXMYAiADKAsyGC5yZX'
+    'NvbmF0ZS5FcGlzb2RlTWVzc2FnZVIIZXBpc29kZXM=');
+
 @$core.Deprecated('Use getEpisodeMessageDescriptor instead')
 const GetEpisodeMessage$json = {
   '1': 'GetEpisodeMessage',

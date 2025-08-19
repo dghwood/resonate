@@ -666,10 +666,14 @@ class UserFollowMessage extends $pb.GeneratedMessage {
 
 class UserSubscriptionMessage extends $pb.GeneratedMessage {
   factory UserSubscriptionMessage({
+    $core.String? id,
     $core.String? userId,
     $core.String? podcastId,
   }) {
     final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
     if (userId != null) {
       $result.userId = userId;
     }
@@ -683,8 +687,9 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
   factory UserSubscriptionMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserSubscriptionMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'userId')
-    ..aOS(2, _omitFieldNames ? '' : 'podcastId')
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOS(3, _omitFieldNames ? '' : 'podcastId')
     ..hasRequiredFields = false
   ;
 
@@ -710,22 +715,31 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
   static UserSubscriptionMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get userId => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set userId($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUserId() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUserId() => $_clearField(1);
+  void clearId() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get podcastId => $_getSZ(1);
+  $core.String get userId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set podcastId($core.String v) { $_setString(1, v); }
+  set userId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPodcastId() => $_has(1);
+  $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPodcastId() => $_clearField(2);
+  void clearUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get podcastId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set podcastId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPodcastId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPodcastId() => $_clearField(3);
 }
 
 class UserListenMessage extends $pb.GeneratedMessage {

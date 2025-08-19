@@ -1801,6 +1801,201 @@ class GetPodcastMessage extends $pb.GeneratedMessage {
   GetPodcastMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class ListPodcastEpisodesMessage_Request extends $pb.GeneratedMessage {
+  factory ListPodcastEpisodesMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? podcastId,
+  }) {
+    final $result = create();
+    if (requestInfo != null) {
+      $result.requestInfo = requestInfo;
+    }
+    if (podcastId != null) {
+      $result.podcastId = podcastId;
+    }
+    return $result;
+  }
+  ListPodcastEpisodesMessage_Request._() : super();
+  factory ListPodcastEpisodesMessage_Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListPodcastEpisodesMessage_Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListPodcastEpisodesMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'podcastId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage_Request clone() => ListPodcastEpisodesMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage_Request copyWith(void Function(ListPodcastEpisodesMessage_Request) updates) => super.copyWith((message) => updates(message as ListPodcastEpisodesMessage_Request)) as ListPodcastEpisodesMessage_Request;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage_Request create() => ListPodcastEpisodesMessage_Request._();
+  ListPodcastEpisodesMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<ListPodcastEpisodesMessage_Request> createRepeated() => $pb.PbList<ListPodcastEpisodesMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage_Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListPodcastEpisodesMessage_Request>(create);
+  static ListPodcastEpisodesMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get podcastId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set podcastId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPodcastId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPodcastId() => $_clearField(2);
+}
+
+class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
+  factory ListPodcastEpisodesMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.EpisodeMessage>? episodes,
+  }) {
+    final $result = create();
+    if (responseInfo != null) {
+      $result.responseInfo = responseInfo;
+    }
+    if (episodes != null) {
+      $result.episodes.addAll(episodes);
+    }
+    return $result;
+  }
+  ListPodcastEpisodesMessage_Response._() : super();
+  factory ListPodcastEpisodesMessage_Response.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListPodcastEpisodesMessage_Response.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListPodcastEpisodesMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
+    ..pc<$0.EpisodeMessage>(2, _omitFieldNames ? '' : 'episodes', $pb.PbFieldType.PM, subBuilder: $0.EpisodeMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage_Response clone() => ListPodcastEpisodesMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage_Response copyWith(void Function(ListPodcastEpisodesMessage_Response) updates) => super.copyWith((message) => updates(message as ListPodcastEpisodesMessage_Response)) as ListPodcastEpisodesMessage_Response;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage_Response create() => ListPodcastEpisodesMessage_Response._();
+  ListPodcastEpisodesMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<ListPodcastEpisodesMessage_Response> createRepeated() => $pb.PbList<ListPodcastEpisodesMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage_Response getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListPodcastEpisodesMessage_Response>(create);
+  static ListPodcastEpisodesMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.EpisodeMessage> get episodes => $_getList(1);
+}
+
+/// Used to list the podcast episodes
+class ListPodcastEpisodesMessage extends $pb.GeneratedMessage {
+  factory ListPodcastEpisodesMessage({
+    ListPodcastEpisodesMessage_Request? request,
+    ListPodcastEpisodesMessage_Response? response,
+  }) {
+    final $result = create();
+    if (request != null) {
+      $result.request = request;
+    }
+    if (response != null) {
+      $result.response = response;
+    }
+    return $result;
+  }
+  ListPodcastEpisodesMessage._() : super();
+  factory ListPodcastEpisodesMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListPodcastEpisodesMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListPodcastEpisodesMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ListPodcastEpisodesMessage_Request>(1, _omitFieldNames ? '' : 'request', subBuilder: ListPodcastEpisodesMessage_Request.create)
+    ..aOM<ListPodcastEpisodesMessage_Response>(2, _omitFieldNames ? '' : 'response', subBuilder: ListPodcastEpisodesMessage_Response.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage clone() => ListPodcastEpisodesMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListPodcastEpisodesMessage copyWith(void Function(ListPodcastEpisodesMessage) updates) => super.copyWith((message) => updates(message as ListPodcastEpisodesMessage)) as ListPodcastEpisodesMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage create() => ListPodcastEpisodesMessage._();
+  ListPodcastEpisodesMessage createEmptyInstance() => create();
+  static $pb.PbList<ListPodcastEpisodesMessage> createRepeated() => $pb.PbList<ListPodcastEpisodesMessage>();
+  @$core.pragma('dart2js:noInline')
+  static ListPodcastEpisodesMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListPodcastEpisodesMessage>(create);
+  static ListPodcastEpisodesMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ListPodcastEpisodesMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(ListPodcastEpisodesMessage_Request v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ListPodcastEpisodesMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ListPodcastEpisodesMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(ListPodcastEpisodesMessage_Response v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  ListPodcastEpisodesMessage_Response ensureResponse() => $_ensure(1);
+}
+
 class GetEpisodeMessage_Request extends $pb.GeneratedMessage {
   factory GetEpisodeMessage_Request({
     RequestInfo? requestInfo,

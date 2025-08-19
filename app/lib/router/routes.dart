@@ -52,10 +52,10 @@ final List<RouteBase> sharedRoutes = [
         // TODO: Handle 404
         return Text('Podcast ID is required');
       }
-      var podcastApi = context.read<PodcastApi>();
       return PodcastPage(
         podcastId: state.pathParameters['id']!,
-        podcastApi: podcastApi,
+        authUser: context.read(),
+        podcastApi: context.read(),
       );
     },
   ),

@@ -133,15 +133,16 @@ final $typed_data.Uint8List userFollowMessageDescriptor = $convert.base64Decode(
 const UserSubscriptionMessage$json = {
   '1': 'UserSubscriptionMessage',
   '2': [
-    {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'podcast_id', '3': 2, '4': 1, '5': 9, '10': 'podcastId'},
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'podcast_id', '3': 3, '4': 1, '5': 9, '10': 'podcastId'},
   ],
 };
 
 /// Descriptor for `UserSubscriptionMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userSubscriptionMessageDescriptor = $convert.base64Decode(
-    'ChdVc2VyU3Vic2NyaXB0aW9uTWVzc2FnZRIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSHQoKcG'
-    '9kY2FzdF9pZBgCIAEoCVIJcG9kY2FzdElk');
+    'ChdVc2VyU3Vic2NyaXB0aW9uTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIA'
+    'EoCVIGdXNlcklkEh0KCnBvZGNhc3RfaWQYAyABKAlSCXBvZGNhc3RJZA==');
 
 @$core.Deprecated('Use userListenMessageDescriptor instead')
 const UserListenMessage$json = {

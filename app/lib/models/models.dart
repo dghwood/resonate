@@ -283,8 +283,10 @@ class User extends BaseModel<UserMessage> {
 }
 
 class UserSubscription extends BaseModel<UserSubscriptionMessage> {
-  UserSubscription({required String userId, required String podcastId})
-    : super(UserSubscriptionMessage(userId: userId, podcastId: podcastId));
+  UserSubscription({String? id, String? userId, String? podcastId})
+    : super(
+        UserSubscriptionMessage(id: id, userId: userId, podcastId: podcastId),
+      );
 
   UserSubscription.fromMessage(super.message);
 
@@ -292,7 +294,7 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
   Uint8List get descriptor => userSubscriptionMessageDescriptor;
 
   @override
-  String get id => '$userId-$podcastId';
+  String get id => _message.id;
   String get userId => _message.userId;
   String get podcastId => _message.podcastId;
 }

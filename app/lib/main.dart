@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
+import 'package:resonate/api/subscription.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/router/routes.dart';
 import 'package:resonate/services/database.dart';
@@ -78,7 +79,6 @@ class MyApp extends StatelessWidget {
           // Needed this so that the DB is setup
           lazy: false,
           create: (context) {
-            print('Creating PodcastApi');
             return PodcastApi(
               authUser: context.read(),
               httpService: context.read(),

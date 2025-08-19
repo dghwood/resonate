@@ -71,8 +71,9 @@ message UserFollowMessage {
 }
 
 message UserSubscriptionMessage {
-    string user_id = 1;
-    string podcast_id = 2;
+    string id = 1;
+    string user_id = 2;
+    string podcast_id = 3;
 }
 
 message UserListenMessage {

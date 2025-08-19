@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/secure_database.dart';
+import 'package:resonate/storage/subscriptions.dart';
 
 Logger _log = Logger('api/auth');
 
@@ -134,8 +137,15 @@ class AuthUser extends ChangeNotifier {
        ),
        _databaseService = databaseService,
        _secureDatabase = secureDatabase {
+    subscriptionApi = SubscriptionApi(
+      client: httpService,
+      databaseService: databaseService,
+      authUser: this,
+    );
     loadFromStorage();
   }
+
+  late final SubscriptionApi subscriptionApi;
 
   // load from secure storage
   Future<void> loadFromStorage() async {
@@ -174,9 +184,18 @@ class AuthUser extends ChangeNotifier {
   AuthUserStatus get status => __status;
 
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
+  // Temporarily set to allow DB to see the user signed in before we update the
+  // notifier status
+  bool _isSignedInForDb = false;
+  bool get isSignedInForDb =>
+      _isSignedInForDb || _status == AuthUserStatus.signedIn;
 
   Future<void> _setupPostLogin() async {
     await _databaseService.init(this);
+    _isSignedInForDb = true;
+    // This loads the user subscriptions into memory
+    await subscriptionApi.init();
+    _isSignedInForDb = false;
     _status = AuthUserStatus.signedIn;
   }
 
