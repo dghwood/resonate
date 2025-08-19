@@ -3,7 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
-import 'package:resonate/components/common/infinite_scroll.dart';
+import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 
@@ -149,7 +149,7 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
     return InfiniteScrollComponent<SearchResult>(
       key: Key(widget.query.value),
       next: _next,
-      itemBuilder: _itemBuilder,
+      builder: _itemBuilder,
     );
   }
 }
