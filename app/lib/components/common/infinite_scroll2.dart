@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/components/common/loading.dart';
 
 final Logger _log = Logger('components/common/infinite_scroll');
 
@@ -39,7 +40,7 @@ class _InfiniteScrollComponentState<T>
     extends State<InfiniteScrollComponent<T>> {
   final List<T> _results = [];
   final _scrollController = ScrollController();
-  InfiniteScrollState _state = InfiniteScrollState();
+  final InfiniteScrollState _state = InfiniteScrollState();
 
   int _currentPage = 0;
 
@@ -102,11 +103,7 @@ class _InfiniteScrollComponentState<T>
         _log.info('build');
         if (_results.isEmpty &&
             _state.state == InfiniteScrollComponentState.loading) {
-          return SizedBox(
-            width: 100,
-            height: 100,
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return LoadingSpinnerComponent();
         }
         return Column(
           children: [
@@ -120,11 +117,7 @@ class _InfiniteScrollComponentState<T>
               ),
             ),
             if (_state.state == InfiniteScrollComponentState.loading)
-              SizedBox(
-                width: 100,
-                height: 100,
-                child: Center(child: CircularProgressIndicator()),
-              ),
+              LoadingSpinnerComponent(),
             if (_state.state == InfiniteScrollComponentState.error)
               TextButton(
                 // TODO(duncan): Pass the error message

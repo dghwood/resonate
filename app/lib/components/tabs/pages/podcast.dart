@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/podcast.dart';
+import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/tabs/pages/base.dart';
 
 Logger _log = Logger('components/tabs/pages/podcast');
@@ -21,7 +22,9 @@ class PodcastPage extends PageComponent {
     return StreamBuilder(
       stream: _podcastApi.get(podcastId),
       builder: (context, snapshot) {
-        _log.info(snapshot);
+        if (!snapshot.hasData) {
+          return LoadingSpinnerComponent();
+        }
         return Text('test');
       },
     );
