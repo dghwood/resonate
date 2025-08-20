@@ -166,12 +166,9 @@ class AuthUser extends ChangeNotifier {
   final AbstractDatabaseService _databaseService;
 
   final UserStorage _userStorage = UserStorage();
-  User? get user =>
-      _status == AuthUserStatus.signedIn ? _userStorage.user : null;
-  Token? get accessToken =>
-      _status == AuthUserStatus.signedIn ? _userStorage.accessToken : null;
-  Token? get refreshToken =>
-      _status == AuthUserStatus.signedIn ? _userStorage.refreshToken : null;
+  User? get user => isSignedInForDb ? _userStorage.user : null;
+  Token? get accessToken => isSignedInForDb ? _userStorage.accessToken : null;
+  Token? get refreshToken => isSignedInForDb ? _userStorage.refreshToken : null;
 
   AuthUserStatus __status = AuthUserStatus.signedOut;
   set _status(AuthUserStatus newStatus) {

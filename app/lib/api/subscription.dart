@@ -127,15 +127,18 @@ class SubscriptionApi extends ChangeNotifier {
   Future<ApiResult<UserSubscription>> subscribe(String podcastId) async {
     // This needs to invalidate the _subscriptions cache..
     var request = AddSubscriptionApiRequest();
-    request.requestPb.subscription = UserSubscriptionMessage(
+    var subscription = UserSubscriptionMessage(
       // userId: '123', // TODO(duncan): Do I need to update this?
       podcastId: podcastId,
     );
+    request.requestPb.subscription = subscription;
     var response = AddSubscriptionApiResponse();
 
     try {
       await _subscribeServer.execute(request, response);
-
+      _subscriptions[podcastId] = UserSubscription.fromMessage(
+        response.responsePb.subscription,
+      );
       return ApiResult.ok(
         UserSubscription.fromMessage(response.responsePb.subscription),
       );
@@ -155,6 +158,7 @@ class SubscriptionApi extends ChangeNotifier {
 
     try {
       await _unsubscribeServer.execute(request, response);
+      _subscriptions.remove(podcastId);
       return ApiResult.ok(
         UserSubscription.fromMessage(response.responsePb.subscription),
       );

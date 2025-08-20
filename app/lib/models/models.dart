@@ -5,17 +5,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:protobuf_google/protobuf_google.dart' hide Duration;
 import 'package:protobuf/protobuf.dart';
-import 'package:resonate/components/tabs/search.dart';
-import 'package:resonate/proto/api.pbserver.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:resonate/proto/common.pbjson.dart';
 import 'package:resonate/services/database.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/utils/proto.dart';
 
-final _log = Logger('models');
+final Logger _log = Logger('models');
 
 // Define a base class for common functionality
 class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
@@ -49,54 +47,44 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
   Uint8List get descriptor =>
       throw UnimplementedError('descriptor must be implemented by subclasses');
 
-  DatabaseStoreType toStore() {
-    final Map<String, Object> storeMap = {};
-    DescriptorProto descriptorPb = DescriptorProto.fromBuffer(descriptor);
-    for (var field in descriptorPb.field) {
-      if (!_message.hasField(field.number)) {
-        continue; // Skip fields that are not set
-      }
-      if (field.label == FieldDescriptorProto_Label.LABEL_REPEATED) {
-        if (_message.getField(field.number) is List &&
-            (_message.getField(field.number) as List).isEmpty) {
-          continue; // Skip fields that are empty arrays
-        }
-        throw UnimplementedError(
-          'Repeated field handling not implemented for field: ${field.name}',
-        );
-      }
-      switch (field.type) {
-        case FieldDescriptorProto_Type.TYPE_STRING:
-        case FieldDescriptorProto_Type.TYPE_INT64:
-        case FieldDescriptorProto_Type.TYPE_BOOL:
-          storeMap['field_${field.number}'] = _message.getField(field.number);
-          break;
-        case FieldDescriptorProto_Type.TYPE_MESSAGE:
-          // Handle nested messages
-          throw UnimplementedError(
-            'Nested message handling not implemented for field: ${field.name}',
-          );
-        default:
-          throw UnimplementedError(
-            'toStore handling not implemented for field: ${field.name}',
-          );
-      }
-    }
-    return storeMap;
-  }
+  DatabaseStoreType toStore() =>
+      DatabaseProtoStoreUtils<T>(descriptor, _message).toStore();
 
-  void fromStore(DatabaseStoreType storeMap) {
-    DescriptorProto descriptorPb = DescriptorProto.fromBuffer(descriptor);
-    for (var field in descriptorPb.field) {
-      if (storeMap.containsKey('field_${field.number}')) {
-        _message.setField(field.number, storeMap['field_${field.number}']!);
-      }
-    }
-  }
+  void fromStore(DatabaseStoreType storeMap) =>
+      DatabaseProtoStoreUtils<T>(descriptor, _message).fromStore(storeMap);
 
   String get id =>
       throw UnimplementedError('id must be implemented by subclasses');
   Uint8List writeToBuffer() => _message.writeToBuffer();
+}
+
+class StorageMetadata extends BaseModel<StorageMetadataMessage> {
+  StorageMetadata({
+    bool? isDeleted,
+    int? updatedTimestamp,
+    int? createdTimestamp,
+  }) : super(
+         StorageMetadataMessage(
+           isDeleted: isDeleted ?? false,
+           updatedTimestamp:
+               updatedTimestamp != null
+                   ? $fixnum.Int64(updatedTimestamp)
+                   : null,
+           createdTimestamp:
+               createdTimestamp != null
+                   ? $fixnum.Int64(createdTimestamp)
+                   : null,
+         ),
+       );
+
+  StorageMetadata.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => storageMetadataMessageDescriptor;
+
+  bool get isDeleted => _message.isDeleted;
+  int? get updatedTimestamp => _message.updatedTimestamp?.toInt();
+  int? get createdTimestamp => _message.createdTimestamp?.toInt();
 }
 
 class Podcast extends BaseModel<PodcastMessage> {

@@ -41,6 +41,10 @@ var mockHttpService = MockHttpService({
       () =>
           AddSubscriptionMessage_Response(
             responseInfo: ResponseInfo(success: true),
+            subscription: UserSubscriptionMessage(
+              userId: '123',
+              podcastId: '123',
+            ),
           ).writeToBuffer(),
   '/api/subscribe/remove':
       () =>

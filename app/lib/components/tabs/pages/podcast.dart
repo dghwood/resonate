@@ -46,7 +46,7 @@ class PodcastPage extends PageComponent {
                       Image.network(podcast.imageUrl),
                       Text('Podcast: ${podcast.title}'),
 
-                      SubscribeButtonComponent(
+                      SubscribeIconCommponent(
                         authUser: _authUser,
                         podcastId: podcast.id,
                       ),

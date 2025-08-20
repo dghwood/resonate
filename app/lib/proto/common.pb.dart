@@ -16,6 +16,84 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+class StorageMetadataMessage extends $pb.GeneratedMessage {
+  factory StorageMetadataMessage({
+    $core.bool? isDeleted,
+    $fixnum.Int64? updatedTimestamp,
+    $fixnum.Int64? createdTimestamp,
+  }) {
+    final $result = create();
+    if (isDeleted != null) {
+      $result.isDeleted = isDeleted;
+    }
+    if (updatedTimestamp != null) {
+      $result.updatedTimestamp = updatedTimestamp;
+    }
+    if (createdTimestamp != null) {
+      $result.createdTimestamp = createdTimestamp;
+    }
+    return $result;
+  }
+  StorageMetadataMessage._() : super();
+  factory StorageMetadataMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorageMetadataMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StorageMetadataMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'isDeleted')
+    ..aInt64(2, _omitFieldNames ? '' : 'updatedTimestamp')
+    ..aInt64(3, _omitFieldNames ? '' : 'createdTimestamp')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StorageMetadataMessage clone() => StorageMetadataMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StorageMetadataMessage copyWith(void Function(StorageMetadataMessage) updates) => super.copyWith((message) => updates(message as StorageMetadataMessage)) as StorageMetadataMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StorageMetadataMessage create() => StorageMetadataMessage._();
+  StorageMetadataMessage createEmptyInstance() => create();
+  static $pb.PbList<StorageMetadataMessage> createRepeated() => $pb.PbList<StorageMetadataMessage>();
+  @$core.pragma('dart2js:noInline')
+  static StorageMetadataMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageMetadataMessage>(create);
+  static StorageMetadataMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get isDeleted => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isDeleted($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsDeleted() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsDeleted() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get updatedTimestamp => $_getI64(1);
+  @$pb.TagNumber(2)
+  set updatedTimestamp($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUpdatedTimestamp() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUpdatedTimestamp() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get createdTimestamp => $_getI64(2);
+  @$pb.TagNumber(3)
+  set createdTimestamp($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCreatedTimestamp() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCreatedTimestamp() => $_clearField(3);
+}
+
 class PodcastMessage extends $pb.GeneratedMessage {
   factory PodcastMessage({
     $core.String? id,
@@ -669,6 +747,7 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? userId,
     $core.String? podcastId,
+    StorageMetadataMessage? metadata,
   }) {
     final $result = create();
     if (id != null) {
@@ -680,6 +759,9 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
     if (podcastId != null) {
       $result.podcastId = podcastId;
     }
+    if (metadata != null) {
+      $result.metadata = metadata;
+    }
     return $result;
   }
   UserSubscriptionMessage._() : super();
@@ -690,6 +772,7 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'userId')
     ..aOS(3, _omitFieldNames ? '' : 'podcastId')
+    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata', subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -740,6 +823,17 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
   $core.bool hasPodcastId() => $_has(2);
   @$pb.TagNumber(3)
   void clearPodcastId() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  StorageMetadataMessage get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(StorageMetadataMessage v) { $_setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => $_clearField(4);
+  @$pb.TagNumber(4)
+  StorageMetadataMessage ensureMetadata() => $_ensure(3);
 }
 
 class UserListenMessage extends $pb.GeneratedMessage {

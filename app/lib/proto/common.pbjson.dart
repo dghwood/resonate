@@ -13,6 +13,22 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use storageMetadataMessageDescriptor instead')
+const StorageMetadataMessage$json = {
+  '1': 'StorageMetadataMessage',
+  '2': [
+    {'1': 'is_deleted', '3': 1, '4': 1, '5': 8, '10': 'isDeleted'},
+    {'1': 'updated_timestamp', '3': 2, '4': 1, '5': 3, '10': 'updatedTimestamp'},
+    {'1': 'created_timestamp', '3': 3, '4': 1, '5': 3, '10': 'createdTimestamp'},
+  ],
+};
+
+/// Descriptor for `StorageMetadataMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storageMetadataMessageDescriptor = $convert.base64Decode(
+    'ChZTdG9yYWdlTWV0YWRhdGFNZXNzYWdlEh0KCmlzX2RlbGV0ZWQYASABKAhSCWlzRGVsZXRlZB'
+    'IrChF1cGRhdGVkX3RpbWVzdGFtcBgCIAEoA1IQdXBkYXRlZFRpbWVzdGFtcBIrChFjcmVhdGVk'
+    'X3RpbWVzdGFtcBgDIAEoA1IQY3JlYXRlZFRpbWVzdGFtcA==');
+
 @$core.Deprecated('Use podcastMessageDescriptor instead')
 const PodcastMessage$json = {
   '1': 'PodcastMessage',
@@ -136,13 +152,15 @@ const UserSubscriptionMessage$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'podcast_id', '3': 3, '4': 1, '5': 9, '10': 'podcastId'},
+    {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.resonate.StorageMetadataMessage', '10': 'metadata'},
   ],
 };
 
 /// Descriptor for `UserSubscriptionMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userSubscriptionMessageDescriptor = $convert.base64Decode(
     'ChdVc2VyU3Vic2NyaXB0aW9uTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIA'
-    'EoCVIGdXNlcklkEh0KCnBvZGNhc3RfaWQYAyABKAlSCXBvZGNhc3RJZA==');
+    'EoCVIGdXNlcklkEh0KCnBvZGNhc3RfaWQYAyABKAlSCXBvZGNhc3RJZBI8CghtZXRhZGF0YRgE'
+    'IAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRh');
 
 @$core.Deprecated('Use userListenMessageDescriptor instead')
 const UserListenMessage$json = {

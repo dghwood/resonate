@@ -18,6 +18,12 @@ package resonate;
 
 option go_package = "github.com/dghwood/resonate/proto"; 
 
+message StorageMetadataMessage {
+    bool is_deleted = 1;
+    int64 updated_timestamp = 2; 
+    int64 created_timestamp = 3;
+}
+
 message PodcastMessage {
     string id = 1;
     string title = 2;
@@ -74,6 +80,7 @@ message UserSubscriptionMessage {
     string id = 1;
     string user_id = 2;
     string podcast_id = 3;
+    StorageMetadataMessage metadata = 4; 
 }
 
 message UserListenMessage {
