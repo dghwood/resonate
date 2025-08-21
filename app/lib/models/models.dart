@@ -4,7 +4,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -15,8 +14,20 @@ import 'package:resonate/utils/proto.dart';
 
 final Logger _log = Logger('models');
 
+// Helper functions to convert between DateTime and Int64
+// Note: timestamps are in milliseconds since epoch, UTC time
+DateTime? _int64ToDateTime($fixnum.Int64? timestamp) {
+  if (timestamp == null) return null;
+  return DateTime.fromMillisecondsSinceEpoch(timestamp.toInt(), isUtc: true);
+}
+
+$fixnum.Int64? _dateTimeToInt64(DateTime? dateTime) {
+  if (dateTime == null) return null;
+  return $fixnum.Int64(dateTime.millisecondsSinceEpoch);
+}
+
 // Define a base class for common functionality
-class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
+class BaseModel<T extends GeneratedMessage> {
   final T _message;
 
   BaseModel(this._message);
@@ -35,23 +46,20 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
     _message.mergeFromBuffer(buffer);
   }
 
-  String toStringStore() {
-    // Should this be hex?
-    return latin1.decode(_message.writeToBuffer());
-  }
-
-  void fromStringStore(String storeMessage) {
-    _message.mergeFromBuffer(latin1.encode(storeMessage));
-  }
-
   Uint8List get descriptor =>
       throw UnimplementedError('descriptor must be implemented by subclasses');
 
-  DatabaseStoreType toStore() =>
-      DatabaseProtoStoreUtils<T>(descriptor, _message).toStore();
+  DatabaseProtoStoreUtils<T> get utils =>
+      DatabaseProtoStoreUtils<T>(descriptor, _message);
 
-  void fromStore(DatabaseStoreType storeMap) =>
-      DatabaseProtoStoreUtils<T>(descriptor, _message).fromStore(storeMap);
+  String toStringStore() => utils.messageToString(_message);
+
+  void fromStringStore(String storeMessage) =>
+      utils.messageFromString(storeMessage, _message);
+
+  DatabaseStoreType toStore() => utils.toStore();
+
+  void fromStore(DatabaseStoreType storeMap) => utils.fromStore(storeMap);
 
   String get id =>
       throw UnimplementedError('id must be implemented by subclasses');
@@ -61,19 +69,13 @@ class BaseModel<T extends GeneratedMessage> extends ChangeNotifier {
 class StorageMetadata extends BaseModel<StorageMetadataMessage> {
   StorageMetadata({
     bool? isDeleted,
-    int? updatedTimestamp,
-    int? createdTimestamp,
+    DateTime? updatedTimestamp,
+    DateTime? createdTimestamp,
   }) : super(
          StorageMetadataMessage(
-           isDeleted: isDeleted ?? false,
-           updatedTimestamp:
-               updatedTimestamp != null
-                   ? $fixnum.Int64(updatedTimestamp)
-                   : null,
-           createdTimestamp:
-               createdTimestamp != null
-                   ? $fixnum.Int64(createdTimestamp)
-                   : null,
+           isDeleted: isDeleted,
+           updatedTimestamp: _dateTimeToInt64(updatedTimestamp),
+           createdTimestamp: _dateTimeToInt64(createdTimestamp),
          ),
        );
 
@@ -83,8 +85,13 @@ class StorageMetadata extends BaseModel<StorageMetadataMessage> {
   Uint8List get descriptor => storageMetadataMessageDescriptor;
 
   bool get isDeleted => _message.isDeleted;
-  int? get updatedTimestamp => _message.updatedTimestamp?.toInt();
-  int? get createdTimestamp => _message.createdTimestamp?.toInt();
+  DateTime? get updatedTimestamp => _int64ToDateTime(_message.updatedTimestamp);
+  DateTime? get createdTimestamp => _int64ToDateTime(_message.createdTimestamp);
+
+  void markDeleted() {
+    _message.isDeleted = true;
+    _message.updatedTimestamp = _dateTimeToInt64(DateTime.now())!;
+  }
 }
 
 class Podcast extends BaseModel<PodcastMessage> {
@@ -271,20 +278,33 @@ class User extends BaseModel<UserMessage> {
 }
 
 class UserSubscription extends BaseModel<UserSubscriptionMessage> {
-  UserSubscription({String? id, String? userId, String? podcastId})
-    : super(
-        UserSubscriptionMessage(id: id, userId: userId, podcastId: podcastId),
-      );
+  UserSubscription({
+    String? id,
+    String? userId,
+    String? podcastId,
+    StorageMetadata? metadata,
+  }) : super(
+         UserSubscriptionMessage(
+           //  id: id,
+           userId: userId,
+           podcastId: podcastId,
+           metadata: metadata?.toMessage(),
+         ),
+       );
 
   UserSubscription.fromMessage(super.message);
+  UserSubscription.copy(UserSubscription model)
+    : super(UserSubscriptionMessage()..mergeFromMessage(model.toMessage()));
 
   @override
   Uint8List get descriptor => userSubscriptionMessageDescriptor;
 
   @override
-  String get id => _message.id;
+  String get id => '${_message.userId}-${_message.podcastId}';
   String get userId => _message.userId;
   String get podcastId => _message.podcastId;
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
 class UserListen extends BaseModel<UserListenMessage> {

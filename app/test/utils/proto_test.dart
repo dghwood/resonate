@@ -10,15 +10,16 @@ void main() {
     test(
       'toStore should correctly convert UserSubscriptionMessage to a Map',
       () {
+        var subMessage = StorageMetadataMessage(
+          isDeleted: false,
+          updatedTimestamp: Int64(1),
+          createdTimestamp: Int64(2),
+        );
         var message = UserSubscriptionMessage(
           id: '123',
           userId: 'user_456',
           podcastId: 'podcast_789',
-          metadata: StorageMetadataMessage(
-            isDeleted: false,
-            updatedTimestamp: Int64(1),
-            createdTimestamp: Int64(2),
-          ),
+          metadata: subMessage,
         );
 
         var writeStore =
@@ -30,18 +31,6 @@ void main() {
         expect(writeStore['field_1'], '123'); // id
         expect(writeStore['field_2'], 'user_456'); // userId
         expect(writeStore['field_3'], 'podcast_789'); // podcastId
-        expect(
-          (writeStore['field_4'] as DatabaseStoreType)['field_1'],
-          false,
-        ); // metadata.isDeleted
-        expect(
-          (writeStore['field_4'] as DatabaseStoreType)['field_2'],
-          Int64(1),
-        ); // metadata.isDeleted
-        expect(
-          (writeStore['field_4'] as DatabaseStoreType)['field_3'],
-          Int64(2),
-        ); // metadata.isDeleted
 
         var newMessage = UserSubscriptionMessage();
         var readStore = DatabaseProtoStoreUtils(

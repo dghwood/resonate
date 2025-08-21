@@ -124,46 +124,80 @@ class SubscriptionApi extends ChangeNotifier {
     }
   }
 
-  Future<ApiResult<UserSubscription>> subscribe(String podcastId) async {
-    // This needs to invalidate the _subscriptions cache..
-    var request = AddSubscriptionApiRequest();
-    var subscription = UserSubscriptionMessage(
-      // userId: '123', // TODO(duncan): Do I need to update this?
+  UserSubscription _createSubscription(String podcastId) {
+    return UserSubscription(
+      id: '${_authUser.user!.id}-$podcastId',
+      userId: _authUser.user!.id,
       podcastId: podcastId,
+      metadata: StorageMetadata(
+        updatedTimestamp: DateTime.now(),
+        createdTimestamp: DateTime.now(),
+      ),
     );
-    request.requestPb.subscription = subscription;
-    var response = AddSubscriptionApiResponse();
-
-    try {
-      await _subscribeServer.execute(request, response);
-      _subscriptions[podcastId] = UserSubscription.fromMessage(
-        response.responsePb.subscription,
-      );
-      return ApiResult.ok(
-        UserSubscription.fromMessage(response.responsePb.subscription),
-      );
-    } on Exception catch (e) {
-      return ApiResult.error(e);
-    }
   }
 
-  Future<ApiResult<UserSubscription>> unsubscribe(String podcastId) async {
-    // This needs to invalidate the _subscriptions cache..
-    var request = RemoveSubscriptionApiRequest();
-    request.requestPb.subscription = UserSubscriptionMessage(
-      // userId: '123', // TODO(duncan): Do I need to update this?
-      podcastId: podcastId,
-    );
-    var response = RemoveSubscriptionApiResponse();
+  Future<ApiResult<UserSubscription>> subscribe(String podcastId) async {
+    if (_subscriptions.containsKey(podcastId)) {
+      _log.info('Already subscribed to $podcastId');
+      return ApiResult.ok(_subscriptions[podcastId]!);
+    }
 
+    var subscription = _createSubscription(podcastId);
+
+    var request = AddSubscriptionApiRequest();
+    var response = AddSubscriptionApiResponse();
+    request.requestPb.subscription = subscription.toMessage();
+
+    // Sync to the database
     try {
-      await _unsubscribeServer.execute(request, response);
-      _subscriptions.remove(podcastId);
-      return ApiResult.ok(
-        UserSubscription.fromMessage(response.responsePb.subscription),
-      );
+      await _subscriptionDatabase.put(subscription);
     } on Exception catch (e) {
+      _log.severe('Failed to put subscription in database: $e');
       return ApiResult.error(e);
     }
+
+    // Sync to the server
+    try {
+      await _subscribeServer.execute(request, response);
+    } on Exception catch (e) {
+      _log.info('Server subscription failed: $e');
+    }
+
+    // Update the local cache.
+    _subscriptions[podcastId] = subscription;
+    return ApiResult.ok(subscription);
+  }
+
+  Future<ApiResult<bool>> unsubscribe(String podcastId) async {
+    if (!_subscriptions.containsKey(podcastId)) {
+      _log.info('Not subscribed to $podcastId');
+      return ApiResult.ok(true);
+    }
+
+    var subscription = UserSubscription.copy(_subscriptions[podcastId]!);
+    subscription.metadata.markDeleted();
+
+    var request = RemoveSubscriptionApiRequest();
+    var response = RemoveSubscriptionApiResponse();
+    request.requestPb.subscription = subscription.toMessage();
+
+    // Update the database
+    try {
+      await _subscriptionDatabase.put(subscription);
+    } on Exception catch (e) {
+      _log.severe('Failed to remove subscription from database: $e');
+      return ApiResult.error(e);
+    }
+
+    // Update the server
+    try {
+      await _unsubscribeServer.execute(request, response);
+    } on Exception catch (e) {
+      _log.info('Server unsubscription failed: $e');
+    }
+
+    // Update the local cache
+    _subscriptions.remove(podcastId);
+    return ApiResult.ok(true);
   }
 }

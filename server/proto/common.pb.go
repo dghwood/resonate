@@ -36,10 +36,12 @@ const (
 )
 
 type StorageMetadataMessage struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	IsDeleted        bool                   `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	UpdatedTimestamp int64                  `protobuf:"varint,2,opt,name=updated_timestamp,json=updatedTimestamp,proto3" json:"updated_timestamp,omitempty"`
-	CreatedTimestamp int64                  `protobuf:"varint,3,opt,name=created_timestamp,json=createdTimestamp,proto3" json:"created_timestamp,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	IsDeleted bool                   `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	// In milliseconds since epoch, UTC time
+	UpdatedTimestamp int64 `protobuf:"varint,2,opt,name=updated_timestamp,json=updatedTimestamp,proto3" json:"updated_timestamp,omitempty"`
+	// In milliseconds since epoch, UTC time
+	CreatedTimestamp int64 `protobuf:"varint,3,opt,name=created_timestamp,json=createdTimestamp,proto3" json:"created_timestamp,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }

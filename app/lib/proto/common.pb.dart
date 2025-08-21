@@ -75,6 +75,7 @@ class StorageMetadataMessage extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearIsDeleted() => $_clearField(1);
 
+  /// In milliseconds since epoch, UTC time
   @$pb.TagNumber(2)
   $fixnum.Int64 get updatedTimestamp => $_getI64(1);
   @$pb.TagNumber(2)
@@ -84,6 +85,7 @@ class StorageMetadataMessage extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdatedTimestamp() => $_clearField(2);
 
+  /// In milliseconds since epoch, UTC time
   @$pb.TagNumber(3)
   $fixnum.Int64 get createdTimestamp => $_getI64(2);
   @$pb.TagNumber(3)

@@ -20,7 +20,9 @@ option go_package = "github.com/dghwood/resonate/proto";
 
 message StorageMetadataMessage {
     bool is_deleted = 1;
+    // In milliseconds since epoch, UTC time
     int64 updated_timestamp = 2; 
+    // In milliseconds since epoch, UTC time
     int64 created_timestamp = 3;
 }
 
