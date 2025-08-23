@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/storage/podcast.dart';
 import 'package:resonate/storage/subscriptions.dart';
 
 Logger _log = Logger('api/subscription');
@@ -93,6 +95,7 @@ class SubscriptionApi extends ChangeNotifier {
          client: client,
          authUser: authUser,
        ),
+       //  _podcastDatabase = PodcastDatabase(databaseService),
        _subscriptionDatabase = SubscriptionDatabase(databaseService);
 
   final AuthUser _authUser;
@@ -100,27 +103,37 @@ class SubscriptionApi extends ChangeNotifier {
   final AddSubscriptionApiServer _subscribeServer;
   final RemoveSubscriptionApiServer _unsubscribeServer;
   final SubscriptionDatabase _subscriptionDatabase;
+  // final PodcastDatabase _podcastDatabase;
 
   final Map<String, UserSubscription> _subscriptions = {};
 
   Future<void> init() async {
     _log.info('Initializing SubscriptionApi...');
     // This should try the db and server..
-    await for (final subscription in list()) {
-      _subscriptions.clear();
-      for (final sub in subscription) {
-        _subscriptions[sub.podcastId] = sub;
+    await for (final result in list()) {
+      switch (result) {
+        case ApiOk():
+          var subscription = result.value;
+          _subscriptions.clear();
+
+          for (final sub in subscription) {
+            _subscriptions[sub.podcastId] = sub;
+          }
+        case ApiError():
+          _log.warning('Failed to load subscriptions: ${result.error}');
       }
     }
   }
 
   UserSubscription? get(String podcastId) => _subscriptions[podcastId];
 
-  Stream<Iterable<UserSubscription>> list() async* {
+  Stream<ApiResult<Iterable<UserSubscription>>> list() async* {
     try {
-      yield await _subscriptionDatabase.list();
+      var result = await _subscriptionDatabase.list();
+      yield ApiResult.ok(result);
     } on Exception catch (e) {
       _log.info('Failed to initialize subscription database: $e');
+      yield ApiResult.error(e);
     }
   }
 
@@ -136,13 +149,19 @@ class SubscriptionApi extends ChangeNotifier {
     );
   }
 
-  Future<ApiResult<UserSubscription>> subscribe(String podcastId) async {
+  Future<ApiResult<UserSubscription>> subscribe(Podcast podcast) async {
+    var podcastId = podcast.id;
     if (_subscriptions.containsKey(podcastId)) {
       _log.info('Already subscribed to $podcastId');
       return ApiResult.ok(_subscriptions[podcastId]!);
     }
 
     var subscription = _createSubscription(podcastId);
+    _log.info('created_subscription::${subscription.id}');
+
+    // TODO(duncanwood): Do I need to make sure I have a local copy of the
+    // podcast, in theory if I've got the podcastId then I should have stored
+    // it already?
 
     var request = AddSubscriptionApiRequest();
     var response = AddSubscriptionApiResponse();
@@ -168,6 +187,7 @@ class SubscriptionApi extends ChangeNotifier {
     return ApiResult.ok(subscription);
   }
 
+  // Do I need to clean up the podcast storage too?
   Future<ApiResult<bool>> unsubscribe(String podcastId) async {
     if (!_subscriptions.containsKey(podcastId)) {
       _log.info('Not subscribed to $podcastId');

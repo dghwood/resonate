@@ -48,7 +48,7 @@ class PodcastPage extends PageComponent {
 
                       SubscribeIconCommponent(
                         authUser: _authUser,
-                        podcastId: podcast.id,
+                        podcast: podcast,
                       ),
                     ],
                   ),

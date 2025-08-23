@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/components/common/add_photo.dart';
+import 'package:resonate/components/common/subscribe.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -73,7 +74,9 @@ class ProfileComponent extends StatelessWidget {
                   child: TabBarView(
                     children: [
                       Center(child: Text('Listens')),
-                      Center(child: Text('Subscriptions')),
+                      SubscriptionListComponent(
+                        authUser: context.read<AuthUser>(),
+                      ),
                       Center(child: Text('Starts')),
                       Center(child: Text('Downloads')),
                     ],

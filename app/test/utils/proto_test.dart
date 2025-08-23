@@ -2,7 +2,6 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/proto/common.pbjson.dart';
-import 'package:resonate/services/database.dart';
 import 'package:resonate/utils/proto.dart';
 
 void main() {

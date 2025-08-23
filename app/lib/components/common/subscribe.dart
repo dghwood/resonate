@@ -7,15 +7,60 @@ import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/common/subscribe');
 
+class SubscriptionListComponent extends StatelessWidget {
+  const SubscriptionListComponent({super.key, required AuthUser authUser})
+    : _authUser = authUser;
+  final AuthUser _authUser;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_authUser.isSignedIn) {
+      return Text('Sign in to see your subscriptions');
+    }
+    var subscriptionApi = _authUser.subscriptionApi;
+    return StreamBuilder(
+      stream: subscriptionApi.list(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return LoadingSpinnerComponent();
+        }
+        var result = snapshot.requireData;
+        switch (result) {
+          case ApiOk():
+            var subscriptions = result.value;
+            return ListView.builder(
+              itemCount: subscriptions.length,
+              itemBuilder: (context, index) {
+                var subscription = subscriptions.elementAt(index);
+                return ListTile(
+                  title: Text(subscription.podcastId),
+                  // subtitle: Text(subscription.podcastId),
+                  // trailing: IconButton(
+                  //   icon: Icon(Icons.remove_circle_outline),
+                  //   onPressed: () {
+                  //     subscriptionApi.unsubscribe(subscription.podcastId);
+                  //   },
+                  // ),
+                );
+              },
+            );
+          case ApiError():
+            return Text('Error loading subscriptions: ${result.error}');
+        }
+      },
+    );
+  }
+}
+
 class SubscribeIconCommponent extends StatelessWidget {
   SubscribeIconCommponent({
     super.key,
     required AuthUser authUser,
-    required String podcastId,
+    required Podcast podcast,
   }) : _authUser = authUser,
-       _podcastId = podcastId;
+       _podcast = podcast;
   final AuthUser _authUser;
-  final String _podcastId;
+  final Podcast _podcast;
 
   final ValueNotifier<Future<ApiResult<bool>>> _future =
       ValueNotifier<Future<ApiResult<bool>>>(Future.value(ApiResult.ok(true)));
@@ -33,8 +78,8 @@ class SubscribeIconCommponent extends StatelessWidget {
             }
             var result = snapshot.requireData;
             var subscriptionApi = _authUser.subscriptionApi;
-            var subscription = subscriptionApi.get(_podcastId);
-            _log.info('$_podcastId - $subscription');
+            var subscription = subscriptionApi.get(_podcast.id);
+            _log.info('${_podcast.id} - $subscription');
             switch (result) {
               case ApiOk():
                 return subscription != null
@@ -43,7 +88,7 @@ class SubscribeIconCommponent extends StatelessWidget {
                       onPressed: () {
                         _log.info('Unsubscribe press');
                         _future.value = subscriptionApi
-                            .unsubscribe(_podcastId)
+                            .unsubscribe(_podcast.id)
                             .then((r) {
                               switch (r) {
                                 case ApiOk():
@@ -59,7 +104,7 @@ class SubscribeIconCommponent extends StatelessWidget {
                       onPressed: () {
                         _log.info('Subscribe press');
                         _future.value = subscriptionApi
-                            .subscribe(_podcastId)
+                            .subscribe(_podcast)
                             .then((r) {
                               switch (r) {
                                 case ApiOk():
@@ -80,40 +125,6 @@ class SubscribeIconCommponent extends StatelessWidget {
             }
           },
         );
-      },
-    );
-  }
-}
-
-class SubscribeButtonComponent extends StatelessWidget {
-  const SubscribeButtonComponent({
-    super.key,
-    required AuthUser authUser,
-    required String podcastId,
-  }) : _authUser = authUser,
-       _podcastId = podcastId;
-  final AuthUser _authUser;
-  final String _podcastId;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!_authUser.isSignedIn) return SizedBox();
-    var subscriptionApi = _authUser.subscriptionApi;
-
-    var subscription = subscriptionApi.get(_podcastId);
-    _log.info(subscription);
-    if (subscription != null) {
-      return IconButton(
-        icon: Icon(Icons.check_circle_outline),
-        onPressed: () {
-          _authUser.subscriptionApi.unsubscribe(_podcastId);
-        },
-      );
-    }
-    return IconButton(
-      icon: Icon(Icons.add_circle_outline),
-      onPressed: () {
-        _authUser.subscriptionApi.subscribe(_podcastId);
       },
     );
   }

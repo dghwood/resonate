@@ -285,7 +285,7 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
     StorageMetadata? metadata,
   }) : super(
          UserSubscriptionMessage(
-           //  id: id,
+           id: id,
            userId: userId,
            podcastId: podcastId,
            metadata: metadata?.toMessage(),
@@ -300,7 +300,7 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
   Uint8List get descriptor => userSubscriptionMessageDescriptor;
 
   @override
-  String get id => '${_message.userId}-${_message.podcastId}';
+  String get id => _message.id;
   String get userId => _message.userId;
   String get podcastId => _message.podcastId;
   StorageMetadata get metadata =>
