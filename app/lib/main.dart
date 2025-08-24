@@ -86,6 +86,13 @@ class MyApp extends StatelessWidget {
             );
           },
         ),
+        Provider<SubscriptionsApi>(
+          create:
+              (context) => SubscriptionsApi(
+                authUser: context.read(),
+                podcastApi: context.read(),
+              ),
+        ),
       ],
       child: Builder(
         builder: (context) {

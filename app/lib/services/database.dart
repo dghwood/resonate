@@ -24,6 +24,10 @@ abstract class AbstractDatabaseService {
     Map<String, DatabaseStoreType> values,
   );
   Future<DatabaseStoreType> getValue(String storeName, String key);
+  Future<Iterable<DatabaseStoreType>> getMany(
+    String storeName,
+    Iterable<String> keys,
+  );
   Future<void> deleteValue(String storeName, String key);
   Future<Iterable<DatabaseStoreType>> getAllValues(String storeName);
   Future<Iterable<DatabaseStoreType>> getAllValuesFromIndex(
@@ -110,8 +114,9 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object value,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb)
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var index = store.index(indexName);
@@ -136,8 +141,9 @@ class DatabaseService implements AbstractDatabaseService {
     DatabaseStoreType value,
   ) async {
     _log.info('setValue::$storeName::$key');
-    if (_authUser == null || !_authUser!.isSignedInForDb)
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     await store.put(value);
@@ -149,8 +155,9 @@ class DatabaseService implements AbstractDatabaseService {
     String storeName,
     Map<String, DatabaseStoreType> values,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb)
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readwrite');
     var store = txn.objectStore(storeName);
     for (var entry in values.entries) {
@@ -161,8 +168,9 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<DatabaseStoreType> getValue(String storeName, String key) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb)
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
+    }
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var value = await store.getObject(key);
@@ -171,6 +179,27 @@ class DatabaseService implements AbstractDatabaseService {
       throw DatabaseNotFoundException('Key $key not found in store $storeName');
     }
     return value as DatabaseStoreType;
+  }
+
+  @override
+  Future<Iterable<DatabaseStoreType>> getMany(
+    String storeName,
+    Iterable<String> keys,
+  ) async {
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
+      throw UserNotSignedInError();
+    }
+    var txn = _db.transaction(storeName, 'readonly');
+    var store = txn.objectStore(storeName);
+    var values = <DatabaseStoreType>[];
+    for (var key in keys) {
+      var value = await store.getObject(key);
+      if (value != null && value is DatabaseStoreType) {
+        values.add(value);
+      }
+    }
+    await txn.completed;
+    return values;
   }
 
   @override
@@ -204,6 +233,7 @@ abstract class AbstractProtoModelDatabase<
   Future<void> put(T model);
   Future<void> putAll(Iterable<T> models);
   Future<void> get(T model);
+  Future<void> getMany(Iterable<T> models);
   Future<Iterable<T>> list();
   Future<Iterable<T>> listFromIndex(String indexName, String value);
 
@@ -255,6 +285,15 @@ class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
   Future<void> get(T model) async {
     final value = await databaseService.getValue(storeName, model.id);
     model.fromStore(value);
+  }
+
+  @override
+  Future<void> getMany(Iterable<T> models) async {
+    final keys = models.map((m) => m.id);
+    final values = await databaseService.getMany(storeName, keys);
+    for (var i = 0; i < models.length; i++) {
+      models.elementAt(i).fromStore(values.elementAt(i));
+    }
   }
 
   @override

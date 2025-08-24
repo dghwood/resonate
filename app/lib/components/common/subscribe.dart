@@ -7,51 +7,6 @@ import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/common/subscribe');
 
-class SubscriptionListComponent extends StatelessWidget {
-  const SubscriptionListComponent({super.key, required AuthUser authUser})
-    : _authUser = authUser;
-  final AuthUser _authUser;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!_authUser.isSignedIn) {
-      return Text('Sign in to see your subscriptions');
-    }
-    var subscriptionApi = _authUser.subscriptionApi;
-    return StreamBuilder(
-      stream: subscriptionApi.list(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return LoadingSpinnerComponent();
-        }
-        var result = snapshot.requireData;
-        switch (result) {
-          case ApiOk():
-            var subscriptions = result.value;
-            return ListView.builder(
-              itemCount: subscriptions.length,
-              itemBuilder: (context, index) {
-                var subscription = subscriptions.elementAt(index);
-                return ListTile(
-                  title: Text(subscription.podcastId),
-                  // subtitle: Text(subscription.podcastId),
-                  // trailing: IconButton(
-                  //   icon: Icon(Icons.remove_circle_outline),
-                  //   onPressed: () {
-                  //     subscriptionApi.unsubscribe(subscription.podcastId);
-                  //   },
-                  // ),
-                );
-              },
-            );
-          case ApiError():
-            return Text('Error loading subscriptions: ${result.error}');
-        }
-      },
-    );
-  }
-}
-
 class SubscribeIconCommponent extends StatelessWidget {
   SubscribeIconCommponent({
     super.key,

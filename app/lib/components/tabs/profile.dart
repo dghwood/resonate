@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/components/common/add_photo.dart';
-import 'package:resonate/components/common/subscribe.dart';
+import 'package:resonate/components/common/subscriptions.dart';
 import 'package:resonate/components/tabs/base.dart';
-import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 
 /* Needs 
@@ -75,7 +74,7 @@ class ProfileComponent extends StatelessWidget {
                     children: [
                       Center(child: Text('Listens')),
                       SubscriptionListComponent(
-                        authUser: context.read<AuthUser>(),
+                        subscriptionsApi: context.read(),
                       ),
                       Center(child: Text('Starts')),
                       Center(child: Text('Downloads')),

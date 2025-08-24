@@ -135,7 +135,20 @@ class PodcastApi {
     }
   }
 
-  Stream<ApiResult<Podcast>> get(String podcastId) async* {
+  Future<ApiResult<Iterable<Podcast>>> getMany(
+    Iterable<String> podcastIds,
+  ) async {
+    var podcasts = podcastIds.map((id) => Podcast(id: id)).toList();
+    try {
+      // I think the order may change here..
+      await _database.getMany(podcasts);
+      return ApiResult.ok(podcasts);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
+  Stream<ApiResult<Podcast>> get(String podcastId, {onlyLocal = false}) async* {
     var request = GetPodcastApiRequest();
     var response = GetPodcastApiResponse();
     var podcast = Podcast(id: podcastId);
@@ -144,9 +157,13 @@ class PodcastApi {
       // await _episodeDatabase.populatePodcastEpisodes(podcast);
 
       yield ApiResult.ok(podcast);
-    } on Exception catch (_) {
+      if (onlyLocal) return;
+    } on Exception catch (e) {
       // Do I return this?
-      // yield ApiResult.error(e);
+      if (onlyLocal) {
+        yield ApiResult.error(e);
+        return;
+      }
     }
     // TODO(duncan): Check if the database is stale and only request then.
     try {

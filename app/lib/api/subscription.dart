@@ -110,31 +110,37 @@ class SubscriptionApi extends ChangeNotifier {
   Future<void> init() async {
     _log.info('Initializing SubscriptionApi...');
     // This should try the db and server..
-    await for (final result in list()) {
-      switch (result) {
-        case ApiOk():
-          var subscription = result.value;
-          _subscriptions.clear();
+    var result = await sync();
+    switch (result) {
+      case ApiOk():
+        var subscription = result.value;
+        _subscriptions.clear();
 
-          for (final sub in subscription) {
-            _subscriptions[sub.podcastId] = sub;
-          }
-        case ApiError():
-          _log.warning('Failed to load subscriptions: ${result.error}');
-      }
+        for (final sub in subscription) {
+          _subscriptions[sub.podcastId] = sub;
+        }
+      case ApiError():
+        _log.warning('Failed to load subscriptions: ${result.error}');
     }
   }
 
   UserSubscription? get(String podcastId) => _subscriptions[podcastId];
 
-  Stream<ApiResult<Iterable<UserSubscription>>> list() async* {
+  Future<ApiResult<Iterable<UserSubscription>>> list() async {
+    // I need to check with the server
     try {
       var result = await _subscriptionDatabase.list();
-      yield ApiResult.ok(result);
+      return ApiResult.ok(result);
     } on Exception catch (e) {
       _log.info('Failed to initialize subscription database: $e');
-      yield ApiResult.error(e);
+      return ApiResult.error(e);
     }
+  }
+
+  Future<ApiResult<Iterable<UserSubscription>>> sync() async {
+    var result = await list();
+    // TODO(duncanwood): Sync with the server
+    return result;
   }
 
   UserSubscription _createSubscription(String podcastId) {
@@ -219,5 +225,41 @@ class SubscriptionApi extends ChangeNotifier {
     // Update the local cache
     _subscriptions.remove(podcastId);
     return ApiResult.ok(true);
+  }
+}
+
+class SubscriptionsApi {
+  const SubscriptionsApi({
+    required AuthUser authUser,
+    required PodcastApi podcastApi,
+  }) : _authUser = authUser,
+       _podcastApi = podcastApi;
+
+  final AuthUser _authUser;
+  final PodcastApi _podcastApi;
+
+  Future<ApiResult<Iterable<Podcast>>> get() async {
+    var subscriptionApi = _authUser.subscriptionApi;
+    var result = await subscriptionApi.list();
+
+    switch (result) {
+      case ApiOk():
+        break;
+      case ApiError():
+        return ApiResult.error(result.error);
+    }
+
+    var subscriptions = result.value;
+    var podcastIds = subscriptions.map((s) => s.podcastId);
+    var podcastResult = await _podcastApi.getMany(podcastIds);
+
+    switch (podcastResult) {
+      case ApiOk():
+        break;
+      case ApiError():
+        return ApiResult.error(podcastResult.error);
+    }
+
+    return ApiResult.ok(podcastResult.value);
   }
 }
