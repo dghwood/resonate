@@ -5,6 +5,7 @@ import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
+import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/subscribe.dart';
@@ -28,10 +29,13 @@ class PodcastPage extends PageComponent {
 
   @override
   Widget buildChild(BuildContext context) {
+    var podcastStream = _podcastApi.get(podcastId);
+    var episodeStream = _podcastApi.list(podcastId);
     return StreamBuilder(
-      stream: _podcastApi.get(podcastId),
+      stream: podcastStream,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        _log.info('buildChild');
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingSpinnerComponent();
         }
         var result = snapshot.requireData;
@@ -53,7 +57,7 @@ class PodcastPage extends PageComponent {
                     ],
                   ),
                   StreamBuilder(
-                    stream: _podcastApi.list(podcastId),
+                    stream: episodeStream,
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return LoadingSpinnerComponent();
@@ -69,10 +73,7 @@ class PodcastPage extends PageComponent {
                             itemCount: results.length,
                             itemBuilder: (context, index) {
                               var episode = results.elementAt(index);
-                              return ListTile(
-                                title: Text(episode.title),
-                                subtitle: Text(episode.description ?? ''),
-                              );
+                              return EpisodeComponent(episode: episode);
                             },
                           );
                         case ApiError():

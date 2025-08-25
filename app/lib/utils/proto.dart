@@ -61,7 +61,6 @@ class DatabaseProtoStoreUtils<T extends GeneratedMessage> {
           );
       }
     }
-    _log.info(storeMap);
     return storeMap;
   }
 

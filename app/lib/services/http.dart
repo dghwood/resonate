@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 
-Logger _log = Logger('http');
+Logger _log = Logger('services/http');
 
 abstract class AbstractHttpService {
   Future<Uint8List> post(Uri url, {Map<String, String>? headers, Object? body});
@@ -43,7 +43,7 @@ class MockHttpService implements AbstractHttpService {
     Map<String, String>? headers,
     Object? body,
   }) async {
-    _log.info(url);
+    _log.info('post::$url');
     await Future.delayed(Duration(seconds: 2));
     if (response.containsKey(url.path)) {
       return response[url.path]!();

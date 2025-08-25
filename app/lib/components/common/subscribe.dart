@@ -34,14 +34,12 @@ class SubscribeIconCommponent extends StatelessWidget {
             var result = snapshot.requireData;
             var subscriptionApi = _authUser.subscriptionApi;
             var subscription = subscriptionApi.get(_podcast.id);
-            _log.info('${_podcast.id} - $subscription');
             switch (result) {
               case ApiOk():
                 return subscription != null
                     ? IconButton(
                       icon: Icon(Icons.check_circle_outline),
                       onPressed: () {
-                        _log.info('Unsubscribe press');
                         _future.value = subscriptionApi
                             .unsubscribe(_podcast.id)
                             .then((r) {
@@ -57,7 +55,6 @@ class SubscribeIconCommponent extends StatelessWidget {
                     : IconButton(
                       icon: Icon(Icons.add_circle_outline),
                       onPressed: () {
-                        _log.info('Subscribe press');
                         _future.value = subscriptionApi
                             .subscribe(_podcast)
                             .then((r) {

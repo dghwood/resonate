@@ -44,6 +44,12 @@ class HomePage extends TabComponent {
             errorService.report(context, Exception('This is an error'));
           },
         ),
+        TextButton(
+          child: Text('Go to podcast'),
+          onPressed: () {
+            Navigate(context).toPodcast('123');
+          },
+        ),
       ],
     );
   }

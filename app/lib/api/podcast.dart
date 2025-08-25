@@ -13,7 +13,7 @@ import 'package:resonate/services/http.dart';
 import 'package:resonate/storage/episode.dart';
 import 'package:resonate/storage/podcast.dart';
 
-Logger _log = Logger('PodcastApi');
+Logger _log = Logger('api/podcast');
 
 class GetPodcastApiRequest extends ApiRequest<GetPodcastMessage_Request> {
   GetPodcastApiRequest()
@@ -108,6 +108,7 @@ class PodcastApi {
   final EpisodeDatabase _episodeDatabase;
 
   Stream<ApiResult<Iterable<Episode>>> list(String podcastId) async* {
+    _log.info('list');
     var request = ListPodcastEpisodesApiRequest();
     request.requestPb.podcastId = podcastId;
     var response = ListPodcastEpisodesApiResponse();
@@ -138,6 +139,7 @@ class PodcastApi {
   Future<ApiResult<Iterable<Podcast>>> getMany(
     Iterable<String> podcastIds,
   ) async {
+    _log.info('getMany');
     var podcasts = podcastIds.map((id) => Podcast(id: id)).toList();
     try {
       // I think the order may change here..
@@ -149,6 +151,7 @@ class PodcastApi {
   }
 
   Stream<ApiResult<Podcast>> get(String podcastId, {onlyLocal = false}) async* {
+    _log.info('get::$podcastId');
     var request = GetPodcastApiRequest();
     var response = GetPodcastApiResponse();
     var podcast = Podcast(id: podcastId);
