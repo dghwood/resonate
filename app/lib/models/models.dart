@@ -177,12 +177,12 @@ class Episode extends BaseModel<EpisodeMessage> {
   String get id => _message.id;
   String get podcastId => _message.podcastId;
   String get title => _message.title;
-  String? get description => _message.description;
-  String? get audioUrl => _message.audioUrl;
-  String? get imageUrl => _message.imageUrl;
-  int? get publishTimestamp => _message.publishTimestamp?.toInt();
-  int? get durationSeconds => _message.durationSeconds?.toInt();
-  int? get episodeNumber => _message.episodeNumber?.toInt();
+  String get description => _message.description;
+  String get audioUrl => _message.audioUrl;
+  String get imageUrl => _message.imageUrl;
+  int get publishTimestamp => _message.publishTimestamp.toInt();
+  int get durationSeconds => _message.durationSeconds.toInt();
+  int get episodeNumber => _message.episodeNumber.toInt();
   bool? get explicit => _message.explicit;
 }
 
@@ -309,18 +309,25 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
 
 class UserListen extends BaseModel<UserListenMessage> {
   UserListen({
-    required String userId,
-    required String episodeId,
-    required int listenTimestamp,
-    required int seconds,
-    required bool completed,
+    String? id,
+    String? userId,
+    String? episodeId,
+    DateTime? listenTimestamp,
+    Duration? seconds,
+    bool? completed,
     Episode? episode,
   }) : super(
          UserListenMessage(
+           id: id,
            userId: userId,
            episodeId: episodeId,
-           listenTimestamp: $fixnum.Int64(listenTimestamp),
-           seconds: $fixnum.Int64(seconds),
+           listenTimestamp:
+               listenTimestamp != null
+                   ? $fixnum.Int64(
+                     listenTimestamp.toUtc().millisecondsSinceEpoch,
+                   )
+                   : null,
+           seconds: seconds != null ? $fixnum.Int64(seconds.inSeconds) : null,
            completed: completed,
            episode: episode?.toMessage(),
          ),
@@ -331,7 +338,7 @@ class UserListen extends BaseModel<UserListenMessage> {
   UserListen.fromMessage(super.message);
 
   @override
-  String get id => '$userId-$episodeId';
+  String get id => _message.id;
   String get userId => _message.userId;
   String get episodeId => _message.episodeId;
   int get listenTimestamp => _message.listenTimestamp.toInt();

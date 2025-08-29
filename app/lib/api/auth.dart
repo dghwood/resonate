@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
@@ -142,10 +143,16 @@ class AuthUser extends ChangeNotifier {
       databaseService: databaseService,
       authUser: this,
     );
+    listenApi = ListenApi(
+      authUser: this,
+      databaseService: databaseService,
+      httpService: httpService,
+    );
     loadFromStorage();
   }
 
   late final SubscriptionApi subscriptionApi;
+  late final ListenApi listenApi;
 
   // load from secure storage
   Future<void> loadFromStorage() async {
@@ -192,6 +199,7 @@ class AuthUser extends ChangeNotifier {
     _isSignedInForDb = true;
     // This loads the user subscriptions into memory
     await subscriptionApi.init();
+    await listenApi.init();
     _isSignedInForDb = false;
     _status = AuthUserStatus.signedIn;
   }

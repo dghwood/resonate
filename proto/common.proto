@@ -86,12 +86,15 @@ message UserSubscriptionMessage {
 }
 
 message UserListenMessage {
-    string user_id = 1;
-    string episode_id = 2;
-    int64 listen_timestamp = 3;
-    int64 seconds = 4;
-    bool completed = 5;
-    EpisodeMessage episode = 6; // this is optional, used for feed items
+    string id = 1; 
+    string user_id = 2;
+    string episode_id = 3;
+    int64 listen_timestamp = 4;
+    int64 seconds = 5;
+    bool completed = 6;
+    EpisodeMessage episode = 7; // this is optional, used for feed items
+
+    StorageMetadataMessage metadata = 8;
 }
 
 message UserFeedItemMessage {

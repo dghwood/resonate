@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/podcast.dart';
+import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/login/signin.dart';
 import 'package:resonate/components/tabs/home.dart';
 import 'package:resonate/components/tabs/pages/podcast.dart';
@@ -79,6 +80,7 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
       builder: (context, state, navigationShell) {
         return Scaffold(
           body: navigationShell,
+          bottomSheet: BottomPlayerComponent(playerApi: context.read()),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: navigationShell.currentIndex,
             onTap:

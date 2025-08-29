@@ -2606,6 +2606,210 @@ class RemoveSubscriptionMessage extends $pb.GeneratedMessage {
   RemoveSubscriptionMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class AddListenMessage_Request extends $pb.GeneratedMessage {
+  factory AddListenMessage_Request({
+    RequestInfo? requestInfo,
+    $0.UserListenMessage? listen,
+  }) {
+    final $result = create();
+    if (requestInfo != null) {
+      $result.requestInfo = requestInfo;
+    }
+    if (listen != null) {
+      $result.listen = listen;
+    }
+    return $result;
+  }
+  AddListenMessage_Request._() : super();
+  factory AddListenMessage_Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddListenMessage_Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddListenMessage.Request', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo', subBuilder: RequestInfo.create)
+    ..aOM<$0.UserListenMessage>(2, _omitFieldNames ? '' : 'listen', subBuilder: $0.UserListenMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddListenMessage_Request clone() => AddListenMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddListenMessage_Request copyWith(void Function(AddListenMessage_Request) updates) => super.copyWith((message) => updates(message as AddListenMessage_Request)) as AddListenMessage_Request;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage_Request create() => AddListenMessage_Request._();
+  AddListenMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<AddListenMessage_Request> createRepeated() => $pb.PbList<AddListenMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage_Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddListenMessage_Request>(create);
+  static AddListenMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserListenMessage get listen => $_getN(1);
+  @$pb.TagNumber(2)
+  set listen($0.UserListenMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasListen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearListen() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserListenMessage ensureListen() => $_ensure(1);
+}
+
+class AddListenMessage_Response extends $pb.GeneratedMessage {
+  factory AddListenMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.UserListenMessage? listen,
+  }) {
+    final $result = create();
+    if (responseInfo != null) {
+      $result.responseInfo = responseInfo;
+    }
+    if (listen != null) {
+      $result.listen = listen;
+    }
+    return $result;
+  }
+  AddListenMessage_Response._() : super();
+  factory AddListenMessage_Response.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddListenMessage_Response.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddListenMessage.Response', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo', subBuilder: ResponseInfo.create)
+    ..aOM<$0.UserListenMessage>(2, _omitFieldNames ? '' : 'listen', subBuilder: $0.UserListenMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddListenMessage_Response clone() => AddListenMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddListenMessage_Response copyWith(void Function(AddListenMessage_Response) updates) => super.copyWith((message) => updates(message as AddListenMessage_Response)) as AddListenMessage_Response;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage_Response create() => AddListenMessage_Response._();
+  AddListenMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<AddListenMessage_Response> createRepeated() => $pb.PbList<AddListenMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage_Response getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddListenMessage_Response>(create);
+  static AddListenMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserListenMessage get listen => $_getN(1);
+  @$pb.TagNumber(2)
+  set listen($0.UserListenMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasListen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearListen() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserListenMessage ensureListen() => $_ensure(1);
+}
+
+class AddListenMessage extends $pb.GeneratedMessage {
+  factory AddListenMessage({
+    AddListenMessage_Request? request,
+    AddListenMessage_Response? response,
+  }) {
+    final $result = create();
+    if (request != null) {
+      $result.request = request;
+    }
+    if (response != null) {
+      $result.response = response;
+    }
+    return $result;
+  }
+  AddListenMessage._() : super();
+  factory AddListenMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddListenMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddListenMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'), createEmptyInstance: create)
+    ..aOM<AddListenMessage_Request>(1, _omitFieldNames ? '' : 'request', subBuilder: AddListenMessage_Request.create)
+    ..aOM<AddListenMessage_Response>(2, _omitFieldNames ? '' : 'response', subBuilder: AddListenMessage_Response.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddListenMessage clone() => AddListenMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddListenMessage copyWith(void Function(AddListenMessage) updates) => super.copyWith((message) => updates(message as AddListenMessage)) as AddListenMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage create() => AddListenMessage._();
+  AddListenMessage createEmptyInstance() => create();
+  static $pb.PbList<AddListenMessage> createRepeated() => $pb.PbList<AddListenMessage>();
+  @$core.pragma('dart2js:noInline')
+  static AddListenMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddListenMessage>(create);
+  static AddListenMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  AddListenMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(AddListenMessage_Request v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  AddListenMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  AddListenMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(AddListenMessage_Response v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  AddListenMessage_Response ensureResponse() => $_ensure(1);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

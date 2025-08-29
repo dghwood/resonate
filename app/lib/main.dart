@@ -4,6 +4,7 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/api/subscription.dart';
@@ -12,6 +13,7 @@ import 'package:resonate/router/routes.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database.dart';
 
 // import 'ui/scaffold.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<ErrorService>(create: (context) => ErrorService()),
+
         Provider<AbstractHttpService>(create: (context) => mockHttpService),
         Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
         Provider<SecureProtoDatabase>(
@@ -68,7 +71,13 @@ class MyApp extends StatelessWidget {
                 databaseService: context.read(),
               ),
         ),
-
+        ChangeNotifierProvider<PlayerApi>(
+          create:
+              (context) => PlayerApi(
+                authUser: context.read(),
+                playerService: PlayerServiceMock(),
+              ),
+        ),
         // API
         Provider<SearchApi>(
           create:
@@ -102,7 +111,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               // brightness: Brightness.dark,
               colorScheme: ColorScheme.fromSeed(
-                brightness: Brightness.light,
+                brightness: Brightness.dark,
                 seedColor: Colors.blue,
               ),
             ),

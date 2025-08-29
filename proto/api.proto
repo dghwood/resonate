@@ -175,3 +175,16 @@ message RemoveSubscriptionMessage {
     Response response = 2;
 }
 
+message AddListenMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserListenMessage listen = 2;  
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserListenMessage listen = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}

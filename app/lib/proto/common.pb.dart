@@ -840,14 +840,19 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
 
 class UserListenMessage extends $pb.GeneratedMessage {
   factory UserListenMessage({
+    $core.String? id,
     $core.String? userId,
     $core.String? episodeId,
     $fixnum.Int64? listenTimestamp,
     $fixnum.Int64? seconds,
     $core.bool? completed,
     EpisodeMessage? episode,
+    StorageMetadataMessage? metadata,
   }) {
     final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
     if (userId != null) {
       $result.userId = userId;
     }
@@ -866,6 +871,9 @@ class UserListenMessage extends $pb.GeneratedMessage {
     if (episode != null) {
       $result.episode = episode;
     }
+    if (metadata != null) {
+      $result.metadata = metadata;
+    }
     return $result;
   }
   UserListenMessage._() : super();
@@ -873,12 +881,14 @@ class UserListenMessage extends $pb.GeneratedMessage {
   factory UserListenMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserListenMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'userId')
-    ..aOS(2, _omitFieldNames ? '' : 'episodeId')
-    ..aInt64(3, _omitFieldNames ? '' : 'listenTimestamp')
-    ..aInt64(4, _omitFieldNames ? '' : 'seconds')
-    ..aOB(5, _omitFieldNames ? '' : 'completed')
-    ..aOM<EpisodeMessage>(6, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOS(3, _omitFieldNames ? '' : 'episodeId')
+    ..aInt64(4, _omitFieldNames ? '' : 'listenTimestamp')
+    ..aInt64(5, _omitFieldNames ? '' : 'seconds')
+    ..aOB(6, _omitFieldNames ? '' : 'completed')
+    ..aOM<EpisodeMessage>(7, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
+    ..aOM<StorageMetadataMessage>(8, _omitFieldNames ? '' : 'metadata', subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -904,60 +914,80 @@ class UserListenMessage extends $pb.GeneratedMessage {
   static UserListenMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get userId => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set userId($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUserId() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUserId() => $_clearField(1);
+  void clearId() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get episodeId => $_getSZ(1);
+  $core.String get userId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set episodeId($core.String v) { $_setString(1, v); }
+  set userId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasEpisodeId() => $_has(1);
+  $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEpisodeId() => $_clearField(2);
+  void clearUserId() => $_clearField(2);
 
   @$pb.TagNumber(3)
-  $fixnum.Int64 get listenTimestamp => $_getI64(2);
+  $core.String get episodeId => $_getSZ(2);
   @$pb.TagNumber(3)
-  set listenTimestamp($fixnum.Int64 v) { $_setInt64(2, v); }
+  set episodeId($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasListenTimestamp() => $_has(2);
+  $core.bool hasEpisodeId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearListenTimestamp() => $_clearField(3);
+  void clearEpisodeId() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  $fixnum.Int64 get seconds => $_getI64(3);
+  $fixnum.Int64 get listenTimestamp => $_getI64(3);
   @$pb.TagNumber(4)
-  set seconds($fixnum.Int64 v) { $_setInt64(3, v); }
+  set listenTimestamp($fixnum.Int64 v) { $_setInt64(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasSeconds() => $_has(3);
+  $core.bool hasListenTimestamp() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSeconds() => $_clearField(4);
+  void clearListenTimestamp() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $core.bool get completed => $_getBF(4);
+  $fixnum.Int64 get seconds => $_getI64(4);
   @$pb.TagNumber(5)
-  set completed($core.bool v) { $_setBool(4, v); }
+  set seconds($fixnum.Int64 v) { $_setInt64(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasCompleted() => $_has(4);
+  $core.bool hasSeconds() => $_has(4);
   @$pb.TagNumber(5)
-  void clearCompleted() => $_clearField(5);
+  void clearSeconds() => $_clearField(5);
 
   @$pb.TagNumber(6)
-  EpisodeMessage get episode => $_getN(5);
+  $core.bool get completed => $_getBF(5);
   @$pb.TagNumber(6)
-  set episode(EpisodeMessage v) { $_setField(6, v); }
+  set completed($core.bool v) { $_setBool(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasEpisode() => $_has(5);
+  $core.bool hasCompleted() => $_has(5);
   @$pb.TagNumber(6)
-  void clearEpisode() => $_clearField(6);
-  @$pb.TagNumber(6)
-  EpisodeMessage ensureEpisode() => $_ensure(5);
+  void clearCompleted() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  EpisodeMessage get episode => $_getN(6);
+  @$pb.TagNumber(7)
+  set episode(EpisodeMessage v) { $_setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasEpisode() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearEpisode() => $_clearField(7);
+  @$pb.TagNumber(7)
+  EpisodeMessage ensureEpisode() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  StorageMetadataMessage get metadata => $_getN(7);
+  @$pb.TagNumber(8)
+  set metadata(StorageMetadataMessage v) { $_setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasMetadata() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearMetadata() => $_clearField(8);
+  @$pb.TagNumber(8)
+  StorageMetadataMessage ensureMetadata() => $_ensure(7);
 }
 
 class UserFeedItemMessage extends $pb.GeneratedMessage {

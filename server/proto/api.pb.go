@@ -752,6 +752,58 @@ func (x *RemoveSubscriptionMessage) GetResponse() *RemoveSubscriptionMessage_Res
 	return nil
 }
 
+type AddListenMessage struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Request       *AddListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	Response      *AddListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddListenMessage) Reset() {
+	*x = AddListenMessage{}
+	mi := &file_proto_api_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddListenMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddListenMessage) ProtoMessage() {}
+
+func (x *AddListenMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddListenMessage.ProtoReflect.Descriptor instead.
+func (*AddListenMessage) Descriptor() ([]byte, []int) {
+	return file_proto_api_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *AddListenMessage) GetRequest() *AddListenMessage_Request {
+	if x != nil {
+		return x.Request
+	}
+	return nil
+}
+
+func (x *AddListenMessage) GetResponse() *AddListenMessage_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
 type RefreshAuthMessage_Request struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
@@ -762,7 +814,7 @@ type RefreshAuthMessage_Request struct {
 
 func (x *RefreshAuthMessage_Request) Reset() {
 	*x = RefreshAuthMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[14]
+	mi := &file_proto_api_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -774,7 +826,7 @@ func (x *RefreshAuthMessage_Request) String() string {
 func (*RefreshAuthMessage_Request) ProtoMessage() {}
 
 func (x *RefreshAuthMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[14]
+	mi := &file_proto_api_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -814,7 +866,7 @@ type RefreshAuthMessage_Response struct {
 
 func (x *RefreshAuthMessage_Response) Reset() {
 	*x = RefreshAuthMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[15]
+	mi := &file_proto_api_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -826,7 +878,7 @@ func (x *RefreshAuthMessage_Response) String() string {
 func (*RefreshAuthMessage_Response) ProtoMessage() {}
 
 func (x *RefreshAuthMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[15]
+	mi := &file_proto_api_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -866,7 +918,7 @@ type LoginRequestMessage_Request struct {
 
 func (x *LoginRequestMessage_Request) Reset() {
 	*x = LoginRequestMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[16]
+	mi := &file_proto_api_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -878,7 +930,7 @@ func (x *LoginRequestMessage_Request) String() string {
 func (*LoginRequestMessage_Request) ProtoMessage() {}
 
 func (x *LoginRequestMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[16]
+	mi := &file_proto_api_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -917,7 +969,7 @@ type LoginRequestMessage_Response struct {
 
 func (x *LoginRequestMessage_Response) Reset() {
 	*x = LoginRequestMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[17]
+	mi := &file_proto_api_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -929,7 +981,7 @@ func (x *LoginRequestMessage_Response) String() string {
 func (*LoginRequestMessage_Response) ProtoMessage() {}
 
 func (x *LoginRequestMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[17]
+	mi := &file_proto_api_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,7 +1015,7 @@ type LoginUserMessage_Request struct {
 
 func (x *LoginUserMessage_Request) Reset() {
 	*x = LoginUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[18]
+	mi := &file_proto_api_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -975,7 +1027,7 @@ func (x *LoginUserMessage_Request) String() string {
 func (*LoginUserMessage_Request) ProtoMessage() {}
 
 func (x *LoginUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[18]
+	mi := &file_proto_api_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1024,7 +1076,7 @@ type LoginUserMessage_Response struct {
 
 func (x *LoginUserMessage_Response) Reset() {
 	*x = LoginUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[19]
+	mi := &file_proto_api_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1036,7 +1088,7 @@ func (x *LoginUserMessage_Response) String() string {
 func (*LoginUserMessage_Response) ProtoMessage() {}
 
 func (x *LoginUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[19]
+	mi := &file_proto_api_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1090,7 +1142,7 @@ type CreateUserMessage_Request struct {
 
 func (x *CreateUserMessage_Request) Reset() {
 	*x = CreateUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[20]
+	mi := &file_proto_api_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1102,7 +1154,7 @@ func (x *CreateUserMessage_Request) String() string {
 func (*CreateUserMessage_Request) ProtoMessage() {}
 
 func (x *CreateUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[20]
+	mi := &file_proto_api_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1142,7 +1194,7 @@ type CreateUserMessage_Response struct {
 
 func (x *CreateUserMessage_Response) Reset() {
 	*x = CreateUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[21]
+	mi := &file_proto_api_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1154,7 +1206,7 @@ func (x *CreateUserMessage_Response) String() string {
 func (*CreateUserMessage_Response) ProtoMessage() {}
 
 func (x *CreateUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[21]
+	mi := &file_proto_api_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1194,7 +1246,7 @@ type GetUserMessage_Request struct {
 
 func (x *GetUserMessage_Request) Reset() {
 	*x = GetUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[22]
+	mi := &file_proto_api_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1206,7 +1258,7 @@ func (x *GetUserMessage_Request) String() string {
 func (*GetUserMessage_Request) ProtoMessage() {}
 
 func (x *GetUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[22]
+	mi := &file_proto_api_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1246,7 +1298,7 @@ type GetUserMessage_Response struct {
 
 func (x *GetUserMessage_Response) Reset() {
 	*x = GetUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[23]
+	mi := &file_proto_api_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1258,7 +1310,7 @@ func (x *GetUserMessage_Response) String() string {
 func (*GetUserMessage_Response) ProtoMessage() {}
 
 func (x *GetUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[23]
+	mi := &file_proto_api_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1298,7 +1350,7 @@ type UpdateUserMessage_Request struct {
 
 func (x *UpdateUserMessage_Request) Reset() {
 	*x = UpdateUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[24]
+	mi := &file_proto_api_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1310,7 +1362,7 @@ func (x *UpdateUserMessage_Request) String() string {
 func (*UpdateUserMessage_Request) ProtoMessage() {}
 
 func (x *UpdateUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[24]
+	mi := &file_proto_api_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1350,7 +1402,7 @@ type UpdateUserMessage_Response struct {
 
 func (x *UpdateUserMessage_Response) Reset() {
 	*x = UpdateUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[25]
+	mi := &file_proto_api_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1362,7 +1414,7 @@ func (x *UpdateUserMessage_Response) String() string {
 func (*UpdateUserMessage_Response) ProtoMessage() {}
 
 func (x *UpdateUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[25]
+	mi := &file_proto_api_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1402,7 +1454,7 @@ type SearchMessage_Request struct {
 
 func (x *SearchMessage_Request) Reset() {
 	*x = SearchMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[26]
+	mi := &file_proto_api_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1414,7 +1466,7 @@ func (x *SearchMessage_Request) String() string {
 func (*SearchMessage_Request) ProtoMessage() {}
 
 func (x *SearchMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[26]
+	mi := &file_proto_api_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1454,7 +1506,7 @@ type SearchMessage_Response struct {
 
 func (x *SearchMessage_Response) Reset() {
 	*x = SearchMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[27]
+	mi := &file_proto_api_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1466,7 +1518,7 @@ func (x *SearchMessage_Response) String() string {
 func (*SearchMessage_Response) ProtoMessage() {}
 
 func (x *SearchMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[27]
+	mi := &file_proto_api_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1506,7 +1558,7 @@ type GetPodcastMessage_Request struct {
 
 func (x *GetPodcastMessage_Request) Reset() {
 	*x = GetPodcastMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[28]
+	mi := &file_proto_api_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1518,7 +1570,7 @@ func (x *GetPodcastMessage_Request) String() string {
 func (*GetPodcastMessage_Request) ProtoMessage() {}
 
 func (x *GetPodcastMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[28]
+	mi := &file_proto_api_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1558,7 +1610,7 @@ type GetPodcastMessage_Response struct {
 
 func (x *GetPodcastMessage_Response) Reset() {
 	*x = GetPodcastMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[29]
+	mi := &file_proto_api_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1570,7 +1622,7 @@ func (x *GetPodcastMessage_Response) String() string {
 func (*GetPodcastMessage_Response) ProtoMessage() {}
 
 func (x *GetPodcastMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[29]
+	mi := &file_proto_api_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1610,7 +1662,7 @@ type ListPodcastEpisodesMessage_Request struct {
 
 func (x *ListPodcastEpisodesMessage_Request) Reset() {
 	*x = ListPodcastEpisodesMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[30]
+	mi := &file_proto_api_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1622,7 +1674,7 @@ func (x *ListPodcastEpisodesMessage_Request) String() string {
 func (*ListPodcastEpisodesMessage_Request) ProtoMessage() {}
 
 func (x *ListPodcastEpisodesMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[30]
+	mi := &file_proto_api_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1662,7 +1714,7 @@ type ListPodcastEpisodesMessage_Response struct {
 
 func (x *ListPodcastEpisodesMessage_Response) Reset() {
 	*x = ListPodcastEpisodesMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[31]
+	mi := &file_proto_api_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1674,7 +1726,7 @@ func (x *ListPodcastEpisodesMessage_Response) String() string {
 func (*ListPodcastEpisodesMessage_Response) ProtoMessage() {}
 
 func (x *ListPodcastEpisodesMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[31]
+	mi := &file_proto_api_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1714,7 +1766,7 @@ type GetEpisodeMessage_Request struct {
 
 func (x *GetEpisodeMessage_Request) Reset() {
 	*x = GetEpisodeMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[32]
+	mi := &file_proto_api_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1726,7 +1778,7 @@ func (x *GetEpisodeMessage_Request) String() string {
 func (*GetEpisodeMessage_Request) ProtoMessage() {}
 
 func (x *GetEpisodeMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[32]
+	mi := &file_proto_api_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1766,7 +1818,7 @@ type GetEpisodeMessage_Response struct {
 
 func (x *GetEpisodeMessage_Response) Reset() {
 	*x = GetEpisodeMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[33]
+	mi := &file_proto_api_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1778,7 +1830,7 @@ func (x *GetEpisodeMessage_Response) String() string {
 func (*GetEpisodeMessage_Response) ProtoMessage() {}
 
 func (x *GetEpisodeMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[33]
+	mi := &file_proto_api_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1818,7 +1870,7 @@ type AddSubscriptionMessage_Request struct {
 
 func (x *AddSubscriptionMessage_Request) Reset() {
 	*x = AddSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[34]
+	mi := &file_proto_api_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1830,7 +1882,7 @@ func (x *AddSubscriptionMessage_Request) String() string {
 func (*AddSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *AddSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[34]
+	mi := &file_proto_api_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1870,7 +1922,7 @@ type AddSubscriptionMessage_Response struct {
 
 func (x *AddSubscriptionMessage_Response) Reset() {
 	*x = AddSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[35]
+	mi := &file_proto_api_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1882,7 +1934,7 @@ func (x *AddSubscriptionMessage_Response) String() string {
 func (*AddSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *AddSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[35]
+	mi := &file_proto_api_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1922,7 +1974,7 @@ type RemoveSubscriptionMessage_Request struct {
 
 func (x *RemoveSubscriptionMessage_Request) Reset() {
 	*x = RemoveSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[36]
+	mi := &file_proto_api_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1934,7 +1986,7 @@ func (x *RemoveSubscriptionMessage_Request) String() string {
 func (*RemoveSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *RemoveSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[36]
+	mi := &file_proto_api_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1974,7 +2026,7 @@ type RemoveSubscriptionMessage_Response struct {
 
 func (x *RemoveSubscriptionMessage_Response) Reset() {
 	*x = RemoveSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[37]
+	mi := &file_proto_api_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1986,7 +2038,7 @@ func (x *RemoveSubscriptionMessage_Response) String() string {
 func (*RemoveSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *RemoveSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[37]
+	mi := &file_proto_api_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2012,6 +2064,110 @@ func (x *RemoveSubscriptionMessage_Response) GetResponseInfo() *ResponseInfo {
 func (x *RemoveSubscriptionMessage_Response) GetSubscription() *UserSubscriptionMessage {
 	if x != nil {
 		return x.Subscription
+	}
+	return nil
+}
+
+type AddListenMessage_Request struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
+	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddListenMessage_Request) Reset() {
+	*x = AddListenMessage_Request{}
+	mi := &file_proto_api_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddListenMessage_Request) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddListenMessage_Request) ProtoMessage() {}
+
+func (x *AddListenMessage_Request) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddListenMessage_Request.ProtoReflect.Descriptor instead.
+func (*AddListenMessage_Request) Descriptor() ([]byte, []int) {
+	return file_proto_api_proto_rawDescGZIP(), []int{14, 0}
+}
+
+func (x *AddListenMessage_Request) GetRequestInfo() *RequestInfo {
+	if x != nil {
+		return x.RequestInfo
+	}
+	return nil
+}
+
+func (x *AddListenMessage_Request) GetListen() *UserListenMessage {
+	if x != nil {
+		return x.Listen
+	}
+	return nil
+}
+
+type AddListenMessage_Response struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
+	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddListenMessage_Response) Reset() {
+	*x = AddListenMessage_Response{}
+	mi := &file_proto_api_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddListenMessage_Response) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddListenMessage_Response) ProtoMessage() {}
+
+func (x *AddListenMessage_Response) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddListenMessage_Response.ProtoReflect.Descriptor instead.
+func (*AddListenMessage_Response) Descriptor() ([]byte, []int) {
+	return file_proto_api_proto_rawDescGZIP(), []int{14, 1}
+}
+
+func (x *AddListenMessage_Response) GetResponseInfo() *ResponseInfo {
+	if x != nil {
+		return x.ResponseInfo
+	}
+	return nil
+}
+
+func (x *AddListenMessage_Response) GetListen() *UserListenMessage {
+	if x != nil {
+		return x.Listen
 	}
 	return nil
 }
@@ -2139,7 +2295,16 @@ const file_proto_api_proto_rawDesc = "" +
 	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscription\x1a\x92\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12E\n" +
-	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscriptionB#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscription\"\x9a\x03\n" +
+	"\x10AddListenMessage\x12@\n" +
+	"\arequest\x18\x01 \x01(\v2&.resonate.api.AddListenMessage.RequestR\arequest\x12C\n" +
+	"\bresponse\x18\x02 \x01(\v2'.resonate.api.AddListenMessage.ResponseR\bresponse\x1a|\n" +
+	"\aRequest\x12<\n" +
+	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x123\n" +
+	"\x06listen\x18\x02 \x01(\v2\x1b.resonate.UserListenMessageR\x06listen\x1a\x80\x01\n" +
+	"\bResponse\x12?\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x123\n" +
+	"\x06listen\x18\x02 \x01(\v2\x1b.resonate.UserListenMessageR\x06listenB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_api_proto_rawDescOnce sync.Once
@@ -2153,7 +2318,7 @@ func file_proto_api_proto_rawDescGZIP() []byte {
 	return file_proto_api_proto_rawDescData
 }
 
-var file_proto_api_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_proto_api_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
 var file_proto_api_proto_goTypes = []any{
 	(*ResponseInfo)(nil),                        // 0: resonate.api.ResponseInfo
 	(*RequestInfo)(nil),                         // 1: resonate.api.RequestInfo
@@ -2169,110 +2334,120 @@ var file_proto_api_proto_goTypes = []any{
 	(*GetEpisodeMessage)(nil),                   // 11: resonate.api.GetEpisodeMessage
 	(*AddSubscriptionMessage)(nil),              // 12: resonate.api.AddSubscriptionMessage
 	(*RemoveSubscriptionMessage)(nil),           // 13: resonate.api.RemoveSubscriptionMessage
-	(*RefreshAuthMessage_Request)(nil),          // 14: resonate.api.RefreshAuthMessage.Request
-	(*RefreshAuthMessage_Response)(nil),         // 15: resonate.api.RefreshAuthMessage.Response
-	(*LoginRequestMessage_Request)(nil),         // 16: resonate.api.LoginRequestMessage.Request
-	(*LoginRequestMessage_Response)(nil),        // 17: resonate.api.LoginRequestMessage.Response
-	(*LoginUserMessage_Request)(nil),            // 18: resonate.api.LoginUserMessage.Request
-	(*LoginUserMessage_Response)(nil),           // 19: resonate.api.LoginUserMessage.Response
-	(*CreateUserMessage_Request)(nil),           // 20: resonate.api.CreateUserMessage.Request
-	(*CreateUserMessage_Response)(nil),          // 21: resonate.api.CreateUserMessage.Response
-	(*GetUserMessage_Request)(nil),              // 22: resonate.api.GetUserMessage.Request
-	(*GetUserMessage_Response)(nil),             // 23: resonate.api.GetUserMessage.Response
-	(*UpdateUserMessage_Request)(nil),           // 24: resonate.api.UpdateUserMessage.Request
-	(*UpdateUserMessage_Response)(nil),          // 25: resonate.api.UpdateUserMessage.Response
-	(*SearchMessage_Request)(nil),               // 26: resonate.api.SearchMessage.Request
-	(*SearchMessage_Response)(nil),              // 27: resonate.api.SearchMessage.Response
-	(*GetPodcastMessage_Request)(nil),           // 28: resonate.api.GetPodcastMessage.Request
-	(*GetPodcastMessage_Response)(nil),          // 29: resonate.api.GetPodcastMessage.Response
-	(*ListPodcastEpisodesMessage_Request)(nil),  // 30: resonate.api.ListPodcastEpisodesMessage.Request
-	(*ListPodcastEpisodesMessage_Response)(nil), // 31: resonate.api.ListPodcastEpisodesMessage.Response
-	(*GetEpisodeMessage_Request)(nil),           // 32: resonate.api.GetEpisodeMessage.Request
-	(*GetEpisodeMessage_Response)(nil),          // 33: resonate.api.GetEpisodeMessage.Response
-	(*AddSubscriptionMessage_Request)(nil),      // 34: resonate.api.AddSubscriptionMessage.Request
-	(*AddSubscriptionMessage_Response)(nil),     // 35: resonate.api.AddSubscriptionMessage.Response
-	(*RemoveSubscriptionMessage_Request)(nil),   // 36: resonate.api.RemoveSubscriptionMessage.Request
-	(*RemoveSubscriptionMessage_Response)(nil),  // 37: resonate.api.RemoveSubscriptionMessage.Response
-	(*TokenMessage)(nil),                        // 38: resonate.TokenMessage
-	(*UserMessage)(nil),                         // 39: resonate.UserMessage
-	(*SearchResultsMessage)(nil),                // 40: resonate.SearchResultsMessage
-	(*PodcastMessage)(nil),                      // 41: resonate.PodcastMessage
-	(*EpisodeMessage)(nil),                      // 42: resonate.EpisodeMessage
-	(*UserSubscriptionMessage)(nil),             // 43: resonate.UserSubscriptionMessage
+	(*AddListenMessage)(nil),                    // 14: resonate.api.AddListenMessage
+	(*RefreshAuthMessage_Request)(nil),          // 15: resonate.api.RefreshAuthMessage.Request
+	(*RefreshAuthMessage_Response)(nil),         // 16: resonate.api.RefreshAuthMessage.Response
+	(*LoginRequestMessage_Request)(nil),         // 17: resonate.api.LoginRequestMessage.Request
+	(*LoginRequestMessage_Response)(nil),        // 18: resonate.api.LoginRequestMessage.Response
+	(*LoginUserMessage_Request)(nil),            // 19: resonate.api.LoginUserMessage.Request
+	(*LoginUserMessage_Response)(nil),           // 20: resonate.api.LoginUserMessage.Response
+	(*CreateUserMessage_Request)(nil),           // 21: resonate.api.CreateUserMessage.Request
+	(*CreateUserMessage_Response)(nil),          // 22: resonate.api.CreateUserMessage.Response
+	(*GetUserMessage_Request)(nil),              // 23: resonate.api.GetUserMessage.Request
+	(*GetUserMessage_Response)(nil),             // 24: resonate.api.GetUserMessage.Response
+	(*UpdateUserMessage_Request)(nil),           // 25: resonate.api.UpdateUserMessage.Request
+	(*UpdateUserMessage_Response)(nil),          // 26: resonate.api.UpdateUserMessage.Response
+	(*SearchMessage_Request)(nil),               // 27: resonate.api.SearchMessage.Request
+	(*SearchMessage_Response)(nil),              // 28: resonate.api.SearchMessage.Response
+	(*GetPodcastMessage_Request)(nil),           // 29: resonate.api.GetPodcastMessage.Request
+	(*GetPodcastMessage_Response)(nil),          // 30: resonate.api.GetPodcastMessage.Response
+	(*ListPodcastEpisodesMessage_Request)(nil),  // 31: resonate.api.ListPodcastEpisodesMessage.Request
+	(*ListPodcastEpisodesMessage_Response)(nil), // 32: resonate.api.ListPodcastEpisodesMessage.Response
+	(*GetEpisodeMessage_Request)(nil),           // 33: resonate.api.GetEpisodeMessage.Request
+	(*GetEpisodeMessage_Response)(nil),          // 34: resonate.api.GetEpisodeMessage.Response
+	(*AddSubscriptionMessage_Request)(nil),      // 35: resonate.api.AddSubscriptionMessage.Request
+	(*AddSubscriptionMessage_Response)(nil),     // 36: resonate.api.AddSubscriptionMessage.Response
+	(*RemoveSubscriptionMessage_Request)(nil),   // 37: resonate.api.RemoveSubscriptionMessage.Request
+	(*RemoveSubscriptionMessage_Response)(nil),  // 38: resonate.api.RemoveSubscriptionMessage.Response
+	(*AddListenMessage_Request)(nil),            // 39: resonate.api.AddListenMessage.Request
+	(*AddListenMessage_Response)(nil),           // 40: resonate.api.AddListenMessage.Response
+	(*TokenMessage)(nil),                        // 41: resonate.TokenMessage
+	(*UserMessage)(nil),                         // 42: resonate.UserMessage
+	(*SearchResultsMessage)(nil),                // 43: resonate.SearchResultsMessage
+	(*PodcastMessage)(nil),                      // 44: resonate.PodcastMessage
+	(*EpisodeMessage)(nil),                      // 45: resonate.EpisodeMessage
+	(*UserSubscriptionMessage)(nil),             // 46: resonate.UserSubscriptionMessage
+	(*UserListenMessage)(nil),                   // 47: resonate.UserListenMessage
 }
 var file_proto_api_proto_depIdxs = []int32{
-	38, // 0: resonate.api.RequestInfo.access_token:type_name -> resonate.TokenMessage
-	14, // 1: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
-	15, // 2: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
-	16, // 3: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
-	17, // 4: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
-	18, // 5: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
-	19, // 6: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
-	20, // 7: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
-	21, // 8: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
-	22, // 9: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
-	23, // 10: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
-	24, // 11: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
-	25, // 12: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
-	26, // 13: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
-	27, // 14: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
-	28, // 15: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
-	29, // 16: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
-	30, // 17: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
-	31, // 18: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
-	32, // 19: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
-	33, // 20: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
-	34, // 21: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
-	35, // 22: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
-	36, // 23: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
-	37, // 24: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
-	1,  // 25: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	38, // 26: resonate.api.RefreshAuthMessage.Request.refresh_token:type_name -> resonate.TokenMessage
-	0,  // 27: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	38, // 28: resonate.api.RefreshAuthMessage.Response.access_token:type_name -> resonate.TokenMessage
-	1,  // 29: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 30: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	1,  // 31: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 32: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	38, // 33: resonate.api.LoginUserMessage.Response.access_token:type_name -> resonate.TokenMessage
-	38, // 34: resonate.api.LoginUserMessage.Response.refresh_token:type_name -> resonate.TokenMessage
-	39, // 35: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
-	1,  // 36: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	39, // 37: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
-	0,  // 38: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	39, // 39: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
-	1,  // 40: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 41: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	39, // 42: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
-	1,  // 43: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	39, // 44: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
-	0,  // 45: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	39, // 46: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
-	1,  // 47: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 48: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	40, // 49: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
-	1,  // 50: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 51: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	41, // 52: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	1,  // 53: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 54: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	42, // 55: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
-	1,  // 56: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 57: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	42, // 58: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
-	1,  // 59: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	43, // 60: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 61: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	43, // 62: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,  // 63: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	43, // 64: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 65: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	43, // 66: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	67, // [67:67] is the sub-list for method output_type
-	67, // [67:67] is the sub-list for method input_type
-	67, // [67:67] is the sub-list for extension type_name
-	67, // [67:67] is the sub-list for extension extendee
-	0,  // [0:67] is the sub-list for field type_name
+	41, // 0: resonate.api.RequestInfo.access_token:type_name -> resonate.TokenMessage
+	15, // 1: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
+	16, // 2: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
+	17, // 3: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
+	18, // 4: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
+	19, // 5: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
+	20, // 6: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
+	21, // 7: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
+	22, // 8: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
+	23, // 9: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
+	24, // 10: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
+	25, // 11: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
+	26, // 12: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
+	27, // 13: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
+	28, // 14: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
+	29, // 15: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
+	30, // 16: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
+	31, // 17: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
+	32, // 18: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
+	33, // 19: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
+	34, // 20: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
+	35, // 21: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
+	36, // 22: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
+	37, // 23: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
+	38, // 24: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
+	39, // 25: resonate.api.AddListenMessage.request:type_name -> resonate.api.AddListenMessage.Request
+	40, // 26: resonate.api.AddListenMessage.response:type_name -> resonate.api.AddListenMessage.Response
+	1,  // 27: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	41, // 28: resonate.api.RefreshAuthMessage.Request.refresh_token:type_name -> resonate.TokenMessage
+	0,  // 29: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	41, // 30: resonate.api.RefreshAuthMessage.Response.access_token:type_name -> resonate.TokenMessage
+	1,  // 31: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 32: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	1,  // 33: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 34: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	41, // 35: resonate.api.LoginUserMessage.Response.access_token:type_name -> resonate.TokenMessage
+	41, // 36: resonate.api.LoginUserMessage.Response.refresh_token:type_name -> resonate.TokenMessage
+	42, // 37: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
+	1,  // 38: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	42, // 39: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
+	0,  // 40: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	42, // 41: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
+	1,  // 42: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 43: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	42, // 44: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
+	1,  // 45: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	42, // 46: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
+	0,  // 47: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	42, // 48: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
+	1,  // 49: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 50: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	43, // 51: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	1,  // 52: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 53: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	44, // 54: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	1,  // 55: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 56: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	45, // 57: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
+	1,  // 58: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 59: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	45, // 60: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
+	1,  // 61: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	46, // 62: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 63: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	46, // 64: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,  // 65: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	46, // 66: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 67: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	46, // 68: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,  // 69: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	47, // 70: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	0,  // 71: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	47, // 72: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	73, // [73:73] is the sub-list for method output_type
+	73, // [73:73] is the sub-list for method input_type
+	73, // [73:73] is the sub-list for extension type_name
+	73, // [73:73] is the sub-list for extension extendee
+	0,  // [0:73] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }
@@ -2287,7 +2462,7 @@ func file_proto_api_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_api_proto_rawDesc), len(file_proto_api_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   38,
+			NumMessages:   41,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

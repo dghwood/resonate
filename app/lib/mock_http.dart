@@ -14,6 +14,9 @@ EpisodeMessage mockEpisodeMessage({
   title: title,
   description: description,
   audioUrl: 'https://example.com/episode.mp3',
+  durationSeconds: Int64(60 * 2),
+  imageUrl:
+      'https://image.simplecastcdn.com/images/3b29236c-8a35-4012-9d27-62c02dd189a8/c750eec7-c202-404d-a5bc-eee317e2ce3d/3000x3000/uploads-2f1595947484360-nc4atf9w7ur-dbbaa7ee07a1ee325ec48d2e666ac261-2fpodsave100daysfinal1800.jpg?aid=rss_feed',
 );
 PodcastMessage mockPodcastMessage({
   String title = 'Pod Save America',
@@ -58,7 +61,10 @@ var mockHttpService = MockHttpService({
             episodes:
                 List.generate(20, (i) => i)
                     .map(
-                      (i) => mockEpisodeMessage(title: 'Pod Save America $i'),
+                      (i) => mockEpisodeMessage(
+                        id: '$i',
+                        title: 'Pod Save America $i',
+                      ),
                     )
                     .toList(),
           ).writeToBuffer(),
