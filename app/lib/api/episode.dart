@@ -77,4 +77,17 @@ class GetEpisodeApi {
       yield ApiResult.error(e);
     }
   }
+
+  Future<ApiResult<Iterable<Episode>>> getMany(
+    Iterable<String> episodeIds,
+  ) async {
+    var episodes = episodeIds.map((id) => Episode(id: id)).toList();
+    try {
+      // I think the order may change here..
+      await _database.getMany(episodes);
+      return ApiResult.ok(episodes);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
 }

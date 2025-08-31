@@ -4,6 +4,8 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/episode.dart';
+import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
@@ -95,11 +97,29 @@ class MyApp extends StatelessWidget {
             );
           },
         ),
+        Provider<GetEpisodeApi>(
+          // Needed this so that the DB is setup
+          lazy: false,
+          create: (context) {
+            return GetEpisodeApi(
+              authUser: context.read(),
+              httpService: context.read(),
+              databaseService: context.read(),
+            );
+          },
+        ),
         Provider<SubscriptionsApi>(
           create:
               (context) => SubscriptionsApi(
                 authUser: context.read(),
                 podcastApi: context.read(),
+              ),
+        ),
+        Provider<ListensApi>(
+          create:
+              (context) => ListensApi(
+                authUser: context.read(),
+                episodeApi: context.read(),
               ),
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
@@ -104,8 +105,9 @@ class ListenApi {
 
   Future<ApiResult<UserListen>> add(
     String episodeId,
-    PlayerProgress progress,
-  ) async {
+    PlayerProgress progress, {
+    bool server = true,
+  }) async {
     UserListen listen;
     // Add to DB
     try {
@@ -114,6 +116,7 @@ class ListenApi {
     } on Exception catch (e) {
       return ApiResult.error(e);
     }
+    if (!server) return ApiResult.ok(listen);
     // Then to server
     try {
       var request = AddListenApiRequest();
@@ -127,5 +130,41 @@ class ListenApi {
     }
     // Then respond
     return ApiResult.ok(listen);
+  }
+}
+
+class ListensApi {
+  const ListensApi({
+    required AuthUser authUser,
+    required GetEpisodeApi episodeApi,
+  }) : _authUser = authUser,
+       _episodeApi = episodeApi;
+
+  final AuthUser _authUser;
+  final GetEpisodeApi _episodeApi;
+
+  Future<ApiResult<Iterable<Episode>>> get() async {
+    var listenApi = _authUser.listenApi;
+    var result = await listenApi.list();
+
+    switch (result) {
+      case ApiOk():
+        break;
+      case ApiError():
+        return ApiResult.error(result.error);
+    }
+
+    var listens = result.value;
+    var episodeIds = listens.map((s) => s.episodeId);
+    var episodeResult = await _episodeApi.getMany(episodeIds);
+
+    switch (episodeResult) {
+      case ApiOk():
+        break;
+      case ApiError():
+        return ApiResult.error(episodeResult.error);
+    }
+
+    return ApiResult.ok(episodeResult.value);
   }
 }

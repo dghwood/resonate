@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/models/models.dart';
@@ -105,11 +106,15 @@ class PlayIconComponent extends StatefulWidget {
     super.key,
     required PlayerApi playerApi,
     required Episode episode,
+    // Optional?
+    required AuthUser authUser,
   }) : _playerApi = playerApi,
-       _episode = episode;
+       _episode = episode,
+       _authUser = authUser;
 
   final PlayerApi _playerApi;
   final Episode _episode;
+  final AuthUser _authUser;
 
   @override
   State<PlayIconComponent> createState() => _PlayIconComponentState();
@@ -118,6 +123,17 @@ class PlayIconComponent extends StatefulWidget {
 class _PlayIconComponentState extends State<PlayIconComponent> {
   double _value = 100;
   StreamSubscription<PlayerProgress>? _stream;
+
+  @override
+  void initState() {
+    var listen = widget._authUser.listenApi.get(widget._episode.id);
+    if (listen != null) {
+      _value = listen.seconds.toInt() / widget._episode.durationSeconds.toInt();
+      _log.info('_value::$_value');
+    }
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -131,18 +147,24 @@ class _PlayIconComponentState extends State<PlayIconComponent> {
     });
   }
 
+  void _onPressed() async {
+    var currentEpisode = widget._playerApi.episode;
+    if (currentEpisode != null && widget._episode.id == currentEpisode.id) {
+      // episode is playing..
+      // TODO(duncan): implement pause / play?
+      return;
+    }
+    await widget._playerApi.load(widget._episode);
+    widget._playerApi.play();
+    _stream = widget._playerApi.progressStream.listen(_onData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         CircularProgressIndicator(value: _value),
-        IconButton(
-          icon: Icon(Icons.play_arrow),
-          onPressed: () async {
-            await widget._playerApi.load(widget._episode);
-            _stream = widget._playerApi.progressStream.listen(_onData);
-          },
-        ),
+        IconButton(icon: Icon(Icons.play_arrow), onPressed: _onPressed),
       ],
     );
   }

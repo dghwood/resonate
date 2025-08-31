@@ -28,25 +28,27 @@ class PlayerApi extends ChangeNotifier {
   Episode? get episode => _currentEpisode;
   Stream<PlayerProgress> get progressStream => _playerService.streamProgress();
 
+  // Implement a queue for adding listens..
+  Map<String, List<PlayerProgress>> _addQueue = {};
+  void _queueAdd(String episodeId, PlayerProgress progress) {
+    if (!_addQueue.containsKey(episodeId)) {
+      _addQueue[episodeId] = [];
+    }
+    _addQueue[episodeId]?.add(progress);
+  }
+
+  void _queuePop(String episodeId) async {
+    if (!_addQueue.containsKey(episodeId)) return;
+    var queue = _addQueue[episodeId]!;
+    var progress = queue.last;
+    _addQueue.remove(episodeId);
+    await _authUser?.listenApi.add(episodeId, progress);
+  }
+
   void _setupListenLogging(Episode episode) {
-    var prevSeconds = 0;
-    progressStream
-        .where((progress) {
-          var currentSeconds = progress.progressDuration!.inSeconds;
-          // Every 5 seconds, which seems like a lot?
-          // This is also going to bubble up a lot..
-          if ((currentSeconds - prevSeconds).abs() > 5) {
-            prevSeconds = currentSeconds;
-            return true;
-          }
-          return false;
-        })
-        .listen((progress) {
-          // This gets cancelled when the playback changes
-          // TODO(duncanwood): This probably gets called too often
-          _log.info('adding listen');
-          _authUser?.listenApi.add(episode.id, progress);
-        });
+    progressStream.listen((progress) {
+      _authUser?.listenApi.add(episode.id, progress, server: false);
+    });
   }
 
   Future<bool> load(Episode episode) async {
@@ -57,13 +59,43 @@ class PlayerApi extends ChangeNotifier {
 
     _currentEpisode = episode;
     await _playerService.load(episode);
-    _playerService.play();
+
+    // Check for listens..
+    var listen = _authUser?.listenApi.get(episode.id);
+    if (listen != null) {
+      seek(Duration(seconds: listen.seconds));
+    }
+
+    await _playerService.play();
     _setupListenLogging(episode);
     return true;
   }
 
   PlayerState get state => _playerService.state;
-  void play() => _playerService.play();
-  void pause() => _playerService.pause();
-  void stop() => _playerService.stop();
+
+  void _logProgress() {
+    if (_currentEpisode == null) return;
+    // This will hit the server
+    _authUser?.listenApi.add(_currentEpisode!.id, _playerService.progress);
+  }
+
+  Future<void> play() async {
+    await _playerService.play();
+    _logProgress();
+  }
+
+  Future<void> pause() async {
+    await _playerService.pause();
+    _logProgress();
+  }
+
+  Future<void> stop() async {
+    await _playerService.stop();
+    _logProgress();
+  }
+
+  Future<void> seek(Duration duration) async {
+    await _playerService.seek(duration);
+    _logProgress();
+  }
 }

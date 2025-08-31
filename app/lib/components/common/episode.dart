@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/models/models.dart';
 
@@ -18,13 +19,14 @@ class EpisodeComponent extends StatelessWidget {
         ListTile(
           leading: Image.network(episode.imageUrl),
           title: Text(episode.title),
-          subtitle: Text(episode.description ?? ''),
+          subtitle: Text(episode.description),
         ),
         Row(
           children: [
             PlayIconComponent(
               key: Key('play-icon-component-${episode.id}'),
               playerApi: context.read(),
+              authUser: context.read(),
               episode: episode,
             ),
             IconButton(icon: Icon(Icons.star), onPressed: () {}),

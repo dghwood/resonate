@@ -10,10 +10,10 @@ Logger _log = Logger('services/player');
 
 abstract class AbstractPlayerService {
   Future<bool> load(Episode episode);
-  void pause();
-  void play();
-  void stop();
-  void seek(Duration duration);
+  Future<void> pause();
+  Future<void> play();
+  Future<void> stop();
+  Future<void> seek(Duration duration);
   PlayerProgress get progress;
   Stream<PlayerState> streamState();
   PlayerState get state;
@@ -99,7 +99,7 @@ class PlayerServiceMock implements AbstractPlayerService {
   }
 
   @override
-  void pause() {
+  Future<void> pause() async {
     _state = PlayerState.paused;
     _timer?.cancel();
   }
@@ -107,7 +107,7 @@ class PlayerServiceMock implements AbstractPlayerService {
   Timer? _timer;
 
   void _onTick(Timer timer) {
-    _log.info('tick');
+    _log.info('tick::$_progressSeconds');
     _progressSeconds += 1;
     if (_progressSeconds > 30) {
       _timer?.cancel();
@@ -116,20 +116,24 @@ class PlayerServiceMock implements AbstractPlayerService {
   }
 
   @override
-  void play() {
+  Future<void> play() async {
+    await Future.delayed(Duration(milliseconds: 500));
     _timer?.cancel();
     _state = PlayerState.playing;
     _timer = Timer.periodic(Duration(seconds: 1), _onTick);
   }
 
   @override
-  void stop() {
+  Future<void> stop() async {
+    await Future.delayed(Duration(milliseconds: 500));
     _state = PlayerState.finished;
     _timer?.cancel();
   }
 
   @override
   Future<void> seek(Duration duration) async {
+    await Future.delayed(Duration(milliseconds: 500));
+    _log.info('seek::${duration.inSeconds}');
     _progressSeconds = duration.inSeconds;
   }
 
