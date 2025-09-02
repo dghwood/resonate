@@ -40,6 +40,22 @@ episode of Pod Save America, please email transcripts@crooked.com''',
 );
 
 var mockHttpService = MockHttpService({
+  '/api/feed':
+      () =>
+          GetFeedMessage_Response(
+            responseInfo: ResponseInfo(success: true),
+            feed: UserFeedMessage(
+              userId: '123',
+              items: List.generate(20, (i) => i).map(
+                (i) => UserFeedItemMessage(
+                  episodeItem: UserFeedItemEpisodeMessage(
+                    episode: mockEpisodeMessage(id: '$i', title: 'Episode $i'),
+                  ),
+                  // listens: UserListenMessage()
+                ),
+              ),
+            ),
+          ).writeToBuffer(),
   '/api/subscribe/add':
       () =>
           AddSubscriptionMessage_Response(

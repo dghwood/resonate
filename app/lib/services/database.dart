@@ -18,7 +18,7 @@ typedef DatabaseStoreType = Map<String, Object?>;
 
 abstract class AbstractDatabaseService {
   Future<void> init(AuthUser user);
-  Future<void> setValue(String storeName, String key, DatabaseStoreType value);
+  Future<void> setValue(String storeName, DatabaseStoreType value);
   Future<void> setValues(
     String storeName,
     Map<String, DatabaseStoreType> values,
@@ -34,6 +34,11 @@ abstract class AbstractDatabaseService {
     String storeName,
     String indexName,
     String value,
+  );
+  Future<Iterable<DatabaseStoreType>> getAllValuesFromLowerBoundIndex(
+    String storeName,
+    String indexName,
+    Object lowerBound,
   );
   Future<void> clear(String storeName);
   void registerStore(String storeName, UpgradeFunction upgradeFunction);
@@ -135,12 +140,35 @@ class DatabaseService implements AbstractDatabaseService {
   }
 
   @override
-  Future<void> setValue(
+  Future<List<DatabaseStoreType>> getAllValuesFromLowerBoundIndex(
     String storeName,
-    String key,
-    DatabaseStoreType value,
+    String indexName,
+    Object lowerBound,
   ) async {
-    _log.info('setValue::$storeName::$key');
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
+      throw UserNotSignedInError();
+    }
+    var txn = _db.transaction(storeName, 'readonly');
+    var store = txn.objectStore(storeName);
+    var index = store.index('podcastId');
+    // var index = store.index(indexName);
+    var cursor = index.openCursor(
+      range: idb.KeyRange.lowerBound(lowerBound),
+      autoAdvance: true,
+    );
+    var values = <DatabaseStoreType>[];
+    await cursor.forEach((c) {
+      if (c.value is DatabaseStoreType) {
+        values.add(c.value as DatabaseStoreType);
+      }
+    });
+    await txn.completed;
+    return values;
+  }
+
+  @override
+  Future<void> setValue(String storeName, DatabaseStoreType value) async {
+    _log.info('setValue::$storeName');
     if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
     }
@@ -236,7 +264,10 @@ abstract class AbstractProtoModelDatabase<
   Future<void> getMany(Iterable<T> models);
   Future<Iterable<T>> list();
   Future<Iterable<T>> listFromIndex(String indexName, String value);
-
+  Future<Iterable<T>> getAllValuesFromLowerBoundIndex(
+    String indexName,
+    Object lowerBound,
+  );
   T onBeforePut(T model);
   void upgradeFunction(idb.VersionChangeEvent versionChangeEvent);
 }
@@ -259,14 +290,11 @@ class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
 
   @override
   Future<void> put(T model) async {
+    _log.info('put::${model.runtimeType}');
     if (model.id.isEmpty) {
       throw ArgumentError('Model must have a non-null id');
     }
-    await databaseService.setValue(
-      storeName,
-      model.id,
-      onBeforePut(model).toStore(),
-    );
+    await databaseService.setValue(storeName, onBeforePut(model).toStore());
   }
 
   @override
@@ -309,6 +337,20 @@ class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
       storeName,
       indexName,
       value,
+    );
+    return values.map((v) => newInstance()..fromStore(v));
+  }
+
+  //getAllValuesFromLowerBoundIndex
+  @override
+  Future<Iterable<T>> getAllValuesFromLowerBoundIndex(
+    String indexName,
+    Object lowerBound,
+  ) async {
+    final values = await databaseService.getAllValuesFromLowerBoundIndex(
+      storeName,
+      indexName,
+      lowerBound,
     );
     return values.map((v) => newInstance()..fromStore(v));
   }

@@ -73,6 +73,14 @@ message UserMessage {
     int64 num_followers = 8; 
 }
 
+// Stripped down UserMessage for more public consumption
+// eg. listens  
+message PublicUserMessage {
+    string id = 1; 
+    string name = 2; 
+    string image_url = 3; 
+}
+
 message UserFollowMessage {
     string user_id = 1; 
     string followed_user_id = 2;
@@ -97,9 +105,21 @@ message UserListenMessage {
     StorageMetadataMessage metadata = 8;
 }
 
-message UserFeedItemMessage {
+message UserFeedItemEpisodeMessage {
     EpisodeMessage episode = 1;
-    UserListenMessage listen = 2; 
+    // These are social items relating to followed users
+    repeated PublicUserMessage user_listens = 2;
+} 
+message UserFeedItemRecommendationMessage {
+    EpisodeMessage episode = 1; 
+    PodcastMessage podcast = 2; 
+    repeated PublicUserMessage user_listens = 3;
+    repeated PublicUserMessage user_subscriptions = 4;
+}
+
+message UserFeedItemMessage {
+    UserFeedItemEpisodeMessage episode_item = 1; 
+    repeated UserFeedItemRecommendationMessage recommended_items = 2; 
 }
 
 message UserFeedMessage {

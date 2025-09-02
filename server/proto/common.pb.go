@@ -519,6 +519,68 @@ func (x *UserMessage) GetNumFollowers() int64 {
 	return 0
 }
 
+// Stripped down UserMessage for more public consumption
+// eg. listens
+type PublicUserMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ImageUrl      string                 `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublicUserMessage) Reset() {
+	*x = PublicUserMessage{}
+	mi := &file_proto_common_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublicUserMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublicUserMessage) ProtoMessage() {}
+
+func (x *PublicUserMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublicUserMessage.ProtoReflect.Descriptor instead.
+func (*PublicUserMessage) Descriptor() ([]byte, []int) {
+	return file_proto_common_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *PublicUserMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PublicUserMessage) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PublicUserMessage) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
 type UserFollowMessage struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	UserId         string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -529,7 +591,7 @@ type UserFollowMessage struct {
 
 func (x *UserFollowMessage) Reset() {
 	*x = UserFollowMessage{}
-	mi := &file_proto_common_proto_msgTypes[6]
+	mi := &file_proto_common_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -541,7 +603,7 @@ func (x *UserFollowMessage) String() string {
 func (*UserFollowMessage) ProtoMessage() {}
 
 func (x *UserFollowMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[6]
+	mi := &file_proto_common_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -554,7 +616,7 @@ func (x *UserFollowMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserFollowMessage.ProtoReflect.Descriptor instead.
 func (*UserFollowMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{6}
+	return file_proto_common_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UserFollowMessage) GetUserId() string {
@@ -583,7 +645,7 @@ type UserSubscriptionMessage struct {
 
 func (x *UserSubscriptionMessage) Reset() {
 	*x = UserSubscriptionMessage{}
-	mi := &file_proto_common_proto_msgTypes[7]
+	mi := &file_proto_common_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -595,7 +657,7 @@ func (x *UserSubscriptionMessage) String() string {
 func (*UserSubscriptionMessage) ProtoMessage() {}
 
 func (x *UserSubscriptionMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[7]
+	mi := &file_proto_common_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -608,7 +670,7 @@ func (x *UserSubscriptionMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserSubscriptionMessage.ProtoReflect.Descriptor instead.
 func (*UserSubscriptionMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{7}
+	return file_proto_common_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UserSubscriptionMessage) GetId() string {
@@ -655,7 +717,7 @@ type UserListenMessage struct {
 
 func (x *UserListenMessage) Reset() {
 	*x = UserListenMessage{}
-	mi := &file_proto_common_proto_msgTypes[8]
+	mi := &file_proto_common_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -667,7 +729,7 @@ func (x *UserListenMessage) String() string {
 func (*UserListenMessage) ProtoMessage() {}
 
 func (x *UserListenMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[8]
+	mi := &file_proto_common_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -680,7 +742,7 @@ func (x *UserListenMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserListenMessage.ProtoReflect.Descriptor instead.
 func (*UserListenMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{8}
+	return file_proto_common_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *UserListenMessage) GetId() string {
@@ -739,17 +801,138 @@ func (x *UserListenMessage) GetMetadata() *StorageMetadataMessage {
 	return nil
 }
 
-type UserFeedItemMessage struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Episode       *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3" json:"episode,omitempty"`
-	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
+type UserFeedItemEpisodeMessage struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Episode *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3" json:"episode,omitempty"`
+	// These are social items relating to followed users
+	UserListens   []*PublicUserMessage `protobuf:"bytes,2,rep,name=user_listens,json=userListens,proto3" json:"user_listens,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *UserFeedItemEpisodeMessage) Reset() {
+	*x = UserFeedItemEpisodeMessage{}
+	mi := &file_proto_common_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserFeedItemEpisodeMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserFeedItemEpisodeMessage) ProtoMessage() {}
+
+func (x *UserFeedItemEpisodeMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserFeedItemEpisodeMessage.ProtoReflect.Descriptor instead.
+func (*UserFeedItemEpisodeMessage) Descriptor() ([]byte, []int) {
+	return file_proto_common_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UserFeedItemEpisodeMessage) GetEpisode() *EpisodeMessage {
+	if x != nil {
+		return x.Episode
+	}
+	return nil
+}
+
+func (x *UserFeedItemEpisodeMessage) GetUserListens() []*PublicUserMessage {
+	if x != nil {
+		return x.UserListens
+	}
+	return nil
+}
+
+type UserFeedItemRecommendationMessage struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Episode           *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3" json:"episode,omitempty"`
+	Podcast           *PodcastMessage        `protobuf:"bytes,2,opt,name=podcast,proto3" json:"podcast,omitempty"`
+	UserListens       []*PublicUserMessage   `protobuf:"bytes,3,rep,name=user_listens,json=userListens,proto3" json:"user_listens,omitempty"`
+	UserSubscriptions []*PublicUserMessage   `protobuf:"bytes,4,rep,name=user_subscriptions,json=userSubscriptions,proto3" json:"user_subscriptions,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *UserFeedItemRecommendationMessage) Reset() {
+	*x = UserFeedItemRecommendationMessage{}
+	mi := &file_proto_common_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserFeedItemRecommendationMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserFeedItemRecommendationMessage) ProtoMessage() {}
+
+func (x *UserFeedItemRecommendationMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserFeedItemRecommendationMessage.ProtoReflect.Descriptor instead.
+func (*UserFeedItemRecommendationMessage) Descriptor() ([]byte, []int) {
+	return file_proto_common_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *UserFeedItemRecommendationMessage) GetEpisode() *EpisodeMessage {
+	if x != nil {
+		return x.Episode
+	}
+	return nil
+}
+
+func (x *UserFeedItemRecommendationMessage) GetPodcast() *PodcastMessage {
+	if x != nil {
+		return x.Podcast
+	}
+	return nil
+}
+
+func (x *UserFeedItemRecommendationMessage) GetUserListens() []*PublicUserMessage {
+	if x != nil {
+		return x.UserListens
+	}
+	return nil
+}
+
+func (x *UserFeedItemRecommendationMessage) GetUserSubscriptions() []*PublicUserMessage {
+	if x != nil {
+		return x.UserSubscriptions
+	}
+	return nil
+}
+
+type UserFeedItemMessage struct {
+	state            protoimpl.MessageState               `protogen:"open.v1"`
+	EpisodeItem      *UserFeedItemEpisodeMessage          `protobuf:"bytes,1,opt,name=episode_item,json=episodeItem,proto3" json:"episode_item,omitempty"`
+	RecommendedItems []*UserFeedItemRecommendationMessage `protobuf:"bytes,2,rep,name=recommended_items,json=recommendedItems,proto3" json:"recommended_items,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
 func (x *UserFeedItemMessage) Reset() {
 	*x = UserFeedItemMessage{}
-	mi := &file_proto_common_proto_msgTypes[9]
+	mi := &file_proto_common_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -761,7 +944,7 @@ func (x *UserFeedItemMessage) String() string {
 func (*UserFeedItemMessage) ProtoMessage() {}
 
 func (x *UserFeedItemMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[9]
+	mi := &file_proto_common_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -774,19 +957,19 @@ func (x *UserFeedItemMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserFeedItemMessage.ProtoReflect.Descriptor instead.
 func (*UserFeedItemMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{9}
+	return file_proto_common_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *UserFeedItemMessage) GetEpisode() *EpisodeMessage {
+func (x *UserFeedItemMessage) GetEpisodeItem() *UserFeedItemEpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.EpisodeItem
 	}
 	return nil
 }
 
-func (x *UserFeedItemMessage) GetListen() *UserListenMessage {
+func (x *UserFeedItemMessage) GetRecommendedItems() []*UserFeedItemRecommendationMessage {
 	if x != nil {
-		return x.Listen
+		return x.RecommendedItems
 	}
 	return nil
 }
@@ -801,7 +984,7 @@ type UserFeedMessage struct {
 
 func (x *UserFeedMessage) Reset() {
 	*x = UserFeedMessage{}
-	mi := &file_proto_common_proto_msgTypes[10]
+	mi := &file_proto_common_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -813,7 +996,7 @@ func (x *UserFeedMessage) String() string {
 func (*UserFeedMessage) ProtoMessage() {}
 
 func (x *UserFeedMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[10]
+	mi := &file_proto_common_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -826,7 +1009,7 @@ func (x *UserFeedMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserFeedMessage.ProtoReflect.Descriptor instead.
 func (*UserFeedMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{10}
+	return file_proto_common_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *UserFeedMessage) GetUserId() string {
@@ -856,7 +1039,7 @@ type SearchResultMessage struct {
 
 func (x *SearchResultMessage) Reset() {
 	*x = SearchResultMessage{}
-	mi := &file_proto_common_proto_msgTypes[11]
+	mi := &file_proto_common_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -868,7 +1051,7 @@ func (x *SearchResultMessage) String() string {
 func (*SearchResultMessage) ProtoMessage() {}
 
 func (x *SearchResultMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[11]
+	mi := &file_proto_common_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +1064,7 @@ func (x *SearchResultMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchResultMessage.ProtoReflect.Descriptor instead.
 func (*SearchResultMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{11}
+	return file_proto_common_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *SearchResultMessage) GetPodcast() *PodcastMessage {
@@ -914,7 +1097,7 @@ type SearchResultsMessage struct {
 
 func (x *SearchResultsMessage) Reset() {
 	*x = SearchResultsMessage{}
-	mi := &file_proto_common_proto_msgTypes[12]
+	mi := &file_proto_common_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -926,7 +1109,7 @@ func (x *SearchResultsMessage) String() string {
 func (*SearchResultsMessage) ProtoMessage() {}
 
 func (x *SearchResultsMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_common_proto_msgTypes[12]
+	mi := &file_proto_common_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -939,7 +1122,7 @@ func (x *SearchResultsMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchResultsMessage.ProtoReflect.Descriptor instead.
 func (*SearchResultsMessage) Descriptor() ([]byte, []int) {
-	return file_proto_common_proto_rawDescGZIP(), []int{12}
+	return file_proto_common_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SearchResultsMessage) GetResults() []*SearchResultMessage {
@@ -995,7 +1178,11 @@ const file_proto_common_proto_rawDesc = "" +
 	"\rsubscriptions\x18\x05 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\x125\n" +
 	"\alistens\x18\x06 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x129\n" +
 	"\tfollowing\x18\a \x03(\v2\x1b.resonate.UserFollowMessageR\tfollowing\x12#\n" +
-	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\"V\n" +
+	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\"T\n" +
+	"\x11PublicUserMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
+	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"V\n" +
 	"\x11UserFollowMessage\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12(\n" +
 	"\x10followed_user_id\x18\x02 \x01(\tR\x0efollowedUserId\"\x9f\x01\n" +
@@ -1014,10 +1201,18 @@ const file_proto_common_proto_rawDesc = "" +
 	"\aseconds\x18\x05 \x01(\x03R\aseconds\x12\x1c\n" +
 	"\tcompleted\x18\x06 \x01(\bR\tcompleted\x122\n" +
 	"\aepisode\x18\a \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\x12<\n" +
-	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"~\n" +
-	"\x13UserFeedItemMessage\x122\n" +
-	"\aepisode\x18\x01 \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\x123\n" +
-	"\x06listen\x18\x02 \x01(\v2\x1b.resonate.UserListenMessageR\x06listen\"_\n" +
+	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x90\x01\n" +
+	"\x1aUserFeedItemEpisodeMessage\x122\n" +
+	"\aepisode\x18\x01 \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\x12>\n" +
+	"\fuser_listens\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\vuserListens\"\x97\x02\n" +
+	"!UserFeedItemRecommendationMessage\x122\n" +
+	"\aepisode\x18\x01 \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\x122\n" +
+	"\apodcast\x18\x02 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\x12>\n" +
+	"\fuser_listens\x18\x03 \x03(\v2\x1b.resonate.PublicUserMessageR\vuserListens\x12J\n" +
+	"\x12user_subscriptions\x18\x04 \x03(\v2\x1b.resonate.PublicUserMessageR\x11userSubscriptions\"\xb8\x01\n" +
+	"\x13UserFeedItemMessage\x12G\n" +
+	"\fepisode_item\x18\x01 \x01(\v2$.resonate.UserFeedItemEpisodeMessageR\vepisodeItem\x12X\n" +
+	"\x11recommended_items\x18\x02 \x03(\v2+.resonate.UserFeedItemRecommendationMessageR\x10recommendedItems\"_\n" +
 	"\x0fUserFeedMessage\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x123\n" +
 	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05items\"\xa8\x01\n" +
@@ -1040,45 +1235,54 @@ func file_proto_common_proto_rawDescGZIP() []byte {
 	return file_proto_common_proto_rawDescData
 }
 
-var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_common_proto_goTypes = []any{
-	(*StorageMetadataMessage)(nil),  // 0: resonate.StorageMetadataMessage
-	(*PodcastMessage)(nil),          // 1: resonate.PodcastMessage
-	(*EpisodeMessage)(nil),          // 2: resonate.EpisodeMessage
-	(*TokenMessage)(nil),            // 3: resonate.TokenMessage
-	(*UserStorageMessage)(nil),      // 4: resonate.UserStorageMessage
-	(*UserMessage)(nil),             // 5: resonate.UserMessage
-	(*UserFollowMessage)(nil),       // 6: resonate.UserFollowMessage
-	(*UserSubscriptionMessage)(nil), // 7: resonate.UserSubscriptionMessage
-	(*UserListenMessage)(nil),       // 8: resonate.UserListenMessage
-	(*UserFeedItemMessage)(nil),     // 9: resonate.UserFeedItemMessage
-	(*UserFeedMessage)(nil),         // 10: resonate.UserFeedMessage
-	(*SearchResultMessage)(nil),     // 11: resonate.SearchResultMessage
-	(*SearchResultsMessage)(nil),    // 12: resonate.SearchResultsMessage
+	(*StorageMetadataMessage)(nil),            // 0: resonate.StorageMetadataMessage
+	(*PodcastMessage)(nil),                    // 1: resonate.PodcastMessage
+	(*EpisodeMessage)(nil),                    // 2: resonate.EpisodeMessage
+	(*TokenMessage)(nil),                      // 3: resonate.TokenMessage
+	(*UserStorageMessage)(nil),                // 4: resonate.UserStorageMessage
+	(*UserMessage)(nil),                       // 5: resonate.UserMessage
+	(*PublicUserMessage)(nil),                 // 6: resonate.PublicUserMessage
+	(*UserFollowMessage)(nil),                 // 7: resonate.UserFollowMessage
+	(*UserSubscriptionMessage)(nil),           // 8: resonate.UserSubscriptionMessage
+	(*UserListenMessage)(nil),                 // 9: resonate.UserListenMessage
+	(*UserFeedItemEpisodeMessage)(nil),        // 10: resonate.UserFeedItemEpisodeMessage
+	(*UserFeedItemRecommendationMessage)(nil), // 11: resonate.UserFeedItemRecommendationMessage
+	(*UserFeedItemMessage)(nil),               // 12: resonate.UserFeedItemMessage
+	(*UserFeedMessage)(nil),                   // 13: resonate.UserFeedMessage
+	(*SearchResultMessage)(nil),               // 14: resonate.SearchResultMessage
+	(*SearchResultsMessage)(nil),              // 15: resonate.SearchResultsMessage
 }
 var file_proto_common_proto_depIdxs = []int32{
 	2,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
 	5,  // 1: resonate.UserStorageMessage.user:type_name -> resonate.UserMessage
 	3,  // 2: resonate.UserStorageMessage.access_token:type_name -> resonate.TokenMessage
 	3,  // 3: resonate.UserStorageMessage.refresh_token:type_name -> resonate.TokenMessage
-	7,  // 4: resonate.UserMessage.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	8,  // 5: resonate.UserMessage.listens:type_name -> resonate.UserListenMessage
-	6,  // 6: resonate.UserMessage.following:type_name -> resonate.UserFollowMessage
+	8,  // 4: resonate.UserMessage.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	9,  // 5: resonate.UserMessage.listens:type_name -> resonate.UserListenMessage
+	7,  // 6: resonate.UserMessage.following:type_name -> resonate.UserFollowMessage
 	0,  // 7: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	2,  // 8: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
 	0,  // 9: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	2,  // 10: resonate.UserFeedItemMessage.episode:type_name -> resonate.EpisodeMessage
-	8,  // 11: resonate.UserFeedItemMessage.listen:type_name -> resonate.UserListenMessage
-	9,  // 12: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	1,  // 13: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
-	5,  // 14: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
-	2,  // 15: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
-	11, // 16: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	2,  // 10: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
+	6,  // 11: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
+	2,  // 12: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
+	1,  // 13: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
+	6,  // 14: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
+	6,  // 15: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
+	10, // 16: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
+	11, // 17: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
+	12, // 18: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
+	1,  // 19: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	5,  // 20: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	2,  // 21: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	14, // 22: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	23, // [23:23] is the sub-list for method output_type
+	23, // [23:23] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }
@@ -1092,7 +1296,7 @@ func file_proto_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

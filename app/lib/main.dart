@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/episode.dart';
+import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
@@ -120,6 +121,16 @@ class MyApp extends StatelessWidget {
               (context) => ListensApi(
                 authUser: context.read(),
                 episodeApi: context.read(),
+              ),
+        ),
+        Provider<GetFeedApi>(
+          // Needed this so that the DB is setup
+          lazy: false,
+          create:
+              (context) => GetFeedApi(
+                httpService: context.read(),
+                databaseService: context.read(),
+                authUser: context.read(),
               ),
         ),
       ],

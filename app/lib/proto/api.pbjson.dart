@@ -552,3 +552,43 @@ final $typed_data.Uint8List addListenMessageDescriptor = $convert.base64Decode(
     'c3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBmxpc3RlbhgCIAEoCzIbLnJlc29uYXRlLlVzZX'
     'JMaXN0ZW5NZXNzYWdlUgZsaXN0ZW4=');
 
+@$core.Deprecated('Use getFeedMessageDescriptor instead')
+const GetFeedMessage$json = {
+  '1': 'GetFeedMessage',
+  '2': [
+    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.GetFeedMessage.Request', '10': 'request'},
+    {'1': 'reponse', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.GetFeedMessage.Response', '10': 'reponse'},
+  ],
+  '3': [GetFeedMessage_Request$json, GetFeedMessage_Response$json],
+};
+
+@$core.Deprecated('Use getFeedMessageDescriptor instead')
+const GetFeedMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'before_timestamp_ms', '3': 3, '4': 1, '5': 3, '10': 'beforeTimestampMs'},
+  ],
+};
+
+@$core.Deprecated('Use getFeedMessageDescriptor instead')
+const GetFeedMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+    {'1': 'feed', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserFeedMessage', '10': 'feed'},
+  ],
+};
+
+/// Descriptor for `GetFeedMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getFeedMessageDescriptor = $convert.base64Decode(
+    'Cg5HZXRGZWVkTWVzc2FnZRI+CgdyZXF1ZXN0GAEgASgLMiQucmVzb25hdGUuYXBpLkdldEZlZW'
+    'RNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSPwoHcmVwb25zZRgCIAEoCzIlLnJlc29uYXRlLmFw'
+    'aS5HZXRGZWVkTWVzc2FnZS5SZXNwb25zZVIHcmVwb25zZRqQAQoHUmVxdWVzdBI8CgxyZXF1ZX'
+    'N0X2luZm8YASABKAsyGS5yZXNvbmF0ZS5hcGkuUmVxdWVzdEluZm9SC3JlcXVlc3RJbmZvEhcK'
+    'B3VzZXJfaWQYAiABKAlSBnVzZXJJZBIuChNiZWZvcmVfdGltZXN0YW1wX21zGAMgASgDUhFiZW'
+    'ZvcmVUaW1lc3RhbXBNcxp6CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVz'
+    'b25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEi0KBGZlZWQYAiABKAsyGS5yZX'
+    'NvbmF0ZS5Vc2VyRmVlZE1lc3NhZ2VSBGZlZWQ=');
+

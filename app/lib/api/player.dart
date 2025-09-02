@@ -28,23 +28,6 @@ class PlayerApi extends ChangeNotifier {
   Episode? get episode => _currentEpisode;
   Stream<PlayerProgress> get progressStream => _playerService.streamProgress();
 
-  // Implement a queue for adding listens..
-  Map<String, List<PlayerProgress>> _addQueue = {};
-  void _queueAdd(String episodeId, PlayerProgress progress) {
-    if (!_addQueue.containsKey(episodeId)) {
-      _addQueue[episodeId] = [];
-    }
-    _addQueue[episodeId]?.add(progress);
-  }
-
-  void _queuePop(String episodeId) async {
-    if (!_addQueue.containsKey(episodeId)) return;
-    var queue = _addQueue[episodeId]!;
-    var progress = queue.last;
-    _addQueue.remove(episodeId);
-    await _authUser?.listenApi.add(episodeId, progress);
-  }
-
   void _setupListenLogging(Episode episode) {
     progressStream.listen((progress) {
       _authUser?.listenApi.add(episode.id, progress, server: false);

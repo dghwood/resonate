@@ -680,6 +680,86 @@ class UserMessage extends $pb.GeneratedMessage {
   void clearNumFollowers() => $_clearField(8);
 }
 
+/// Stripped down UserMessage for more public consumption
+/// eg. listens
+class PublicUserMessage extends $pb.GeneratedMessage {
+  factory PublicUserMessage({
+    $core.String? id,
+    $core.String? name,
+    $core.String? imageUrl,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (imageUrl != null) {
+      $result.imageUrl = imageUrl;
+    }
+    return $result;
+  }
+  PublicUserMessage._() : super();
+  factory PublicUserMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PublicUserMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PublicUserMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOS(3, _omitFieldNames ? '' : 'imageUrl')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PublicUserMessage clone() => PublicUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PublicUserMessage copyWith(void Function(PublicUserMessage) updates) => super.copyWith((message) => updates(message as PublicUserMessage)) as PublicUserMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PublicUserMessage create() => PublicUserMessage._();
+  PublicUserMessage createEmptyInstance() => create();
+  static $pb.PbList<PublicUserMessage> createRepeated() => $pb.PbList<PublicUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static PublicUserMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PublicUserMessage>(create);
+  static PublicUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get imageUrl => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set imageUrl($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasImageUrl() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearImageUrl() => $_clearField(3);
+}
+
 class UserFollowMessage extends $pb.GeneratedMessage {
   factory UserFollowMessage({
     $core.String? userId,
@@ -990,17 +1070,162 @@ class UserListenMessage extends $pb.GeneratedMessage {
   StorageMetadataMessage ensureMetadata() => $_ensure(7);
 }
 
-class UserFeedItemMessage extends $pb.GeneratedMessage {
-  factory UserFeedItemMessage({
+class UserFeedItemEpisodeMessage extends $pb.GeneratedMessage {
+  factory UserFeedItemEpisodeMessage({
     EpisodeMessage? episode,
-    UserListenMessage? listen,
+    $core.Iterable<PublicUserMessage>? userListens,
   }) {
     final $result = create();
     if (episode != null) {
       $result.episode = episode;
     }
-    if (listen != null) {
-      $result.listen = listen;
+    if (userListens != null) {
+      $result.userListens.addAll(userListens);
+    }
+    return $result;
+  }
+  UserFeedItemEpisodeMessage._() : super();
+  factory UserFeedItemEpisodeMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserFeedItemEpisodeMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserFeedItemEpisodeMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOM<EpisodeMessage>(1, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
+    ..pc<PublicUserMessage>(2, _omitFieldNames ? '' : 'userListens', $pb.PbFieldType.PM, subBuilder: PublicUserMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserFeedItemEpisodeMessage clone() => UserFeedItemEpisodeMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserFeedItemEpisodeMessage copyWith(void Function(UserFeedItemEpisodeMessage) updates) => super.copyWith((message) => updates(message as UserFeedItemEpisodeMessage)) as UserFeedItemEpisodeMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserFeedItemEpisodeMessage create() => UserFeedItemEpisodeMessage._();
+  UserFeedItemEpisodeMessage createEmptyInstance() => create();
+  static $pb.PbList<UserFeedItemEpisodeMessage> createRepeated() => $pb.PbList<UserFeedItemEpisodeMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UserFeedItemEpisodeMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserFeedItemEpisodeMessage>(create);
+  static UserFeedItemEpisodeMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  EpisodeMessage get episode => $_getN(0);
+  @$pb.TagNumber(1)
+  set episode(EpisodeMessage v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEpisode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEpisode() => $_clearField(1);
+  @$pb.TagNumber(1)
+  EpisodeMessage ensureEpisode() => $_ensure(0);
+
+  /// These are social items relating to followed users
+  @$pb.TagNumber(2)
+  $pb.PbList<PublicUserMessage> get userListens => $_getList(1);
+}
+
+class UserFeedItemRecommendationMessage extends $pb.GeneratedMessage {
+  factory UserFeedItemRecommendationMessage({
+    EpisodeMessage? episode,
+    PodcastMessage? podcast,
+    $core.Iterable<PublicUserMessage>? userListens,
+    $core.Iterable<PublicUserMessage>? userSubscriptions,
+  }) {
+    final $result = create();
+    if (episode != null) {
+      $result.episode = episode;
+    }
+    if (podcast != null) {
+      $result.podcast = podcast;
+    }
+    if (userListens != null) {
+      $result.userListens.addAll(userListens);
+    }
+    if (userSubscriptions != null) {
+      $result.userSubscriptions.addAll(userSubscriptions);
+    }
+    return $result;
+  }
+  UserFeedItemRecommendationMessage._() : super();
+  factory UserFeedItemRecommendationMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserFeedItemRecommendationMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserFeedItemRecommendationMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
+    ..aOM<EpisodeMessage>(1, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
+    ..aOM<PodcastMessage>(2, _omitFieldNames ? '' : 'podcast', subBuilder: PodcastMessage.create)
+    ..pc<PublicUserMessage>(3, _omitFieldNames ? '' : 'userListens', $pb.PbFieldType.PM, subBuilder: PublicUserMessage.create)
+    ..pc<PublicUserMessage>(4, _omitFieldNames ? '' : 'userSubscriptions', $pb.PbFieldType.PM, subBuilder: PublicUserMessage.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserFeedItemRecommendationMessage clone() => UserFeedItemRecommendationMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserFeedItemRecommendationMessage copyWith(void Function(UserFeedItemRecommendationMessage) updates) => super.copyWith((message) => updates(message as UserFeedItemRecommendationMessage)) as UserFeedItemRecommendationMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserFeedItemRecommendationMessage create() => UserFeedItemRecommendationMessage._();
+  UserFeedItemRecommendationMessage createEmptyInstance() => create();
+  static $pb.PbList<UserFeedItemRecommendationMessage> createRepeated() => $pb.PbList<UserFeedItemRecommendationMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UserFeedItemRecommendationMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserFeedItemRecommendationMessage>(create);
+  static UserFeedItemRecommendationMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  EpisodeMessage get episode => $_getN(0);
+  @$pb.TagNumber(1)
+  set episode(EpisodeMessage v) { $_setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEpisode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEpisode() => $_clearField(1);
+  @$pb.TagNumber(1)
+  EpisodeMessage ensureEpisode() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  PodcastMessage get podcast => $_getN(1);
+  @$pb.TagNumber(2)
+  set podcast(PodcastMessage v) { $_setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPodcast() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPodcast() => $_clearField(2);
+  @$pb.TagNumber(2)
+  PodcastMessage ensurePodcast() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<PublicUserMessage> get userListens => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<PublicUserMessage> get userSubscriptions => $_getList(3);
+}
+
+class UserFeedItemMessage extends $pb.GeneratedMessage {
+  factory UserFeedItemMessage({
+    UserFeedItemEpisodeMessage? episodeItem,
+    $core.Iterable<UserFeedItemRecommendationMessage>? recommendedItems,
+  }) {
+    final $result = create();
+    if (episodeItem != null) {
+      $result.episodeItem = episodeItem;
+    }
+    if (recommendedItems != null) {
+      $result.recommendedItems.addAll(recommendedItems);
     }
     return $result;
   }
@@ -1009,8 +1234,8 @@ class UserFeedItemMessage extends $pb.GeneratedMessage {
   factory UserFeedItemMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserFeedItemMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'), createEmptyInstance: create)
-    ..aOM<EpisodeMessage>(1, _omitFieldNames ? '' : 'episode', subBuilder: EpisodeMessage.create)
-    ..aOM<UserListenMessage>(2, _omitFieldNames ? '' : 'listen', subBuilder: UserListenMessage.create)
+    ..aOM<UserFeedItemEpisodeMessage>(1, _omitFieldNames ? '' : 'episodeItem', subBuilder: UserFeedItemEpisodeMessage.create)
+    ..pc<UserFeedItemRecommendationMessage>(2, _omitFieldNames ? '' : 'recommendedItems', $pb.PbFieldType.PM, subBuilder: UserFeedItemRecommendationMessage.create)
     ..hasRequiredFields = false
   ;
 
@@ -1036,26 +1261,18 @@ class UserFeedItemMessage extends $pb.GeneratedMessage {
   static UserFeedItemMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  EpisodeMessage get episode => $_getN(0);
+  UserFeedItemEpisodeMessage get episodeItem => $_getN(0);
   @$pb.TagNumber(1)
-  set episode(EpisodeMessage v) { $_setField(1, v); }
+  set episodeItem(UserFeedItemEpisodeMessage v) { $_setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasEpisode() => $_has(0);
+  $core.bool hasEpisodeItem() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEpisode() => $_clearField(1);
+  void clearEpisodeItem() => $_clearField(1);
   @$pb.TagNumber(1)
-  EpisodeMessage ensureEpisode() => $_ensure(0);
+  UserFeedItemEpisodeMessage ensureEpisodeItem() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  UserListenMessage get listen => $_getN(1);
-  @$pb.TagNumber(2)
-  set listen(UserListenMessage v) { $_setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasListen() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearListen() => $_clearField(2);
-  @$pb.TagNumber(2)
-  UserListenMessage ensureListen() => $_ensure(1);
+  $pb.PbList<UserFeedItemRecommendationMessage> get recommendedItems => $_getList(1);
 }
 
 class UserFeedMessage extends $pb.GeneratedMessage {

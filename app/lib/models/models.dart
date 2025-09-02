@@ -389,3 +389,60 @@ class SearchResult extends BaseModel<SearchResultMessage> {
       _message.hasEpisode() ? Episode.fromMessage(_message.episode) : null;
   User? get user => _message.hasUser() ? User.fromMessage(_message.user) : null;
 }
+
+class UserFeed extends BaseModel<UserFeedMessage> {
+  UserFeed({String? userId}) : super(UserFeedMessage(userId: userId));
+
+  UserFeed.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userFeedMessageDescriptor;
+
+  @override
+  String get id => _message.userId;
+
+  Iterable<UserFeedItem> get items =>
+      _message.items.map((i) => UserFeedItem.fromMessage(i));
+}
+
+class UserFeedItem extends BaseModel<UserFeedItemMessage> {
+  UserFeedItem() : super(UserFeedItemMessage());
+
+  UserFeedItem.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userFeedItemMessageDescriptor;
+
+  UserFeedItemEpisode? get episodeItem =>
+      _message.hasEpisodeItem()
+          ? UserFeedItemEpisode.fromMessage(_message.episodeItem)
+          : null;
+
+  Iterable<UserFeedItemRecommendation>? get recommendationItems =>
+      _message.recommendedItems.isNotEmpty
+          ? _message.recommendedItems.map(
+            (i) => UserFeedItemRecommendation.fromMessage(i),
+          )
+          : null;
+}
+
+class UserFeedItemEpisode extends BaseModel<UserFeedItemEpisodeMessage> {
+  UserFeedItemEpisode() : super(UserFeedItemEpisodeMessage());
+
+  UserFeedItemEpisode.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userFeedItemEpisodeMessageDescriptor;
+
+  Episode get episode => Episode.fromMessage(_message.episode);
+}
+
+class UserFeedItemRecommendation
+    extends BaseModel<UserFeedItemRecommendationMessage> {
+  UserFeedItemRecommendation() : super(UserFeedItemRecommendationMessage());
+
+  UserFeedItemRecommendation.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => userFeedItemRecommendationMessageDescriptor;
+}

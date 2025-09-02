@@ -188,3 +188,19 @@ message AddListenMessage {
     Request request = 1; 
     Response response = 2; 
 }
+
+message GetFeedMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2; 
+        // Used for requesting the n+1 page of feed items
+        int64 before_timestamp_ms = 3; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserFeedMessage feed = 2; 
+    }
+
+    Request request = 1; 
+    Response reponse = 2; 
+}
