@@ -35,7 +35,7 @@ class HomePage extends TabComponent {
             Navigate(context).toPodcast('123');
           },
         ),
-        FeedComponent(feedApi: context.read()),
+        Expanded(child: FeedComponent(feedApi: context.read())),
       ],
     );
   }

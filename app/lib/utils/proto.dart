@@ -96,11 +96,12 @@ class DatabaseProtoStoreUtils<T extends GeneratedMessage> {
           } else {
             _message.setField(
               field.number,
-              (value as List<int>).map((i) => Int64(i)),
+              (value as List<Object?>).map((i) => Int64(i! as int)),
             );
           }
         case FieldDescriptorProto_Type.TYPE_STRING:
         case FieldDescriptorProto_Type.TYPE_BOOL:
+          // TODO(duncan): I bet I need to cast the List..
           _message.setField(field.number, value);
         case FieldDescriptorProto_Type.TYPE_MESSAGE:
           var builder = _message.info_.fieldInfo[field.number]!.subBuilder!;
@@ -117,10 +118,13 @@ class DatabaseProtoStoreUtils<T extends GeneratedMessage> {
           } else {
             var repeatedField =
                 _message.getField(field.number) as List<GeneratedMessage>;
+            // Again casting to List<String> seems to be possible here
+            // You need to convert to List<Object?> then to String
             var values =
-                (value as List<String>).map((i) {
+                (value as List<Object?>).map((i) {
                   var m = builder();
-                  messageFromString(i, m);
+                  var s = i! as String;
+                  messageFromString(s, m);
                   return m;
                 }).toList();
             // For some reason I need to add these individually, since addAll
