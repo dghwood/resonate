@@ -11,24 +11,28 @@ Logger _log = Logger('api/player');
 class PlaylistApi {
   PlaylistApi();
 
-  final List<Episode> episodes = [];
+  final List<Episode> _episodes = [];
+  Iterable<Episode> get episodes => _episodes;
+  // For recommended episodes..
+  // TODO(duncan): Implement this..
+  final List<Episode> _autoEpisodes = [];
 
-  void addNext(Episode episode) {
-    episodes.insert(0, episode);
+  void next(Episode episode) {
+    _episodes.insert(0, episode);
   }
 
   void add(Episode episode) {
-    episodes.add(episode);
+    _episodes.add(episode);
   }
 
   void remove(Episode episode) {
-    episodes.remove(episode);
+    _episodes.remove(episode);
   }
 
-  void clear() => episodes.clear();
+  void clear() => _episodes.clear();
 
-  bool get hasNext => episodes.isNotEmpty;
-  Episode get pop => episodes.removeAt(0);
+  bool get hasNext => _episodes.isNotEmpty;
+  Episode get pop => _episodes.removeAt(0);
 }
 
 class PlayerApi extends ChangeNotifier {
@@ -121,5 +125,11 @@ class PlayerApi extends ChangeNotifier {
     _log.info('seek');
     await _playerService.seek(duration);
     _logProgress();
+  }
+
+  Future<void> seekProportional(double percent) async {
+    var duration = _playerService.progress.duration!;
+    var newDurationMs = duration.inMilliseconds * percent;
+    await _playerService.seek(Duration(milliseconds: newDurationMs.toInt()));
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
@@ -9,6 +10,118 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('components/common/player');
+
+class PlayerComponent extends StatelessWidget {
+  const PlayerComponent({super.key, required PlayerApi playerApi})
+    : _playerApi = playerApi;
+
+  final PlayerApi _playerApi;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: _playerApi,
+      builder: (context, _) {
+        if (_playerApi.state == PlayerState.init) {
+          return Text('Nothing Playing');
+        }
+        var episode = _playerApi.episode!;
+        return Center(
+          child: Column(
+            children: [
+              Image.network(episode.imageUrl),
+              Text(episode.title),
+              PlayButtonComponent(playerApi: _playerApi, size: 100),
+              PlayerSliderComponent(playerApi: _playerApi),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  static void show(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      showDragHandle: true,
+      context: context,
+      builder: (context) {
+        return PlayerComponent(playerApi: context.read());
+      },
+    );
+  }
+}
+
+/* PlayerSliderComponent 
+
+  This tracks the audio duration & buffering and updates a 
+  slider to enable seek. 
+*/
+class PlayerSliderComponent extends StatefulWidget {
+  const PlayerSliderComponent({super.key, required PlayerApi playerApi})
+    : _playerApi = playerApi;
+
+  final PlayerApi _playerApi;
+
+  @override
+  State<PlayerSliderComponent> createState() => _PlayerSliderComponentState();
+}
+
+class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
+  PlayerProgress _playerProgress = PlayerProgress();
+  double _value = 0.0;
+  StreamSubscription<PlayerProgress>? _progressSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _progressSubscription = widget._playerApi.progressStream.listen((progress) {
+      setState(() {
+        _playerProgress = progress;
+        _value = progress.percentProgress;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _progressSubscription?.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Slider(
+          value: _value,
+          // Use this for buffering..
+          secondaryTrackValue: _playerProgress.percentBuffered,
+          onChangeStart: (_) {
+            _progressSubscription?.pause();
+          },
+          onChangeEnd: (newValue) {
+            setState(() {
+              _value = newValue;
+            });
+            widget._playerApi.seekProportional(newValue).then((_) {
+              _progressSubscription?.resume();
+            });
+          },
+          onChanged: (newValue) {
+            setState(() {
+              _value = newValue;
+            });
+          },
+        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [Text(duration), Text(remainingDuration)],
+        // ),
+      ],
+    );
+  }
+}
 
 class BottomPlayerComponent extends StatelessWidget {
   const BottomPlayerComponent({super.key, required PlayerApi playerApi})
@@ -38,11 +151,18 @@ class BottomPlayerComponent extends StatelessWidget {
                 child: Column(
                   children: [
                     Expanded(
-                      child: Center(
-                        child: ListTile(
-                          title: Text(episode.title),
-                          leading: Image.network(episode.imageUrl),
-                          trailing: PlayButtonComponent(playerApi: _playerApi),
+                      child: GestureDetector(
+                        onTap: () {
+                          PlayerComponent.show(context);
+                        },
+                        child: Center(
+                          child: ListTile(
+                            title: Text(episode.title),
+                            leading: Image.network(episode.imageUrl),
+                            trailing: PlayButtonComponent(
+                              playerApi: _playerApi,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -69,16 +189,21 @@ class BottomPlayerComponent extends StatelessWidget {
 }
 
 class PlayButtonComponent extends StatelessWidget {
-  const PlayButtonComponent({super.key, required PlayerApi playerApi})
-    : _playerApi = playerApi;
+  const PlayButtonComponent({
+    super.key,
+    required PlayerApi playerApi,
+    this.size = 16,
+  }) : _playerApi = playerApi;
 
   final PlayerApi _playerApi;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     switch (_playerApi.state) {
       case PlayerState.playing:
         return IconButton(
+          iconSize: size,
           icon: Icon(Icons.pause_circle_outline),
           onPressed: () {
             _playerApi.pause();
@@ -86,6 +211,7 @@ class PlayButtonComponent extends StatelessWidget {
         );
       case PlayerState.paused:
         return IconButton(
+          iconSize: size,
           icon: Icon(Icons.play_arrow_outlined),
           onPressed: () {
             _playerApi.play();
@@ -93,10 +219,10 @@ class PlayButtonComponent extends StatelessWidget {
         );
 
       case PlayerState.loading:
-        return LoadingSpinnerComponent(size: 16);
+        return LoadingSpinnerComponent(size: size);
       case PlayerState.init:
       case PlayerState.finished:
-        return Icon(Icons.done);
+        return Icon(Icons.done, size: size);
     }
   }
 }

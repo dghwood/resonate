@@ -87,8 +87,6 @@ class PlayerService implements AbstractPlayerService {
 
   Timer? _timer;
   void _onTick(_) {
-    _log.info('_onTick');
-    _log.info(progress);
     _progressStreamController?.add(progress);
   }
 
@@ -103,6 +101,7 @@ class PlayerService implements AbstractPlayerService {
   final justAudio.AudioPlayer _player = justAudio.AudioPlayer();
 
   Duration? _episodeDuration;
+
   @override
   Future<bool> load(Episode episode, {Duration? startDuration}) async {
     _episodeDuration = await _player.setAudioSource(
