@@ -35,21 +35,21 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<bool> load(Episode episode) async {
+    _log.info('load');
     // Implements equals in Episode class
     if (_currentEpisode?.id == episode.id) {
       return true;
     }
 
     _currentEpisode = episode;
-    await _playerService.load(episode);
-
     // Check for listens..
     var listen = _authUser?.listenApi.get(episode.id);
-    if (listen != null) {
-      seek(Duration(seconds: listen.seconds));
-    }
+    var startDuration =
+        listen != null ? Duration(seconds: listen.seconds) : null;
 
-    await _playerService.play();
+    await _playerService.load(episode, startDuration: startDuration);
+    // Don't wait..
+    _playerService.play();
     _setupListenLogging(episode);
     return true;
   }
@@ -63,21 +63,26 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    await _playerService.play();
+    _log.info('play');
+    // Don't await, since it holds until playback stops..
+    _playerService.play();
     _logProgress();
   }
 
   Future<void> pause() async {
+    _log.info('pause');
     await _playerService.pause();
     _logProgress();
   }
 
   Future<void> stop() async {
+    _log.info('stop');
     await _playerService.stop();
     _logProgress();
   }
 
   Future<void> seek(Duration duration) async {
+    _log.info('seek');
     await _playerService.seek(duration);
     _logProgress();
   }

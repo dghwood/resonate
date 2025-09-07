@@ -13,7 +13,8 @@ EpisodeMessage mockEpisodeMessage({
   id: id,
   title: title,
   description: description,
-  audioUrl: 'https://example.com/episode.mp3',
+  audioUrl:
+      'https://pdst.fm/e/arttrk.com/p/CRMDA/claritaspod.com/measure/pscrb.fm/rss/p/mgln.ai/e/284/pdrl.fm/b85a46/stitcher.simplecastaudio.com/9aa1e238-cbed-4305-9808-c9228fc6dd4f/episodes/0ba25cc3-528a-41c6-9569-a53ed26bcdb2/audio/128/default.mp3?aid=rss_feed&awCollectionId=9aa1e238-cbed-4305-9808-c9228fc6dd4f&awEpisodeId=0ba25cc3-528a-41c6-9569-a53ed26bcdb2&feed=dxZsm5kX',
   durationSeconds: Int64(30),
   imageUrl:
       'https://image.simplecastcdn.com/images/3b29236c-8a35-4012-9d27-62c02dd189a8/c750eec7-c202-404d-a5bc-eee317e2ce3d/3000x3000/uploads-2f1595947484360-nc4atf9w7ur-dbbaa7ee07a1ee325ec48d2e666ac261-2fpodsave100daysfinal1800.jpg?aid=rss_feed',

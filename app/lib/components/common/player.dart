@@ -52,7 +52,7 @@ class BottomPlayerComponent extends StatelessWidget {
                         var value = 0.0;
                         if (asyncSnapshot.hasData) {
                           var data = asyncSnapshot.requireData;
-                          value = data.progressDuration!.inSeconds / 30;
+                          value = data.percentProgress;
                         }
                         return LinearProgressIndicator(value: value);
                       },
@@ -129,7 +129,6 @@ class _PlayIconComponentState extends State<PlayIconComponent> {
     var listen = widget._authUser.listenApi.get(widget._episode.id);
     if (listen != null) {
       _value = listen.seconds.toInt() / widget._episode.durationSeconds.toInt();
-      _log.info('_value::$_value');
     }
 
     super.initState();
@@ -141,22 +140,24 @@ class _PlayIconComponentState extends State<PlayIconComponent> {
     super.dispose();
   }
 
-  void _onData(PlayerProgress process) {
+  void _onData(PlayerProgress progress) {
+    _log.info('_onData::$progress');
     setState(() {
-      _value = process.percentProgress;
+      _value = progress.percentProgress;
     });
   }
 
   void _onPressed() async {
+    _log.info('onPressed');
     var currentEpisode = widget._playerApi.episode;
     if (currentEpisode != null && widget._episode.id == currentEpisode.id) {
-      // episode is playing..
-      // TODO(duncan): implement pause / play?
+      _log.info('current episode playing');
       return;
     }
     await widget._playerApi.load(widget._episode);
-    widget._playerApi.play();
+    _log.info('listening to stream');
     _stream = widget._playerApi.progressStream.listen(_onData);
+    _log.info('listened to stream');
   }
 
   @override

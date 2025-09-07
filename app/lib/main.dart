@@ -58,10 +58,7 @@ class MyApp extends StatelessWidget {
               (context) => SecureProtoDatabase(secureDatabase: context.read()),
         ),
         Provider<AbstractDatabaseService>(
-          create:
-              (context) => DatabaseService(
-                idbFactoryNative,
-              ),
+          create: (context) => DatabaseService(idbFactoryNative),
         ),
         ChangeNotifierProvider<AuthUser>(
           create:
@@ -75,7 +72,7 @@ class MyApp extends StatelessWidget {
           create:
               (context) => PlayerApi(
                 authUser: context.read(),
-                playerService: PlayerServiceMock(),
+                playerService: PlayerService(),
               ),
         ),
         // API

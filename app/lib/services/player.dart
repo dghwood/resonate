@@ -5,11 +5,12 @@ import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
+import 'package:just_audio/just_audio.dart' as justAudio;
 
 Logger _log = Logger('services/player');
 
 abstract class AbstractPlayerService {
-  Future<bool> load(Episode episode);
+  Future<bool> load(Episode episode, {Duration? startDuration});
   Future<void> pause();
   Future<void> play();
   Future<void> stop();
@@ -46,6 +47,135 @@ class PlayerProgress {
       return 0;
     }
     return bufferedDuration!.inMilliseconds / duration!.inMilliseconds;
+  }
+
+  @override
+  String toString() {
+    return 'progress::$percentProgress';
+  }
+}
+
+class PlayerService implements AbstractPlayerService {
+  PlayerService() {
+    _stateStreamController = StreamController<PlayerState>.broadcast(
+      onListen: () => state,
+    );
+    _setupProgressStream();
+    _player.playerStateStream.listen((_) => _onStateChange());
+    _player.processingStateStream.listen((_) => _onStateChange());
+  }
+
+  late final StreamController<PlayerState> _stateStreamController;
+  StreamController<PlayerProgress>? _progressStreamController;
+
+  void _onStateChange() {
+    var s = state;
+    _log.info('onStateChange::$s');
+    _timer?.cancel();
+    switch (s) {
+      case PlayerState.init:
+      case PlayerState.paused:
+      case PlayerState.finished:
+        break;
+      case PlayerState.playing:
+      case PlayerState.loading:
+        _timer = Timer.periodic(Duration(seconds: 1), _onTick);
+        break;
+    }
+    _stateStreamController.add(s);
+  }
+
+  Timer? _timer;
+  void _onTick(_) {
+    _log.info('_onTick');
+    _log.info(progress);
+    _progressStreamController?.add(progress);
+  }
+
+  Future<bool> _setupProgressStream() async {
+    _log.info('_setupProgressStream');
+    await _progressStreamController?.close();
+    _progressStreamController = StreamController<PlayerProgress>.broadcast(
+      onListen: () => progress,
+      onCancel: () => _log.info('progressStreamCancelled'),
+    );
+    return true;
+  }
+
+  final justAudio.AudioPlayer _player = justAudio.AudioPlayer();
+
+  Duration? _episodeDuration;
+  @override
+  Future<bool> load(Episode episode, {Duration? startDuration}) async {
+    _log.info('load started');
+    _episodeDuration = await _player.setAudioSource(
+      justAudio.AudioSource.uri(Uri.parse(episode.audioUrl)),
+      initialPosition: startDuration,
+    );
+    // _episodeDuration = await _player.setUrl(episode.audioUrl);
+    _log.info('load middle');
+    await _setupProgressStream();
+    _log.info('load finished');
+    return true;
+  }
+
+  @override
+  Future<void> pause() async {
+    _log.info('pause');
+    await _player.pause();
+  }
+
+  @override
+  Future<void> play() async {
+    _log.info('play');
+    await _player.play();
+  }
+
+  @override
+  PlayerProgress get progress {
+    return PlayerProgress(
+      progressDuration: _player.position,
+      bufferedDuration: _player.bufferedPosition,
+      duration: _episodeDuration,
+    );
+  }
+
+  @override
+  Future<void> seek(Duration duration) async {
+    await _player.seek(duration);
+  }
+
+  @override
+  Future<void> stop() async {
+    await _player.stop();
+  }
+
+  @override
+  PlayerState get state {
+    switch (_player.processingState) {
+      case justAudio.ProcessingState.completed:
+        return PlayerState.finished;
+      case justAudio.ProcessingState.ready:
+        return _player.playerState.playing
+            ? PlayerState.playing
+            : PlayerState.paused;
+      case justAudio.ProcessingState.buffering:
+      case justAudio.ProcessingState.loading:
+        return PlayerState.loading;
+      case justAudio.ProcessingState.idle:
+        return PlayerState.init;
+    }
+  }
+
+  @override
+  Stream<PlayerState> streamState() {
+    return _stateStreamController.stream;
+  }
+
+  @override
+  Stream<PlayerProgress> streamProgress() {
+    _log.info('streamProgress');
+    return _progressStreamController!.stream;
   }
 }
 
@@ -86,7 +216,7 @@ class PlayerServiceMock implements AbstractPlayerService {
   }
 
   @override
-  Future<bool> load(Episode episode) async {
+  Future<bool> load(Episode episode, {Duration? startDuration}) async {
     _state = PlayerState.loading;
     // Reset these
     _progressSeconds = 0;
