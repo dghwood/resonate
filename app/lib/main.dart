@@ -61,9 +61,6 @@ class MyApp extends StatelessWidget {
           create:
               (context) => DatabaseService(
                 idbFactoryNative,
-                // idbFactoryNative,
-                // authUser: context.read(),
-                // user: context.read(),
               ),
         ),
         ChangeNotifierProvider<AuthUser>(

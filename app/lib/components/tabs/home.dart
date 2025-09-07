@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/tabs/base.dart';
@@ -71,10 +72,7 @@ class FeedComponent extends StatelessWidget {
               return Text('Recommendations not implemented');
             }
             var episodeItem = item.episodeItem!;
-            return ListTile(
-              title: Text(episodeItem.episode.title),
-              leading: Image.network(episodeItem.episode.imageUrl),
-            );
+            return EpisodeComponent(episode: episodeItem.episode);
           },
         );
       },
