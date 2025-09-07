@@ -68,9 +68,11 @@ class MyApp extends StatelessWidget {
                 databaseService: context.read(),
               ),
         ),
+        Provider<PlaylistApi>(create: (context) => PlaylistApi()),
         ChangeNotifierProvider<PlayerApi>(
           create:
               (context) => PlayerApi(
+                playlistApi: context.read(),
                 authUser: context.read(),
                 playerService: PlayerService(),
               ),

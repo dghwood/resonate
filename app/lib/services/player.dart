@@ -93,11 +93,9 @@ class PlayerService implements AbstractPlayerService {
   }
 
   Future<bool> _setupProgressStream() async {
-    _log.info('_setupProgressStream');
     await _progressStreamController?.close();
     _progressStreamController = StreamController<PlayerProgress>.broadcast(
       onListen: () => progress,
-      onCancel: () => _log.info('progressStreamCancelled'),
     );
     return true;
   }
@@ -107,27 +105,21 @@ class PlayerService implements AbstractPlayerService {
   Duration? _episodeDuration;
   @override
   Future<bool> load(Episode episode, {Duration? startDuration}) async {
-    _log.info('load started');
     _episodeDuration = await _player.setAudioSource(
       justAudio.AudioSource.uri(Uri.parse(episode.audioUrl)),
       initialPosition: startDuration,
     );
-    // _episodeDuration = await _player.setUrl(episode.audioUrl);
-    _log.info('load middle');
     await _setupProgressStream();
-    _log.info('load finished');
     return true;
   }
 
   @override
   Future<void> pause() async {
-    _log.info('pause');
     await _player.pause();
   }
 
   @override
   Future<void> play() async {
-    _log.info('play');
     await _player.play();
   }
 
@@ -174,121 +166,118 @@ class PlayerService implements AbstractPlayerService {
 
   @override
   Stream<PlayerProgress> streamProgress() {
-    _log.info('streamProgress');
     return _progressStreamController!.stream;
   }
 }
 
-class PlayerServiceMock implements AbstractPlayerService {
-  PlayerServiceMock() {
-    _setupStateStream();
-    _setupProgressStream();
-  }
-  late final StreamController<PlayerState> _stateStreamController;
-  StreamController<PlayerProgress>? _progressStreamController;
-  int _progressSeconds = 0;
-  int _bufferedSeconds = 1;
+// class PlayerServiceMock implements AbstractPlayerService {
+//   PlayerServiceMock() {
+//     _setupStateStream();
+//     _setupProgressStream();
+//   }
+//   late final StreamController<PlayerState> _stateStreamController;
+//   StreamController<PlayerProgress>? _progressStreamController;
+//   int _progressSeconds = 0;
+//   int _bufferedSeconds = 1;
 
-  Future<bool> _setupProgressStream() async {
-    var d = await _progressStreamController?.close();
-    _log.info('close::$d');
-    _progressStreamController = StreamController<PlayerProgress>.broadcast(
-      onListen: _onProgressListen,
-      onCancel: () => _log.info('cancelled'),
-    );
-    _log.info('_setupProgressStream');
-    return true;
-  }
+//   Future<bool> _setupProgressStream() async {
+//     var d = await _progressStreamController?.close();
+//     _progressStreamController = StreamController<PlayerProgress>.broadcast(
+//       onListen: _onProgressListen,
+//       onCancel: () => _log.info('cancelled'),
+//     );
+//     return true;
+//   }
 
-  void _setupStateStream() {
-    _stateStreamController = StreamController<PlayerState>.broadcast(
-      onListen: _onStateListen,
-    );
-  }
+//   void _setupStateStream() {
+//     _stateStreamController = StreamController<PlayerState>.broadcast(
+//       onListen: _onStateListen,
+//     );
+//   }
 
-  @override
-  PlayerProgress get progress {
-    return PlayerProgress(
-      progressDuration: Duration(seconds: _progressSeconds),
-      bufferedDuration: Duration(seconds: _bufferedSeconds),
-      duration: Duration(seconds: 30),
-    );
-  }
+//   @override
+//   PlayerProgress get progress {
+//     return PlayerProgress(
+//       progressDuration: Duration(seconds: _progressSeconds),
+//       bufferedDuration: Duration(seconds: _bufferedSeconds),
+//       duration: Duration(seconds: 30),
+//     );
+//   }
 
-  @override
-  Future<bool> load(Episode episode, {Duration? startDuration}) async {
-    _state = PlayerState.loading;
-    // Reset these
-    _progressSeconds = 0;
-    _bufferedSeconds = 1;
-    await _setupProgressStream();
-    _log.info('this should be after _setupProgressStream');
-    await Future.delayed(Duration(seconds: 1));
-    _state = PlayerState.playing;
-    return true;
-  }
+//   @override
+//   Future<bool> load(Episode episode, {Duration? startDuration}) async {
+//     _state = PlayerState.loading;
+//     // Reset these
+//     _progressSeconds = 0;
+//     _bufferedSeconds = 1;
+//     await _setupProgressStream();
+//     _log.info('this should be after _setupProgressStream');
+//     await Future.delayed(Duration(seconds: 1));
+//     _state = PlayerState.playing;
+//     return true;
+//   }
 
-  @override
-  Future<void> pause() async {
-    _state = PlayerState.paused;
-    _timer?.cancel();
-  }
+//   @override
+//   Future<void> pause() async {
+//     _state = PlayerState.paused;
+//     _timer?.cancel();
+//   }
 
-  Timer? _timer;
+//   Timer? _timer;
 
-  void _onTick(Timer timer) {
-    _log.info('tick::$_progressSeconds');
-    _progressSeconds += 1;
-    if (_progressSeconds > 30) {
-      _timer?.cancel();
-    }
-    _progressStreamController?.add(progress);
-  }
+//   void _onTick(Timer timer) {
+//     _log.info('tick::$_progressSeconds');
+//     _progressSeconds += 1;
+//     if (_progressSeconds > 30) {
+//       _timer?.cancel();
+//     }
+//     _progressStreamController?.add(progress);
+//   }
 
-  @override
-  Future<void> play() async {
-    await Future.delayed(Duration(milliseconds: 500));
-    _timer?.cancel();
-    _state = PlayerState.playing;
-    _timer = Timer.periodic(Duration(seconds: 1), _onTick);
-  }
+//   @override
+//   Future<void> play() async {
+//     await Future.delayed(Duration(milliseconds: 500));
+//     _timer?.cancel();
+//     _state = PlayerState.playing;
+//     _timer = Timer.periodic(Duration(seconds: 1), _onTick);
+//   }
 
-  @override
-  Future<void> stop() async {
-    await Future.delayed(Duration(milliseconds: 500));
-    _state = PlayerState.finished;
-    _timer?.cancel();
-  }
+//   @override
+//   Future<void> stop() async {
+//     await Future.delayed(Duration(milliseconds: 500));
+//     _state = PlayerState.finished;
+//     _timer?.cancel();
+//   }
 
-  @override
-  Future<void> seek(Duration duration) async {
-    await Future.delayed(Duration(milliseconds: 500));
-    _log.info('seek::${duration.inSeconds}');
-    _progressSeconds = duration.inSeconds;
-  }
+//   @override
+//   Future<void> seek(Duration duration) async {
+//     await Future.delayed(Duration(milliseconds: 500));
+//     _log.info('seek::${duration.inSeconds}');
+//     _progressSeconds = duration.inSeconds;
+//   }
 
-  PlayerState __state = PlayerState.init;
-  @override
-  PlayerState get state => __state;
-  set _state(PlayerState newState) {
-    if (__state == newState) return;
-    __state = newState;
-    _stateStreamController.add(newState);
-  }
+//   PlayerState __state = PlayerState.init;
+//   @override
+//   PlayerState get state => __state;
+//   set _state(PlayerState newState) {
+//     if (__state == newState) return;
+//     __state = newState;
+//     _stateStreamController.add(newState);
+//   }
 
-  void _onStateListen() => _stateStreamController.add(state);
-  void _onProgressListen() {
-    _log.info('_onProgressListen::${_progressStreamController?.isClosed}');
-    _progressStreamController?.add(progress);
-  }
+//   void _onStateListen() => _stateStreamController.add(state);
+//   void _onProgressListen() {
+//     _log.info('_onProgressListen::${_progressStreamController?.isClosed}');
+//     _progressStreamController?.add(progress);
+//   }
 
-  @override
-  Stream<PlayerState> streamState() {
-    return _stateStreamController.stream;
-  }
+//   @override
+//   Stream<PlayerState> streamState() {
+//     return _stateStreamController.stream;
+//   }
 
-  @override
-  Stream<PlayerProgress> streamProgress() {
-    return _progressStreamController!.stream;
-  }
-}
+//   @override
+//   Stream<PlayerProgress> streamProgress() {
+//     return _progressStreamController!.stream;
+//   }
+// }

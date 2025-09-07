@@ -7,21 +7,57 @@ import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('api/player');
 
+// Should I move this to the player service directory?
+class PlaylistApi {
+  PlaylistApi();
+
+  final List<Episode> episodes = [];
+
+  void addNext(Episode episode) {
+    episodes.insert(0, episode);
+  }
+
+  void add(Episode episode) {
+    episodes.add(episode);
+  }
+
+  void remove(Episode episode) {
+    episodes.remove(episode);
+  }
+
+  void clear() => episodes.clear();
+
+  bool get hasNext => episodes.isNotEmpty;
+  Episode get pop => episodes.removeAt(0);
+}
+
 class PlayerApi extends ChangeNotifier {
   PlayerApi({
     required AbstractPlayerService playerService,
+    required PlaylistApi playlistApi,
     required AuthUser authUser,
   }) : _playerService = playerService,
-       _authUser = authUser {
-    _playerService.streamState().listen((state) {
-      // Update when the state stream changes..
-      _log.info('$state');
-      notifyListeners();
-    });
+       _authUser = authUser,
+       _playlistApi = playlistApi {
+    _playerService.streamState().listen(_onStateChange);
+  }
+
+  void _onStateChange(PlayerState state) {
+    _log.info('$state');
+    switch (state) {
+      case PlayerState.finished:
+        // When the episode is finished load the next episode
+        if (!_playlistApi.hasNext) break;
+        load(_playlistApi.pop);
+      default:
+        break;
+    }
+    notifyListeners();
   }
 
   final AbstractPlayerService _playerService;
   final AuthUser? _authUser;
+  final PlaylistApi _playlistApi;
 
   Episode? _currentEpisode;
 
@@ -35,7 +71,7 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<bool> load(Episode episode) async {
-    _log.info('load');
+    _log.info('load::${episode.id}');
     // Implements equals in Episode class
     if (_currentEpisode?.id == episode.id) {
       return true;

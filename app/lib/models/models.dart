@@ -64,6 +64,16 @@ class BaseModel<T extends GeneratedMessage> {
   String get id =>
       throw UnimplementedError('id must be implemented by subclasses');
   Uint8List writeToBuffer() => _message.writeToBuffer();
+
+  @override
+  bool operator ==(Object other) {
+    var m = other as BaseModel<T>;
+    return id == m.id;
+  }
+
+  @override
+  // Is this right?
+  int get hashCode => id.hashCode;
 }
 
 class StorageMetadata extends BaseModel<StorageMetadataMessage> {
