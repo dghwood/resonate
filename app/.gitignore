@@ -69,4 +69,4 @@ node_modules/
 .dataconnect
 
 # builds 
-build/
+app/build/
