@@ -1,3 +1,5 @@
+import 'dart:async';
+
 sealed class ApiResult<T> {
   const ApiResult();
 
@@ -28,4 +30,27 @@ final class ApiError<T> extends ApiResult<T> {
 
   @override
   String toString() => 'Result<$T>.error($error)';
+}
+
+// Stream Api Result
+class StreamApiResult<P extends ApiResult, R extends ApiResult> {
+  StreamApiResult() {
+    _progressController = StreamController<P>(
+      onCancel: () {},
+      onListen: () {},
+      onPause: () {},
+      onResume: () {},
+    );
+    _doneController = StreamController<R>(
+      onCancel: () {},
+      onListen: () {},
+      onPause: () {},
+      onResume: () {},
+    );
+  }
+
+  late final StreamController<P> _progressController;
+  Stream<P> get progress => _progressController.stream;
+  late final StreamController<R> _doneController;
+  Future<R> get done => _doneController.stream.first;
 }

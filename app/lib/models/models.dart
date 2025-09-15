@@ -10,6 +10,7 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:resonate/proto/common.pbjson.dart';
 import 'package:resonate/services/database.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/services/download.dart';
 import 'package:resonate/utils/proto.dart';
 
 final Logger _log = Logger('models');
@@ -90,6 +91,10 @@ class StorageMetadata extends BaseModel<StorageMetadataMessage> {
        );
 
   StorageMetadata.fromMessage(super.message);
+  factory StorageMetadata.now() => StorageMetadata(
+    updatedTimestamp: DateTime.now(),
+    createdTimestamp: DateTime.now(),
+  );
 
   @override
   Uint8List get descriptor => storageMetadataMessageDescriptor;
@@ -455,4 +460,48 @@ class UserFeedItemRecommendation
 
   @override
   Uint8List get descriptor => userFeedItemRecommendationMessageDescriptor;
+}
+
+class UserDownload extends BaseModel<UserDownloadMessage> {
+  UserDownload({
+    String? id,
+    String? episodeId,
+    String? filePath,
+    bool? isDownloaded,
+    StorageMetadata? metadata,
+    this.downloadItem,
+  }) : super(
+         UserDownloadMessage(
+           id: id,
+           filePath: filePath,
+           isDownloaded: isDownloaded,
+           episodeId: episodeId,
+           metadata: metadata?.toMessage(),
+         ),
+       );
+
+  UserDownload.fromMessage(super.message, {this.downloadItem});
+
+  UserDownload.copy(UserDownload model, {this.downloadItem})
+    : super(UserDownloadMessage()..mergeFromMessage(model.toMessage()));
+
+  @override
+  Uint8List get descriptor => userDownloadMessageDescriptor;
+
+  @override
+  String get id => _message.id;
+  bool get isDownloaded => _message.isDownloaded;
+  set isDownloaded(bool value) {
+    _message.isDownloaded = true;
+    // TODO(duncan): update metadata timestamp
+  }
+
+  String get episodeId => _message.episodeId;
+  String get filePath => _message.filePath;
+
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
+
+  // Used for download
+  DownloadItem? downloadItem;
 }

@@ -4,6 +4,7 @@ import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/listens.dart';
@@ -18,10 +19,6 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database.dart';
-
-// import 'ui/scaffold.dart';
-// import 'models/player.dart';
-// import 'providers/backend.dart';
 
 void main() async {
   // https://pub.dev/packages/just_audio_background
@@ -58,7 +55,7 @@ class MyApp extends StatelessWidget {
               (context) => SecureProtoDatabase(secureDatabase: context.read()),
         ),
         Provider<AbstractDatabaseService>(
-          create: (context) => DatabaseService(idbFactoryNative),
+          create: (context) => DatabaseService(idbFactorySqflite),
         ),
         ChangeNotifierProvider<AuthUser>(
           create:
@@ -127,6 +124,14 @@ class MyApp extends StatelessWidget {
                 httpService: context.read(),
                 databaseService: context.read(),
                 authUser: context.read(),
+              ),
+        ),
+        Provider<DownloadApi>(
+          lazy: false,
+          create:
+              (context) => DownloadApi(
+                authUser: context.read(),
+                databaseService: context.read(),
               ),
         ),
       ],

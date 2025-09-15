@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/components/common/download.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/models/models.dart';
 
@@ -31,6 +32,7 @@ class EpisodeComponent extends StatelessWidget {
             ),
             IconButton(icon: Icon(Icons.star), onPressed: () {}),
             IconButton(icon: Icon(Icons.playlist_add), onPressed: () {}),
+            DownloadIcon(downloadApi: context.read(), episode: episode),
           ],
         ),
       ],

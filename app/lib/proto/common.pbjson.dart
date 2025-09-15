@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: proto/common.proto
-//
+// Generated from proto/common.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -18,8 +19,20 @@ const StorageMetadataMessage$json = {
   '1': 'StorageMetadataMessage',
   '2': [
     {'1': 'is_deleted', '3': 1, '4': 1, '5': 8, '10': 'isDeleted'},
-    {'1': 'updated_timestamp', '3': 2, '4': 1, '5': 3, '10': 'updatedTimestamp'},
-    {'1': 'created_timestamp', '3': 3, '4': 1, '5': 3, '10': 'createdTimestamp'},
+    {
+      '1': 'updated_timestamp',
+      '3': 2,
+      '4': 1,
+      '5': 3,
+      '10': 'updatedTimestamp'
+    },
+    {
+      '1': 'created_timestamp',
+      '3': 3,
+      '4': 1,
+      '5': 3,
+      '10': 'createdTimestamp'
+    },
   ],
 };
 
@@ -39,7 +52,14 @@ const PodcastMessage$json = {
     {'1': 'url', '3': 4, '4': 1, '5': 9, '10': 'url'},
     {'1': 'image_url', '3': 5, '4': 1, '5': 9, '10': 'imageUrl'},
     {'1': 'author', '3': 6, '4': 1, '5': 9, '10': 'author'},
-    {'1': 'episodes', '3': 7, '4': 3, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episodes'},
+    {
+      '1': 'episodes',
+      '3': 7,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episodes'
+    },
   ],
 };
 
@@ -60,7 +80,13 @@ const EpisodeMessage$json = {
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
     {'1': 'audio_url', '3': 5, '4': 1, '5': 9, '10': 'audioUrl'},
     {'1': 'image_url', '3': 6, '4': 1, '5': 9, '10': 'imageUrl'},
-    {'1': 'publish_timestamp', '3': 8, '4': 1, '5': 3, '10': 'publishTimestamp'},
+    {
+      '1': 'publish_timestamp',
+      '3': 8,
+      '4': 1,
+      '5': 3,
+      '10': 'publishTimestamp'
+    },
     {'1': 'duration_seconds', '3': 9, '4': 1, '5': 3, '10': 'durationSeconds'},
     {'1': 'episode_number', '3': 10, '4': 1, '5': 3, '10': 'episodeNumber'},
     {'1': 'explicit', '3': 11, '4': 1, '5': 8, '10': 'explicit'},
@@ -81,7 +107,13 @@ const TokenMessage$json = {
   '1': 'TokenMessage',
   '2': [
     {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
-    {'1': 'expiry_utc_timestamp', '3': 2, '4': 1, '5': 3, '10': 'expiryUtcTimestamp'},
+    {
+      '1': 'expiry_utc_timestamp',
+      '3': 2,
+      '4': 1,
+      '5': 3,
+      '10': 'expiryUtcTimestamp'
+    },
   ],
 };
 
@@ -94,9 +126,30 @@ final $typed_data.Uint8List tokenMessageDescriptor = $convert.base64Decode(
 const UserStorageMessage$json = {
   '1': 'UserStorageMessage',
   '2': [
-    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
-    {'1': 'access_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'accessToken'},
-    {'1': 'refresh_token', '3': 3, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'refreshToken'},
+    {
+      '1': 'user',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
+    {
+      '1': 'access_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'accessToken'
+    },
+    {
+      '1': 'refresh_token',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'refreshToken'
+    },
   ],
 };
 
@@ -115,9 +168,30 @@ const UserMessage$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
     {'1': 'image_url', '3': 4, '4': 1, '5': 9, '10': 'imageUrl'},
-    {'1': 'subscriptions', '3': 5, '4': 3, '5': 11, '6': '.resonate.UserSubscriptionMessage', '10': 'subscriptions'},
-    {'1': 'listens', '3': 6, '4': 3, '5': 11, '6': '.resonate.UserListenMessage', '10': 'listens'},
-    {'1': 'following', '3': 7, '4': 3, '5': 11, '6': '.resonate.UserFollowMessage', '10': 'following'},
+    {
+      '1': 'subscriptions',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscriptions'
+    },
+    {
+      '1': 'listens',
+      '3': 6,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listens'
+    },
+    {
+      '1': 'following',
+      '3': 7,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'following'
+    },
     {'1': 'num_followers', '3': 8, '4': 1, '5': 3, '10': 'numFollowers'},
   ],
 };
@@ -167,7 +241,14 @@ const UserSubscriptionMessage$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'podcast_id', '3': 3, '4': 1, '5': 9, '10': 'podcastId'},
-    {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.resonate.StorageMetadataMessage', '10': 'metadata'},
+    {
+      '1': 'metadata',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
@@ -187,8 +268,22 @@ const UserListenMessage$json = {
     {'1': 'listen_timestamp', '3': 4, '4': 1, '5': 3, '10': 'listenTimestamp'},
     {'1': 'seconds', '3': 5, '4': 1, '5': 3, '10': 'seconds'},
     {'1': 'completed', '3': 6, '4': 1, '5': 8, '10': 'completed'},
-    {'1': 'episode', '3': 7, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
-    {'1': 'metadata', '3': 8, '4': 1, '5': 11, '6': '.resonate.StorageMetadataMessage', '10': 'metadata'},
+    {
+      '1': 'episode',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episode'
+    },
+    {
+      '1': 'metadata',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
@@ -205,25 +300,68 @@ final $typed_data.Uint8List userListenMessageDescriptor = $convert.base64Decode(
 const UserFeedItemEpisodeMessage$json = {
   '1': 'UserFeedItemEpisodeMessage',
   '2': [
-    {'1': 'episode', '3': 1, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
-    {'1': 'user_listens', '3': 2, '4': 3, '5': 11, '6': '.resonate.PublicUserMessage', '10': 'userListens'},
+    {
+      '1': 'episode',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episode'
+    },
+    {
+      '1': 'user_listens',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'userListens'
+    },
   ],
 };
 
 /// Descriptor for `UserFeedItemEpisodeMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userFeedItemEpisodeMessageDescriptor = $convert.base64Decode(
-    'ChpVc2VyRmVlZEl0ZW1FcGlzb2RlTWVzc2FnZRIyCgdlcGlzb2RlGAEgASgLMhgucmVzb25hdG'
-    'UuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPgoMdXNlcl9saXN0ZW5zGAIgAygLMhsucmVzb25h'
-    'dGUuUHVibGljVXNlck1lc3NhZ2VSC3VzZXJMaXN0ZW5z');
+final $typed_data.Uint8List userFeedItemEpisodeMessageDescriptor =
+    $convert.base64Decode(
+        'ChpVc2VyRmVlZEl0ZW1FcGlzb2RlTWVzc2FnZRIyCgdlcGlzb2RlGAEgASgLMhgucmVzb25hdG'
+        'UuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPgoMdXNlcl9saXN0ZW5zGAIgAygLMhsucmVzb25h'
+        'dGUuUHVibGljVXNlck1lc3NhZ2VSC3VzZXJMaXN0ZW5z');
 
 @$core.Deprecated('Use userFeedItemRecommendationMessageDescriptor instead')
 const UserFeedItemRecommendationMessage$json = {
   '1': 'UserFeedItemRecommendationMessage',
   '2': [
-    {'1': 'episode', '3': 1, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
-    {'1': 'podcast', '3': 2, '4': 1, '5': 11, '6': '.resonate.PodcastMessage', '10': 'podcast'},
-    {'1': 'user_listens', '3': 3, '4': 3, '5': 11, '6': '.resonate.PublicUserMessage', '10': 'userListens'},
-    {'1': 'user_subscriptions', '3': 4, '4': 3, '5': 11, '6': '.resonate.PublicUserMessage', '10': 'userSubscriptions'},
+    {
+      '1': 'episode',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episode'
+    },
+    {
+      '1': 'podcast',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PodcastMessage',
+      '10': 'podcast'
+    },
+    {
+      '1': 'user_listens',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'userListens'
+    },
+    {
+      '1': 'user_subscriptions',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'userSubscriptions'
+    },
   ],
 };
 
@@ -240,8 +378,22 @@ final $typed_data.Uint8List userFeedItemRecommendationMessageDescriptor = $conve
 const UserFeedItemMessage$json = {
   '1': 'UserFeedItemMessage',
   '2': [
-    {'1': 'episode_item', '3': 1, '4': 1, '5': 11, '6': '.resonate.UserFeedItemEpisodeMessage', '10': 'episodeItem'},
-    {'1': 'recommended_items', '3': 2, '4': 3, '5': 11, '6': '.resonate.UserFeedItemRecommendationMessage', '10': 'recommendedItems'},
+    {
+      '1': 'episode_item',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFeedItemEpisodeMessage',
+      '10': 'episodeItem'
+    },
+    {
+      '1': 'recommended_items',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserFeedItemRecommendationMessage',
+      '10': 'recommendedItems'
+    },
   ],
 };
 
@@ -257,7 +409,14 @@ const UserFeedMessage$json = {
   '1': 'UserFeedMessage',
   '2': [
     {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'items', '3': 2, '4': 3, '5': 11, '6': '.resonate.UserFeedItemMessage', '10': 'items'},
+    {
+      '1': 'items',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserFeedItemMessage',
+      '10': 'items'
+    },
   ],
 };
 
@@ -270,9 +429,30 @@ final $typed_data.Uint8List userFeedMessageDescriptor = $convert.base64Decode(
 const SearchResultMessage$json = {
   '1': 'SearchResultMessage',
   '2': [
-    {'1': 'podcast', '3': 1, '4': 1, '5': 11, '6': '.resonate.PodcastMessage', '10': 'podcast'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
-    {'1': 'episode', '3': 3, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
+    {
+      '1': 'podcast',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PodcastMessage',
+      '10': 'podcast'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
+    {
+      '1': 'episode',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episode'
+    },
   ],
 };
 
@@ -287,7 +467,14 @@ final $typed_data.Uint8List searchResultMessageDescriptor = $convert.base64Decod
 const SearchResultsMessage$json = {
   '1': 'SearchResultsMessage',
   '2': [
-    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.resonate.SearchResultMessage', '10': 'results'},
+    {
+      '1': 'results',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.SearchResultMessage',
+      '10': 'results'
+    },
   ],
 };
 
@@ -296,3 +483,28 @@ final $typed_data.Uint8List searchResultsMessageDescriptor = $convert.base64Deco
     'ChRTZWFyY2hSZXN1bHRzTWVzc2FnZRI3CgdyZXN1bHRzGAEgAygLMh0ucmVzb25hdGUuU2Vhcm'
     'NoUmVzdWx0TWVzc2FnZVIHcmVzdWx0cw==');
 
+@$core.Deprecated('Use userDownloadMessageDescriptor instead')
+const UserDownloadMessage$json = {
+  '1': 'UserDownloadMessage',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'episode_id', '3': 2, '4': 1, '5': 9, '10': 'episodeId'},
+    {'1': 'file_path', '3': 3, '4': 1, '5': 9, '10': 'filePath'},
+    {'1': 'is_downloaded', '3': 4, '4': 1, '5': 8, '10': 'isDownloaded'},
+    {
+      '1': 'metadata',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+  ],
+};
+
+/// Descriptor for `UserDownloadMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userDownloadMessageDescriptor = $convert.base64Decode(
+    'ChNVc2VyRG93bmxvYWRNZXNzYWdlEg4KAmlkGAEgASgJUgJpZBIdCgplcGlzb2RlX2lkGAIgAS'
+    'gJUgllcGlzb2RlSWQSGwoJZmlsZV9wYXRoGAMgASgJUghmaWxlUGF0aBIjCg1pc19kb3dubG9h'
+    'ZGVkGAQgASgIUgxpc0Rvd25sb2FkZWQSPAoIbWV0YWRhdGEYBSABKAsyIC5yZXNvbmF0ZS5TdG'
+    '9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');

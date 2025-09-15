@@ -138,3 +138,12 @@ message SearchResultsMessage {
     repeated SearchResultMessage results = 1;
     // int64 num_results = 2; 
 }
+
+message UserDownloadMessage {
+    string id = 1; 
+    string episode_id = 2; 
+    string file_path = 3; 
+    bool is_downloaded = 4;
+
+    StorageMetadataMessage metadata = 5; 
+}

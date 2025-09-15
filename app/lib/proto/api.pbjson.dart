@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: proto/api.proto
-//
+// Generated from proto/api.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -32,7 +33,14 @@ const RequestInfo$json = {
   '1': 'RequestInfo',
   '2': [
     {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'access_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'accessToken'},
+    {
+      '1': 'access_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'accessToken'
+    },
   ],
 };
 
@@ -45,8 +53,22 @@ final $typed_data.Uint8List requestInfoDescriptor = $convert.base64Decode(
 const RefreshAuthMessage$json = {
   '1': 'RefreshAuthMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RefreshAuthMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.RefreshAuthMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RefreshAuthMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RefreshAuthMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [RefreshAuthMessage_Request$json, RefreshAuthMessage_Response$json],
 };
@@ -55,8 +77,22 @@ const RefreshAuthMessage$json = {
 const RefreshAuthMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'refresh_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'refreshToken'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'refresh_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'refreshToken'
+    },
   ],
 };
 
@@ -64,8 +100,22 @@ const RefreshAuthMessage_Request$json = {
 const RefreshAuthMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'access_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'accessToken'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'access_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'accessToken'
+    },
   ],
 };
 
@@ -84,8 +134,22 @@ final $typed_data.Uint8List refreshAuthMessageDescriptor = $convert.base64Decode
 const LoginRequestMessage$json = {
   '1': 'LoginRequestMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.LoginRequestMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.LoginRequestMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.LoginRequestMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.LoginRequestMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [LoginRequestMessage_Request$json, LoginRequestMessage_Response$json],
 };
@@ -94,7 +158,14 @@ const LoginRequestMessage$json = {
 const LoginRequestMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
   ],
 };
@@ -103,7 +174,14 @@ const LoginRequestMessage_Request$json = {
 const LoginRequestMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
   ],
 };
 
@@ -121,8 +199,22 @@ final $typed_data.Uint8List loginRequestMessageDescriptor = $convert.base64Decod
 const LoginUserMessage$json = {
   '1': 'LoginUserMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.LoginUserMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.LoginUserMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.LoginUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.LoginUserMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [LoginUserMessage_Request$json, LoginUserMessage_Response$json],
 };
@@ -131,7 +223,14 @@ const LoginUserMessage$json = {
 const LoginUserMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
     {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
   ],
@@ -141,10 +240,38 @@ const LoginUserMessage_Request$json = {
 const LoginUserMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'access_token', '3': 2, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'accessToken'},
-    {'1': 'refresh_token', '3': 3, '4': 1, '5': 11, '6': '.resonate.TokenMessage', '10': 'refreshToken'},
-    {'1': 'user', '3': 4, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'access_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'accessToken'
+    },
+    {
+      '1': 'refresh_token',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'refreshToken'
+    },
+    {
+      '1': 'user',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -165,8 +292,22 @@ final $typed_data.Uint8List loginUserMessageDescriptor = $convert.base64Decode(
 const CreateUserMessage$json = {
   '1': 'CreateUserMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.CreateUserMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.CreateUserMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.CreateUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.CreateUserMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [CreateUserMessage_Request$json, CreateUserMessage_Response$json],
 };
@@ -175,8 +316,22 @@ const CreateUserMessage$json = {
 const CreateUserMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -184,8 +339,22 @@ const CreateUserMessage_Request$json = {
 const CreateUserMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -204,8 +373,22 @@ final $typed_data.Uint8List createUserMessageDescriptor = $convert.base64Decode(
 const GetUserMessage$json = {
   '1': 'GetUserMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.GetUserMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.GetUserMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetUserMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [GetUserMessage_Request$json, GetUserMessage_Response$json],
 };
@@ -214,7 +397,14 @@ const GetUserMessage$json = {
 const GetUserMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
   ],
 };
@@ -223,8 +413,22 @@ const GetUserMessage_Request$json = {
 const GetUserMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -242,8 +446,22 @@ final $typed_data.Uint8List getUserMessageDescriptor = $convert.base64Decode(
 const UpdateUserMessage$json = {
   '1': 'UpdateUserMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.UpdateUserMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.UpdateUserMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.UpdateUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.UpdateUserMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [UpdateUserMessage_Request$json, UpdateUserMessage_Response$json],
 };
@@ -252,8 +470,22 @@ const UpdateUserMessage$json = {
 const UpdateUserMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -261,8 +493,22 @@ const UpdateUserMessage_Request$json = {
 const UpdateUserMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserMessage', '10': 'user'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
   ],
 };
 
@@ -281,8 +527,22 @@ final $typed_data.Uint8List updateUserMessageDescriptor = $convert.base64Decode(
 const SearchMessage$json = {
   '1': 'SearchMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.SearchMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.SearchMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SearchMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SearchMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [SearchMessage_Request$json, SearchMessage_Response$json],
 };
@@ -291,7 +551,14 @@ const SearchMessage$json = {
 const SearchMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'query', '3': 2, '4': 1, '5': 9, '10': 'query'},
   ],
 };
@@ -300,8 +567,22 @@ const SearchMessage_Request$json = {
 const SearchMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'search_results', '3': 2, '4': 1, '5': 11, '6': '.resonate.SearchResultsMessage', '10': 'searchResults'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'search_results',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.SearchResultsMessage',
+      '10': 'searchResults'
+    },
   ],
 };
 
@@ -320,8 +601,22 @@ final $typed_data.Uint8List searchMessageDescriptor = $convert.base64Decode(
 const GetPodcastMessage$json = {
   '1': 'GetPodcastMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.GetPodcastMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.GetPodcastMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetPodcastMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetPodcastMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [GetPodcastMessage_Request$json, GetPodcastMessage_Response$json],
 };
@@ -330,7 +625,14 @@ const GetPodcastMessage$json = {
 const GetPodcastMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'podcast_id', '3': 2, '4': 1, '5': 9, '10': 'podcastId'},
   ],
 };
@@ -339,8 +641,22 @@ const GetPodcastMessage_Request$json = {
 const GetPodcastMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'podcast', '3': 2, '4': 1, '5': 11, '6': '.resonate.PodcastMessage', '10': 'podcast'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'podcast',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PodcastMessage',
+      '10': 'podcast'
+    },
   ],
 };
 
@@ -359,17 +675,41 @@ final $typed_data.Uint8List getPodcastMessageDescriptor = $convert.base64Decode(
 const ListPodcastEpisodesMessage$json = {
   '1': 'ListPodcastEpisodesMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ListPodcastEpisodesMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.ListPodcastEpisodesMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListPodcastEpisodesMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListPodcastEpisodesMessage.Response',
+      '10': 'response'
+    },
   ],
-  '3': [ListPodcastEpisodesMessage_Request$json, ListPodcastEpisodesMessage_Response$json],
+  '3': [
+    ListPodcastEpisodesMessage_Request$json,
+    ListPodcastEpisodesMessage_Response$json
+  ],
 };
 
 @$core.Deprecated('Use listPodcastEpisodesMessageDescriptor instead')
 const ListPodcastEpisodesMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'podcast_id', '3': 2, '4': 1, '5': 9, '10': 'podcastId'},
   ],
 };
@@ -378,8 +718,22 @@ const ListPodcastEpisodesMessage_Request$json = {
 const ListPodcastEpisodesMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'episodes', '3': 2, '4': 3, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episodes'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'episodes',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episodes'
+    },
   ],
 };
 
@@ -398,8 +752,22 @@ final $typed_data.Uint8List listPodcastEpisodesMessageDescriptor = $convert.base
 const GetEpisodeMessage$json = {
   '1': 'GetEpisodeMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.GetEpisodeMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.GetEpisodeMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetEpisodeMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetEpisodeMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [GetEpisodeMessage_Request$json, GetEpisodeMessage_Response$json],
 };
@@ -408,7 +776,14 @@ const GetEpisodeMessage$json = {
 const GetEpisodeMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'episode_id', '3': 2, '4': 1, '5': 9, '10': 'episodeId'},
   ],
 };
@@ -417,8 +792,22 @@ const GetEpisodeMessage_Request$json = {
 const GetEpisodeMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'episode', '3': 2, '4': 1, '5': 11, '6': '.resonate.EpisodeMessage', '10': 'episode'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'episode',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.EpisodeMessage',
+      '10': 'episode'
+    },
   ],
 };
 
@@ -437,18 +826,49 @@ final $typed_data.Uint8List getEpisodeMessageDescriptor = $convert.base64Decode(
 const AddSubscriptionMessage$json = {
   '1': 'AddSubscriptionMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.AddSubscriptionMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.AddSubscriptionMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddSubscriptionMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddSubscriptionMessage.Response',
+      '10': 'response'
+    },
   ],
-  '3': [AddSubscriptionMessage_Request$json, AddSubscriptionMessage_Response$json],
+  '3': [
+    AddSubscriptionMessage_Request$json,
+    AddSubscriptionMessage_Response$json
+  ],
 };
 
 @$core.Deprecated('Use addSubscriptionMessageDescriptor instead')
 const AddSubscriptionMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'subscription', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserSubscriptionMessage', '10': 'subscription'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'subscription',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscription'
+    },
   ],
 };
 
@@ -456,8 +876,22 @@ const AddSubscriptionMessage_Request$json = {
 const AddSubscriptionMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'subscription', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserSubscriptionMessage', '10': 'subscription'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'subscription',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscription'
+    },
   ],
 };
 
@@ -477,18 +911,49 @@ final $typed_data.Uint8List addSubscriptionMessageDescriptor = $convert.base64De
 const RemoveSubscriptionMessage$json = {
   '1': 'RemoveSubscriptionMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RemoveSubscriptionMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.RemoveSubscriptionMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveSubscriptionMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveSubscriptionMessage.Response',
+      '10': 'response'
+    },
   ],
-  '3': [RemoveSubscriptionMessage_Request$json, RemoveSubscriptionMessage_Response$json],
+  '3': [
+    RemoveSubscriptionMessage_Request$json,
+    RemoveSubscriptionMessage_Response$json
+  ],
 };
 
 @$core.Deprecated('Use removeSubscriptionMessageDescriptor instead')
 const RemoveSubscriptionMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'subscription', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserSubscriptionMessage', '10': 'subscription'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'subscription',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscription'
+    },
   ],
 };
 
@@ -496,8 +961,22 @@ const RemoveSubscriptionMessage_Request$json = {
 const RemoveSubscriptionMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'subscription', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserSubscriptionMessage', '10': 'subscription'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'subscription',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscription'
+    },
   ],
 };
 
@@ -517,8 +996,22 @@ final $typed_data.Uint8List removeSubscriptionMessageDescriptor = $convert.base6
 const AddListenMessage$json = {
   '1': 'AddListenMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.AddListenMessage.Request', '10': 'request'},
-    {'1': 'response', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.AddListenMessage.Response', '10': 'response'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddListenMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddListenMessage.Response',
+      '10': 'response'
+    },
   ],
   '3': [AddListenMessage_Request$json, AddListenMessage_Response$json],
 };
@@ -527,8 +1020,22 @@ const AddListenMessage$json = {
 const AddListenMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
-    {'1': 'listen', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserListenMessage', '10': 'listen'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'listen',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listen'
+    },
   ],
 };
 
@@ -536,8 +1043,22 @@ const AddListenMessage_Request$json = {
 const AddListenMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'listen', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserListenMessage', '10': 'listen'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'listen',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listen'
+    },
   ],
 };
 
@@ -556,8 +1077,22 @@ final $typed_data.Uint8List addListenMessageDescriptor = $convert.base64Decode(
 const GetFeedMessage$json = {
   '1': 'GetFeedMessage',
   '2': [
-    {'1': 'request', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.GetFeedMessage.Request', '10': 'request'},
-    {'1': 'reponse', '3': 2, '4': 1, '5': 11, '6': '.resonate.api.GetFeedMessage.Response', '10': 'reponse'},
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetFeedMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'reponse',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetFeedMessage.Response',
+      '10': 'reponse'
+    },
   ],
   '3': [GetFeedMessage_Request$json, GetFeedMessage_Response$json],
 };
@@ -566,9 +1101,22 @@ const GetFeedMessage$json = {
 const GetFeedMessage_Request$json = {
   '1': 'Request',
   '2': [
-    {'1': 'request_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.RequestInfo', '10': 'requestInfo'},
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'before_timestamp_ms', '3': 3, '4': 1, '5': 3, '10': 'beforeTimestampMs'},
+    {
+      '1': 'before_timestamp_ms',
+      '3': 3,
+      '4': 1,
+      '5': 3,
+      '10': 'beforeTimestampMs'
+    },
   ],
 };
 
@@ -576,8 +1124,22 @@ const GetFeedMessage_Request$json = {
 const GetFeedMessage_Response$json = {
   '1': 'Response',
   '2': [
-    {'1': 'response_info', '3': 1, '4': 1, '5': 11, '6': '.resonate.api.ResponseInfo', '10': 'responseInfo'},
-    {'1': 'feed', '3': 2, '4': 1, '5': 11, '6': '.resonate.UserFeedMessage', '10': 'feed'},
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'feed',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFeedMessage',
+      '10': 'feed'
+    },
   ],
 };
 
@@ -591,4 +1153,3 @@ final $typed_data.Uint8List getFeedMessageDescriptor = $convert.base64Decode(
     'ZvcmVUaW1lc3RhbXBNcxp6CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVz'
     'b25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEi0KBGZlZWQYAiABKAsyGS5yZX'
     'NvbmF0ZS5Vc2VyRmVlZE1lc3NhZ2VSBGZlZWQ=');
-
