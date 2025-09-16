@@ -32,7 +32,10 @@ class EpisodeComponent extends StatelessWidget {
             ),
             IconButton(icon: Icon(Icons.star), onPressed: () {}),
             IconButton(icon: Icon(Icons.playlist_add), onPressed: () {}),
-            DownloadIcon(downloadApi: context.read(), episode: episode),
+            DownloadIconComponent(
+              downloadApi: context.read(),
+              episode: episode,
+            ),
           ],
         ),
       ],

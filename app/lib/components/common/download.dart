@@ -8,8 +8,10 @@ import 'package:resonate/services/download.dart';
 
 Logger _log = Logger('components/common/download');
 
-class DownloadIcon extends StatefulWidget {
-  const DownloadIcon({
+enum DownloadIconStatus { queued, downloading, canceled, error, done, init }
+
+class DownloadIconComponent extends StatefulWidget {
+  const DownloadIconComponent({
     super.key,
     required this.downloadApi,
     required this.episode,
@@ -19,64 +21,103 @@ class DownloadIcon extends StatefulWidget {
   final Episode episode;
 
   @override
-  State<DownloadIcon> createState() => _DownloadIconState();
+  State<DownloadIconComponent> createState() => _DownloadIconComponentState();
 }
 
-class _DownloadIconState extends State<DownloadIcon> {
-  UserDownload? _userDownload;
-
-  @override
-  Widget build(BuildContext context) {
-    _userDownload = widget.downloadApi.get(widget.episode.id);
-    if (_userDownload != null) {
-      if (_userDownload?.downloadItem == null) {
-        // Need to remove the download on click?
-        return Icon(Icons.download_done);
-      }
-      // Has download
-      return DownloadingIcon(downloadItem: _userDownload!.downloadItem!);
-    }
-    return IconButton(
-      icon: Icon(Icons.download),
-      onPressed: () async {
-        _log.info('download');
-        var result = await widget.downloadApi.download(widget.episode);
-        setState(() {});
-      },
-    );
+class _DownloadIconComponentState extends State<DownloadIconComponent> {
+  DownloadIconStatus _status = DownloadIconStatus.init;
+  DownloadItem? __downloadItem;
+  DownloadItem? get _downloadItem => __downloadItem;
+  set _downloadItem(DownloadItem? value) {
+    _downloadItem?.removeListener(_listener);
+    __downloadItem = value;
+    // This doesn't seem to fire
+    _listener();
+    _downloadItem?.addListener(_listener);
   }
-}
 
-class DownloadingIcon extends StatelessWidget {
-  const DownloadingIcon({super.key, required this.downloadItem});
+  @override
+  void initState() {
+    super.initState();
+    var download = widget.downloadApi.get(widget.episode.id);
+    if (download == null) return;
+    if (download.isDownloaded) {
+      _status = DownloadIconStatus.done;
+      return;
+    }
+    _downloadItem = download.downloadItem;
+  }
 
-  final DownloadItem downloadItem;
+  @override
+  void dispose() {
+    _downloadItem?.removeListener(_listener);
+    super.dispose();
+  }
+
+  void _listener() {
+    _log.info(__downloadItem!.status);
+    setState(() {
+      switch (_downloadItem!.status) {
+        case DownloadItemStatus.queued:
+          _status = DownloadIconStatus.queued;
+        case DownloadItemStatus.downloading:
+          _status = DownloadIconStatus.downloading;
+        case DownloadItemStatus.canceled:
+          _status = DownloadIconStatus.canceled;
+        case DownloadItemStatus.error:
+          _status = DownloadIconStatus.error;
+        case DownloadItemStatus.done:
+          _status = DownloadIconStatus.done;
+      }
+    });
+  }
+
+  void initDownload() async {
+    var result = await widget.downloadApi.download(widget.episode);
+    switch (result) {
+      case ApiOk():
+        setState(() {
+          _downloadItem = result.value;
+        });
+      case ApiError():
+        break;
+    }
+  }
+
+  void initCancel() async {
+    _downloadItem?.cancel();
+  }
+
+  void initDelete() async {
+    var result = await widget.downloadApi.delete(widget.episode.id);
+    switch (result) {
+      case ApiOk():
+      case ApiError():
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: downloadItem,
-      builder: (context, _) {
-        var item = downloadItem;
-        switch (item.status) {
-          case DownloadItemStatus.queued:
-            return GestureDetector(
-              onTap: () => item.cancel(),
-              child: LoadingSpinnerComponent(size: 18),
-            );
-          case DownloadItemStatus.downloading:
-            return GestureDetector(
-              onTap: () => item.cancel(),
-              child: LoadingSpinnerComponent(size: 18, value: item.progress),
-            );
-          case DownloadItemStatus.error:
-            return Icon(Icons.error);
-          case DownloadItemStatus.canceled:
-            return Icon(Icons.cancel);
-          case DownloadItemStatus.done:
-            return Icon(Icons.download_done);
-        }
-      },
-    );
+    switch (_status) {
+      case DownloadIconStatus.init:
+        return IconButton(icon: Icon(Icons.download), onPressed: initDownload);
+      case DownloadIconStatus.queued:
+        return IconButton(icon: Icon(Icons.refresh), onPressed: initCancel);
+      case DownloadIconStatus.canceled:
+        return IconButton(icon: Icon(Icons.cancel), onPressed: initDownload);
+      case DownloadIconStatus.done:
+        return Icon(Icons.download_done);
+      case DownloadIconStatus.error:
+        return IconButton(icon: Icon(Icons.error), onPressed: initDownload);
+      case DownloadIconStatus.downloading:
+        return GestureDetector(
+          onTap: initCancel,
+          child: LoadingSpinnerComponent(
+            size: 18,
+            value: _downloadItem!.progress,
+          ),
+        );
+    }
   }
 }
