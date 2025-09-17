@@ -1,7 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/services/file.dart';
+import 'package:http/http.dart' as http;
+
+Logger _log = Logger('services/download');
 
 enum DownloadItemStatus { queued, downloading, canceled, error, done }
 
@@ -29,18 +34,75 @@ class DownloadItem extends ChangeNotifier {
   ApiResult<bool> get result => _result!;
 
   void download() async {
+    _log.info('download');
     _status = DownloadItemStatus.downloading;
-    for (var i = 0; i < 11; i++) {
-      if (_status == DownloadItemStatus.canceled) {
-        await onCancel();
-        _result = ApiResult.error(Exception('cancelled download'));
+    try {
+      AbstractFile file;
+      if (kIsWeb) {
+        file = IndexDbFile(filePath);
+      } else {
+        file = FilesystemFile(filePath);
+      }
+      final request = http.Request('GET', url);
+      // This seemed to be required for certain URLs
+      // TODO(duncan): What?
+      request.maxRedirects = 10;
+      request.followRedirects = true;
+
+      // TODO(issues/1): Here is the issue..
+      // There are certain (spotify) CDNs which don't enable CORS
+      // on their servers, so in Web the download won't work.
+      // Which I guess means I need to proxy the request via the server...
+      final response = await http.Client().send(request);
+      final contentLength = response.contentLength ?? 1;
+
+      if (response.statusCode != 200) {
+        _log.info('url statusCode :: ${response.statusCode}');
+        _status = DownloadItemStatus.error;
+        _result = ApiResult.error(
+          Exception('Failed to download file: ${response.statusCode}'),
+        );
         notifyListeners();
         return;
       }
-      await Future.delayed(const Duration(seconds: 1));
-      _progress = i / 10;
+      _log.info('opening write');
+      await file.openWrite();
+      var bytesReceived = 0;
+      await for (var chunk in response.stream) {
+        _log.info('got chunk');
+        if (_status == DownloadItemStatus.canceled) {
+          await file.cancelWrite();
+          await onCancel();
+          _result = ApiResult.error(Exception('cancelled download'));
+          notifyListeners();
+          return;
+        }
+        file.write(chunk);
+        bytesReceived += chunk.length;
+        _progress = bytesReceived / contentLength;
+        // This is notifying the listeners too much
+
+        notifyListeners();
+      }
+      await file.closeWrite();
+    } on Exception catch (e) {
+      _log.info(e);
+      _status = DownloadItemStatus.error;
+      _result = ApiResult.error(e);
       notifyListeners();
+      return;
     }
+    // for (var i = 0; i < 11; i++) {
+    //   if (_status == DownloadItemStatus.canceled) {
+    //     await onCancel();
+    //     _result = ApiResult.error(Exception('cancelled download'));
+    //     notifyListeners();
+    //     return;
+    //   }
+    //   await Future.delayed(const Duration(seconds: 1));
+    //   _progress = i / 10;
+    //   notifyListeners();
+    // }
     try {
       await onDone();
     } on Exception catch (e) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
@@ -55,7 +56,10 @@ class MyApp extends StatelessWidget {
               (context) => SecureProtoDatabase(secureDatabase: context.read()),
         ),
         Provider<AbstractDatabaseService>(
-          create: (context) => DatabaseService(idbFactorySqflite),
+          create:
+              (context) => DatabaseService(
+                kIsWeb ? idbFactoryNative : idbFactorySqflite,
+              ),
         ),
         ChangeNotifierProvider<AuthUser>(
           create:

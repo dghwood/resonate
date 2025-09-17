@@ -1,6 +1,6 @@
 module github.com/dghwood/resonate
 
-go 1.24.2
+go 1.25.1
 
 require (
 	github.com/golang-jwt/jwt/v4 v4.5.2

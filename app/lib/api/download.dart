@@ -83,7 +83,7 @@ class DownloadApi {
     if (_downloads.containsKey(episodeId)) {
       return ApiResult.error(Exception('Already downloading'));
     }
-    var filePath = 'someFilePath';
+    var filePath = '/episode-downloads/${episode.id}';
     var download = _createUserDownload(episodeId, filePath);
 
     // Download & Sync to database
