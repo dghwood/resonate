@@ -1,0 +1,108 @@
+import 'package:flutter/foundation.dart';
+import 'package:idb_sqflite/idb_sqflite.dart';
+import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/download.dart';
+import 'package:resonate/api/episode.dart';
+import 'package:resonate/api/feed.dart';
+import 'package:resonate/api/listens.dart';
+import 'package:resonate/api/player.dart';
+import 'package:resonate/api/podcast.dart';
+import 'package:resonate/api/search.dart';
+import 'package:resonate/api/subscription.dart';
+import 'package:resonate/mock_http.dart';
+import 'package:resonate/services/database.dart';
+import 'package:resonate/api/errors.dart';
+import 'package:resonate/services/http.dart';
+import 'package:resonate/services/player.dart';
+import 'package:resonate/services/secure_database.dart';
+
+final providers = [
+  Provider<ErrorService>(create: (context) => ErrorService()),
+
+  Provider<AbstractHttpService>(create: (context) => mockHttpService),
+  Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
+  Provider<SecureProtoDatabase>(
+    create: (context) => SecureProtoDatabase(secureDatabase: context.read()),
+  ),
+  Provider<AbstractDatabaseService>(
+    create:
+        (context) =>
+            DatabaseService(kIsWeb ? idbFactoryNative : idbFactorySqflite),
+  ),
+  ChangeNotifierProvider<AuthUser>(
+    create:
+        (context) => AuthUser(
+          secureDatabase: context.read(),
+          httpService: context.read(),
+          databaseService: context.read(),
+        ),
+  ),
+  Provider<PlaylistApi>(create: (context) => PlaylistApi()),
+  ChangeNotifierProvider<PlayerApi>(
+    create:
+        (context) => PlayerApi(
+          playlistApi: context.read(),
+          authUser: context.read(),
+          playerService: PlayerService(),
+        ),
+  ),
+  // API
+  Provider<SearchApi>(
+    create:
+        (context) =>
+            SearchApi(authUser: context.read(), client: context.read()),
+  ),
+  Provider<PodcastApi>(
+    // Needed this so that the DB is setup
+    lazy: false,
+    create: (context) {
+      return PodcastApi(
+        authUser: context.read(),
+        httpService: context.read(),
+        databaseService: context.read(),
+      );
+    },
+  ),
+  Provider<GetEpisodeApi>(
+    // Needed this so that the DB is setup
+    lazy: false,
+    create: (context) {
+      return GetEpisodeApi(
+        authUser: context.read(),
+        httpService: context.read(),
+        databaseService: context.read(),
+      );
+    },
+  ),
+  Provider<SubscriptionsApi>(
+    create:
+        (context) => SubscriptionsApi(
+          authUser: context.read(),
+          podcastApi: context.read(),
+        ),
+  ),
+  Provider<ListensApi>(
+    create:
+        (context) =>
+            ListensApi(authUser: context.read(), episodeApi: context.read()),
+  ),
+  Provider<GetFeedApi>(
+    // Needed this so that the DB is setup
+    lazy: false,
+    create:
+        (context) => GetFeedApi(
+          httpService: context.read(),
+          databaseService: context.read(),
+          authUser: context.read(),
+        ),
+  ),
+  Provider<DownloadApi>(
+    lazy: false,
+    create:
+        (context) => DownloadApi(
+          authUser: context.read(),
+          databaseService: context.read(),
+        ),
+  ),
+];

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/download.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/models/models.dart';
