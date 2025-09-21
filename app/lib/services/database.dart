@@ -217,6 +217,7 @@ class DatabaseService implements AbstractDatabaseService {
     if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
     }
+    _log.info('getMany::$keys');
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var values = <DatabaseStoreType>[];
@@ -272,6 +273,11 @@ abstract class AbstractProtoModelDatabase<
   void upgradeFunction(idb.VersionChangeEvent versionChangeEvent);
 }
 
+/* ProtoModelDatabase 
+
+  I need this to able to be created multiple times, given I 
+  don't want to pass around a single reference everywhere. 
+*/
 class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
     implements AbstractProtoModelDatabase<K, T> {
   ProtoModelDatabase(this.databaseService);
@@ -319,7 +325,11 @@ class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
   Future<void> getMany(Iterable<T> models) async {
     final keys = models.map((m) => m.id);
     final values = await databaseService.getMany(storeName, keys);
-    for (var i = 0; i < models.length; i++) {
+    if (values.length != models.length) {
+      throw UnimplementedError('Not all models found');
+    }
+    for (var i = 0; i < values.length; i++) {
+      // Note: for models not found
       models.elementAt(i).fromStore(values.elementAt(i));
     }
   }

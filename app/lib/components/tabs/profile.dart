@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/components/common/add_photo.dart';
+import 'package:resonate/components/common/downloads.dart';
 import 'package:resonate/components/common/listens.dart';
 import 'package:resonate/components/common/subscriptions.dart';
 import 'package:resonate/components/tabs/base.dart';
@@ -78,7 +79,7 @@ class ProfileComponent extends StatelessWidget {
                         subscriptionsApi: context.read(),
                       ),
                       Center(child: Text('Starts')),
-                      Center(child: Text('Downloads')),
+                      DownloadsListComponent(downloadsApi: context.read()),
                     ],
                   ),
                 ),

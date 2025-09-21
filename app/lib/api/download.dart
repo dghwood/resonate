@@ -7,6 +7,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/download.dart';
 import 'package:resonate/storage/download.dart';
+import 'package:resonate/storage/episode.dart';
 
 Logger _log = Logger('api/download');
 
@@ -16,15 +17,18 @@ class DownloadApi {
     required AbstractDatabaseService databaseService,
   }) : _authUser = authUser,
        _downloadManager = DownloadManager(),
+       _episodeDatabase = EpisodeDatabase(databaseService),
        _downloadDatabase = DownloadDatabase(databaseService);
 
   final AuthUser _authUser;
   final DownloadManager _downloadManager;
   final DownloadDatabase _downloadDatabase;
+  final EpisodeDatabase _episodeDatabase;
 
   final Map<String, UserDownload> _downloads = {};
 
   Future<void> init() async {
+    // I think i need to make sure I create the directory.
     var result = await sync();
     switch (result) {
       case ApiOk():
@@ -45,7 +49,7 @@ class DownloadApi {
     // I need to check with the server
     try {
       var result = await _downloadDatabase.list();
-      return ApiResult.ok(result);
+      return ApiResult.ok(result.where((e) => !e.metadata.isDeleted));
     } on Exception catch (e) {
       _log.info('Failed to initialize download database: $e');
       return ApiResult.error(e);
@@ -83,13 +87,21 @@ class DownloadApi {
     if (_downloads.containsKey(episodeId)) {
       return ApiResult.error(Exception('Already downloading'));
     }
-    var filePath = '/episode-downloads/${episode.id}';
+    var filePath = 'episode-downloads-${episode.id}.audio';
     var download = _createUserDownload(episodeId, filePath);
+
+    try {
+      // Need to add Episode to local DB when downloading.
+      await _episodeDatabase.put(episode);
+    } on Exception catch (e) {
+      _log.severe('Failed to add episode to database: $e');
+      return ApiResult.error(e);
+    }
 
     // Download & Sync to database
     var item = _downloadManager.add(
       url: Uri.parse(episode.audioUrl),
-      filePath: 'someFilePath',
+      filePath: download.filePath,
       onDone: () async {
         download.isDownloaded = true;
         await _downloadDatabase.put(download);
@@ -107,12 +119,15 @@ class DownloadApi {
     if (!_downloads.containsKey(episodeId)) {
       return ApiResult.ok(true);
     }
+    var filePath = _downloads[episodeId]!.filePath;
 
-    var download = UserDownload.copy(_downloads[episodeId]!);
-    download.metadata.markDeleted();
-
-    // Update the database
     try {
+      // Actually delete the file
+      _log.info('delete');
+      await _downloadManager.delete(filePath);
+      _log.info('deleted');
+      var download = UserDownload.copy(_downloads[episodeId]!);
+      download.metadata.markDeleted();
       await _downloadDatabase.put(download);
     } on Exception catch (e) {
       _log.severe('Failed to remove download from database: $e');
@@ -128,18 +143,19 @@ class DownloadApi {
 class DownloadsApi {
   const DownloadsApi({
     required AuthUser authUser,
-    required DownloadApi downloadApi,
     required GetEpisodeApi episodeApi,
   }) : _authUser = authUser,
-       _downloadApi = downloadApi,
        _episodeApi = episodeApi;
 
   final AuthUser _authUser;
   final GetEpisodeApi _episodeApi;
-  final DownloadApi _downloadApi;
+
+  Future<ApiResult<bool>> delete(String episodeId) async {
+    return await _authUser.downloadApi.delete(episodeId);
+  }
 
   Future<ApiResult<Iterable<Episode>>> get() async {
-    var result = await _downloadApi.list();
+    var result = await _authUser.downloadApi.list();
 
     switch (result) {
       case ApiOk():

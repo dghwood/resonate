@@ -43,6 +43,7 @@ class DownloadItem extends ChangeNotifier {
       } else {
         file = FilesystemFile(filePath);
       }
+      _log.info('requesting $url');
       final request = http.Request('GET', url);
       // This seemed to be required for certain URLs
       // TODO(duncan): What?
@@ -69,7 +70,7 @@ class DownloadItem extends ChangeNotifier {
       await file.openWrite();
       var bytesReceived = 0;
       await for (var chunk in response.stream) {
-        _log.info('got chunk');
+        _log.info('chunk');
         if (_status == DownloadItemStatus.canceled) {
           await file.cancelWrite();
           await onCancel();
@@ -78,6 +79,7 @@ class DownloadItem extends ChangeNotifier {
           return;
         }
         file.write(chunk);
+        _log.info('wrote chunk');
         bytesReceived += chunk.length;
         _progress = bytesReceived / contentLength;
         // This is notifying the listeners too much
@@ -92,17 +94,7 @@ class DownloadItem extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    // for (var i = 0; i < 11; i++) {
-    //   if (_status == DownloadItemStatus.canceled) {
-    //     await onCancel();
-    //     _result = ApiResult.error(Exception('cancelled download'));
-    //     notifyListeners();
-    //     return;
-    //   }
-    //   await Future.delayed(const Duration(seconds: 1));
-    //   _progress = i / 10;
-    //   notifyListeners();
-    // }
+
     try {
       await onDone();
     } on Exception catch (e) {
@@ -141,6 +133,37 @@ class DownloadManager {
     );
     _queue.add(item);
     return item;
+  }
+
+  Future<void> delete(String filePath) async {
+    // remove from queue
+    for (var item in _queue.where((item) => item.filePath == filePath)) {
+      switch (item.status) {
+        case DownloadItemStatus.queued:
+        case DownloadItemStatus.downloading:
+          item.cancel();
+          // Don't remove from queue, that will happen
+          // after cancel
+          continue;
+        case DownloadItemStatus.canceled:
+        case DownloadItemStatus.error:
+        case DownloadItemStatus.done:
+          // Don't think I need to do anything here..
+          // The _handleQueue function will clean up the queue
+          break;
+      }
+    }
+
+    // Now for any downloads not in the queue I need to delete them
+    AbstractFile file;
+    if (kIsWeb) {
+      file = IndexDbFile(filePath);
+    } else {
+      file = FilesystemFile(filePath);
+    }
+    _log.info('deleting file on disk: $filePath');
+    await file.delete();
+    _log.info('deleted file on disk');
   }
 
   void _handleQueue(_) {

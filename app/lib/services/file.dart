@@ -6,7 +6,10 @@
 
 import 'dart:io';
 
+import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
+
+Logger _log = Logger('services/file');
 
 abstract class AbstractFile {
   AbstractFile(this.path);
@@ -15,6 +18,7 @@ abstract class AbstractFile {
   void write(List<int> bytes);
   Future<void> cancelWrite();
   Future<void> closeWrite();
+  Future<void> delete();
 }
 
 class FilesystemFile implements AbstractFile {
@@ -26,17 +30,35 @@ class FilesystemFile implements AbstractFile {
   File? _file;
   IOSink? _writeSink;
 
-  @override
-  Future<void> openWrite() async {
+  Future<void> _defineFile() async {
     final cacheDirectory = await getApplicationCacheDirectory();
     final fullPath = '${cacheDirectory.path}/$path';
     _file = File(fullPath);
+  }
+
+  @override
+  Future<void> openWrite() async {
+    await _defineFile();
     _writeSink = _file!.openWrite();
+    _log.info('opening ${_file!.path} for write');
   }
 
   @override
   void write(List<int> bytes) {
-    _writeSink?.add(bytes);
+    _writeSink!.add(bytes);
+  }
+
+  @override
+  Future<void> delete() async {
+    _log.info('delete');
+    await _defineFile();
+    if (await _file!.exists()) {
+      _log.info('deleting existing file $path');
+      await _file!.delete();
+      _log.info('deleted');
+    } else {
+      _log.info('file does not exist $path');
+    }
   }
 
   @override
@@ -47,8 +69,10 @@ class FilesystemFile implements AbstractFile {
     }
   }
 
+  @override
   Future<void> closeWrite() async {
-    await _writeSink?.close();
+    await _writeSink!.close();
+    _log.info('closing ${_file!.path} for write');
   }
 }
 
@@ -68,6 +92,11 @@ class IndexDbFile implements AbstractFile {
   @override
   void write(List<int> bytes) {
     _bytesBuffer.addAll(bytes);
+  }
+
+  @override
+  Future<void> delete() async {
+    throw UnimplementedError('delete not implemented');
   }
 
   @override

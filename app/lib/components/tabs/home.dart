@@ -7,6 +7,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -22,7 +23,12 @@ class HomePage extends TabComponent {
     return Column(
       children: [
         Text('home'),
-
+        TextButton(
+          child: Text('show playlist'),
+          onPressed: () {
+            PlaylistComponent.show(context);
+          },
+        ),
         TextButton(
           child: Text('show error'),
           onPressed: () {

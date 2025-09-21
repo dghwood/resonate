@@ -12,27 +12,47 @@ class PlaylistApi {
   PlaylistApi();
 
   final List<Episode> _episodes = [];
-  Iterable<Episode> get episodes => _episodes;
+
+  Future<Iterable<Episode>> list() async {
+    return _episodes;
+  }
+
   // For recommended episodes..
   // TODO(duncan): Implement this..
   final List<Episode> _autoEpisodes = [];
 
-  void next(Episode episode) {
+  Future<void> next(Episode episode) async {
     _episodes.insert(0, episode);
   }
 
-  void add(Episode episode) {
+  Future<void> add(Episode episode) async {
     _episodes.add(episode);
   }
 
-  void remove(Episode episode) {
+  Future<void> remove(Episode episode) async {
     _episodes.remove(episode);
   }
 
-  void clear() => _episodes.clear();
+  Future<void> clear() async {
+    _episodes.clear();
+  }
+
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    var item = _episodes.removeAt(oldIndex);
+    _episodes.insert(newIndex, item);
+  }
+
+  bool has(Episode episode) {
+    return _episodes.any((e) => e == episode);
+  }
 
   bool get hasNext => _episodes.isNotEmpty;
-  Episode get pop => _episodes.removeAt(0);
+  Future<Episode> get pop async {
+    return _episodes.removeAt(0);
+  }
 }
 
 class PlayerApi extends ChangeNotifier {
@@ -52,7 +72,7 @@ class PlayerApi extends ChangeNotifier {
       case PlayerState.finished:
         // When the episode is finished load the next episode
         if (!_playlistApi.hasNext) break;
-        load(_playlistApi.pop);
+        _playlistApi.pop.then((e) => load(e));
       default:
         break;
     }
@@ -62,6 +82,7 @@ class PlayerApi extends ChangeNotifier {
   final AbstractPlayerService _playerService;
   final AuthUser? _authUser;
   final PlaylistApi _playlistApi;
+  PlaylistApi get playlistApi => _playlistApi;
 
   Episode? _currentEpisode;
 
@@ -70,7 +91,7 @@ class PlayerApi extends ChangeNotifier {
 
   void _setupListenLogging(Episode episode) {
     progressStream.listen((progress) {
-      _authUser?.listenApi.add(episode.id, progress, server: false);
+      _authUser?.listenApi.add(episode, progress, server: false);
     });
   }
 
@@ -99,7 +120,7 @@ class PlayerApi extends ChangeNotifier {
   void _logProgress() {
     if (_currentEpisode == null) return;
     // This will hit the server
-    _authUser?.listenApi.add(_currentEpisode!.id, _playerService.progress);
+    _authUser?.listenApi.add(_currentEpisode!, _playerService.progress);
   }
 
   Future<void> play() async {

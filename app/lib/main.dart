@@ -1,26 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
-import 'package:resonate/api/download.dart';
-import 'package:resonate/api/episode.dart';
-import 'package:resonate/api/feed.dart';
-import 'package:resonate/api/listens.dart';
-import 'package:resonate/api/player.dart';
-import 'package:resonate/api/podcast.dart';
-import 'package:resonate/api/search.dart';
-import 'package:resonate/api/subscription.dart';
-import 'package:resonate/mock_http.dart';
 import 'package:resonate/providers.dart';
 import 'package:resonate/router/routes.dart';
-import 'package:resonate/services/database.dart';
-import 'package:resonate/api/errors.dart';
-import 'package:resonate/services/http.dart';
-import 'package:resonate/services/player.dart';
-import 'package:resonate/services/secure_database.dart';
 
 void main() async {
   // https://pub.dev/packages/just_audio_background

@@ -6,10 +6,97 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/reordable_listview.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('components/common/player');
+
+class PlaylistComponent extends StatelessWidget {
+  const PlaylistComponent({super.key, required this.playerApi});
+
+  final PlayerApi playerApi;
+
+  @override
+  Widget build(BuildContext context) {
+    var playlistApi = playerApi.playlistApi;
+    return FutureBuilder(
+      future: playlistApi.list(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return LoadingSpinnerComponent();
+        }
+        var episodes = snapshot.requireData.toList();
+        return ReordableListviewComponent(
+          items: episodes,
+          onReorder: (oldIndex, newIndex) async {
+            await Future.delayed(Duration(seconds: 1));
+          },
+          builder:
+              (episode) => ListTile(
+                key: Key(episode.id),
+                leading: Image.network(episode.imageUrl),
+                title: Text(episode.title),
+                trailing: Icon(Icons.play_arrow),
+              ),
+        );
+        return ListView.builder(
+          itemCount: episodes.length,
+          itemBuilder: (context, index) {
+            var episode = episodes.elementAt(index);
+            var widget = ListTile(
+              leading: Image.network(episode.imageUrl),
+              title: Text(episode.title),
+              trailing: Icon(Icons.play_arrow),
+            );
+            return widget;
+          },
+        );
+      },
+    );
+  }
+
+  static void show(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      showDragHandle: true,
+      context: context,
+      builder: (context) {
+        return PlaylistComponent(playerApi: context.read());
+      },
+    );
+  }
+}
+
+class PlayerComponentPage extends StatelessWidget {
+  const PlayerComponentPage({super.key, required this.playerApi});
+
+  final PlayerApi playerApi;
+
+  @override
+  Widget build(BuildContext context) {
+    _log.info('PlayerComponentPage::build');
+    final controller = PageController();
+    return PageView(
+      controller: controller,
+      children: [
+        PlayerComponent(playerApi: playerApi),
+        PlaylistComponent(playerApi: playerApi),
+      ],
+    );
+  }
+
+  static void show(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      showDragHandle: true,
+      context: context,
+      builder: (context) {
+        return PlayerComponentPage(playerApi: context.read());
+      },
+    );
+  }
+}
 
 class PlayerComponent extends StatelessWidget {
   const PlayerComponent({super.key, required PlayerApi playerApi})
@@ -29,7 +116,7 @@ class PlayerComponent extends StatelessWidget {
         return Center(
           child: Column(
             children: [
-              Image.network(episode.imageUrl),
+              Image.network(episode.imageUrl, height: 150, width: 150),
               Text(episode.title),
               PlayButtonComponent(playerApi: _playerApi, size: 100),
               PlayerSliderComponent(playerApi: _playerApi),
@@ -153,7 +240,7 @@ class BottomPlayerComponent extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          PlayerComponent.show(context);
+                          PlayerComponentPage.show(context);
                         },
                         child: Center(
                           child: ListTile(

@@ -55,7 +55,7 @@ class _DownloadIconComponentState extends State<DownloadIconComponent> {
   }
 
   void _listener() {
-    _log.info(__downloadItem!.status);
+    // _log.info(__downloadItem!.status);
     setState(() {
       switch (_downloadItem!.status) {
         case DownloadItemStatus.queued:

@@ -17,7 +17,7 @@ import 'package:resonate/services/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database.dart';
 
-final providers = [
+final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
 
   Provider<AbstractHttpService>(create: (context) => mockHttpService),
@@ -38,71 +38,76 @@ final providers = [
           databaseService: context.read(),
         ),
   ),
-  Provider<PlaylistApi>(create: (context) => PlaylistApi()),
-  ChangeNotifierProvider<PlayerApi>(
-    create:
-        (context) => PlayerApi(
-          playlistApi: context.read(),
-          authUser: context.read(),
-          playerService: PlayerService(),
-        ),
-  ),
-  // API
-  Provider<SearchApi>(
-    create:
-        (context) =>
-            SearchApi(authUser: context.read(), client: context.read()),
-  ),
-  Provider<PodcastApi>(
-    // Needed this so that the DB is setup
-    lazy: false,
-    create: (context) {
-      return PodcastApi(
-        authUser: context.read(),
-        httpService: context.read(),
-        databaseService: context.read(),
-      );
-    },
-  ),
-  Provider<GetEpisodeApi>(
-    // Needed this so that the DB is setup
-    lazy: false,
-    create: (context) {
-      return GetEpisodeApi(
-        authUser: context.read(),
-        httpService: context.read(),
-        databaseService: context.read(),
-      );
-    },
-  ),
-  Provider<SubscriptionsApi>(
-    create:
-        (context) => SubscriptionsApi(
-          authUser: context.read(),
-          podcastApi: context.read(),
-        ),
-  ),
-  Provider<ListensApi>(
-    create:
-        (context) =>
-            ListensApi(authUser: context.read(), episodeApi: context.read()),
-  ),
-  Provider<GetFeedApi>(
-    // Needed this so that the DB is setup
-    lazy: false,
-    create:
-        (context) => GetFeedApi(
-          httpService: context.read(),
-          databaseService: context.read(),
-          authUser: context.read(),
-        ),
-  ),
-  Provider<DownloadApi>(
-    lazy: false,
-    create:
-        (context) => DownloadApi(
-          authUser: context.read(),
-          databaseService: context.read(),
-        ),
-  ),
 ];
+final providers =
+    _baseProviders +
+    [
+      Provider<PlaylistApi>(create: (context) => PlaylistApi()),
+      ChangeNotifierProvider<PlayerApi>(
+        create:
+            (context) => PlayerApi(
+              playlistApi: context.read(),
+              authUser: context.read(),
+              playerService: PlayerService(),
+            ),
+      ),
+      // API
+      Provider<SearchApi>(
+        create:
+            (context) =>
+                SearchApi(authUser: context.read(), client: context.read()),
+      ),
+      Provider<PodcastApi>(
+        // Needed this so that the DB is setup
+        lazy: false,
+        create: (context) {
+          return PodcastApi(
+            authUser: context.read(),
+            httpService: context.read(),
+            databaseService: context.read(),
+          );
+        },
+      ),
+      Provider<GetEpisodeApi>(
+        // Needed this so that the DB is setup
+        lazy: false,
+        create: (context) {
+          return GetEpisodeApi(
+            authUser: context.read(),
+            httpService: context.read(),
+            databaseService: context.read(),
+          );
+        },
+      ),
+      Provider<SubscriptionsApi>(
+        create:
+            (context) => SubscriptionsApi(
+              authUser: context.read(),
+              podcastApi: context.read(),
+            ),
+      ),
+      Provider<ListensApi>(
+        create:
+            (context) => ListensApi(
+              authUser: context.read(),
+              episodeApi: context.read(),
+            ),
+      ),
+      Provider<GetFeedApi>(
+        // Needed this so that the DB is setup
+        lazy: false,
+        create:
+            (context) => GetFeedApi(
+              httpService: context.read(),
+              databaseService: context.read(),
+              authUser: context.read(),
+            ),
+      ),
+      Provider<DownloadsApi>(
+        create:
+            (context) => DownloadsApi(
+              episodeApi: context.read(),
+              authUser: context.read(),
+            ),
+      ),
+    ];

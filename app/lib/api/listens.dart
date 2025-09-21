@@ -9,6 +9,7 @@ import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/player.dart';
+import 'package:resonate/storage/episode.dart';
 import 'package:resonate/storage/listens.dart';
 
 Logger _log = Logger('api/listens');
@@ -48,10 +49,12 @@ class ListenApi {
     required AbstractDatabaseService databaseService,
   }) : _addServer = AddListenApiServer(authUser: authUser, client: httpService),
        _database = ListenDatabase(databaseService),
-       _authUser = authUser;
+       _authUser = authUser,
+       _episodeDatabase = EpisodeDatabase(databaseService);
 
   final AddListenApiServer _addServer;
   final ListenDatabase _database;
+  final EpisodeDatabase _episodeDatabase;
   final AuthUser _authUser;
 
   final Map<String, UserListen> _listens = {};
@@ -103,14 +106,27 @@ class ListenApi {
     );
   }
 
+  // We have to make sure the episode is in the local DB when
+  // registering a listen, so just keep a log of puts
+  // so we can skip always adding the episode to the local DB.
+  Map<String, bool> _episodePuts = {};
+
   Future<ApiResult<UserListen>> add(
-    String episodeId,
+    Episode episode,
     PlayerProgress progress, {
     bool server = true,
   }) async {
+    String episodeId = episode.id;
     UserListen listen;
     // Add to DB
     try {
+      // Note you need to make sure the episode is in the local DB
+      // This gets called a lot, maybe I need caching or something
+      if (_episodePuts[episodeId] == null) {
+        _episodeDatabase.put(episode);
+        _episodePuts[episodeId] = true;
+      }
+
       listen = _createListen(episodeId, progress);
       await _database.put(listen);
     } on Exception catch (e) {
@@ -146,7 +162,7 @@ class ListensApi {
   Future<ApiResult<Iterable<Episode>>> get() async {
     var listenApi = _authUser.listenApi;
     var result = await listenApi.list();
-
+    _log.info('got $result');
     switch (result) {
       case ApiOk():
         break;
@@ -156,7 +172,9 @@ class ListensApi {
 
     var listens = result.value;
     var episodeIds = listens.map((s) => s.episodeId);
+    _log.info('for episodeIds: ${episodeIds.length}');
     var episodeResult = await _episodeApi.getMany(episodeIds);
+    _log.info('got $episodeResult');
 
     switch (episodeResult) {
       case ApiOk():

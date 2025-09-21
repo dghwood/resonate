@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
@@ -8,6 +9,8 @@ import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/storage/episode.dart';
+
+Logger _log = Logger('api/episode');
 
 class GetEpisodeApiRequest extends ApiRequest<GetEpisodeMessage_Request> {
   GetEpisodeApiRequest()
@@ -82,9 +85,11 @@ class GetEpisodeApi {
     Iterable<String> episodeIds,
   ) async {
     var episodes = episodeIds.map((id) => Episode(id: id)).toList();
+    _log.info('getMany::$episodes');
     try {
       // I think the order may change here..
       await _database.getMany(episodes);
+      _log.info('database returned');
       return ApiResult.ok(episodes);
     } on Exception catch (e) {
       return ApiResult.error(e);

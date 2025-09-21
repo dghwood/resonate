@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
-import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
-import 'package:resonate/api/subscription.dart';
 import 'package:resonate/components/common/loading.dart';
-import 'package:resonate/components/common/subscribe.dart';
-import 'package:resonate/router/navigation.dart';
 
 Logger _log = Logger('components/common/listens');
 
@@ -27,6 +22,7 @@ class ListensListComponent extends StatelessWidget {
         var result = snapshot.requireData;
         switch (result) {
           case ApiOk():
+            _log.info('result::ok::${result.value.length}');
             break;
           case ApiError():
             return Text('Error loading subscriptions: ${result.error}');
@@ -39,7 +35,10 @@ class ListensListComponent extends StatelessWidget {
             var episode = episodes.elementAt(index);
             return ListTile(
               // onTap: () => Navigate(context).toPodcast(episodes.id),
-              leading: Image.network(episode.imageUrl),
+              leading:
+                  episode.imageUrl != ''
+                      ? Image.network(episode.imageUrl)
+                      : null,
               title: Text(episode.title),
               subtitle: Text(episode.description, maxLines: 2),
               // trailing: SubscribeIconCommponent(
