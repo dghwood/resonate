@@ -38,3 +38,17 @@ type Episode struct {
 func (p *Episode) GetId() string {
 	return p.Id
 }
+
+// UserListen
+type UserListen struct {
+	proto.UserListenMessage
+}
+
+func (p *UserListen) GetId() string {
+	return p.Id
+}
+
+// StorageMetadata
+type StorageMetadata struct {
+	proto.StorageMetadataMessage
+}

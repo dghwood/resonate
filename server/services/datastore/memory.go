@@ -7,24 +7,46 @@ import (
 	"github.com/dghwood/resonate/models"
 )
 
-type MemoryDatastore struct {
+type memoryDatabase struct {
 	Data map[string]models.Model
 }
 
-func NewMemoryDatastore() *MemoryDatastore {
-	return &MemoryDatastore{
+func NewMemoryDatabase() memoryDatabase {
+	return memoryDatabase{
 		Data: make(map[string]models.Model),
 	}
 }
 
+type MemoryDatastore struct {
+	Data map[string]memoryDatabase
+}
+
+func NewMemoryDatastore() *MemoryDatastore {
+	return &MemoryDatastore{
+		Data: make(map[string]memoryDatabase),
+	}
+}
+
+func (ds *MemoryDatastore) getDb(entity models.Model) memoryDatabase {
+	dbName := MessageName(entity)
+	if val, ok := ds.Data[dbName]; ok {
+		return val
+	}
+	db := NewMemoryDatabase()
+	ds.Data[dbName] = db
+	return db
+}
+
 func (ds *MemoryDatastore) Put(entity models.Model) error {
-	ds.Data[entity.GetId()] = entity
+	database := ds.getDb(entity)
+	database.Data[entity.GetId()] = entity
 	log.Println(GetFields(entity))
 	return nil
 }
 
 func (ds *MemoryDatastore) Get(entity models.Model) error {
-	if val, ok := ds.Data[entity.GetId()]; ok {
+	database := ds.getDb(entity)
+	if val, ok := database.Data[entity.GetId()]; ok {
 		models.Merge(entity, val)
 		return nil
 	}
@@ -38,7 +60,8 @@ func (ds *MemoryDatastore) PutMulti(src any) error {
 	}
 	for i := 0; i < entities.Len(); i++ {
 		entity := entities.Index(i).Interface().(models.Model)
-		ds.Data[entity.GetId()] = entity
+		database := ds.getDb(entity)
+		database.Data[entity.GetId()] = entity
 		log.Println(GetFields(entity))
 	}
 	return nil
@@ -51,7 +74,8 @@ func (ds *MemoryDatastore) GetMulti(src any) error {
 	}
 	for i := 0; i < entities.Len(); i++ {
 		entity := entities.Index(i).Interface().(models.Model)
-		if val, ok := ds.Data[entity.GetId()]; ok {
+		database := ds.getDb(entity)
+		if val, ok := database.Data[entity.GetId()]; ok {
 			models.Merge(entity, val)
 		} else {
 			return ErrorEntityNotFound

@@ -1,18 +1,74 @@
 package datastore
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/dghwood/resonate/models"
+	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-func GetFields(message models.Model) (fields map[int64]string) {
-	fields = make(map[int64]string)
+// datastore.Property
+type Field struct {
+	Number  int32
+	Value   any
+	NoIndex bool
+}
+
+func MessageName(message models.Model) string {
+	return fmt.Sprint(message.ProtoReflect().Descriptor().Name())
+}
+
+func GetFields(message models.Model) (fields []Field) {
+	fields = make([]Field, 0)
 	message.ProtoReflect().Range(
 		func(
 			fd protoreflect.FieldDescriptor,
 			value protoreflect.Value) bool {
-			fields[int64(fd.Number())] = value.String()
+
+			field := Field{
+				Number: int32(fd.Number()),
+			}
+
+			switch fd.Kind() {
+			case protoreflect.MessageKind:
+				bytes, err := proto.Marshal(value.Message().Interface())
+				if err != nil {
+					log.Print("error marshalling proto")
+					return true
+				}
+				field.Value = bytes
+			default:
+				field.Value = value.Interface()
+			}
+
+			fields = append(fields, field)
+
 			return true
 		})
+	return
+}
+
+func RetrieveFields(fields []Field, model models.Model) (err error) {
+	for _, field := range fields {
+		num := field.Number
+		descriptor := model.ProtoReflect().
+			Descriptor().Fields().
+			ByNumber(protoreflect.FieldNumber(num))
+
+		switch descriptor.Kind() {
+		case protoreflect.MessageKind:
+			// Need to init the message first
+			nested := model.ProtoReflect().Get(descriptor).
+				Message().New()
+			proto.Unmarshal(
+				field.Value.([]byte),
+				nested.Interface())
+			model.ProtoReflect().Set(descriptor, protoreflect.ValueOf(nested))
+		default:
+			model.ProtoReflect().Set(descriptor, protoreflect.ValueOf(field.Value))
+		}
+	}
 	return
 }
