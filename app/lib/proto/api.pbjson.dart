@@ -734,6 +734,14 @@ const ListPodcastEpisodesMessage_Response$json = {
       '6': '.resonate.EpisodeMessage',
       '10': 'episodes'
     },
+    {
+      '1': 'podcast',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PodcastMessage',
+      '10': 'podcast'
+    },
   ],
 };
 
@@ -744,9 +752,10 @@ final $typed_data.Uint8List listPodcastEpisodesMessageDescriptor = $convert.base
     'cG9uc2UYAiABKAsyMS5yZXNvbmF0ZS5hcGkuTGlzdFBvZGNhc3RFcGlzb2Rlc01lc3NhZ2UuUm'
     'VzcG9uc2VSCHJlc3BvbnNlGmYKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVz'
     'b25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIdCgpwb2RjYXN0X2lkGAIgASgJUg'
-    'lwb2RjYXN0SWQagQEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0'
+    'lwb2RjYXN0SWQatQEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0'
     'ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SNAoIZXBpc29kZXMYAiADKAsyGC5yZX'
-    'NvbmF0ZS5FcGlzb2RlTWVzc2FnZVIIZXBpc29kZXM=');
+    'NvbmF0ZS5FcGlzb2RlTWVzc2FnZVIIZXBpc29kZXMSMgoHcG9kY2FzdBgDIAEoCzIYLnJlc29u'
+    'YXRlLlBvZGNhc3RNZXNzYWdlUgdwb2RjYXN0');
 
 @$core.Deprecated('Use getEpisodeMessageDescriptor instead')
 const GetEpisodeMessage$json = {

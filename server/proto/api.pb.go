@@ -1760,6 +1760,7 @@ type ListPodcastEpisodesMessage_Response struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
 	Episodes      []*EpisodeMessage      `protobuf:"bytes,2,rep,name=episodes,proto3" json:"episodes,omitempty"`
+	Podcast       *PodcastMessage        `protobuf:"bytes,3,opt,name=podcast,proto3" json:"podcast,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1804,6 +1805,13 @@ func (x *ListPodcastEpisodesMessage_Response) GetResponseInfo() *ResponseInfo {
 func (x *ListPodcastEpisodesMessage_Response) GetEpisodes() []*EpisodeMessage {
 	if x != nil {
 		return x.Episodes
+	}
+	return nil
+}
+
+func (x *ListPodcastEpisodesMessage_Response) GetPodcast() *PodcastMessage {
+	if x != nil {
+		return x.Podcast
 	}
 	return nil
 }
@@ -2422,17 +2430,18 @@ const file_proto_api_proto_rawDesc = "" +
 	"podcast_id\x18\x02 \x01(\tR\tpodcastId\x1a\x7f\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x122\n" +
-	"\apodcast\x18\x02 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\xa3\x03\n" +
+	"\apodcast\x18\x02 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\xd7\x03\n" +
 	"\x1aListPodcastEpisodesMessage\x12J\n" +
 	"\arequest\x18\x01 \x01(\v20.resonate.api.ListPodcastEpisodesMessage.RequestR\arequest\x12M\n" +
 	"\bresponse\x18\x02 \x01(\v21.resonate.api.ListPodcastEpisodesMessage.ResponseR\bresponse\x1af\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x1d\n" +
 	"\n" +
-	"podcast_id\x18\x02 \x01(\tR\tpodcastId\x1a\x81\x01\n" +
+	"podcast_id\x18\x02 \x01(\tR\tpodcastId\x1a\xb5\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x124\n" +
-	"\bepisodes\x18\x02 \x03(\v2\x18.resonate.EpisodeMessageR\bepisodes\"\x85\x03\n" +
+	"\bepisodes\x18\x02 \x03(\v2\x18.resonate.EpisodeMessageR\bepisodes\x122\n" +
+	"\apodcast\x18\x03 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\x85\x03\n" +
 	"\x11GetEpisodeMessage\x12A\n" +
 	"\arequest\x18\x01 \x01(\v2'.resonate.api.GetEpisodeMessage.RequestR\arequest\x12D\n" +
 	"\bresponse\x18\x02 \x01(\v2(.resonate.api.GetEpisodeMessage.ResponseR\bresponse\x1af\n" +
@@ -2609,29 +2618,30 @@ var file_proto_api_proto_depIdxs = []int32{
 	1,  // 57: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
 	0,  // 58: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
 	48, // 59: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
-	1,  // 60: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 61: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	48, // 62: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
-	1,  // 63: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	49, // 64: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 65: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	49, // 66: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,  // 67: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	49, // 68: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	0,  // 69: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	49, // 70: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,  // 71: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	50, // 72: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	0,  // 73: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	50, // 74: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	1,  // 75: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,  // 76: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	51, // 77: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
-	78, // [78:78] is the sub-list for method output_type
-	78, // [78:78] is the sub-list for method input_type
-	78, // [78:78] is the sub-list for extension type_name
-	78, // [78:78] is the sub-list for extension extendee
-	0,  // [0:78] is the sub-list for field type_name
+	47, // 60: resonate.api.ListPodcastEpisodesMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	1,  // 61: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 62: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	48, // 63: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
+	1,  // 64: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	49, // 65: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 66: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	49, // 67: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,  // 68: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	49, // 69: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	0,  // 70: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	49, // 71: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,  // 72: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	50, // 73: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	0,  // 74: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	50, // 75: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	1,  // 76: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,  // 77: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	51, // 78: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
+	79, // [79:79] is the sub-list for method output_type
+	79, // [79:79] is the sub-list for method input_type
+	79, // [79:79] is the sub-list for extension type_name
+	79, // [79:79] is the sub-list for extension extendee
+	0,  // [0:79] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }

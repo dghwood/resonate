@@ -2070,10 +2070,12 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
   factory ListPodcastEpisodesMessage_Response({
     ResponseInfo? responseInfo,
     $core.Iterable<$0.EpisodeMessage>? episodes,
+    $0.PodcastMessage? podcast,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (episodes != null) result.episodes.addAll(episodes);
+    if (podcast != null) result.podcast = podcast;
     return result;
   }
 
@@ -2096,6 +2098,8 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
     ..pc<$0.EpisodeMessage>(
         2, _omitFieldNames ? '' : 'episodes', $pb.PbFieldType.PM,
         subBuilder: $0.EpisodeMessage.create)
+    ..aOM<$0.PodcastMessage>(3, _omitFieldNames ? '' : 'podcast',
+        subBuilder: $0.PodcastMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -2137,6 +2141,17 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$0.EpisodeMessage> get episodes => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $0.PodcastMessage get podcast => $_getN(2);
+  @$pb.TagNumber(3)
+  set podcast($0.PodcastMessage value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPodcast() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPodcast() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $0.PodcastMessage ensurePodcast() => $_ensure(2);
 }
 
 /// Used to list the podcast episodes

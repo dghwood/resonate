@@ -132,6 +132,7 @@ message ListPodcastEpisodesMessage {
     message Response {
         ResponseInfo response_info = 1;
         repeated EpisodeMessage episodes = 2; 
+        PodcastMessage podcast = 3;
     }
     Request request = 1;
     Response response = 2;
