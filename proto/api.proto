@@ -163,6 +163,7 @@ message AddSubscriptionMessage {
     Request request = 1;
     Response response = 2;
 }
+// Do I need this? Basically the same as Add 
 message RemoveSubscriptionMessage {
     message Request {
         RequestInfo request_info = 1; 
@@ -171,6 +172,18 @@ message RemoveSubscriptionMessage {
     message Response {
         ResponseInfo response_info = 1;
         UserSubscriptionMessage subscription = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
+message ListSubscriptionMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated UserSubscriptionMessage subscriptions = 2; 
     }
     Request request = 1;
     Response response = 2;

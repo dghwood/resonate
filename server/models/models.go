@@ -64,3 +64,7 @@ type LoggedInUserMessage struct {
 	IsLoggedIn bool
 	Token      *proto.TokenMessage
 }
+
+type Subscription struct {
+	proto.UserSubscriptionMessage
+}
