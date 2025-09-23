@@ -65,6 +65,58 @@ func TestMemoryMultiDatastore(t *testing.T) {
 	}
 }
 
+func TestMemoryListForUserDatastore(t *testing.T) {
+	model0 := models.Subscription{}
+	model0.Id = "1"
+	model0.UserId = "1"
+
+	model1 := models.Subscription{}
+	model1.Id = "2"
+	model1.UserId = "2"
+
+	model2 := models.Subscription{}
+	model2.Id = "3"
+	model2.UserId = "2"
+
+	modelsToPut := []*models.Subscription{&model0, &model1, &model2}
+
+	ds := NewMemoryDatastore()
+	err := ds.PutMulti(modelsToPut)
+	if err != nil {
+		t.Errorf("Put() error = %v", err)
+	}
+
+	model := models.Subscription{}
+	model.UserId = "2"
+	iter := ds.ListForUser(&model)
+
+	results := make([]*models.Subscription, 0)
+
+	for {
+		result := models.Subscription{}
+		err := iter.Next(&result)
+		if err == IteratorDone {
+			break
+		}
+		if err != nil {
+			t.Errorf("Next() error = %v", err)
+		}
+		results = append(results, &result)
+	}
+
+	if len(results) != 2 {
+		t.Errorf("len(results) = %d; want 2", len(results))
+	}
+	if results[0].Id != "2" || results[1].Id != "3" {
+		t.Errorf("results[0].Id = %s; results[1].Id = %s;", results[0].Id, results[1].Id)
+	}
+
+}
+
 func TestMemoryIsDatastore(t *testing.T) {
 	var _ Datastore = (*MemoryDatastore)(nil)
+}
+
+func TestMemoryIsDatastoreIterator(t *testing.T) {
+	var _ Iterator = (*MemoryDatastoreIterator)(nil)
 }

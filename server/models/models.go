@@ -17,6 +17,14 @@ type Model interface {
 	GetId() string
 }
 
+// Mainly used to enable list for user
+// methods in the datastore
+type UserModel interface {
+	Model
+	GetUserId() string
+	GetUserIdFieldNum() int32
+}
+
 func Merge(to, from pb.Message) {
 	pb.Merge(to, from)
 }
@@ -53,18 +61,23 @@ type StorageMetadata struct {
 	proto.StorageMetadataMessage
 }
 
-type UserMessage struct {
+type User struct {
 	proto.UserMessage
 }
 
 // Extended user message
-type LoggedInUserMessage struct {
+type LoggedInUser struct {
 	proto.UserMessage
 
 	IsLoggedIn bool
 	Token      *proto.TokenMessage
 }
 
+// Subscription
 type Subscription struct {
 	proto.UserSubscriptionMessage
+}
+
+func (p *Subscription) GetUserIdFieldNum() int32 {
+	return 2
 }

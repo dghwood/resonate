@@ -25,7 +25,7 @@ func (f Refresh) ResponseProto() *pb.RefreshAuthMessage_Response {
 //
 // This function refreshes the access token by using the provided refresh token.
 func (f Refresh) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *pb.RefreshAuthMessage_Request,
 	response *pb.RefreshAuthMessage_Response) (err error) {
 

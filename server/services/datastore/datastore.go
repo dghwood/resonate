@@ -15,15 +15,22 @@ import (
 	// "google.golang.org/protobuf/proto"
 )
 
-var ErrorEntityNotFound = errors.New("Datastore not found")
-var ErrorParameterNotCorrect = errors.New("parameters are not correct")
+var (
+	ErrorEntityNotFound      = errors.New("Datastore not found")
+	ErrorParameterNotCorrect = errors.New("parameters are not correct")
+	IteratorDone             = errors.New("iterator done")
+)
+
+type Iterator interface {
+	Next(entity models.Model) (err error)
+	Cursor() string
+}
 
 type Datastore interface {
 	Put(entity models.Model) (err error)
 	Get(entity models.Model) (err error)
 	PutMulti(entities any) (err error)
 	GetMulti(entities any) (err error)
-	// Run(ctx context.Context, q *datastore.Query) (it *datastore.Iterator)
-	// Errors() DatastoreErrors
+	ListForUser(entity models.UserModel) (iter Iterator)
 	Close()
 }

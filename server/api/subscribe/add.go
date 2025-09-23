@@ -20,7 +20,7 @@ func (f Add) ResponseProto() *proto.AddSubscriptionMessage_Response {
 }
 
 func (f *Add) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *proto.AddSubscriptionMessage_Request,
 	response *proto.AddSubscriptionMessage_Response) (err error) {
 

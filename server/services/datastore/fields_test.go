@@ -15,6 +15,17 @@ func TestMessageName(t *testing.T) {
 	}
 }
 
+func TestFieldName(t *testing.T) {
+	model := models.Subscription{}
+	model.UserId = "123"
+
+	fields := GetFields(&model)
+
+	if fields[0].Name != "user_id" {
+		t.Errorf("FieldName() = %s; want user_id", fields[0].Name)
+	}
+}
+
 func TestFields(t *testing.T) {
 	model := models.UserListen{}
 	model.Id = "123"

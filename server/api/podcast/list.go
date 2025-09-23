@@ -23,7 +23,7 @@ func (f List) ResponseProto() *proto.ListPodcastEpisodesMessage_Response {
 }
 
 func (f *List) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *proto.ListPodcastEpisodesMessage_Request,
 	response *proto.ListPodcastEpisodesMessage_Response) (err error) {
 

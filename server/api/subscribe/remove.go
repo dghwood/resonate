@@ -20,7 +20,7 @@ func (f Remove) ResponseProto() *proto.RemoveSubscriptionMessage_Response {
 }
 
 func (f *Remove) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *proto.RemoveSubscriptionMessage_Request,
 	response *proto.RemoveSubscriptionMessage_Response) (err error) {
 

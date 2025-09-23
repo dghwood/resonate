@@ -23,7 +23,7 @@ func (f Query) ResponseProto() *proto.SearchMessage_Response {
 }
 
 func (f *Query) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *proto.SearchMessage_Request,
 	response *proto.SearchMessage_Response) (err error) {
 

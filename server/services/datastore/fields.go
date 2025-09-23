@@ -11,6 +11,7 @@ import (
 
 // datastore.Property
 type Field struct {
+	Name    string
 	Number  int32
 	Value   any
 	NoIndex bool
@@ -28,6 +29,7 @@ func GetFields(message models.Model) (fields []Field) {
 			value protoreflect.Value) bool {
 
 			field := Field{
+				Name:   string(fd.Name()),
 				Number: int32(fd.Number()),
 			}
 

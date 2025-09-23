@@ -33,7 +33,7 @@ func (f Login) ResponseProto() *pb.LoginUserMessage_Response {
 // and returns the user and access token, as well as a refresh token.
 // This also creates a new user if the user does not exist.
 func (f Login) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *pb.LoginUserMessage_Request,
 	response *pb.LoginUserMessage_Response) (err error) {
 

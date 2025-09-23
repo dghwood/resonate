@@ -20,7 +20,7 @@ func (f List) ResponseProto() *proto.ListSubscriptionMessage_Response {
 }
 
 func (f *List) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *proto.ListSubscriptionMessage_Request,
 	response *proto.ListSubscriptionMessage_Response) (err error) {
 

@@ -22,7 +22,7 @@ func (f Request) ResponseProto() *pb.LoginRequestMessage_Response {
 //
 // This emails the user with a code to login
 func (f Request) Execute(
-	loggedInUser *models.LoggedInUserMessage,
+	loggedInUser *models.LoggedInUser,
 	request *pb.LoginRequestMessage_Request,
 	response *pb.LoginRequestMessage_Response) (err error) {
 

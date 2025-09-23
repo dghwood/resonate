@@ -25,12 +25,12 @@ type ApiResponseInterface interface {
 type ApiExecuteData struct {
 	Request  ApiRequestInterface
 	Response ApiResponseInterface
-	User     *models.LoggedInUserMessage
+	User     *models.LoggedInUser
 }
 
 type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] interface {
 	// Execute(data ApiExecuteData) error
-	Execute(user *models.LoggedInUserMessage, request request, response response) error
+	Execute(user *models.LoggedInUser, request request, response response) error
 	RequestProto() request
 	ResponseProto() response
 	RequireSignIn() bool
@@ -59,7 +59,7 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 			}
 
 			// Only construct this for signed in?
-			user := models.LoggedInUserMessage{
+			user := models.LoggedInUser{
 				UserMessage: proto.UserMessage{
 					Id: userId,
 				},
