@@ -18,7 +18,7 @@ func TestList(t *testing.T) {
 	}
 	var response = proto.ListPodcastEpisodesMessage_Response{}
 
-	err := api.Execute(&request, &response)
+	err := api.Execute(nil, &request, &response)
 	if err != nil {
 		t.Error(err)
 	}

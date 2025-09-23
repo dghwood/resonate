@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/dghwood/resonate/models"
 	pb "github.com/dghwood/resonate/proto"
 
 	"crypto/rand"
@@ -31,7 +32,10 @@ func (f Login) ResponseProto() *pb.LoginUserMessage_Response {
 // This also needs to only allow N attempts
 // and returns the user and access token, as well as a refresh token.
 // This also creates a new user if the user does not exist.
-func (f Login) Execute(request *pb.LoginUserMessage_Request, response *pb.LoginUserMessage_Response) (err error) {
+func (f Login) Execute(
+	loggedInUser *models.LoggedInUserMessage,
+	request *pb.LoginUserMessage_Request,
+	response *pb.LoginUserMessage_Response) (err error) {
 
 	user := &pb.UserMessage{
 		// Should this be a hash of the email?

@@ -3,6 +3,7 @@ package auth
 import (
 	"log"
 
+	"github.com/dghwood/resonate/models"
 	pb "github.com/dghwood/resonate/proto"
 )
 
@@ -21,6 +22,7 @@ func (f Request) ResponseProto() *pb.LoginRequestMessage_Response {
 //
 // This emails the user with a code to login
 func (f Request) Execute(
+	loggedInUser *models.LoggedInUserMessage,
 	request *pb.LoginRequestMessage_Request,
 	response *pb.LoginRequestMessage_Response) (err error) {
 

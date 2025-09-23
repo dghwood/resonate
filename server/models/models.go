@@ -52,3 +52,15 @@ func (p *UserListen) GetId() string {
 type StorageMetadata struct {
 	proto.StorageMetadataMessage
 }
+
+type UserMessage struct {
+	proto.UserMessage
+}
+
+// Extended user message
+type LoggedInUserMessage struct {
+	proto.UserMessage
+
+	IsLoggedIn bool
+	Token      *proto.TokenMessage
+}

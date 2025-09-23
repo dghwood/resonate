@@ -5,6 +5,7 @@ import (
 	"time"
 
 	token "github.com/dghwood/resonate/auth"
+	"github.com/dghwood/resonate/models"
 	pb "github.com/dghwood/resonate/proto"
 )
 
@@ -23,7 +24,10 @@ func (f Refresh) ResponseProto() *pb.RefreshAuthMessage_Response {
 // Execute
 //
 // This function refreshes the access token by using the provided refresh token.
-func (f Refresh) Execute(request *pb.RefreshAuthMessage_Request, response *pb.RefreshAuthMessage_Response) (err error) {
+func (f Refresh) Execute(
+	loggedInUser *models.LoggedInUserMessage,
+	request *pb.RefreshAuthMessage_Request,
+	response *pb.RefreshAuthMessage_Response) (err error) {
 
 	userId := request.RequestInfo.UserId
 	// refreshToken := request.RefreshToken

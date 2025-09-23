@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dghwood/resonate/auth"
+	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
 )
@@ -20,42 +22,53 @@ type ApiResponseInterface interface {
 	GetResponseInfo() *proto.ResponseInfo
 }
 
+type ApiExecuteData struct {
+	Request  ApiRequestInterface
+	Response ApiResponseInterface
+	User     *models.LoggedInUserMessage
+}
+
 type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] interface {
-	Execute(request request, response response) error
+	// Execute(data ApiExecuteData) error
+	Execute(user *models.LoggedInUserMessage, request request, response response) error
 	RequestProto() request
 	ResponseProto() response
 	RequireSignIn() bool
 }
 
-// func Attach[request pb.Message, response pb.Message](
-// 	auth auth.Auth, f ApiInterface[request, response], path string) {
-// 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-// 		token := r.Header.Get("Authorization")
-// 		user, err := auth.GetUser(token)
-// 		if err != nil {
-// 			// TODO(duncan): Better error handling..
-// 			http.Error(w, err.Error(), http.StatusUnauthorized)
-// 			return
-// 		}
-// 		request := f.RequestProto()
-// 		parseProto(r, request)
-// 		response := f.ResponseProto()
-// 		err = f.Execute(&user, request, response)
-// 		if err != nil {
-// 			log.Println(err)
-// 		}
-// 		writeProto(r, w, response)
-// 	})
-// }
-
 func Attach[request ApiRequestInterface, response ApiResponseInterface](
 	f ApiInterface[request, response], path string) {
 	http.HandleFunc(path,
 		func(w http.ResponseWriter, r *http.Request) {
+			// Check if login is required
+
 			request := f.RequestProto()
 			parseProto(r, request)
 			response := f.ResponseProto()
-			err := f.Execute(request, response)
+
+			token := request.GetRequestInfo().AccessToken
+			userId, err := auth.ValidUserIdFromToken(token)
+			if f.RequireSignIn() && err != nil {
+				// Redirect on error
+				response.GetResponseInfo().Success = false
+				// TODO(duncan): I should probably have the right
+				// error here, maybe the token has expired.
+				response.GetResponseInfo().ErrorMessage = err.Error()
+				writeProto(r, w, response)
+				return
+			}
+
+			// Only construct this for signed in?
+			user := models.LoggedInUserMessage{
+				UserMessage: proto.UserMessage{
+					Id: userId,
+				},
+				IsLoggedIn: err == nil,
+				Token:      token,
+			}
+
+			err = f.Execute(&user, request, response)
+
 			if err != nil {
 				log.Println(err)
 				response.GetResponseInfo().Success = false

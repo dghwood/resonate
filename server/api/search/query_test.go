@@ -14,7 +14,7 @@ func TestSearch(t *testing.T) {
 	request.Query = "test"
 
 	response := api.ResponseProto()
-	api.Execute(request, response)
+	api.Execute(nil, request, response)
 	if len(response.SearchResults.Results) != 10 {
 		t.Errorf("wrong number of results %d", len(response.SearchResults.Results))
 	}

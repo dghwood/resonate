@@ -39,6 +39,15 @@ func GetAccessToken(user *pb.UserMessage, expireIn time.Duration) (tokenPb *pb.T
 	return
 }
 
+func ValidUserIdFromToken(tokenPb *pb.TokenMessage) (userId string, err error) {
+	claim, err := decodeAccessToken(tokenPb.Token)
+	if err != nil {
+		return
+	}
+	userId = claim.UserId
+	return
+}
+
 func ValidateAccessToken(tokenPb *pb.TokenMessage, user *pb.UserMessage) (err error) {
 	claim, err := decodeAccessToken(tokenPb.Token)
 	if err != nil {

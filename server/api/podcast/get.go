@@ -20,6 +20,7 @@ func (f Get) ResponseProto() *proto.GetPodcastMessage_Response {
 }
 
 func (f *Get) Execute(
+	loggedInUser *models.LoggedInUserMessage,
 	request *proto.GetPodcastMessage_Request,
 	response *proto.GetPodcastMessage_Response) (err error) {
 

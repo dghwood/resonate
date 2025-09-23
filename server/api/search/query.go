@@ -1,7 +1,9 @@
 package search
 
 import (
+	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
+
 	// "github.com/dghwood/resonate/services/datastore"
 	"github.com/dghwood/resonate/services/search"
 )
@@ -21,6 +23,7 @@ func (f Query) ResponseProto() *proto.SearchMessage_Response {
 }
 
 func (f *Query) Execute(
+	loggedInUser *models.LoggedInUserMessage,
 	request *proto.SearchMessage_Request,
 	response *proto.SearchMessage_Response) (err error) {
 
