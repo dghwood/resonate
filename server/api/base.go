@@ -6,18 +6,28 @@ import (
 	"log"
 	"net/http"
 
-	// pb "github.com/dghwood/resonate/proto"
-	"google.golang.org/protobuf/proto"
+	"github.com/dghwood/resonate/proto"
+	pb "google.golang.org/protobuf/proto"
 )
 
-type ApiInterface[request proto.Message, response proto.Message] interface {
+type ApiRequestInterface interface {
+	pb.Message
+	GetRequestInfo() *proto.RequestInfo
+}
+
+type ApiResponseInterface interface {
+	pb.Message
+	GetResponseInfo() *proto.ResponseInfo
+}
+
+type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] interface {
 	Execute(request request, response response) error
 	RequestProto() request
 	ResponseProto() response
 	RequireSignIn() bool
 }
 
-// func Attach[request proto.Message, response proto.Message](
+// func Attach[request pb.Message, response pb.Message](
 // 	auth auth.Auth, f ApiInterface[request, response], path string) {
 // 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 // 		token := r.Header.Get("Authorization")
@@ -38,30 +48,35 @@ type ApiInterface[request proto.Message, response proto.Message] interface {
 // 	})
 // }
 
-func Attach[request proto.Message, response proto.Message](
+func Attach[request ApiRequestInterface, response ApiResponseInterface](
 	f ApiInterface[request, response], path string) {
-	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		request := f.RequestProto()
-		parseProto(r, request)
-		response := f.ResponseProto()
-		err := f.Execute(request, response)
-		if err != nil {
-			log.Println(err)
-		}
-		writeProto(r, w, response)
-	})
+	http.HandleFunc(path,
+		func(w http.ResponseWriter, r *http.Request) {
+			request := f.RequestProto()
+			parseProto(r, request)
+			response := f.ResponseProto()
+			err := f.Execute(request, response)
+			if err != nil {
+				log.Println(err)
+				response.GetResponseInfo().Success = false
+				response.GetResponseInfo().ErrorMessage = err.Error()
+			} else {
+				response.GetResponseInfo().Success = true
+			}
+			writeProto(r, w, response)
+		})
 }
 
 func writeProto(
 	r *http.Request,
 	w http.ResponseWriter,
-	response proto.Message) {
+	response pb.Message) {
 	if r.URL.Query().Has("json") {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-	responseBytes, err := proto.Marshal(response)
+	responseBytes, err := pb.Marshal(response)
 	if err != nil {
 		log.Printf("failed to marshal response")
 	}
@@ -70,13 +85,13 @@ func writeProto(
 	w.Write(responseBytes)
 }
 
-func parseProto(r *http.Request, request proto.Message) {
+func parseProto(r *http.Request, request pb.Message) {
 	reqBytes, err := io.ReadAll(r.Body)
 	if err != nil {
 		log.Print(err)
 	}
 	log.Println(request)
-	err = proto.Unmarshal(reqBytes, request)
+	err = pb.Unmarshal(reqBytes, request)
 	if err != nil {
 		log.Print("PARSE ERR", err)
 	}
