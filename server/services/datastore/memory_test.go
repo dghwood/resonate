@@ -88,7 +88,7 @@ func TestMemoryListForUserDatastore(t *testing.T) {
 
 	model := models.Subscription{}
 	model.UserId = "2"
-	iter := ds.ListForUser(&model)
+	iter := ds.ListForUser([]string{"2"}, &model)
 
 	results := make([]*models.Subscription, 0)
 

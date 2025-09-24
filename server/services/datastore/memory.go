@@ -106,15 +106,21 @@ func (it *MemoryDatastoreIterator) Cursor() string {
 }
 
 func (ds *MemoryDatastore) ListForUser(
+	userIds []string,
 	entity models.UserModel) Iterator {
 
 	database := ds.getDb(entity)
 	data := make([][]Field, 0)
 	for _, fields := range database.Data {
 		for _, field := range fields {
-			if field.Number == entity.GetUserIdFieldNum() &&
-				field.Value == entity.GetUserId() {
-				data = append(data, fields)
+			if field.Number == entity.GetUserIdFieldNum() {
+				var value = field.Value.(string)
+				for _, userId := range userIds {
+					if value == userId {
+						data = append(data, fields)
+						break
+					}
+				}
 			}
 		}
 	}
