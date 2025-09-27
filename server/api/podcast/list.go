@@ -36,10 +36,28 @@ func (f *List) Execute(
 	model.Id = id
 
 	// Try the database,
-	pErr := f.Datastore.Get(&model)
-	if pErr == nil {
-		log.Printf("error getting model %s", pErr)
+	if f.Datastore.Get(&model) == nil {
 		// Check the updated timestamp, and request the episodes from DB
+		model := models.Episode{}
+		it := f.Datastore.ListForIds(
+			[]string{model.Id},
+			model.GetPodcastIdFieldNum(),
+			model.GetPublishTimestampFieldNum(),
+			&model)
+
+		for {
+			episode := models.Episode{}
+			er := it.Next(&episode)
+			if er == datastore.IteratorDone {
+				break
+			}
+			if er != nil {
+				return er
+			}
+			response.Episodes = append(
+				response.Episodes, &episode.EpisodeMessage)
+		}
+		return
 	}
 
 	podcast, episodes, err := rss.Get(model.Url)

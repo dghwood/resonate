@@ -1,0 +1,38 @@
+package subscribe
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/services/datastore"
+)
+
+func TestList(t *testing.T) {
+	ds := datastore.NewMemoryDatastore()
+	for i := range 10 {
+		model := models.Subscription{}
+		model.Id = fmt.Sprint(i)
+		if i%2 == 0 {
+			model.UserId = "123"
+		} else {
+			model.UserId = "456"
+		}
+
+		ds.Put(&model)
+	}
+	list := &List{Datastore: ds}
+	request := list.RequestProto()
+	response := list.ResponseProto()
+	user := models.LoggedInUser{}
+	user.IsLoggedIn = true
+	user.Id = "123"
+
+	err := list.Execute(&user, request, response)
+	if err != nil {
+		t.Errorf("Execute() error = %v", err)
+	}
+	if len(response.Subscriptions) != 5 {
+		t.Errorf("len(response.Subscriptions) = %d; want 10", len(response.Subscriptions))
+	}
+}

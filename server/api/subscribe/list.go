@@ -26,5 +26,24 @@ func (f *List) Execute(
 
 	// Need to query db for all subscriptions (paging?)
 	// a user
+	model := models.Subscription{}
+	subscriptions := f.Datastore.ListForIds(
+		[]string{loggedInUser.Id},
+		model.GetUserIdFieldNum(),
+		-1, // Sort by something?
+		&models.Subscription{})
+
+	for {
+		model := models.Subscription{}
+		err := subscriptions.Next(&model)
+		if err == datastore.IteratorDone {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		response.Subscriptions = append(
+			response.Subscriptions, &model.UserSubscriptionMessage)
+	}
 	return
 }

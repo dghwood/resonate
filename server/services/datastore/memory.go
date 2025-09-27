@@ -3,6 +3,7 @@ package datastore
 import (
 	"log"
 	"reflect"
+	"sort"
 
 	"github.com/dghwood/resonate/models"
 )
@@ -105,17 +106,19 @@ func (it *MemoryDatastoreIterator) Cursor() string {
 	return ""
 }
 
-func (ds *MemoryDatastore) ListForUser(
-	userIds []string,
-	entity models.UserModel) Iterator {
+func (ds *MemoryDatastore) ListForIds(
+	ids []string,
+	idFieldNum int32,
+	sortFieldNum int32,
+	entity models.Model) Iterator {
 
 	database := ds.getDb(entity)
 	data := make([][]Field, 0)
 	for _, fields := range database.Data {
 		for _, field := range fields {
-			if field.Number == entity.GetUserIdFieldNum() {
+			if field.Number == idFieldNum {
 				var value = field.Value.(string)
-				for _, userId := range userIds {
+				for _, userId := range ids {
 					if value == userId {
 						data = append(data, fields)
 						break
@@ -123,6 +126,22 @@ func (ds *MemoryDatastore) ListForUser(
 				}
 			}
 		}
+	}
+
+	// I'm sure this will throw an error if the wrong type
+	if sortFieldNum >= 0 {
+		sort.Slice(data, func(i, j int) bool {
+			for _, field := range data[i] {
+				if field.Number == sortFieldNum {
+					for _, field2 := range data[j] {
+						if field2.Number == sortFieldNum {
+							return field.Value.(int64) < field2.Value.(int64)
+						}
+					}
+				}
+			}
+			return false
+		})
 	}
 
 	return &MemoryDatastoreIterator{

@@ -65,35 +65,42 @@ func TestMemoryMultiDatastore(t *testing.T) {
 	}
 }
 
-func TestMemoryListForUserDatastore(t *testing.T) {
-	model0 := models.Subscription{}
+func TestMemoryListIdsDatastore(t *testing.T) {
+	model0 := models.Episode{}
 	model0.Id = "1"
-	model0.UserId = "1"
+	model0.PodcastId = "1"
+	model0.PublishTimestamp = 1
 
-	model1 := models.Subscription{}
+	model1 := models.Episode{}
 	model1.Id = "2"
-	model1.UserId = "2"
+	model1.PodcastId = "2"
+	model1.PublishTimestamp = 2
 
-	model2 := models.Subscription{}
+	model2 := models.Episode{}
 	model2.Id = "3"
-	model2.UserId = "2"
+	model2.PodcastId = "2"
+	model2.PublishTimestamp = 3
 
-	modelsToPut := []*models.Subscription{&model0, &model1, &model2}
+	modelsToPut := []*models.Episode{&model0, &model1, &model2}
 
 	ds := NewMemoryDatastore()
 	err := ds.PutMulti(modelsToPut)
+
 	if err != nil {
 		t.Errorf("Put() error = %v", err)
 	}
 
-	model := models.Subscription{}
-	model.UserId = "2"
-	iter := ds.ListForUser([]string{"2"}, &model)
+	model := models.Episode{}
+	iter := ds.ListForIds(
+		[]string{"2"},
+		2, // PodcastId field num
+		8, // publish_timestamp
+		&model)
 
-	results := make([]*models.Subscription, 0)
+	results := make([]*models.Episode, 0)
 
 	for {
-		result := models.Subscription{}
+		result := models.Episode{}
 		err := iter.Next(&result)
 		if err == IteratorDone {
 			break

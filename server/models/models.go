@@ -38,13 +38,32 @@ func (p *Podcast) GetId() string {
 	return p.Id
 }
 
+func (p *Podcast) New() Model {
+	return &Podcast{}
+}
+
 /* Episode */
 type Episode struct {
 	proto.EpisodeMessage
 }
 
+func (p *Episode) GetMessage() *proto.EpisodeMessage {
+	return &p.EpisodeMessage
+}
+
 func (p *Episode) GetId() string {
 	return p.Id
+}
+
+func (p *Episode) New() Model {
+	return &Episode{}
+}
+
+func (p *Episode) GetPodcastIdFieldNum() int32 {
+	return 2
+}
+func (p *Episode) GetPublishTimestampFieldNum() int32 {
+	return 8
 }
 
 // UserListen
@@ -56,6 +75,10 @@ func (p *UserListen) GetId() string {
 	return p.Id
 }
 
+func (p *UserListen) New() Model {
+	return &UserListen{}
+}
+
 // StorageMetadata
 type StorageMetadata struct {
 	proto.StorageMetadataMessage
@@ -63,6 +86,10 @@ type StorageMetadata struct {
 
 type User struct {
 	proto.UserMessage
+}
+
+func (p *User) New() Model {
+	return &User{}
 }
 
 // Extended user message
@@ -73,6 +100,11 @@ type LoggedInUser struct {
 	Token      *proto.TokenMessage
 }
 
+func (p *LoggedInUser) New() Model {
+	// This won't work
+	return &LoggedInUser{}
+}
+
 // Subscription
 type Subscription struct {
 	proto.UserSubscriptionMessage
@@ -80,4 +112,9 @@ type Subscription struct {
 
 func (p *Subscription) GetUserIdFieldNum() int32 {
 	return 2
+}
+
+func (p *Subscription) New() Model {
+	// This won't work
+	return &Subscription{}
 }

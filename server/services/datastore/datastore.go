@@ -31,7 +31,9 @@ type Datastore interface {
 	Get(entity models.Model) (err error)
 	PutMulti(entities any) (err error)
 	GetMulti(entities any) (err error)
-	ListForUser(userIds []string, entity models.UserModel) (iter Iterator)
-	// ListForUser(entity models.UserModel) (iter Iterator)
+	ListForIds(ids []string,
+		idFieldNum int32,
+		sortFieldNum int32,
+		entity models.Model) (iter Iterator)
 	Close()
 }
