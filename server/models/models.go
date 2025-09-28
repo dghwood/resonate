@@ -96,6 +96,14 @@ func (p *User) New() Model {
 	return &User{}
 }
 
+func (p *User) ToPublicUser() *proto.PublicUserMessage {
+	return &proto.PublicUserMessage{
+		Id:       p.Id,
+		Name:     p.Name,
+		ImageUrl: p.ImageUrl,
+	}
+}
+
 // Extended user message
 type LoggedInUser struct {
 	proto.UserMessage

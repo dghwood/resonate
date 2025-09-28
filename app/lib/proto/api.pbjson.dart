@@ -1442,12 +1442,12 @@ const AddFollowMessage_Request$json = {
       '10': 'requestInfo'
     },
     {
-      '1': 'Follow',
+      '1': 'follow',
       '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.UserFollowMessage',
-      '10': 'Follow'
+      '10': 'follow'
     },
   ],
 };
@@ -1465,12 +1465,12 @@ const AddFollowMessage_Response$json = {
       '10': 'responseInfo'
     },
     {
-      '1': 'Follow',
+      '1': 'follow',
       '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.UserFollowMessage',
-      '10': 'Follow'
+      '10': 'follow'
     },
   ],
 };
@@ -1481,10 +1481,10 @@ final $typed_data.Uint8List addFollowMessageDescriptor = $convert.base64Decode(
     '9sbG93TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkMKCHJlc3BvbnNlGAIgASgLMicucmVzb25h'
     'dGUuYXBpLkFkZEZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnwKB1JlcXVlc3QSPA'
     'oMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0'
-    'SW5mbxIzCgZGb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2FnZVIGRm9sbG'
+    'SW5mbxIzCgZmb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2FnZVIGZm9sbG'
     '93GoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJl'
-    'c3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBkZvbGxvdxgCIAEoCzIbLnJlc29uYXRlLlVzZX'
-    'JGb2xsb3dNZXNzYWdlUgZGb2xsb3c=');
+    'c3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBmZvbGxvdxgCIAEoCzIbLnJlc29uYXRlLlVzZX'
+    'JGb2xsb3dNZXNzYWdlUgZmb2xsb3c=');
 
 @$core.Deprecated('Use removeFollowMessageDescriptor instead')
 const RemoveFollowMessage$json = {
@@ -1523,12 +1523,12 @@ const RemoveFollowMessage_Request$json = {
       '10': 'requestInfo'
     },
     {
-      '1': 'Follow',
+      '1': 'follow',
       '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.UserFollowMessage',
-      '10': 'Follow'
+      '10': 'follow'
     },
   ],
 };
@@ -1546,12 +1546,12 @@ const RemoveFollowMessage_Response$json = {
       '10': 'responseInfo'
     },
     {
-      '1': 'Follow',
+      '1': 'follow',
       '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.UserFollowMessage',
-      '10': 'Follow'
+      '10': 'follow'
     },
   ],
 };
@@ -1562,10 +1562,10 @@ final $typed_data.Uint8List removeFollowMessageDescriptor = $convert.base64Decod
     'Vtb3ZlRm9sbG93TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
     'cmVzb25hdGUuYXBpLlJlbW92ZUZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnwKB1'
     'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
-    'UgtyZXF1ZXN0SW5mbxIzCgZGb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2'
-    'FnZVIGRm9sbG93GoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25h'
-    'dGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBkZvbGxvdxgCIAEoCzIbLnJlc2'
-    '9uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgZGb2xsb3c=');
+    'UgtyZXF1ZXN0SW5mbxIzCgZmb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2'
+    'FnZVIGZm9sbG93GoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25h'
+    'dGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBmZvbGxvdxgCIAEoCzIbLnJlc2'
+    '9uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgZmb2xsb3c=');
 
 @$core.Deprecated('Use listFollowMessageDescriptor instead')
 const ListFollowMessage$json = {
@@ -1620,12 +1620,12 @@ const ListFollowMessage_Response$json = {
       '10': 'responseInfo'
     },
     {
-      '1': 'Follows',
+      '1': 'follows',
       '3': 2,
       '4': 3,
       '5': 11,
       '6': '.resonate.UserFollowMessage',
-      '10': 'Follows'
+      '10': 'follows'
     },
   ],
 };
@@ -1638,4 +1638,295 @@ final $typed_data.Uint8List listFollowMessageDescriptor = $convert.base64Decode(
     'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
     'ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQaggEKCFJlc3BvbnNlEj8KDXJlc3Bvbn'
     'NlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8S'
-    'NQoHRm9sbG93cxgCIAMoCzIbLnJlc29uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgdGb2xsb3dz');
+    'NQoHZm9sbG93cxgCIAMoCzIbLnJlc29uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgdmb2xsb3dz');
+
+@$core.Deprecated('Use getPublicUserMessageDescriptor instead')
+const GetPublicUserMessage$json = {
+  '1': 'GetPublicUserMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetPublicUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.GetPublicUserMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [GetPublicUserMessage_Request$json, GetPublicUserMessage_Response$json],
+};
+
+@$core.Deprecated('Use getPublicUserMessageDescriptor instead')
+const GetPublicUserMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+@$core.Deprecated('Use getPublicUserMessageDescriptor instead')
+const GetPublicUserMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'user'
+    },
+  ],
+};
+
+/// Descriptor for `GetPublicUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getPublicUserMessageDescriptor = $convert.base64Decode(
+    'ChRHZXRQdWJsaWNVc2VyTWVzc2FnZRJECgdyZXF1ZXN0GAEgASgLMioucmVzb25hdGUuYXBpLk'
+    'dldFB1YmxpY1VzZXJNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRwoIcmVzcG9uc2UYAiABKAsy'
+    'Ky5yZXNvbmF0ZS5hcGkuR2V0UHVibGljVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGm'
+    'AKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJ'
+    'bmZvUgtyZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQafAoIUmVzcG9uc2USPw'
+    'oNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3Bv'
+    'bnNlSW5mbxIvCgR1c2VyGAIgASgLMhsucmVzb25hdGUuUHVibGljVXNlck1lc3NhZ2VSBHVzZX'
+    'I=');
+
+@$core.Deprecated('Use editUserMessageDescriptor instead')
+const EditUserMessage$json = {
+  '1': 'EditUserMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.EditUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.EditUserMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [EditUserMessage_Request$json, EditUserMessage_Response$json],
+};
+
+@$core.Deprecated('Use editUserMessageDescriptor instead')
+const EditUserMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
+  ],
+};
+
+@$core.Deprecated('Use editUserMessageDescriptor instead')
+const EditUserMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'user',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserMessage',
+      '10': 'user'
+    },
+  ],
+};
+
+/// Descriptor for `EditUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List editUserMessageDescriptor = $convert.base64Decode(
+    'Cg9FZGl0VXNlck1lc3NhZ2USPwoHcmVxdWVzdBgBIAEoCzIlLnJlc29uYXRlLmFwaS5FZGl0VX'
+    'Nlck1lc3NhZ2UuUmVxdWVzdFIHcmVxdWVzdBJCCghyZXNwb25zZRgCIAEoCzImLnJlc29uYXRl'
+    'LmFwaS5FZGl0VXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnIKB1JlcXVlc3QSPAoMcm'
+    'VxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5m'
+    'bxIpCgR1c2VyGAIgASgLMhUucmVzb25hdGUuVXNlck1lc3NhZ2VSBHVzZXIadgoIUmVzcG9uc2'
+    'USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJl'
+    'c3BvbnNlSW5mbxIpCgR1c2VyGAIgASgLMhUucmVzb25hdGUuVXNlck1lc3NhZ2VSBHVzZXI=');
+
+@$core.Deprecated('Use removeUserMessageDescriptor instead')
+const RemoveUserMessage$json = {
+  '1': 'RemoveUserMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveUserMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [RemoveUserMessage_Request$json, RemoveUserMessage_Response$json],
+};
+
+@$core.Deprecated('Use removeUserMessageDescriptor instead')
+const RemoveUserMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+@$core.Deprecated('Use removeUserMessageDescriptor instead')
+const RemoveUserMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+  ],
+};
+
+/// Descriptor for `RemoveUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List removeUserMessageDescriptor = $convert.base64Decode(
+    'ChFSZW1vdmVVc2VyTWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLlJlbW'
+    '92ZVVzZXJNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
+    'bmF0ZS5hcGkuUmVtb3ZlVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmAKB1JlcXVlc3'
+    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
+    'ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQaSwoIUmVzcG9uc2USPwoNcmVzcG9uc2'
+    'VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbw==');
+
+@$core.Deprecated('Use listUserMessageDescriptor instead')
+const ListUserMessage$json = {
+  '1': 'ListUserMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListUserMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListUserMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [ListUserMessage_Request$json, ListUserMessage_Response$json],
+};
+
+@$core.Deprecated('Use listUserMessageDescriptor instead')
+const ListUserMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'user_ids', '3': 2, '4': 3, '5': 9, '10': 'userIds'},
+  ],
+};
+
+@$core.Deprecated('Use listUserMessageDescriptor instead')
+const ListUserMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'users',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'users'
+    },
+  ],
+};
+
+/// Descriptor for `ListUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listUserMessageDescriptor = $convert.base64Decode(
+    'Cg9MaXN0VXNlck1lc3NhZ2USPwoHcmVxdWVzdBgBIAEoCzIlLnJlc29uYXRlLmFwaS5MaXN0VX'
+    'Nlck1lc3NhZ2UuUmVxdWVzdFIHcmVxdWVzdBJCCghyZXNwb25zZRgCIAEoCzImLnJlc29uYXRl'
+    'LmFwaS5MaXN0VXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmIKB1JlcXVlc3QSPAoMcm'
+    'VxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5m'
+    'bxIZCgh1c2VyX2lkcxgCIAMoCVIHdXNlcklkcxp+CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbm'
+    'ZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjEKBXVz'
+    'ZXJzGAIgAygLMhsucmVzb25hdGUuUHVibGljVXNlck1lc3NhZ2VSBXVzZXJz');

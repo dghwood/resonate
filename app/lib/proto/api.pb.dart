@@ -4133,8 +4133,8 @@ class AddFollowMessage_Request extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
-    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
-        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'follow',
+        subBuilder: $0.UserFollowMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4209,8 +4209,8 @@ class AddFollowMessage_Response extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
         subBuilder: ResponseInfo.create)
-    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
-        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'follow',
+        subBuilder: $0.UserFollowMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4359,8 +4359,8 @@ class RemoveFollowMessage_Request extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
-    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
-        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'follow',
+        subBuilder: $0.UserFollowMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4437,8 +4437,8 @@ class RemoveFollowMessage_Response extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
         subBuilder: ResponseInfo.create)
-    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
-        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'follow',
+        subBuilder: $0.UserFollowMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4663,8 +4663,8 @@ class ListFollowMessage_Response extends $pb.GeneratedMessage {
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
         subBuilder: ResponseInfo.create)
     ..pc<$0.UserFollowMessage>(
-        2, _omitFieldNames ? '' : 'Follows', $pb.PbFieldType.PM,
-        protoName: 'Follows', subBuilder: $0.UserFollowMessage.create)
+        2, _omitFieldNames ? '' : 'follows', $pb.PbFieldType.PM,
+        subBuilder: $0.UserFollowMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4778,6 +4778,879 @@ class ListFollowMessage extends $pb.GeneratedMessage {
   void clearResponse() => $_clearField(2);
   @$pb.TagNumber(2)
   ListFollowMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class GetPublicUserMessage_Request extends $pb.GeneratedMessage {
+  factory GetPublicUserMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? userId,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (userId != null) result.userId = userId;
+    return result;
+  }
+
+  GetPublicUserMessage_Request._();
+
+  factory GetPublicUserMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetPublicUserMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetPublicUserMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage_Request clone() =>
+      GetPublicUserMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage_Request copyWith(
+          void Function(GetPublicUserMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as GetPublicUserMessage_Request))
+          as GetPublicUserMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage_Request create() =>
+      GetPublicUserMessage_Request._();
+  @$core.override
+  GetPublicUserMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<GetPublicUserMessage_Request> createRepeated() =>
+      $pb.PbList<GetPublicUserMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetPublicUserMessage_Request>(create);
+  static GetPublicUserMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get userId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUserId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserId() => $_clearField(2);
+}
+
+class GetPublicUserMessage_Response extends $pb.GeneratedMessage {
+  factory GetPublicUserMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.PublicUserMessage? user,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (user != null) result.user = user;
+    return result;
+  }
+
+  GetPublicUserMessage_Response._();
+
+  factory GetPublicUserMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetPublicUserMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetPublicUserMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOM<$0.PublicUserMessage>(2, _omitFieldNames ? '' : 'user',
+        subBuilder: $0.PublicUserMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage_Response clone() =>
+      GetPublicUserMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage_Response copyWith(
+          void Function(GetPublicUserMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as GetPublicUserMessage_Response))
+          as GetPublicUserMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage_Response create() =>
+      GetPublicUserMessage_Response._();
+  @$core.override
+  GetPublicUserMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<GetPublicUserMessage_Response> createRepeated() =>
+      $pb.PbList<GetPublicUserMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetPublicUserMessage_Response>(create);
+  static GetPublicUserMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.PublicUserMessage get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user($0.PublicUserMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.PublicUserMessage ensureUser() => $_ensure(1);
+}
+
+class GetPublicUserMessage extends $pb.GeneratedMessage {
+  factory GetPublicUserMessage({
+    GetPublicUserMessage_Request? request,
+    GetPublicUserMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  GetPublicUserMessage._();
+
+  factory GetPublicUserMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetPublicUserMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetPublicUserMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<GetPublicUserMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: GetPublicUserMessage_Request.create)
+    ..aOM<GetPublicUserMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: GetPublicUserMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage clone() =>
+      GetPublicUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetPublicUserMessage copyWith(void Function(GetPublicUserMessage) updates) =>
+      super.copyWith((message) => updates(message as GetPublicUserMessage))
+          as GetPublicUserMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage create() => GetPublicUserMessage._();
+  @$core.override
+  GetPublicUserMessage createEmptyInstance() => create();
+  static $pb.PbList<GetPublicUserMessage> createRepeated() =>
+      $pb.PbList<GetPublicUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static GetPublicUserMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetPublicUserMessage>(create);
+  static GetPublicUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  GetPublicUserMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(GetPublicUserMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  GetPublicUserMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  GetPublicUserMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(GetPublicUserMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  GetPublicUserMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class EditUserMessage_Request extends $pb.GeneratedMessage {
+  factory EditUserMessage_Request({
+    RequestInfo? requestInfo,
+    $0.UserMessage? user,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (user != null) result.user = user;
+    return result;
+  }
+
+  EditUserMessage_Request._();
+
+  factory EditUserMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EditUserMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EditUserMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOM<$0.UserMessage>(2, _omitFieldNames ? '' : 'user',
+        subBuilder: $0.UserMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage_Request clone() =>
+      EditUserMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage_Request copyWith(
+          void Function(EditUserMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as EditUserMessage_Request))
+          as EditUserMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage_Request create() => EditUserMessage_Request._();
+  @$core.override
+  EditUserMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<EditUserMessage_Request> createRepeated() =>
+      $pb.PbList<EditUserMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EditUserMessage_Request>(create);
+  static EditUserMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserMessage get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user($0.UserMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserMessage ensureUser() => $_ensure(1);
+}
+
+class EditUserMessage_Response extends $pb.GeneratedMessage {
+  factory EditUserMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.UserMessage? user,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (user != null) result.user = user;
+    return result;
+  }
+
+  EditUserMessage_Response._();
+
+  factory EditUserMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EditUserMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EditUserMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOM<$0.UserMessage>(2, _omitFieldNames ? '' : 'user',
+        subBuilder: $0.UserMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage_Response clone() =>
+      EditUserMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage_Response copyWith(
+          void Function(EditUserMessage_Response) updates) =>
+      super.copyWith((message) => updates(message as EditUserMessage_Response))
+          as EditUserMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage_Response create() => EditUserMessage_Response._();
+  @$core.override
+  EditUserMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<EditUserMessage_Response> createRepeated() =>
+      $pb.PbList<EditUserMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EditUserMessage_Response>(create);
+  static EditUserMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserMessage get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user($0.UserMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserMessage ensureUser() => $_ensure(1);
+}
+
+class EditUserMessage extends $pb.GeneratedMessage {
+  factory EditUserMessage({
+    EditUserMessage_Request? request,
+    EditUserMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  EditUserMessage._();
+
+  factory EditUserMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EditUserMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'EditUserMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<EditUserMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: EditUserMessage_Request.create)
+    ..aOM<EditUserMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: EditUserMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage clone() => EditUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  EditUserMessage copyWith(void Function(EditUserMessage) updates) =>
+      super.copyWith((message) => updates(message as EditUserMessage))
+          as EditUserMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage create() => EditUserMessage._();
+  @$core.override
+  EditUserMessage createEmptyInstance() => create();
+  static $pb.PbList<EditUserMessage> createRepeated() =>
+      $pb.PbList<EditUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static EditUserMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<EditUserMessage>(create);
+  static EditUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  EditUserMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(EditUserMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  EditUserMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  EditUserMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(EditUserMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  EditUserMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class RemoveUserMessage_Request extends $pb.GeneratedMessage {
+  factory RemoveUserMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? userId,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (userId != null) result.userId = userId;
+    return result;
+  }
+
+  RemoveUserMessage_Request._();
+
+  factory RemoveUserMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveUserMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveUserMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage_Request clone() =>
+      RemoveUserMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage_Request copyWith(
+          void Function(RemoveUserMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as RemoveUserMessage_Request))
+          as RemoveUserMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage_Request create() => RemoveUserMessage_Request._();
+  @$core.override
+  RemoveUserMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<RemoveUserMessage_Request> createRepeated() =>
+      $pb.PbList<RemoveUserMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveUserMessage_Request>(create);
+  static RemoveUserMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get userId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUserId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserId() => $_clearField(2);
+}
+
+class RemoveUserMessage_Response extends $pb.GeneratedMessage {
+  factory RemoveUserMessage_Response({
+    ResponseInfo? responseInfo,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    return result;
+  }
+
+  RemoveUserMessage_Response._();
+
+  factory RemoveUserMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveUserMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveUserMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage_Response clone() =>
+      RemoveUserMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage_Response copyWith(
+          void Function(RemoveUserMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as RemoveUserMessage_Response))
+          as RemoveUserMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage_Response create() => RemoveUserMessage_Response._();
+  @$core.override
+  RemoveUserMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<RemoveUserMessage_Response> createRepeated() =>
+      $pb.PbList<RemoveUserMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveUserMessage_Response>(create);
+  static RemoveUserMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+}
+
+class RemoveUserMessage extends $pb.GeneratedMessage {
+  factory RemoveUserMessage({
+    RemoveUserMessage_Request? request,
+    RemoveUserMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  RemoveUserMessage._();
+
+  factory RemoveUserMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveUserMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveUserMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RemoveUserMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: RemoveUserMessage_Request.create)
+    ..aOM<RemoveUserMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: RemoveUserMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage clone() => RemoveUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveUserMessage copyWith(void Function(RemoveUserMessage) updates) =>
+      super.copyWith((message) => updates(message as RemoveUserMessage))
+          as RemoveUserMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage create() => RemoveUserMessage._();
+  @$core.override
+  RemoveUserMessage createEmptyInstance() => create();
+  static $pb.PbList<RemoveUserMessage> createRepeated() =>
+      $pb.PbList<RemoveUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveUserMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveUserMessage>(create);
+  static RemoveUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RemoveUserMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(RemoveUserMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RemoveUserMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  RemoveUserMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(RemoveUserMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  RemoveUserMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class ListUserMessage_Request extends $pb.GeneratedMessage {
+  factory ListUserMessage_Request({
+    RequestInfo? requestInfo,
+    $core.Iterable<$core.String>? userIds,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (userIds != null) result.userIds.addAll(userIds);
+    return result;
+  }
+
+  ListUserMessage_Request._();
+
+  factory ListUserMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListUserMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListUserMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..pPS(2, _omitFieldNames ? '' : 'userIds')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage_Request clone() =>
+      ListUserMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage_Request copyWith(
+          void Function(ListUserMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as ListUserMessage_Request))
+          as ListUserMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage_Request create() => ListUserMessage_Request._();
+  @$core.override
+  ListUserMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<ListUserMessage_Request> createRepeated() =>
+      $pb.PbList<ListUserMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListUserMessage_Request>(create);
+  static ListUserMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.String> get userIds => $_getList(1);
+}
+
+class ListUserMessage_Response extends $pb.GeneratedMessage {
+  factory ListUserMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.PublicUserMessage>? users,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (users != null) result.users.addAll(users);
+    return result;
+  }
+
+  ListUserMessage_Response._();
+
+  factory ListUserMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListUserMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListUserMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.PublicUserMessage>(
+        2, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM,
+        subBuilder: $0.PublicUserMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage_Response clone() =>
+      ListUserMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage_Response copyWith(
+          void Function(ListUserMessage_Response) updates) =>
+      super.copyWith((message) => updates(message as ListUserMessage_Response))
+          as ListUserMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage_Response create() => ListUserMessage_Response._();
+  @$core.override
+  ListUserMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<ListUserMessage_Response> createRepeated() =>
+      $pb.PbList<ListUserMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListUserMessage_Response>(create);
+  static ListUserMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.PublicUserMessage> get users => $_getList(1);
+}
+
+class ListUserMessage extends $pb.GeneratedMessage {
+  factory ListUserMessage({
+    ListUserMessage_Request? request,
+    ListUserMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  ListUserMessage._();
+
+  factory ListUserMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListUserMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListUserMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ListUserMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: ListUserMessage_Request.create)
+    ..aOM<ListUserMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: ListUserMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage clone() => ListUserMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListUserMessage copyWith(void Function(ListUserMessage) updates) =>
+      super.copyWith((message) => updates(message as ListUserMessage))
+          as ListUserMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage create() => ListUserMessage._();
+  @$core.override
+  ListUserMessage createEmptyInstance() => create();
+  static $pb.PbList<ListUserMessage> createRepeated() =>
+      $pb.PbList<ListUserMessage>();
+  @$core.pragma('dart2js:noInline')
+  static ListUserMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListUserMessage>(create);
+  static ListUserMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ListUserMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(ListUserMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ListUserMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ListUserMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(ListUserMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  ListUserMessage_Response ensureResponse() => $_ensure(1);
 }
 
 const $core.bool _omitFieldNames =

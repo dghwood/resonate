@@ -255,11 +255,11 @@ message GetFeedMessage {
 message AddFollowMessage {
     message Request {
         RequestInfo request_info = 1; 
-        UserFollowMessage Follow = 2;  
+        UserFollowMessage follow = 2;  
     }
     message Response {
         ResponseInfo response_info = 1; 
-        UserFollowMessage Follow = 2; 
+        UserFollowMessage follow = 2; 
     }
 
     Request request = 1; 
@@ -269,11 +269,11 @@ message AddFollowMessage {
 message RemoveFollowMessage {
     message Request {
         RequestInfo request_info = 1; 
-        UserFollowMessage Follow = 2;  
+        UserFollowMessage follow = 2;  
     }
     message Response {
         ResponseInfo response_info = 1; 
-        UserFollowMessage Follow = 2; 
+        UserFollowMessage follow = 2; 
     }
 
     Request request = 1; 
@@ -287,7 +287,62 @@ message ListFollowMessage {
     }
     message Response {
         ResponseInfo response_info = 1; 
-        repeated UserFollowMessage Follows = 2; 
+        repeated UserFollowMessage follows = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message GetPublicUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        PublicUserMessage user = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message EditUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserMessage user = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserMessage user = 2;
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message RemoveUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message ListUserMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        repeated string user_ids = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        repeated PublicUserMessage users = 2; 
     }
 
     Request request = 1; 
