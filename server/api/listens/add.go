@@ -1,6 +1,7 @@
 package subscribe
 
 import (
+	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -23,6 +24,10 @@ func (f *Add) Execute(
 	loggedInUser *models.LoggedInUser,
 	request *proto.AddListenMessage_Request,
 	response *proto.AddListenMessage_Response) (err error) {
+
+	if loggedInUser.Id != request.Listen.UserId {
+		return errors.ERROR_PERMISSION_DENIED
+	}
 
 	Listen := models.Listen{}
 	models.Merge(&Listen.UserListenMessage, request.Listen)

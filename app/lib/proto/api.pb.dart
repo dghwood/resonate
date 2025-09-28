@@ -16,6 +16,7 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'common.pb.dart' as $0;
+import 'errors.pbenum.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
@@ -23,10 +24,12 @@ class ResponseInfo extends $pb.GeneratedMessage {
   factory ResponseInfo({
     $core.bool? success,
     $core.String? errorMessage,
+    $1.ErrorEnum? error,
   }) {
     final result = create();
     if (success != null) result.success = success;
     if (errorMessage != null) result.errorMessage = errorMessage;
+    if (error != null) result.error = error;
     return result;
   }
 
@@ -45,6 +48,10 @@ class ResponseInfo extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'success')
     ..aOS(2, _omitFieldNames ? '' : 'errorMessage')
+    ..e<$1.ErrorEnum>(3, _omitFieldNames ? '' : 'error', $pb.PbFieldType.OE,
+        defaultOrMaker: $1.ErrorEnum.ERROR_UNKNOWN,
+        valueOf: $1.ErrorEnum.valueOf,
+        enumValues: $1.ErrorEnum.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -85,6 +92,15 @@ class ResponseInfo extends $pb.GeneratedMessage {
   $core.bool hasErrorMessage() => $_has(1);
   @$pb.TagNumber(2)
   void clearErrorMessage() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $1.ErrorEnum get error => $_getN(2);
+  @$pb.TagNumber(3)
+  set error($1.ErrorEnum value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasError() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearError() => $_clearField(3);
 }
 
 class RequestInfo extends $pb.GeneratedMessage {
@@ -4065,6 +4081,679 @@ class GetFeedMessage extends $pb.GeneratedMessage {
   void clearReponse() => $_clearField(2);
   @$pb.TagNumber(2)
   GetFeedMessage_Response ensureReponse() => $_ensure(1);
+}
+
+class AddFollowMessage_Request extends $pb.GeneratedMessage {
+  factory AddFollowMessage_Request({
+    RequestInfo? requestInfo,
+    $0.UserFollowMessage? follow,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (follow != null) result.follow = follow;
+    return result;
+  }
+
+  AddFollowMessage_Request._();
+
+  factory AddFollowMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AddFollowMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AddFollowMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
+        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage_Request clone() =>
+      AddFollowMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage_Request copyWith(
+          void Function(AddFollowMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as AddFollowMessage_Request))
+          as AddFollowMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage_Request create() => AddFollowMessage_Request._();
+  @$core.override
+  AddFollowMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<AddFollowMessage_Request> createRepeated() =>
+      $pb.PbList<AddFollowMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AddFollowMessage_Request>(create);
+  static AddFollowMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage get follow => $_getN(1);
+  @$pb.TagNumber(2)
+  set follow($0.UserFollowMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasFollow() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFollow() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage ensureFollow() => $_ensure(1);
+}
+
+class AddFollowMessage_Response extends $pb.GeneratedMessage {
+  factory AddFollowMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.UserFollowMessage? follow,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (follow != null) result.follow = follow;
+    return result;
+  }
+
+  AddFollowMessage_Response._();
+
+  factory AddFollowMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AddFollowMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AddFollowMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
+        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage_Response clone() =>
+      AddFollowMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage_Response copyWith(
+          void Function(AddFollowMessage_Response) updates) =>
+      super.copyWith((message) => updates(message as AddFollowMessage_Response))
+          as AddFollowMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage_Response create() => AddFollowMessage_Response._();
+  @$core.override
+  AddFollowMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<AddFollowMessage_Response> createRepeated() =>
+      $pb.PbList<AddFollowMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AddFollowMessage_Response>(create);
+  static AddFollowMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage get follow => $_getN(1);
+  @$pb.TagNumber(2)
+  set follow($0.UserFollowMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasFollow() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFollow() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage ensureFollow() => $_ensure(1);
+}
+
+class AddFollowMessage extends $pb.GeneratedMessage {
+  factory AddFollowMessage({
+    AddFollowMessage_Request? request,
+    AddFollowMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  AddFollowMessage._();
+
+  factory AddFollowMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AddFollowMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AddFollowMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<AddFollowMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: AddFollowMessage_Request.create)
+    ..aOM<AddFollowMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: AddFollowMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage clone() => AddFollowMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  AddFollowMessage copyWith(void Function(AddFollowMessage) updates) =>
+      super.copyWith((message) => updates(message as AddFollowMessage))
+          as AddFollowMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage create() => AddFollowMessage._();
+  @$core.override
+  AddFollowMessage createEmptyInstance() => create();
+  static $pb.PbList<AddFollowMessage> createRepeated() =>
+      $pb.PbList<AddFollowMessage>();
+  @$core.pragma('dart2js:noInline')
+  static AddFollowMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AddFollowMessage>(create);
+  static AddFollowMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  AddFollowMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(AddFollowMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  AddFollowMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  AddFollowMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(AddFollowMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  AddFollowMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class RemoveFollowMessage_Request extends $pb.GeneratedMessage {
+  factory RemoveFollowMessage_Request({
+    RequestInfo? requestInfo,
+    $0.UserFollowMessage? follow,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (follow != null) result.follow = follow;
+    return result;
+  }
+
+  RemoveFollowMessage_Request._();
+
+  factory RemoveFollowMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveFollowMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveFollowMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
+        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage_Request clone() =>
+      RemoveFollowMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage_Request copyWith(
+          void Function(RemoveFollowMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as RemoveFollowMessage_Request))
+          as RemoveFollowMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage_Request create() =>
+      RemoveFollowMessage_Request._();
+  @$core.override
+  RemoveFollowMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<RemoveFollowMessage_Request> createRepeated() =>
+      $pb.PbList<RemoveFollowMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveFollowMessage_Request>(create);
+  static RemoveFollowMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage get follow => $_getN(1);
+  @$pb.TagNumber(2)
+  set follow($0.UserFollowMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasFollow() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFollow() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage ensureFollow() => $_ensure(1);
+}
+
+class RemoveFollowMessage_Response extends $pb.GeneratedMessage {
+  factory RemoveFollowMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.UserFollowMessage? follow,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (follow != null) result.follow = follow;
+    return result;
+  }
+
+  RemoveFollowMessage_Response._();
+
+  factory RemoveFollowMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveFollowMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveFollowMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOM<$0.UserFollowMessage>(2, _omitFieldNames ? '' : 'Follow',
+        protoName: 'Follow', subBuilder: $0.UserFollowMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage_Response clone() =>
+      RemoveFollowMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage_Response copyWith(
+          void Function(RemoveFollowMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as RemoveFollowMessage_Response))
+          as RemoveFollowMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage_Response create() =>
+      RemoveFollowMessage_Response._();
+  @$core.override
+  RemoveFollowMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<RemoveFollowMessage_Response> createRepeated() =>
+      $pb.PbList<RemoveFollowMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveFollowMessage_Response>(create);
+  static RemoveFollowMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage get follow => $_getN(1);
+  @$pb.TagNumber(2)
+  set follow($0.UserFollowMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasFollow() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFollow() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserFollowMessage ensureFollow() => $_ensure(1);
+}
+
+class RemoveFollowMessage extends $pb.GeneratedMessage {
+  factory RemoveFollowMessage({
+    RemoveFollowMessage_Request? request,
+    RemoveFollowMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  RemoveFollowMessage._();
+
+  factory RemoveFollowMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RemoveFollowMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RemoveFollowMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RemoveFollowMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: RemoveFollowMessage_Request.create)
+    ..aOM<RemoveFollowMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: RemoveFollowMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage clone() => RemoveFollowMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RemoveFollowMessage copyWith(void Function(RemoveFollowMessage) updates) =>
+      super.copyWith((message) => updates(message as RemoveFollowMessage))
+          as RemoveFollowMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage create() => RemoveFollowMessage._();
+  @$core.override
+  RemoveFollowMessage createEmptyInstance() => create();
+  static $pb.PbList<RemoveFollowMessage> createRepeated() =>
+      $pb.PbList<RemoveFollowMessage>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveFollowMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RemoveFollowMessage>(create);
+  static RemoveFollowMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RemoveFollowMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(RemoveFollowMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RemoveFollowMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  RemoveFollowMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(RemoveFollowMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  RemoveFollowMessage_Response ensureResponse() => $_ensure(1);
+}
+
+class ListFollowMessage_Request extends $pb.GeneratedMessage {
+  factory ListFollowMessage_Request({
+    RequestInfo? requestInfo,
+    $core.String? userId,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (userId != null) result.userId = userId;
+    return result;
+  }
+
+  ListFollowMessage_Request._();
+
+  factory ListFollowMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListFollowMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListFollowMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage_Request clone() =>
+      ListFollowMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage_Request copyWith(
+          void Function(ListFollowMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as ListFollowMessage_Request))
+          as ListFollowMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage_Request create() => ListFollowMessage_Request._();
+  @$core.override
+  ListFollowMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<ListFollowMessage_Request> createRepeated() =>
+      $pb.PbList<ListFollowMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListFollowMessage_Request>(create);
+  static ListFollowMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get userId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUserId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserId() => $_clearField(2);
+}
+
+class ListFollowMessage_Response extends $pb.GeneratedMessage {
+  factory ListFollowMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.UserFollowMessage>? follows,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (follows != null) result.follows.addAll(follows);
+    return result;
+  }
+
+  ListFollowMessage_Response._();
+
+  factory ListFollowMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListFollowMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListFollowMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.UserFollowMessage>(
+        2, _omitFieldNames ? '' : 'Follows', $pb.PbFieldType.PM,
+        protoName: 'Follows', subBuilder: $0.UserFollowMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage_Response clone() =>
+      ListFollowMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage_Response copyWith(
+          void Function(ListFollowMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as ListFollowMessage_Response))
+          as ListFollowMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage_Response create() => ListFollowMessage_Response._();
+  @$core.override
+  ListFollowMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<ListFollowMessage_Response> createRepeated() =>
+      $pb.PbList<ListFollowMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListFollowMessage_Response>(create);
+  static ListFollowMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserFollowMessage> get follows => $_getList(1);
+}
+
+class ListFollowMessage extends $pb.GeneratedMessage {
+  factory ListFollowMessage({
+    ListFollowMessage_Request? request,
+    ListFollowMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  ListFollowMessage._();
+
+  factory ListFollowMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListFollowMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListFollowMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ListFollowMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: ListFollowMessage_Request.create)
+    ..aOM<ListFollowMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: ListFollowMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage clone() => ListFollowMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListFollowMessage copyWith(void Function(ListFollowMessage) updates) =>
+      super.copyWith((message) => updates(message as ListFollowMessage))
+          as ListFollowMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage create() => ListFollowMessage._();
+  @$core.override
+  ListFollowMessage createEmptyInstance() => create();
+  static $pb.PbList<ListFollowMessage> createRepeated() =>
+      $pb.PbList<ListFollowMessage>();
+  @$core.pragma('dart2js:noInline')
+  static ListFollowMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListFollowMessage>(create);
+  static ListFollowMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ListFollowMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(ListFollowMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ListFollowMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ListFollowMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(ListFollowMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  ListFollowMessage_Response ensureResponse() => $_ensure(1);
 }
 
 const $core.bool _omitFieldNames =

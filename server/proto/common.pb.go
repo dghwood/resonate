@@ -607,9 +607,10 @@ func (x *PublicUserMessage) GetImageUrl() string {
 
 type UserFollowMessage struct {
 	state          protoimpl.MessageState  `protogen:"open.v1"`
-	UserId         string                  `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	FollowedUserId string                  `protobuf:"bytes,2,opt,name=followed_user_id,json=followedUserId,proto3" json:"followed_user_id,omitempty"`
-	Metadata       *StorageMetadataMessage `protobuf:"bytes,3,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Id             string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId         string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	FollowedUserId string                  `protobuf:"bytes,3,opt,name=followed_user_id,json=followedUserId,proto3" json:"followed_user_id,omitempty"`
+	Metadata       *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -642,6 +643,13 @@ func (x *UserFollowMessage) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UserFollowMessage.ProtoReflect.Descriptor instead.
 func (*UserFollowMessage) Descriptor() ([]byte, []int) {
 	return file_proto_common_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UserFollowMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
 }
 
 func (x *UserFollowMessage) GetUserId() string {
@@ -1293,11 +1301,12 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x11PublicUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\x94\x01\n" +
-	"\x11UserFollowMessage\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12(\n" +
-	"\x10followed_user_id\x18\x02 \x01(\tR\x0efollowedUserId\x12<\n" +
-	"\bmetadata\x18\x03 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x9f\x01\n" +
+	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\xa4\x01\n" +
+	"\x11UserFollowMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12(\n" +
+	"\x10followed_user_id\x18\x03 \x01(\tR\x0efollowedUserId\x12<\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x9f\x01\n" +
 	"\x17UserSubscriptionMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +

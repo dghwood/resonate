@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/dghwood/resonate/auth"
+	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
@@ -71,6 +72,9 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 
 			if err != nil {
 				log.Println(err)
+				if appErr, ok := err.(errors.Error); ok {
+					response.GetResponseInfo().Error = appErr.Enum
+				}
 				response.GetResponseInfo().Success = false
 				response.GetResponseInfo().ErrorMessage = err.Error()
 			} else {

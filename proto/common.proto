@@ -85,9 +85,10 @@ message PublicUserMessage {
 }
 
 message UserFollowMessage {
-    string user_id = 1; 
-    string followed_user_id = 2;
-    StorageMetadataMessage metadata = 3; 
+    string id = 1;
+    string user_id = 2; 
+    string followed_user_id = 3;
+    StorageMetadataMessage metadata = 4; 
 }
 
 message UserSubscriptionMessage {

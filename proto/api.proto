@@ -3,12 +3,14 @@ syntax = "proto3";
 package resonate.api; 
 
 import "proto/common.proto";
+import "proto/errors.proto";
 
 option go_package = "github.com/dghwood/resonate/proto";
 
 message ResponseInfo {
     bool success = 1; 
     string error_message = 2; 
+    ErrorEnum error = 3;
 }
 message RequestInfo {
     string user_id = 1; 
@@ -246,4 +248,46 @@ message GetFeedMessage {
 
     Request request = 1; 
     Response reponse = 2; 
+}
+
+message AddFollowMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserFollowMessage Follow = 2;  
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserFollowMessage Follow = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message RemoveFollowMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserFollowMessage Follow = 2;  
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserFollowMessage Follow = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message ListFollowMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        repeated UserFollowMessage Follows = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
 }

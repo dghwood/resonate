@@ -20,13 +20,22 @@ const ResponseInfo$json = {
   '2': [
     {'1': 'success', '3': 1, '4': 1, '5': 8, '10': 'success'},
     {'1': 'error_message', '3': 2, '4': 1, '5': 9, '10': 'errorMessage'},
+    {
+      '1': 'error',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.resonate.ErrorEnum',
+      '10': 'error'
+    },
   ],
 };
 
 /// Descriptor for `ResponseInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List responseInfoDescriptor = $convert.base64Decode(
     'CgxSZXNwb25zZUluZm8SGAoHc3VjY2VzcxgBIAEoCFIHc3VjY2VzcxIjCg1lcnJvcl9tZXNzYW'
-    'dlGAIgASgJUgxlcnJvck1lc3NhZ2U=');
+    'dlGAIgASgJUgxlcnJvck1lc3NhZ2USKQoFZXJyb3IYAyABKA4yEy5yZXNvbmF0ZS5FcnJvckVu'
+    'dW1SBWVycm9y');
 
 @$core.Deprecated('Use requestInfoDescriptor instead')
 const RequestInfo$json = {
@@ -1393,3 +1402,238 @@ final $typed_data.Uint8List getFeedMessageDescriptor = $convert.base64Decode(
     'ZvcmVUaW1lc3RhbXBNcxp6CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVz'
     'b25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEi0KBGZlZWQYAiABKAsyGS5yZX'
     'NvbmF0ZS5Vc2VyRmVlZE1lc3NhZ2VSBGZlZWQ=');
+
+@$core.Deprecated('Use addFollowMessageDescriptor instead')
+const AddFollowMessage$json = {
+  '1': 'AddFollowMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddFollowMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.AddFollowMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [AddFollowMessage_Request$json, AddFollowMessage_Response$json],
+};
+
+@$core.Deprecated('Use addFollowMessageDescriptor instead')
+const AddFollowMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'Follow',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'Follow'
+    },
+  ],
+};
+
+@$core.Deprecated('Use addFollowMessageDescriptor instead')
+const AddFollowMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'Follow',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'Follow'
+    },
+  ],
+};
+
+/// Descriptor for `AddFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addFollowMessageDescriptor = $convert.base64Decode(
+    'ChBBZGRGb2xsb3dNZXNzYWdlEkAKB3JlcXVlc3QYASABKAsyJi5yZXNvbmF0ZS5hcGkuQWRkRm'
+    '9sbG93TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkMKCHJlc3BvbnNlGAIgASgLMicucmVzb25h'
+    'dGUuYXBpLkFkZEZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnwKB1JlcXVlc3QSPA'
+    'oMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0'
+    'SW5mbxIzCgZGb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2FnZVIGRm9sbG'
+    '93GoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJl'
+    'c3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBkZvbGxvdxgCIAEoCzIbLnJlc29uYXRlLlVzZX'
+    'JGb2xsb3dNZXNzYWdlUgZGb2xsb3c=');
+
+@$core.Deprecated('Use removeFollowMessageDescriptor instead')
+const RemoveFollowMessage$json = {
+  '1': 'RemoveFollowMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveFollowMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveFollowMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [RemoveFollowMessage_Request$json, RemoveFollowMessage_Response$json],
+};
+
+@$core.Deprecated('Use removeFollowMessageDescriptor instead')
+const RemoveFollowMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'Follow',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'Follow'
+    },
+  ],
+};
+
+@$core.Deprecated('Use removeFollowMessageDescriptor instead')
+const RemoveFollowMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'Follow',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'Follow'
+    },
+  ],
+};
+
+/// Descriptor for `RemoveFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List removeFollowMessageDescriptor = $convert.base64Decode(
+    'ChNSZW1vdmVGb2xsb3dNZXNzYWdlEkMKB3JlcXVlc3QYASABKAsyKS5yZXNvbmF0ZS5hcGkuUm'
+    'Vtb3ZlRm9sbG93TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
+    'cmVzb25hdGUuYXBpLlJlbW92ZUZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnwKB1'
+    'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
+    'UgtyZXF1ZXN0SW5mbxIzCgZGb2xsb3cYAiABKAsyGy5yZXNvbmF0ZS5Vc2VyRm9sbG93TWVzc2'
+    'FnZVIGRm9sbG93GoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25h'
+    'dGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBkZvbGxvdxgCIAEoCzIbLnJlc2'
+    '9uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgZGb2xsb3c=');
+
+@$core.Deprecated('Use listFollowMessageDescriptor instead')
+const ListFollowMessage$json = {
+  '1': 'ListFollowMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListFollowMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListFollowMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [ListFollowMessage_Request$json, ListFollowMessage_Response$json],
+};
+
+@$core.Deprecated('Use listFollowMessageDescriptor instead')
+const ListFollowMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+@$core.Deprecated('Use listFollowMessageDescriptor instead')
+const ListFollowMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'Follows',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserFollowMessage',
+      '10': 'Follows'
+    },
+  ],
+};
+
+/// Descriptor for `ListFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listFollowMessageDescriptor = $convert.base64Decode(
+    'ChFMaXN0Rm9sbG93TWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLkxpc3'
+    'RGb2xsb3dNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
+    'bmF0ZS5hcGkuTGlzdEZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmAKB1JlcXVlc3'
+    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
+    'ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQaggEKCFJlc3BvbnNlEj8KDXJlc3Bvbn'
+    'NlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8S'
+    'NQoHRm9sbG93cxgCIAMoCzIbLnJlc29uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUgdGb2xsb3dz');

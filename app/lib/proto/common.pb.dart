@@ -805,11 +805,13 @@ class PublicUserMessage extends $pb.GeneratedMessage {
 
 class UserFollowMessage extends $pb.GeneratedMessage {
   factory UserFollowMessage({
+    $core.String? id,
     $core.String? userId,
     $core.String? followedUserId,
     StorageMetadataMessage? metadata,
   }) {
     final result = create();
+    if (id != null) result.id = id;
     if (userId != null) result.userId = userId;
     if (followedUserId != null) result.followedUserId = followedUserId;
     if (metadata != null) result.metadata = metadata;
@@ -829,9 +831,10 @@ class UserFollowMessage extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'UserFollowMessage',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'userId')
-    ..aOS(2, _omitFieldNames ? '' : 'followedUserId')
-    ..aOM<StorageMetadataMessage>(3, _omitFieldNames ? '' : 'metadata',
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOS(3, _omitFieldNames ? '' : 'followedUserId')
+    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
@@ -857,33 +860,42 @@ class UserFollowMessage extends $pb.GeneratedMessage {
   static UserFollowMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get userId => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set userId($core.String value) => $_setString(0, value);
+  set id($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasUserId() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUserId() => $_clearField(1);
+  void clearId() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get followedUserId => $_getSZ(1);
+  $core.String get userId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set followedUserId($core.String value) => $_setString(1, value);
+  set userId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasFollowedUserId() => $_has(1);
+  $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearFollowedUserId() => $_clearField(2);
+  void clearUserId() => $_clearField(2);
 
   @$pb.TagNumber(3)
-  StorageMetadataMessage get metadata => $_getN(2);
+  $core.String get followedUserId => $_getSZ(2);
   @$pb.TagNumber(3)
-  set metadata(StorageMetadataMessage value) => $_setField(3, value);
+  set followedUserId($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
-  $core.bool hasMetadata() => $_has(2);
+  $core.bool hasFollowedUserId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearMetadata() => $_clearField(3);
-  @$pb.TagNumber(3)
-  StorageMetadataMessage ensureMetadata() => $_ensure(2);
+  void clearFollowedUserId() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  StorageMetadataMessage get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(StorageMetadataMessage value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => $_clearField(4);
+  @$pb.TagNumber(4)
+  StorageMetadataMessage ensureMetadata() => $_ensure(3);
 }
 
 class UserSubscriptionMessage extends $pb.GeneratedMessage {

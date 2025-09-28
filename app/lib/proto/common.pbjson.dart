@@ -252,11 +252,12 @@ final $typed_data.Uint8List publicUserMessageDescriptor = $convert.base64Decode(
 const UserFollowMessage$json = {
   '1': 'UserFollowMessage',
   '2': [
-    {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'followed_user_id', '3': 2, '4': 1, '5': 9, '10': 'followedUserId'},
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'followed_user_id', '3': 3, '4': 1, '5': 9, '10': 'followedUserId'},
     {
       '1': 'metadata',
-      '3': 3,
+      '3': 4,
       '4': 1,
       '5': 11,
       '6': '.resonate.StorageMetadataMessage',
@@ -267,9 +268,9 @@ const UserFollowMessage$json = {
 
 /// Descriptor for `UserFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userFollowMessageDescriptor = $convert.base64Decode(
-    'ChFVc2VyRm9sbG93TWVzc2FnZRIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSKAoQZm9sbG93ZW'
-    'RfdXNlcl9pZBgCIAEoCVIOZm9sbG93ZWRVc2VySWQSPAoIbWV0YWRhdGEYAyABKAsyIC5yZXNv'
-    'bmF0ZS5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
+    'ChFVc2VyRm9sbG93TWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIAEoCVIGdX'
+    'NlcklkEigKEGZvbGxvd2VkX3VzZXJfaWQYAyABKAlSDmZvbGxvd2VkVXNlcklkEjwKCG1ldGFk'
+    'YXRhGAQgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');
 
 @$core.Deprecated('Use userSubscriptionMessageDescriptor instead')
 const UserSubscriptionMessage$json = {

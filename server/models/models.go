@@ -128,3 +128,11 @@ type Listen struct {
 func (p *Listen) GetUserIdFieldNum() int32 {
 	return 2
 }
+
+type Follow struct {
+	proto.UserFollowMessage
+}
+
+func (p *Follow) GetUserIdFieldNum() int32 {
+	return 2
+}
