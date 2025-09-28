@@ -608,6 +608,78 @@ final $typed_data.Uint8List searchMessageDescriptor = $convert.base64Decode(
     'dHMYAiABKAsyHi5yZXNvbmF0ZS5TZWFyY2hSZXN1bHRzTWVzc2FnZVINc2VhcmNoUmVzdWx0cw'
     '==');
 
+@$core.Deprecated('Use searchTopMessageDescriptor instead')
+const SearchTopMessage$json = {
+  '1': 'SearchTopMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SearchTopMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SearchTopMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [SearchTopMessage_Request$json, SearchTopMessage_Response$json],
+};
+
+@$core.Deprecated('Use searchTopMessageDescriptor instead')
+const SearchTopMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+  ],
+};
+
+@$core.Deprecated('Use searchTopMessageDescriptor instead')
+const SearchTopMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'search_results',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.SearchResultsMessage',
+      '10': 'searchResults'
+    },
+  ],
+};
+
+/// Descriptor for `SearchTopMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchTopMessageDescriptor = $convert.base64Decode(
+    'ChBTZWFyY2hUb3BNZXNzYWdlEkAKB3JlcXVlc3QYASABKAsyJi5yZXNvbmF0ZS5hcGkuU2Vhcm'
+    'NoVG9wTWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkMKCHJlc3BvbnNlGAIgASgLMicucmVzb25h'
+    'dGUuYXBpLlNlYXJjaFRvcE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGkcKB1JlcXVlc3QSPA'
+    'oMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0'
+    'SW5mbxqSAQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS'
+    '5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxJFCg5zZWFyY2hfcmVzdWx0cxgCIAEoCzIeLnJl'
+    'c29uYXRlLlNlYXJjaFJlc3VsdHNNZXNzYWdlUg1zZWFyY2hSZXN1bHRz');
+
 @$core.Deprecated('Use getPodcastMessageDescriptor instead')
 const GetPodcastMessage$json = {
   '1': 'GetPodcastMessage',

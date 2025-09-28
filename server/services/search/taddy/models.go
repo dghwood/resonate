@@ -1,4 +1,4 @@
-// Models for Taddy Search Response 
+// Models for Taddy Search Response
 package taddy
 
 type TaddySearchQueryResponse struct {
@@ -21,4 +21,18 @@ type TaddyPodcast struct {
 	Description string `json:"description"`
 	ImageUrl    string `json:"imageUrl"`
 	RssUrl      string `json:"rssUrl"`
+}
+
+type TaddyTopPodcasts struct {
+	Data   TaddyTopPodcastsResponse `json:"data"`
+	Errors []TaddyErrors            `json:"errors"`
+}
+
+type TaddyTopPodcastsResponse struct {
+	GetTopChartsByCountry TaddyTopCharts `json:"getTopChartsByCountry"`
+}
+
+type TaddyTopCharts struct {
+	TopChartsId   string         `json:"topChartsId"`
+	PodcastSeries []TaddyPodcast `json:"podcastSeries"`
 }

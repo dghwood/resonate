@@ -8,33 +8,29 @@ import (
 	"github.com/dghwood/resonate/services/search"
 )
 
-type Query struct {
+type Top struct {
 	Datastore datastore.Datastore
 	SearchApi search.Search
 }
 
-func NewQuery() *Query {
-	return &Query{
-		SearchApi: search.NewMockSearch(),
-	}
+func (f Top) RequireSignIn() bool { return false }
+
+func (f Top) RequestProto() *proto.SearchTopMessage_Request {
+	return &proto.SearchTopMessage_Request{}
+}
+func (f Top) ResponseProto() *proto.SearchTopMessage_Response {
+	return &proto.SearchTopMessage_Response{}
 }
 
-func (f Query) RequireSignIn() bool { return false }
-
-func (f Query) RequestProto() *proto.SearchMessage_Request {
-	return &proto.SearchMessage_Request{}
-}
-func (f Query) ResponseProto() *proto.SearchMessage_Response {
-	return &proto.SearchMessage_Response{}
-}
-
-func (f *Query) Execute(
+/*
+TopSearch
+*/
+func (f *Top) Execute(
 	loggedInUser *models.LoggedInUser,
-	request *proto.SearchMessage_Request,
-	response *proto.SearchMessage_Response) (err error) {
+	request *proto.SearchTopMessage_Request,
+	response *proto.SearchTopMessage_Response) (err error) {
 
-	query := request.Query
-	podcasts, err := f.SearchApi.Podcasts(query)
+	podcasts, err := f.SearchApi.Podcasts("REPLACE ME")
 	if err != nil {
 		return
 	}

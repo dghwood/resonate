@@ -9,6 +9,9 @@ type Search interface {
 	Podcasts(query string) (
 		podcasts []*models.Podcast,
 		err error)
+	TopPodcasts() (
+		podcasts []*models.Podcast,
+		err error)
 }
 
 func NewMockSearch() *MockSearch {

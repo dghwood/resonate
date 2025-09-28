@@ -1805,6 +1805,218 @@ class SearchMessage extends $pb.GeneratedMessage {
   SearchMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class SearchTopMessage_Request extends $pb.GeneratedMessage {
+  factory SearchTopMessage_Request({
+    RequestInfo? requestInfo,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    return result;
+  }
+
+  SearchTopMessage_Request._();
+
+  factory SearchTopMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchTopMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchTopMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage_Request clone() =>
+      SearchTopMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage_Request copyWith(
+          void Function(SearchTopMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as SearchTopMessage_Request))
+          as SearchTopMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage_Request create() => SearchTopMessage_Request._();
+  @$core.override
+  SearchTopMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<SearchTopMessage_Request> createRepeated() =>
+      $pb.PbList<SearchTopMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchTopMessage_Request>(create);
+  static SearchTopMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+}
+
+class SearchTopMessage_Response extends $pb.GeneratedMessage {
+  factory SearchTopMessage_Response({
+    ResponseInfo? responseInfo,
+    $0.SearchResultsMessage? searchResults,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (searchResults != null) result.searchResults = searchResults;
+    return result;
+  }
+
+  SearchTopMessage_Response._();
+
+  factory SearchTopMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchTopMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchTopMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOM<$0.SearchResultsMessage>(2, _omitFieldNames ? '' : 'searchResults',
+        subBuilder: $0.SearchResultsMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage_Response clone() =>
+      SearchTopMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage_Response copyWith(
+          void Function(SearchTopMessage_Response) updates) =>
+      super.copyWith((message) => updates(message as SearchTopMessage_Response))
+          as SearchTopMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage_Response create() => SearchTopMessage_Response._();
+  @$core.override
+  SearchTopMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<SearchTopMessage_Response> createRepeated() =>
+      $pb.PbList<SearchTopMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchTopMessage_Response>(create);
+  static SearchTopMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.SearchResultsMessage get searchResults => $_getN(1);
+  @$pb.TagNumber(2)
+  set searchResults($0.SearchResultsMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSearchResults() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSearchResults() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.SearchResultsMessage ensureSearchResults() => $_ensure(1);
+}
+
+/// This is primarily used for typeahead suggestions
+class SearchTopMessage extends $pb.GeneratedMessage {
+  factory SearchTopMessage({
+    SearchTopMessage_Request? request,
+    SearchTopMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  SearchTopMessage._();
+
+  factory SearchTopMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchTopMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchTopMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<SearchTopMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: SearchTopMessage_Request.create)
+    ..aOM<SearchTopMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: SearchTopMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage clone() => SearchTopMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchTopMessage copyWith(void Function(SearchTopMessage) updates) =>
+      super.copyWith((message) => updates(message as SearchTopMessage))
+          as SearchTopMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage create() => SearchTopMessage._();
+  @$core.override
+  SearchTopMessage createEmptyInstance() => create();
+  static $pb.PbList<SearchTopMessage> createRepeated() =>
+      $pb.PbList<SearchTopMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SearchTopMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchTopMessage>(create);
+  static SearchTopMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  SearchTopMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(SearchTopMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  SearchTopMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  SearchTopMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(SearchTopMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  SearchTopMessage_Response ensureResponse() => $_ensure(1);
+}
+
 class GetPodcastMessage_Request extends $pb.GeneratedMessage {
   factory GetPodcastMessage_Request({
     RequestInfo? requestInfo,

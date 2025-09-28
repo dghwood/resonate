@@ -114,6 +114,20 @@ message SearchMessage {
     Response response = 2;
 }
 
+// This is primarily used for typeahead suggestions
+message SearchTopMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        SearchResultsMessage search_results = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
 message GetPodcastMessage {
     message Request {
         RequestInfo request_info = 1; 

@@ -29,3 +29,9 @@ func (m *MockSearch) Podcasts(query string) (
 	}
 	return
 }
+
+func (m *MockSearch) TopPodcasts() (
+	podcasts []*models.Podcast,
+	err error) {
+	return m.Podcasts("THIS DOES NOT WORK")
+}

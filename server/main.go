@@ -6,12 +6,16 @@ import (
 	"os"
 
 	"github.com/dghwood/resonate/api"
-	"github.com/dghwood/resonate/services/datastore"
+	datastoreService "github.com/dghwood/resonate/services/datastore"
+	searchService "github.com/dghwood/resonate/services/search"
 
 	"github.com/dghwood/resonate/api/auth"
+	"github.com/dghwood/resonate/api/feed"
 	"github.com/dghwood/resonate/api/follows"
 	"github.com/dghwood/resonate/api/listens"
+	"github.com/dghwood/resonate/api/search"
 	"github.com/dghwood/resonate/api/subscribe"
+	"github.com/dghwood/resonate/api/users"
 )
 
 func main() {
@@ -21,27 +25,60 @@ func main() {
 		port = "8080"
 	}
 
-	ds := datastore.NewMemoryDatastore()
+	datastore := datastoreService.NewMemoryDatastore()
+	searchApi := searchService.NewMockSearch()
 
 	// Login API endpoints
-	api.Attach(auth.Login{}, "/api/login")
-	api.Attach(auth.Refresh{}, "/api/login/refresh")
-	api.Attach(auth.Request{}, "/api/login/request")
+	api.Attach(auth.Login{
+		Datastore: datastore}, "/api/login")
+	api.Attach(auth.Refresh{
+		Datastore: datastore}, "/api/login/refresh")
+	api.Attach(auth.Request{
+		Datastore: datastore}, "/api/login/request")
 
 	// Subscriptions
-	api.Attach(&subscribe.List{Datastore: ds}, "/api/subscribe/list")
-	api.Attach(&subscribe.Add{Datastore: ds}, "/api/subscribe/add")
-	api.Attach(&subscribe.Remove{Datastore: ds}, "/api/subscribe/remove")
+	api.Attach(&subscribe.List{
+		Datastore: datastore}, "/api/subscribe/list")
+	api.Attach(&subscribe.Add{
+		Datastore: datastore}, "/api/subscribe/add")
+	api.Attach(&subscribe.Remove{
+		Datastore: datastore}, "/api/subscribe/remove")
 
-	// Subscriptions
-	api.Attach(&follows.List{Datastore: ds}, "/api/follow/list")
-	api.Attach(&follows.Add{Datastore: ds}, "/api/follow/add")
-	api.Attach(&follows.Remove{Datastore: ds}, "/api/follow/remove")
+	// Follows
+	api.Attach(&follows.List{
+		Datastore: datastore}, "/api/follow/list")
+	api.Attach(&follows.Add{
+		Datastore: datastore}, "/api/follow/add")
+	api.Attach(&follows.Remove{
+		Datastore: datastore}, "/api/follow/remove")
 
 	// Listens
-	api.Attach(&listens.List{Datastore: ds}, "/api/listens/list")
-	api.Attach(&listens.Add{Datastore: ds}, "/api/listens/add")
-	api.Attach(&listens.Remove{Datastore: ds}, "/api/listens/remove")
+	api.Attach(&listens.List{
+		Datastore: datastore}, "/api/listens/list")
+	api.Attach(&listens.Add{
+		Datastore: datastore}, "/api/listens/add")
+	api.Attach(&listens.Remove{
+		Datastore: datastore}, "/api/listens/remove")
+
+	// Users
+	api.Attach(&users.List{
+		Datastore: datastore}, "/api/users/list")
+	api.Attach(&users.Edit{
+		Datastore: datastore}, "/api/users/edit")
+	api.Attach(&users.Get{
+		Datastore: datastore}, "/api/users/get")
+
+	// Feed
+	api.Attach(&feed.Get{
+		Datastore: datastore}, "/api/feed/get")
+
+	// Search
+	api.Attach(&search.Query{
+		SearchApi: searchApi,
+		Datastore: datastore}, "/api/search/query")
+	api.Attach(&search.Top{
+		SearchApi: searchApi,
+		Datastore: datastore}, "/api/search/top")
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
