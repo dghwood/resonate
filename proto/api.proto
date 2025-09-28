@@ -180,6 +180,7 @@ message RemoveSubscriptionMessage {
 message ListSubscriptionMessage {
     message Request {
         RequestInfo request_info = 1; 
+        string user_id = 2; 
     }
     message Response {
         ResponseInfo response_info = 1;
@@ -197,6 +198,34 @@ message AddListenMessage {
     message Response {
         ResponseInfo response_info = 1; 
         UserListenMessage listen = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message RemoveListenMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserListenMessage listen = 2;  
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        UserListenMessage listen = 2; 
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}
+
+message ListListenMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        string user_id = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        repeated UserListenMessage listens = 2; 
     }
 
     Request request = 1; 

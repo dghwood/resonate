@@ -28,7 +28,7 @@ func (f *List) Execute(
 	// a user
 	model := models.Subscription{}
 	subscriptions := f.Datastore.ListForIds(
-		[]string{loggedInUser.Id},
+		[]string{request.UserId},
 		model.GetUserIdFieldNum(),
 		-1, // Sort by something?
 		&models.Subscription{})

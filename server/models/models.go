@@ -118,3 +118,12 @@ func (p *Subscription) New() Model {
 	// This won't work
 	return &Subscription{}
 }
+
+// Listen
+type Listen struct {
+	proto.UserListenMessage
+}
+
+func (p *Listen) GetUserIdFieldNum() int32 {
+	return 2
+}

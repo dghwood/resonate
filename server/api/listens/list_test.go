@@ -11,7 +11,7 @@ import (
 func TestList(t *testing.T) {
 	ds := datastore.NewMemoryDatastore()
 	for i := range 10 {
-		model := models.Subscription{}
+		model := models.Listen{}
 		model.Id = fmt.Sprint(i)
 		if i%2 == 0 {
 			model.UserId = "123"
@@ -34,7 +34,7 @@ func TestList(t *testing.T) {
 	if err != nil {
 		t.Errorf("Execute() error = %v", err)
 	}
-	if len(response.Subscriptions) != 5 {
-		t.Errorf("len(response.Subscriptions) = %d; want 10", len(response.Subscriptions))
+	if len(response.Listens) != 5 {
+		t.Errorf("len(response.Listens) = %d; want 5", len(response.Listens))
 	}
 }

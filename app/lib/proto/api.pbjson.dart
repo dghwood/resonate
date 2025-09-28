@@ -1040,6 +1040,7 @@ const ListSubscriptionMessage_Request$json = {
       '6': '.resonate.api.RequestInfo',
       '10': 'requestInfo'
     },
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
   ],
 };
 
@@ -1071,11 +1072,11 @@ final $typed_data.Uint8List listSubscriptionMessageDescriptor = $convert.base64D
     'ChdMaXN0U3Vic2NyaXB0aW9uTWVzc2FnZRJHCgdyZXF1ZXN0GAEgASgLMi0ucmVzb25hdGUuYX'
     'BpLkxpc3RTdWJzY3JpcHRpb25NZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSSgoIcmVzcG9uc2UY'
     'AiABKAsyLi5yZXNvbmF0ZS5hcGkuTGlzdFN1YnNjcmlwdGlvbk1lc3NhZ2UuUmVzcG9uc2VSCH'
-    'Jlc3BvbnNlGkcKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBp'
-    'LlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxqUAQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbx'
-    'gBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxJHCg1zdWJz'
-    'Y3JpcHRpb25zGAIgAygLMiEucmVzb25hdGUuVXNlclN1YnNjcmlwdGlvbk1lc3NhZ2VSDXN1Yn'
-    'NjcmlwdGlvbnM=');
+    'Jlc3BvbnNlGmAKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBp'
+    'LlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQalAEKCF'
+    'Jlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJ'
+    'bmZvUgxyZXNwb25zZUluZm8SRwoNc3Vic2NyaXB0aW9ucxgCIAMoCzIhLnJlc29uYXRlLlVzZX'
+    'JTdWJzY3JpcHRpb25NZXNzYWdlUg1zdWJzY3JpcHRpb25z');
 
 @$core.Deprecated('Use addListenMessageDescriptor instead')
 const AddListenMessage$json = {
@@ -1157,6 +1158,160 @@ final $typed_data.Uint8List addListenMessageDescriptor = $convert.base64Decode(
     'VuGoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJl'
     'c3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBmxpc3RlbhgCIAEoCzIbLnJlc29uYXRlLlVzZX'
     'JMaXN0ZW5NZXNzYWdlUgZsaXN0ZW4=');
+
+@$core.Deprecated('Use removeListenMessageDescriptor instead')
+const RemoveListenMessage$json = {
+  '1': 'RemoveListenMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveListenMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RemoveListenMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [RemoveListenMessage_Request$json, RemoveListenMessage_Response$json],
+};
+
+@$core.Deprecated('Use removeListenMessageDescriptor instead')
+const RemoveListenMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'listen',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listen'
+    },
+  ],
+};
+
+@$core.Deprecated('Use removeListenMessageDescriptor instead')
+const RemoveListenMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'listen',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listen'
+    },
+  ],
+};
+
+/// Descriptor for `RemoveListenMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List removeListenMessageDescriptor = $convert.base64Decode(
+    'ChNSZW1vdmVMaXN0ZW5NZXNzYWdlEkMKB3JlcXVlc3QYASABKAsyKS5yZXNvbmF0ZS5hcGkuUm'
+    'Vtb3ZlTGlzdGVuTWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
+    'cmVzb25hdGUuYXBpLlJlbW92ZUxpc3Rlbk1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnwKB1'
+    'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
+    'UgtyZXF1ZXN0SW5mbxIzCgZsaXN0ZW4YAiABKAsyGy5yZXNvbmF0ZS5Vc2VyTGlzdGVuTWVzc2'
+    'FnZVIGbGlzdGVuGoABCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25h'
+    'dGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjMKBmxpc3RlbhgCIAEoCzIbLnJlc2'
+    '9uYXRlLlVzZXJMaXN0ZW5NZXNzYWdlUgZsaXN0ZW4=');
+
+@$core.Deprecated('Use listListenMessageDescriptor instead')
+const ListListenMessage$json = {
+  '1': 'ListListenMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListListenMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ListListenMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [ListListenMessage_Request$json, ListListenMessage_Response$json],
+};
+
+@$core.Deprecated('Use listListenMessageDescriptor instead')
+const ListListenMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+@$core.Deprecated('Use listListenMessageDescriptor instead')
+const ListListenMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'listens',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listens'
+    },
+  ],
+};
+
+/// Descriptor for `ListListenMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listListenMessageDescriptor = $convert.base64Decode(
+    'ChFMaXN0TGlzdGVuTWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLkxpc3'
+    'RMaXN0ZW5NZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
+    'bmF0ZS5hcGkuTGlzdExpc3Rlbk1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmAKB1JlcXVlc3'
+    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
+    'ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQaggEKCFJlc3BvbnNlEj8KDXJlc3Bvbn'
+    'NlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8S'
+    'NQoHbGlzdGVucxgCIAMoCzIbLnJlc29uYXRlLlVzZXJMaXN0ZW5NZXNzYWdlUgdsaXN0ZW5z');
 
 @$core.Deprecated('Use getFeedMessageDescriptor instead')
 const GetFeedMessage$json = {
