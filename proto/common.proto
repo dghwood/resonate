@@ -58,22 +58,41 @@ message TokenMessage {
     int64 expiry_utc_timestamp = 2; 
 }
 
+message LoginAttempt {
+    string id = 1; 
+    string phone_number = 2; 
+    string password = 3;
+    StorageMetadataMessage metadata = 4;
+    int64 expiry_utc_timestamp = 5;
+    int64 num_attempts = 6;
+}
+
 message UserStorageMessage {
     UserMessage user = 1; 
     TokenMessage access_token = 2; 
     TokenMessage refresh_token = 3; 
 }
 
+message RefreshTokensMessage {
+    string id = 1; 
+    string user_id = 2;
+    repeated TokenMessage tokens = 3; 
+    StorageMetadataMessage metadata = 4;
+}
+
 message UserMessage {
     string id = 1;
     string name = 2;
     string email = 3;
+    // What about country code, etc. 
+    string phone_number = 10;
+    // Should this be a data url? 
     string image_url = 4;
     repeated UserSubscriptionMessage subscriptions = 5;
     repeated UserListenMessage listens = 6;
     repeated UserFollowMessage following = 7;
     int64 num_followers = 8; 
-    StorageMetadataMessage metadata = 9; 
+    StorageMetadataMessage metadata = 9;   
 }
 
 // Stripped down UserMessage for more public consumption

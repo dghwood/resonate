@@ -12,7 +12,7 @@ func TestIsValidEmail(t *testing.T) {
 	}
 
 	for email, expected := range emails {
-		if isValidEmail(email) != expected {
+		if IsValidEmail(email) != expected {
 			t.Errorf("Expected %s to be valid: %v", email, expected)
 		}
 	}

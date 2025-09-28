@@ -24,9 +24,12 @@ const (
 type ErrorEnum int32
 
 const (
-	ErrorEnum_ERROR_UNKNOWN           ErrorEnum = 0
-	ErrorEnum_ERROR_INTERNAL          ErrorEnum = 1
-	ErrorEnum_ERROR_PERMISSION_DENIED ErrorEnum = 2
+	ErrorEnum_ERROR_UNKNOWN             ErrorEnum = 0
+	ErrorEnum_ERROR_INTERNAL            ErrorEnum = 1
+	ErrorEnum_ERROR_PERMISSION_DENIED   ErrorEnum = 2
+	ErrorEnum_ERROR_INVALID_CREDENTIALS ErrorEnum = 3
+	ErrorEnum_ERROR_TOO_MANY_ATTEMPTS   ErrorEnum = 4
+	ErrorEnum_ERROR_TIME_EXPIRED        ErrorEnum = 5
 )
 
 // Enum value maps for ErrorEnum.
@@ -35,11 +38,17 @@ var (
 		0: "ERROR_UNKNOWN",
 		1: "ERROR_INTERNAL",
 		2: "ERROR_PERMISSION_DENIED",
+		3: "ERROR_INVALID_CREDENTIALS",
+		4: "ERROR_TOO_MANY_ATTEMPTS",
+		5: "ERROR_TIME_EXPIRED",
 	}
 	ErrorEnum_value = map[string]int32{
-		"ERROR_UNKNOWN":           0,
-		"ERROR_INTERNAL":          1,
-		"ERROR_PERMISSION_DENIED": 2,
+		"ERROR_UNKNOWN":             0,
+		"ERROR_INTERNAL":            1,
+		"ERROR_PERMISSION_DENIED":   2,
+		"ERROR_INVALID_CREDENTIALS": 3,
+		"ERROR_TOO_MANY_ATTEMPTS":   4,
+		"ERROR_TIME_EXPIRED":        5,
 	}
 )
 
@@ -74,11 +83,14 @@ var File_proto_errors_proto protoreflect.FileDescriptor
 
 const file_proto_errors_proto_rawDesc = "" +
 	"\n" +
-	"\x12proto/errors.proto\x12\bresonate*O\n" +
+	"\x12proto/errors.proto\x12\bresonate*\xa3\x01\n" +
 	"\tErrorEnum\x12\x11\n" +
 	"\rERROR_UNKNOWN\x10\x00\x12\x12\n" +
 	"\x0eERROR_INTERNAL\x10\x01\x12\x1b\n" +
-	"\x17ERROR_PERMISSION_DENIED\x10\x02B#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\x17ERROR_PERMISSION_DENIED\x10\x02\x12\x1d\n" +
+	"\x19ERROR_INVALID_CREDENTIALS\x10\x03\x12\x1b\n" +
+	"\x17ERROR_TOO_MANY_ATTEMPTS\x10\x04\x12\x16\n" +
+	"\x12ERROR_TIME_EXPIRED\x10\x05B#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_errors_proto_rawDescOnce sync.Once

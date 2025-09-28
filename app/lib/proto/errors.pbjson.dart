@@ -21,10 +21,14 @@ const ErrorEnum$json = {
     {'1': 'ERROR_UNKNOWN', '2': 0},
     {'1': 'ERROR_INTERNAL', '2': 1},
     {'1': 'ERROR_PERMISSION_DENIED', '2': 2},
+    {'1': 'ERROR_INVALID_CREDENTIALS', '2': 3},
+    {'1': 'ERROR_TOO_MANY_ATTEMPTS', '2': 4},
+    {'1': 'ERROR_TIME_EXPIRED', '2': 5},
   ],
 };
 
 /// Descriptor for `ErrorEnum`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List errorEnumDescriptor = $convert.base64Decode(
     'CglFcnJvckVudW0SEQoNRVJST1JfVU5LTk9XThAAEhIKDkVSUk9SX0lOVEVSTkFMEAESGwoXRV'
-    'JST1JfUEVSTUlTU0lPTl9ERU5JRUQQAg==');
+    'JST1JfUEVSTUlTU0lPTl9ERU5JRUQQAhIdChlFUlJPUl9JTlZBTElEX0NSRURFTlRJQUxTEAMS'
+    'GwoXRVJST1JfVE9PX01BTllfQVRURU1QVFMQBBIWChJFUlJPUl9USU1FX0VYUElSRUQQBQ==');

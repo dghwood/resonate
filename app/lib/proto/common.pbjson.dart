@@ -141,6 +141,40 @@ final $typed_data.Uint8List tokenMessageDescriptor = $convert.base64Decode(
     'CgxUb2tlbk1lc3NhZ2USFAoFdG9rZW4YASABKAlSBXRva2VuEjAKFGV4cGlyeV91dGNfdGltZX'
     'N0YW1wGAIgASgDUhJleHBpcnlVdGNUaW1lc3RhbXA=');
 
+@$core.Deprecated('Use loginAttemptDescriptor instead')
+const LoginAttempt$json = {
+  '1': 'LoginAttempt',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'phone_number', '3': 2, '4': 1, '5': 9, '10': 'phoneNumber'},
+    {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
+    {
+      '1': 'metadata',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+    {
+      '1': 'expiry_utc_timestamp',
+      '3': 5,
+      '4': 1,
+      '5': 3,
+      '10': 'expiryUtcTimestamp'
+    },
+    {'1': 'num_attempts', '3': 6, '4': 1, '5': 3, '10': 'numAttempts'},
+  ],
+};
+
+/// Descriptor for `LoginAttempt`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List loginAttemptDescriptor = $convert.base64Decode(
+    'CgxMb2dpbkF0dGVtcHQSDgoCaWQYASABKAlSAmlkEiEKDHBob25lX251bWJlchgCIAEoCVILcG'
+    'hvbmVOdW1iZXISGgoIcGFzc3dvcmQYAyABKAlSCHBhc3N3b3JkEjwKCG1ldGFkYXRhGAQgASgL'
+    'MiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGESMAoUZXhwaXJ5X3'
+    'V0Y190aW1lc3RhbXAYBSABKANSEmV4cGlyeVV0Y1RpbWVzdGFtcBIhCgxudW1fYXR0ZW1wdHMY'
+    'BiABKANSC251bUF0dGVtcHRz');
+
 @$core.Deprecated('Use userStorageMessageDescriptor instead')
 const UserStorageMessage$json = {
   '1': 'UserStorageMessage',
@@ -179,6 +213,38 @@ final $typed_data.Uint8List userStorageMessageDescriptor = $convert.base64Decode
     'YWNjZXNzVG9rZW4SOwoNcmVmcmVzaF90b2tlbhgDIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2'
     'FnZVIMcmVmcmVzaFRva2Vu');
 
+@$core.Deprecated('Use refreshTokensMessageDescriptor instead')
+const RefreshTokensMessage$json = {
+  '1': 'RefreshTokensMessage',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {
+      '1': 'tokens',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'tokens'
+    },
+    {
+      '1': 'metadata',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+  ],
+};
+
+/// Descriptor for `RefreshTokensMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List refreshTokensMessageDescriptor = $convert.base64Decode(
+    'ChRSZWZyZXNoVG9rZW5zTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIAEoCV'
+    'IGdXNlcklkEi4KBnRva2VucxgDIAMoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVIGdG9rZW5z'
+    'EjwKCG1ldGFkYXRhGAQgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbW'
+    'V0YWRhdGE=');
+
 @$core.Deprecated('Use userMessageDescriptor instead')
 const UserMessage$json = {
   '1': 'UserMessage',
@@ -186,6 +252,7 @@ const UserMessage$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'phone_number', '3': 10, '4': 1, '5': 9, '10': 'phoneNumber'},
     {'1': 'image_url', '3': 4, '4': 1, '5': 9, '10': 'imageUrl'},
     {
       '1': 'subscriptions',
@@ -226,12 +293,13 @@ const UserMessage$json = {
 /// Descriptor for `UserMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode(
     'CgtVc2VyTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVlbW'
-    'FpbBgDIAEoCVIFZW1haWwSGwoJaW1hZ2VfdXJsGAQgASgJUghpbWFnZVVybBJHCg1zdWJzY3Jp'
-    'cHRpb25zGAUgAygLMiEucmVzb25hdGUuVXNlclN1YnNjcmlwdGlvbk1lc3NhZ2VSDXN1YnNjcm'
-    'lwdGlvbnMSNQoHbGlzdGVucxgGIAMoCzIbLnJlc29uYXRlLlVzZXJMaXN0ZW5NZXNzYWdlUgds'
-    'aXN0ZW5zEjkKCWZvbGxvd2luZxgHIAMoCzIbLnJlc29uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUg'
-    'lmb2xsb3dpbmcSIwoNbnVtX2ZvbGxvd2VycxgIIAEoA1IMbnVtRm9sbG93ZXJzEjwKCG1ldGFk'
-    'YXRhGAkgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');
+    'FpbBgDIAEoCVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAogASgJUgtwaG9uZU51bWJlchIbCglp'
+    'bWFnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5yZXNvbm'
+    'F0ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW5zGAYg'
+    'AygLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93aW5nGA'
+    'cgAygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxIjCg1udW1fZm9s'
+    'bG93ZXJzGAggASgDUgxudW1Gb2xsb3dlcnMSPAoIbWV0YWRhdGEYCSABKAsyIC5yZXNvbmF0ZS'
+    '5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
 
 @$core.Deprecated('Use publicUserMessageDescriptor instead')
 const PublicUserMessage$json = {

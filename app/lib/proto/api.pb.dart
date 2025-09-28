@@ -407,10 +407,12 @@ class LoginRequestMessage_Request extends $pb.GeneratedMessage {
   factory LoginRequestMessage_Request({
     RequestInfo? requestInfo,
     $core.String? email,
+    $core.String? phoneNumber,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (email != null) result.email = email;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
     return result;
   }
 
@@ -430,6 +432,7 @@ class LoginRequestMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'email')
+    ..aOS(3, _omitFieldNames ? '' : 'phoneNumber')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -476,6 +479,15 @@ class LoginRequestMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasEmail() => $_has(1);
   @$pb.TagNumber(2)
   void clearEmail() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get phoneNumber => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set phoneNumber($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPhoneNumber() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPhoneNumber() => $_clearField(3);
 }
 
 class LoginRequestMessage_Response extends $pb.GeneratedMessage {
@@ -621,11 +633,13 @@ class LoginUserMessage_Request extends $pb.GeneratedMessage {
     RequestInfo? requestInfo,
     $core.String? email,
     $core.String? password,
+    $core.String? phoneNumber,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (email != null) result.email = email;
     if (password != null) result.password = password;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
     return result;
   }
 
@@ -646,6 +660,7 @@ class LoginUserMessage_Request extends $pb.GeneratedMessage {
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'email')
     ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..aOS(4, _omitFieldNames ? '' : 'phoneNumber')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -699,6 +714,15 @@ class LoginUserMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasPassword() => $_has(2);
   @$pb.TagNumber(3)
   void clearPassword() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get phoneNumber => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set phoneNumber($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasPhoneNumber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPhoneNumber() => $_clearField(4);
 }
 
 class LoginUserMessage_Response extends $pb.GeneratedMessage {

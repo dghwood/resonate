@@ -1,29 +1,28 @@
 package auth
 
 import (
-	"log"
 	"time"
 
+	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/models"
-	pb "github.com/dghwood/resonate/proto"
-
-	"crypto/rand"
-	"crypto/sha256"
-	"encoding/hex"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/utils"
 
 	token "github.com/dghwood/resonate/auth"
 )
 
 type Login struct {
+	Datastore datastore.Datastore
 }
 
 func (f Login) RequireSignIn() bool { return false }
 
-func (f Login) RequestProto() *pb.LoginUserMessage_Request {
-	return &pb.LoginUserMessage_Request{}
+func (f Login) RequestProto() *proto.LoginUserMessage_Request {
+	return &proto.LoginUserMessage_Request{}
 }
-func (f Login) ResponseProto() *pb.LoginUserMessage_Response {
-	return &pb.LoginUserMessage_Response{}
+func (f Login) ResponseProto() *proto.LoginUserMessage_Response {
+	return &proto.LoginUserMessage_Response{}
 }
 
 // Execute
@@ -33,55 +32,90 @@ func (f Login) ResponseProto() *pb.LoginUserMessage_Response {
 // and returns the user and access token, as well as a refresh token.
 // This also creates a new user if the user does not exist.
 func (f Login) Execute(
-	loggedInUser *models.LoggedInUser,
-	request *pb.LoginUserMessage_Request,
-	response *pb.LoginUserMessage_Response) (err error) {
+	_ *models.LoggedInUser,
+	request *proto.LoginUserMessage_Request,
+	response *proto.LoginUserMessage_Response) (err error) {
 
-	user := &pb.UserMessage{
-		// Should this be a hash of the email?
-		Id:    "123456789",
-		Email: request.Email,
-		Name:  "Duncan Wood",
+	password := request.Password
+	phoneNumber := request.PhoneNumber
+
+	if utils.IsValidPhoneNumber(phoneNumber) {
+		// The front end should deal with this
+		return errors.ERROR_INTERNAL
 	}
 
-	accessToken, err := token.GetAccessToken(user, 24*time.Hour)
+	loginAttempt := models.LoginAttempt{}
+	loginAttempt.PhoneNumber = phoneNumber
+
+	err = f.Datastore.Get(&loginAttempt)
 	if err != nil {
-		log.Println("Error generating access token:", err)
-		response.ResponseInfo = &pb.ResponseInfo{
-			Success:      false,
-			ErrorMessage: "Failed to generate access token",
-		}
 		return
 	}
 
-	// Build the response with the user and access token
-	response.ResponseInfo = &pb.ResponseInfo{
-		Success: true,
+	// TODO(duncan): 3 attemps hardcoded?
+	if loginAttempt.NumAttempts >= 3 {
+		return errors.ERROR_TOO_MANY_ATTEMPTS
 	}
+	// Check the expiry
+	if loginAttempt.ExpiryUtcTimestamp > time.Now().UTC().Unix() {
+		return errors.ERROR_TIME_EXPIRED
+	}
+	// Check the password
+	if loginAttempt.Password != password {
+		loginAttempt.NumAttempts += 1
+		err = f.Datastore.Put(&loginAttempt)
+		if err != nil {
+			return
+		}
+		return errors.ERROR_INVALID_CREDENTIALS
+	}
+	// Now the user is authenticated
+	user := models.User{}
+	user.Id = utils.HashString(phoneNumber)
+	user.PhoneNumber = phoneNumber
+
+	// Get the user if they already exist
+	userErr := f.Datastore.Get(&user)
+	if userErr != nil && userErr != datastore.ErrorEntityNotFound {
+		return userErr
+	}
+	userExists := userErr == nil
+
+	refreshTokens := models.RefreshTokens{}
+	refreshTokens.UserId = user.Id
+
+	// This is the user's refresh token
+	refreshToken := &proto.TokenMessage{
+		Token: utils.GenerateUniqueID(),
+		// TODO(duncan): Should this have an expiry?
+		ExpiryUtcTimestamp: time.Now().Add(365 * 24 * time.Hour).UTC().Unix(),
+	}
+
+	if userExists {
+		// User exists, so load their refreshTokens
+		refreshErr := f.Datastore.Get(&refreshTokens)
+		if refreshErr != nil &&
+			refreshErr != datastore.ErrorEntityNotFound {
+			return refreshErr
+		}
+	}
+
+	refreshTokens.Tokens = append(refreshTokens.Tokens, refreshToken)
+
+	err = f.Datastore.Put(&refreshTokens)
+	if err != nil {
+		return
+	}
+
+	// Generate the access token
+	accessToken, err := token.GetAccessToken(&user.UserMessage, 24*time.Hour)
+	if err != nil {
+		return
+	}
+
 	response.AccessToken = accessToken
 	// This needs to be stored in the database
-	response.RefreshToken = &pb.TokenMessage{
-		Token: generateUniqueID(),
-		// Should this have an expiry?
-	}
-	response.User = user
+	response.RefreshToken = refreshToken
+	response.User = &user.UserMessage
 	return
-}
-
-// GenerateUniqueID generates a random 32-character hexadecimal string.
-func generateUniqueID() string {
-	bytes := make([]byte, 16)
-	_, err := rand.Read(bytes)
-	if err != nil {
-		log.Println("Error generating unique ID:", err)
-		return ""
-	}
-	return hex.EncodeToString(bytes)
-}
-
-func hashEmail(email string) string {
-	bytes := []byte(email)
-	hasher := sha256.New()
-	hasher.Write(bytes)
-	return hex.EncodeToString(hasher.Sum(nil))
 }

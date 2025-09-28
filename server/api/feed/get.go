@@ -26,6 +26,7 @@ This has to do a lot
 * Get a list of subscriptions
 * Get a list of episodes for those subscriptions
 
+TODO(duncan):
 * Get a list of followers
 * Get a list of subscriptions for followers
 * Get a list of episodes for those subscriptions

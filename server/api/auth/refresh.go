@@ -1,24 +1,26 @@
 package auth
 
 import (
-	"log"
 	"time"
 
 	token "github.com/dghwood/resonate/auth"
+	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/models"
-	pb "github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/services/datastore"
 )
 
 type Refresh struct {
+	Datastore datastore.Datastore
 }
 
 func (f Refresh) RequireSignIn() bool { return false }
 
-func (f Refresh) RequestProto() *pb.RefreshAuthMessage_Request {
-	return &pb.RefreshAuthMessage_Request{}
+func (f Refresh) RequestProto() *proto.RefreshAuthMessage_Request {
+	return &proto.RefreshAuthMessage_Request{}
 }
-func (f Refresh) ResponseProto() *pb.RefreshAuthMessage_Response {
-	return &pb.RefreshAuthMessage_Response{}
+func (f Refresh) ResponseProto() *proto.RefreshAuthMessage_Response {
+	return &proto.RefreshAuthMessage_Response{}
 }
 
 // Execute
@@ -26,31 +28,42 @@ func (f Refresh) ResponseProto() *pb.RefreshAuthMessage_Response {
 // This function refreshes the access token by using the provided refresh token.
 func (f Refresh) Execute(
 	loggedInUser *models.LoggedInUser,
-	request *pb.RefreshAuthMessage_Request,
-	response *pb.RefreshAuthMessage_Response) (err error) {
+	request *proto.RefreshAuthMessage_Request,
+	response *proto.RefreshAuthMessage_Response) (err error) {
 
 	userId := request.RequestInfo.UserId
-	// refreshToken := request.RefreshToken
-	// Look this up in the database & check refresh token
-	user := &pb.UserMessage{
+	refreshToken := request.RefreshToken
+
+	tokens := models.RefreshTokens{}
+	tokens.UserId = userId
+	err = f.Datastore.Get(&tokens)
+	if err != nil {
+		return
+	}
+	// Check the refresh token
+	isTokenGood := false
+	for _, token := range tokens.Tokens {
+		if token.Token == refreshToken.Token &&
+			refreshToken.ExpiryUtcTimestamp < time.Now().UTC().Unix() {
+			isTokenGood = true
+			break
+		}
+	}
+	if !isTokenGood {
+		return errors.ERROR_INVALID_CREDENTIALS
+	}
+
+	// TODO(duncan): Does this need to be filled out futher?
+	user := &proto.UserMessage{
 		Id: userId,
 	}
 
-	// generate a new access token
+	// Generate a new access token
 	accessToken, err := token.GetAccessToken(user, 24*time.Hour)
 	if err != nil {
-		log.Println("Error generating access token:", err)
-		response.ResponseInfo = &pb.ResponseInfo{
-			Success:      false,
-			ErrorMessage: "Failed to generate access token",
-		}
 		return
 	}
 
-	// Build the response with the user and access token
-	response.ResponseInfo = &pb.ResponseInfo{
-		Success: true,
-	}
 	response.AccessToken = accessToken
 	return
 }

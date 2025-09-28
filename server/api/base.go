@@ -74,9 +74,11 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 				log.Println(err)
 				if appErr, ok := err.(errors.Error); ok {
 					response.GetResponseInfo().Error = appErr.Enum
+				} else {
+					response.GetResponseInfo().Error = errors.ERROR_INTERNAL.Enum
+					// TODO(duncan): Remove this?
+					response.GetResponseInfo().ErrorMessage = err.Error()
 				}
-				response.GetResponseInfo().Success = false
-				response.GetResponseInfo().ErrorMessage = err.Error()
 			} else {
 				response.GetResponseInfo().Success = true
 			}

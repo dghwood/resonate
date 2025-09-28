@@ -2,46 +2,56 @@ package auth
 
 import (
 	"log"
+	"time"
 
+	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/models"
-	pb "github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/utils"
 )
 
 type Request struct {
+	Datastore datastore.Datastore
 }
 
 func (f Request) RequireSignIn() bool { return false }
-func (f Request) RequestProto() *pb.LoginRequestMessage_Request {
-	return &pb.LoginRequestMessage_Request{}
+
+func (f Request) RequestProto() *proto.LoginRequestMessage_Request {
+	return &proto.LoginRequestMessage_Request{}
 }
-func (f Request) ResponseProto() *pb.LoginRequestMessage_Response {
-	return &pb.LoginRequestMessage_Response{}
+func (f Request) ResponseProto() *proto.LoginRequestMessage_Response {
+	return &proto.LoginRequestMessage_Response{}
 }
 
 // Execute
 //
-// This emails the user with a code to login
+// This texts the user with a code to login
+// Note this is both for new users and existing
 func (f Request) Execute(
-	loggedInUser *models.LoggedInUser,
-	request *pb.LoginRequestMessage_Request,
-	response *pb.LoginRequestMessage_Response) (err error) {
+	_ *models.LoggedInUser,
+	request *proto.LoginRequestMessage_Request,
+	response *proto.LoginRequestMessage_Response) (err error) {
 
-	// email the user with a code
-	email := request.Email
-	if email == "" {
-		response.ResponseInfo = &pb.ResponseInfo{
-			Success:      false,
-			ErrorMessage: "Email is required",
-		}
+	// Send a text with the password
+	phoneNumber := request.PhoneNumber
+
+	if !utils.IsValidPhoneNumber(phoneNumber) {
+		// The front end should deal with this
+		return errors.ERROR_INTERNAL
+	}
+
+	password := utils.GenerateUniqueID()
+	loginAttempt := models.LoginAttempt{}
+	loginAttempt.PhoneNumber = phoneNumber
+	loginAttempt.Password = password
+	loginAttempt.ExpiryUtcTimestamp = time.Now().Add(15 * time.Minute).UTC().Unix()
+
+	err = f.Datastore.Put(&loginAttempt)
+	if err != nil {
 		return
 	}
-
-	password := generateUniqueID()
-	// Remove this
-	log.Printf("Sending login email to %s with password: %s", email, password)
-
-	response.ResponseInfo = &pb.ResponseInfo{
-		Success: true,
-	}
+	// TODO(duncan): Remove this in production
+	log.Printf("Sending login request to %s with password: %s", phoneNumber, password)
 	return
 }

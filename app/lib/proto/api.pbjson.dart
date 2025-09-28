@@ -176,6 +176,7 @@ const LoginRequestMessage_Request$json = {
       '10': 'requestInfo'
     },
     {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
+    {'1': 'phone_number', '3': 3, '4': 1, '5': 9, '10': 'phoneNumber'},
   ],
 };
 
@@ -198,11 +199,11 @@ const LoginRequestMessage_Response$json = {
 final $typed_data.Uint8List loginRequestMessageDescriptor = $convert.base64Decode(
     'ChNMb2dpblJlcXVlc3RNZXNzYWdlEkMKB3JlcXVlc3QYASABKAsyKS5yZXNvbmF0ZS5hcGkuTG'
     '9naW5SZXF1ZXN0TWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
-    'cmVzb25hdGUuYXBpLkxvZ2luUmVxdWVzdE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGl0KB1'
-    'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
-    'UgtyZXF1ZXN0SW5mbxIUCgVlbWFpbBgCIAEoCVIFZW1haWwaSwoIUmVzcG9uc2USPwoNcmVzcG'
-    '9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5m'
-    'bw==');
+    'cmVzb25hdGUuYXBpLkxvZ2luUmVxdWVzdE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGoABCg'
+    'dSZXF1ZXN0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5m'
+    'b1ILcmVxdWVzdEluZm8SFAoFZW1haWwYAiABKAlSBWVtYWlsEiEKDHBob25lX251bWJlchgDIA'
+    'EoCVILcGhvbmVOdW1iZXIaSwoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJl'
+    'c29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbw==');
 
 @$core.Deprecated('Use loginUserMessageDescriptor instead')
 const LoginUserMessage$json = {
@@ -242,6 +243,7 @@ const LoginUserMessage_Request$json = {
     },
     {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
     {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
+    {'1': 'phone_number', '3': 4, '4': 1, '5': 9, '10': 'phoneNumber'},
   ],
 };
 
@@ -288,14 +290,14 @@ const LoginUserMessage_Response$json = {
 final $typed_data.Uint8List loginUserMessageDescriptor = $convert.base64Decode(
     'ChBMb2dpblVzZXJNZXNzYWdlEkAKB3JlcXVlc3QYASABKAsyJi5yZXNvbmF0ZS5hcGkuTG9naW'
     '5Vc2VyTWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkMKCHJlc3BvbnNlGAIgASgLMicucmVzb25h'
-    'dGUuYXBpLkxvZ2luVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGnkKB1JlcXVlc3QSPA'
-    'oMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0'
-    'SW5mbxIUCgVlbWFpbBgCIAEoCVIFZW1haWwSGgoIcGFzc3dvcmQYAyABKAlSCHBhc3N3b3JkGu'
-    '4BCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3Bv'
-    'bnNlSW5mb1IMcmVzcG9uc2VJbmZvEjkKDGFjY2Vzc190b2tlbhgCIAEoCzIWLnJlc29uYXRlLl'
-    'Rva2VuTWVzc2FnZVILYWNjZXNzVG9rZW4SOwoNcmVmcmVzaF90b2tlbhgDIAEoCzIWLnJlc29u'
-    'YXRlLlRva2VuTWVzc2FnZVIMcmVmcmVzaFRva2VuEikKBHVzZXIYBCABKAsyFS5yZXNvbmF0ZS'
-    '5Vc2VyTWVzc2FnZVIEdXNlcg==');
+    'dGUuYXBpLkxvZ2luVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGpwBCgdSZXF1ZXN0Ej'
+    'wKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5mb1ILcmVxdWVz'
+    'dEluZm8SFAoFZW1haWwYAiABKAlSBWVtYWlsEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZB'
+    'IhCgxwaG9uZV9udW1iZXIYBCABKAlSC3Bob25lTnVtYmVyGu4BCghSZXNwb25zZRI/Cg1yZXNw'
+    'b25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbm'
+    'ZvEjkKDGFjY2Vzc190b2tlbhgCIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVILYWNjZXNz'
+    'VG9rZW4SOwoNcmVmcmVzaF90b2tlbhgDIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVIMcm'
+    'VmcmVzaFRva2VuEikKBHVzZXIYBCABKAsyFS5yZXNvbmF0ZS5Vc2VyTWVzc2FnZVIEdXNlcg==');
 
 @$core.Deprecated('Use createUserMessageDescriptor instead')
 const CreateUserMessage$json = {

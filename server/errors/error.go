@@ -28,4 +28,19 @@ var (
 		Enum:    proto.ErrorEnum_ERROR_UNKNOWN,
 		Message: "An unknown error has occurred.",
 	}
+
+	ERROR_INVALID_CREDENTIALS = Error{
+		Enum:    proto.ErrorEnum_ERROR_INVALID_CREDENTIALS,
+		Message: "The provided credentials are invalid.",
+	}
+
+	ERROR_TOO_MANY_ATTEMPTS = Error{
+		Enum:    proto.ErrorEnum_ERROR_TOO_MANY_ATTEMPTS,
+		Message: "Too many attempts have been made.",
+	}
+
+	ERROR_TIME_EXPIRED = Error{
+		Enum:    proto.ErrorEnum_ERROR_TIME_EXPIRED,
+		Message: "The time has expired.",
+	}
 )

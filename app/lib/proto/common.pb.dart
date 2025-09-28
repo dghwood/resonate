@@ -490,6 +490,126 @@ class TokenMessage extends $pb.GeneratedMessage {
   void clearExpiryUtcTimestamp() => $_clearField(2);
 }
 
+class LoginAttempt extends $pb.GeneratedMessage {
+  factory LoginAttempt({
+    $core.String? id,
+    $core.String? phoneNumber,
+    $core.String? password,
+    StorageMetadataMessage? metadata,
+    $fixnum.Int64? expiryUtcTimestamp,
+    $fixnum.Int64? numAttempts,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
+    if (password != null) result.password = password;
+    if (metadata != null) result.metadata = metadata;
+    if (expiryUtcTimestamp != null)
+      result.expiryUtcTimestamp = expiryUtcTimestamp;
+    if (numAttempts != null) result.numAttempts = numAttempts;
+    return result;
+  }
+
+  LoginAttempt._();
+
+  factory LoginAttempt.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory LoginAttempt.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'LoginAttempt',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'phoneNumber')
+    ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
+    ..aInt64(5, _omitFieldNames ? '' : 'expiryUtcTimestamp')
+    ..aInt64(6, _omitFieldNames ? '' : 'numAttempts')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LoginAttempt clone() => LoginAttempt()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LoginAttempt copyWith(void Function(LoginAttempt) updates) =>
+      super.copyWith((message) => updates(message as LoginAttempt))
+          as LoginAttempt;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LoginAttempt create() => LoginAttempt._();
+  @$core.override
+  LoginAttempt createEmptyInstance() => create();
+  static $pb.PbList<LoginAttempt> createRepeated() =>
+      $pb.PbList<LoginAttempt>();
+  @$core.pragma('dart2js:noInline')
+  static LoginAttempt getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<LoginAttempt>(create);
+  static LoginAttempt? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get phoneNumber => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set phoneNumber($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasPhoneNumber() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPhoneNumber() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get password => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set password($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPassword() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPassword() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  StorageMetadataMessage get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(StorageMetadataMessage value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => $_clearField(4);
+  @$pb.TagNumber(4)
+  StorageMetadataMessage ensureMetadata() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get expiryUtcTimestamp => $_getI64(4);
+  @$pb.TagNumber(5)
+  set expiryUtcTimestamp($fixnum.Int64 value) => $_setInt64(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasExpiryUtcTimestamp() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearExpiryUtcTimestamp() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get numAttempts => $_getI64(5);
+  @$pb.TagNumber(6)
+  set numAttempts($fixnum.Int64 value) => $_setInt64(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasNumAttempts() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearNumAttempts() => $_clearField(6);
+}
+
 class UserStorageMessage extends $pb.GeneratedMessage {
   factory UserStorageMessage({
     UserMessage? user,
@@ -579,6 +699,97 @@ class UserStorageMessage extends $pb.GeneratedMessage {
   TokenMessage ensureRefreshToken() => $_ensure(2);
 }
 
+class RefreshTokensMessage extends $pb.GeneratedMessage {
+  factory RefreshTokensMessage({
+    $core.String? id,
+    $core.String? userId,
+    $core.Iterable<TokenMessage>? tokens,
+    StorageMetadataMessage? metadata,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (userId != null) result.userId = userId;
+    if (tokens != null) result.tokens.addAll(tokens);
+    if (metadata != null) result.metadata = metadata;
+    return result;
+  }
+
+  RefreshTokensMessage._();
+
+  factory RefreshTokensMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RefreshTokensMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RefreshTokensMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..pc<TokenMessage>(3, _omitFieldNames ? '' : 'tokens', $pb.PbFieldType.PM,
+        subBuilder: TokenMessage.create)
+    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RefreshTokensMessage clone() =>
+      RefreshTokensMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RefreshTokensMessage copyWith(void Function(RefreshTokensMessage) updates) =>
+      super.copyWith((message) => updates(message as RefreshTokensMessage))
+          as RefreshTokensMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RefreshTokensMessage create() => RefreshTokensMessage._();
+  @$core.override
+  RefreshTokensMessage createEmptyInstance() => create();
+  static $pb.PbList<RefreshTokensMessage> createRepeated() =>
+      $pb.PbList<RefreshTokensMessage>();
+  @$core.pragma('dart2js:noInline')
+  static RefreshTokensMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RefreshTokensMessage>(create);
+  static RefreshTokensMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get userId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUserId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<TokenMessage> get tokens => $_getList(2);
+
+  @$pb.TagNumber(4)
+  StorageMetadataMessage get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(StorageMetadataMessage value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => $_clearField(4);
+  @$pb.TagNumber(4)
+  StorageMetadataMessage ensureMetadata() => $_ensure(3);
+}
+
 class UserMessage extends $pb.GeneratedMessage {
   factory UserMessage({
     $core.String? id,
@@ -590,6 +801,7 @@ class UserMessage extends $pb.GeneratedMessage {
     $core.Iterable<UserFollowMessage>? following,
     $fixnum.Int64? numFollowers,
     StorageMetadataMessage? metadata,
+    $core.String? phoneNumber,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -601,6 +813,7 @@ class UserMessage extends $pb.GeneratedMessage {
     if (following != null) result.following.addAll(following);
     if (numFollowers != null) result.numFollowers = numFollowers;
     if (metadata != null) result.metadata = metadata;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
     return result;
   }
 
@@ -633,6 +846,7 @@ class UserMessage extends $pb.GeneratedMessage {
     ..aInt64(8, _omitFieldNames ? '' : 'numFollowers')
     ..aOM<StorageMetadataMessage>(9, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aOS(10, _omitFieldNames ? '' : 'phoneNumber')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -682,6 +896,7 @@ class UserMessage extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearEmail() => $_clearField(3);
 
+  /// Should this be a data url?
   @$pb.TagNumber(4)
   $core.String get imageUrl => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -719,6 +934,16 @@ class UserMessage extends $pb.GeneratedMessage {
   void clearMetadata() => $_clearField(9);
   @$pb.TagNumber(9)
   StorageMetadataMessage ensureMetadata() => $_ensure(8);
+
+  /// What about country code, etc.
+  @$pb.TagNumber(10)
+  $core.String get phoneNumber => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set phoneNumber($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasPhoneNumber() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearPhoneNumber() => $_clearField(10);
 }
 
 /// Stripped down UserMessage for more public consumption

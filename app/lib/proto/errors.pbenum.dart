@@ -21,15 +21,24 @@ class ErrorEnum extends $pb.ProtobufEnum {
       ErrorEnum._(1, _omitEnumNames ? '' : 'ERROR_INTERNAL');
   static const ErrorEnum ERROR_PERMISSION_DENIED =
       ErrorEnum._(2, _omitEnumNames ? '' : 'ERROR_PERMISSION_DENIED');
+  static const ErrorEnum ERROR_INVALID_CREDENTIALS =
+      ErrorEnum._(3, _omitEnumNames ? '' : 'ERROR_INVALID_CREDENTIALS');
+  static const ErrorEnum ERROR_TOO_MANY_ATTEMPTS =
+      ErrorEnum._(4, _omitEnumNames ? '' : 'ERROR_TOO_MANY_ATTEMPTS');
+  static const ErrorEnum ERROR_TIME_EXPIRED =
+      ErrorEnum._(5, _omitEnumNames ? '' : 'ERROR_TIME_EXPIRED');
 
   static const $core.List<ErrorEnum> values = <ErrorEnum>[
     ERROR_UNKNOWN,
     ERROR_INTERNAL,
     ERROR_PERMISSION_DENIED,
+    ERROR_INVALID_CREDENTIALS,
+    ERROR_TOO_MANY_ATTEMPTS,
+    ERROR_TIME_EXPIRED,
   ];
 
   static final $core.List<ErrorEnum?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 2);
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
   static ErrorEnum? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

@@ -8,7 +8,10 @@ package models
 import (
 	// "context"
 
+	"fmt"
+
 	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/utils"
 	pb "google.golang.org/protobuf/proto"
 )
 
@@ -135,4 +138,21 @@ type Follow struct {
 
 func (p *Follow) GetUserIdFieldNum() int32 {
 	return 2
+}
+
+type LoginAttempt struct {
+	proto.LoginAttempt
+}
+
+func (p *LoginAttempt) GetId() string {
+	// TODO(duncan): Add something unique to this like the time
+	return utils.HashString(p.PhoneNumber)
+}
+
+type RefreshTokens struct {
+	proto.RefreshTokensMessage
+}
+
+func (p *RefreshTokens) GetId() string {
+	return fmt.Sprintf("refresh-token-%s", p.UserId)
 }

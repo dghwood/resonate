@@ -1285,6 +1285,7 @@ type LoginRequestMessage_Request struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1329,6 +1330,13 @@ func (x *LoginRequestMessage_Request) GetRequestInfo() *RequestInfo {
 func (x *LoginRequestMessage_Request) GetEmail() string {
 	if x != nil {
 		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginRequestMessage_Request) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
 	}
 	return ""
 }
@@ -1382,6 +1390,7 @@ type LoginUserMessage_Request struct {
 	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
 	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1433,6 +1442,13 @@ func (x *LoginUserMessage_Request) GetEmail() string {
 func (x *LoginUserMessage_Request) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *LoginUserMessage_Request) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
 	}
 	return ""
 }
@@ -3310,22 +3326,24 @@ const file_proto_api_proto_rawDesc = "" +
 	"\rrefresh_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\frefreshToken\x1a\x86\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x129\n" +
-	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\"\xce\x02\n" +
+	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\"\xf2\x02\n" +
 	"\x13LoginRequestMessage\x12C\n" +
 	"\arequest\x18\x01 \x01(\v2).resonate.api.LoginRequestMessage.RequestR\arequest\x12F\n" +
-	"\bresponse\x18\x02 \x01(\v2*.resonate.api.LoginRequestMessage.ResponseR\bresponse\x1a]\n" +
+	"\bresponse\x18\x02 \x01(\v2*.resonate.api.LoginRequestMessage.ResponseR\bresponse\x1a\x80\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x1aK\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12!\n" +
+	"\fphone_number\x18\x03 \x01(\tR\vphoneNumber\x1aK\n" +
 	"\bResponse\x12?\n" +
-	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\"\x85\x04\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\"\xa9\x04\n" +
 	"\x10LoginUserMessage\x12@\n" +
 	"\arequest\x18\x01 \x01(\v2&.resonate.api.LoginUserMessage.RequestR\arequest\x12C\n" +
-	"\bresponse\x18\x02 \x01(\v2'.resonate.api.LoginUserMessage.ResponseR\bresponse\x1ay\n" +
+	"\bresponse\x18\x02 \x01(\v2'.resonate.api.LoginUserMessage.ResponseR\bresponse\x1a\x9c\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\x1a\xee\x01\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\x12!\n" +
+	"\fphone_number\x18\x04 \x01(\tR\vphoneNumber\x1a\xee\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x129\n" +
 	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\x12;\n" +
