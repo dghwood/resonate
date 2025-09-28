@@ -35,6 +35,7 @@ message PodcastMessage {
     string author = 6;
     // this is optional 
     repeated EpisodeMessage episodes = 7;
+    StorageMetadataMessage metadata = 8; 
 }
 
 message EpisodeMessage {
@@ -48,6 +49,7 @@ message EpisodeMessage {
     int64 duration_seconds = 9;
     int64 episode_number = 10;
     bool explicit = 11;
+    StorageMetadataMessage metadata = 12; 
 }
 
 message TokenMessage {
@@ -71,6 +73,7 @@ message UserMessage {
     repeated UserListenMessage listens = 6;
     repeated UserFollowMessage following = 7;
     int64 num_followers = 8; 
+    StorageMetadataMessage metadata = 9; 
 }
 
 // Stripped down UserMessage for more public consumption
@@ -84,6 +87,7 @@ message PublicUserMessage {
 message UserFollowMessage {
     string user_id = 1; 
     string followed_user_id = 2;
+    StorageMetadataMessage metadata = 3; 
 }
 
 message UserSubscriptionMessage {

@@ -15,6 +15,7 @@ import (
 type Model interface {
 	pb.Message
 	GetId() string
+	GetMetadata() *proto.StorageMetadataMessage
 }
 
 // Mainly used to enable list for user

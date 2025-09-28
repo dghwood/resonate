@@ -60,6 +60,14 @@ const PodcastMessage$json = {
       '6': '.resonate.EpisodeMessage',
       '10': 'episodes'
     },
+    {
+      '1': 'metadata',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
@@ -68,7 +76,8 @@ final $typed_data.Uint8List podcastMessageDescriptor = $convert.base64Decode(
     'Cg5Qb2RjYXN0TWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFAoFdGl0bGUYAiABKAlSBXRpdGxlEi'
     'AKC2Rlc2NyaXB0aW9uGAMgASgJUgtkZXNjcmlwdGlvbhIQCgN1cmwYBCABKAlSA3VybBIbCglp'
     'bWFnZV91cmwYBSABKAlSCGltYWdlVXJsEhYKBmF1dGhvchgGIAEoCVIGYXV0aG9yEjQKCGVwaX'
-    'NvZGVzGAcgAygLMhgucmVzb25hdGUuRXBpc29kZU1lc3NhZ2VSCGVwaXNvZGVz');
+    'NvZGVzGAcgAygLMhgucmVzb25hdGUuRXBpc29kZU1lc3NhZ2VSCGVwaXNvZGVzEjwKCG1ldGFk'
+    'YXRhGAggASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');
 
 @$core.Deprecated('Use episodeMessageDescriptor instead')
 const EpisodeMessage$json = {
@@ -90,6 +99,14 @@ const EpisodeMessage$json = {
     {'1': 'duration_seconds', '3': 9, '4': 1, '5': 3, '10': 'durationSeconds'},
     {'1': 'episode_number', '3': 10, '4': 1, '5': 3, '10': 'episodeNumber'},
     {'1': 'explicit', '3': 11, '4': 1, '5': 8, '10': 'explicit'},
+    {
+      '1': 'metadata',
+      '3': 12,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
@@ -100,7 +117,9 @@ final $typed_data.Uint8List episodeMessageDescriptor = $convert.base64Decode(
     'Y3JpcHRpb24SGwoJYXVkaW9fdXJsGAUgASgJUghhdWRpb1VybBIbCglpbWFnZV91cmwYBiABKA'
     'lSCGltYWdlVXJsEisKEXB1Ymxpc2hfdGltZXN0YW1wGAggASgDUhBwdWJsaXNoVGltZXN0YW1w'
     'EikKEGR1cmF0aW9uX3NlY29uZHMYCSABKANSD2R1cmF0aW9uU2Vjb25kcxIlCg5lcGlzb2RlX2'
-    '51bWJlchgKIAEoA1INZXBpc29kZU51bWJlchIaCghleHBsaWNpdBgLIAEoCFIIZXhwbGljaXQ=');
+    '51bWJlchgKIAEoA1INZXBpc29kZU51bWJlchIaCghleHBsaWNpdBgLIAEoCFIIZXhwbGljaXQS'
+    'PAoIbWV0YWRhdGEYDCABKAsyIC5yZXNvbmF0ZS5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZX'
+    'RhZGF0YQ==');
 
 @$core.Deprecated('Use tokenMessageDescriptor instead')
 const TokenMessage$json = {
@@ -193,6 +212,14 @@ const UserMessage$json = {
       '10': 'following'
     },
     {'1': 'num_followers', '3': 8, '4': 1, '5': 3, '10': 'numFollowers'},
+    {
+      '1': 'metadata',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
@@ -203,7 +230,8 @@ final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode(
     'cHRpb25zGAUgAygLMiEucmVzb25hdGUuVXNlclN1YnNjcmlwdGlvbk1lc3NhZ2VSDXN1YnNjcm'
     'lwdGlvbnMSNQoHbGlzdGVucxgGIAMoCzIbLnJlc29uYXRlLlVzZXJMaXN0ZW5NZXNzYWdlUgds'
     'aXN0ZW5zEjkKCWZvbGxvd2luZxgHIAMoCzIbLnJlc29uYXRlLlVzZXJGb2xsb3dNZXNzYWdlUg'
-    'lmb2xsb3dpbmcSIwoNbnVtX2ZvbGxvd2VycxgIIAEoA1IMbnVtRm9sbG93ZXJz');
+    'lmb2xsb3dpbmcSIwoNbnVtX2ZvbGxvd2VycxgIIAEoA1IMbnVtRm9sbG93ZXJzEjwKCG1ldGFk'
+    'YXRhGAkgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');
 
 @$core.Deprecated('Use publicUserMessageDescriptor instead')
 const PublicUserMessage$json = {
@@ -226,13 +254,22 @@ const UserFollowMessage$json = {
   '2': [
     {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'followed_user_id', '3': 2, '4': 1, '5': 9, '10': 'followedUserId'},
+    {
+      '1': 'metadata',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
 /// Descriptor for `UserFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userFollowMessageDescriptor = $convert.base64Decode(
     'ChFVc2VyRm9sbG93TWVzc2FnZRIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSKAoQZm9sbG93ZW'
-    'RfdXNlcl9pZBgCIAEoCVIOZm9sbG93ZWRVc2VySWQ=');
+    'RfdXNlcl9pZBgCIAEoCVIOZm9sbG93ZWRVc2VySWQSPAoIbWV0YWRhdGEYAyABKAsyIC5yZXNv'
+    'bmF0ZS5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
 
 @$core.Deprecated('Use userSubscriptionMessageDescriptor instead')
 const UserSubscriptionMessage$json = {

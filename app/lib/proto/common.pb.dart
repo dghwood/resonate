@@ -110,6 +110,7 @@ class PodcastMessage extends $pb.GeneratedMessage {
     $core.String? imageUrl,
     $core.String? author,
     $core.Iterable<EpisodeMessage>? episodes,
+    StorageMetadataMessage? metadata,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -119,6 +120,7 @@ class PodcastMessage extends $pb.GeneratedMessage {
     if (imageUrl != null) result.imageUrl = imageUrl;
     if (author != null) result.author = author;
     if (episodes != null) result.episodes.addAll(episodes);
+    if (metadata != null) result.metadata = metadata;
     return result;
   }
 
@@ -144,6 +146,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
     ..pc<EpisodeMessage>(
         7, _omitFieldNames ? '' : 'episodes', $pb.PbFieldType.PM,
         subBuilder: EpisodeMessage.create)
+    ..aOM<StorageMetadataMessage>(8, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -224,6 +228,17 @@ class PodcastMessage extends $pb.GeneratedMessage {
   /// this is optional
   @$pb.TagNumber(7)
   $pb.PbList<EpisodeMessage> get episodes => $_getList(6);
+
+  @$pb.TagNumber(8)
+  StorageMetadataMessage get metadata => $_getN(7);
+  @$pb.TagNumber(8)
+  set metadata(StorageMetadataMessage value) => $_setField(8, value);
+  @$pb.TagNumber(8)
+  $core.bool hasMetadata() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearMetadata() => $_clearField(8);
+  @$pb.TagNumber(8)
+  StorageMetadataMessage ensureMetadata() => $_ensure(7);
 }
 
 class EpisodeMessage extends $pb.GeneratedMessage {
@@ -238,6 +253,7 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     $fixnum.Int64? durationSeconds,
     $fixnum.Int64? episodeNumber,
     $core.bool? explicit,
+    StorageMetadataMessage? metadata,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -250,6 +266,7 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     if (durationSeconds != null) result.durationSeconds = durationSeconds;
     if (episodeNumber != null) result.episodeNumber = episodeNumber;
     if (explicit != null) result.explicit = explicit;
+    if (metadata != null) result.metadata = metadata;
     return result;
   }
 
@@ -276,6 +293,8 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     ..aInt64(9, _omitFieldNames ? '' : 'durationSeconds')
     ..aInt64(10, _omitFieldNames ? '' : 'episodeNumber')
     ..aOB(11, _omitFieldNames ? '' : 'explicit')
+    ..aOM<StorageMetadataMessage>(12, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -388,6 +407,17 @@ class EpisodeMessage extends $pb.GeneratedMessage {
   $core.bool hasExplicit() => $_has(9);
   @$pb.TagNumber(11)
   void clearExplicit() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  StorageMetadataMessage get metadata => $_getN(10);
+  @$pb.TagNumber(12)
+  set metadata(StorageMetadataMessage value) => $_setField(12, value);
+  @$pb.TagNumber(12)
+  $core.bool hasMetadata() => $_has(10);
+  @$pb.TagNumber(12)
+  void clearMetadata() => $_clearField(12);
+  @$pb.TagNumber(12)
+  StorageMetadataMessage ensureMetadata() => $_ensure(10);
 }
 
 class TokenMessage extends $pb.GeneratedMessage {
@@ -559,6 +589,7 @@ class UserMessage extends $pb.GeneratedMessage {
     $core.Iterable<UserListenMessage>? listens,
     $core.Iterable<UserFollowMessage>? following,
     $fixnum.Int64? numFollowers,
+    StorageMetadataMessage? metadata,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -569,6 +600,7 @@ class UserMessage extends $pb.GeneratedMessage {
     if (listens != null) result.listens.addAll(listens);
     if (following != null) result.following.addAll(following);
     if (numFollowers != null) result.numFollowers = numFollowers;
+    if (metadata != null) result.metadata = metadata;
     return result;
   }
 
@@ -599,6 +631,8 @@ class UserMessage extends $pb.GeneratedMessage {
         7, _omitFieldNames ? '' : 'following', $pb.PbFieldType.PM,
         subBuilder: UserFollowMessage.create)
     ..aInt64(8, _omitFieldNames ? '' : 'numFollowers')
+    ..aOM<StorageMetadataMessage>(9, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -674,6 +708,17 @@ class UserMessage extends $pb.GeneratedMessage {
   $core.bool hasNumFollowers() => $_has(7);
   @$pb.TagNumber(8)
   void clearNumFollowers() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  StorageMetadataMessage get metadata => $_getN(8);
+  @$pb.TagNumber(9)
+  set metadata(StorageMetadataMessage value) => $_setField(9, value);
+  @$pb.TagNumber(9)
+  $core.bool hasMetadata() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearMetadata() => $_clearField(9);
+  @$pb.TagNumber(9)
+  StorageMetadataMessage ensureMetadata() => $_ensure(8);
 }
 
 /// Stripped down UserMessage for more public consumption
@@ -762,10 +807,12 @@ class UserFollowMessage extends $pb.GeneratedMessage {
   factory UserFollowMessage({
     $core.String? userId,
     $core.String? followedUserId,
+    StorageMetadataMessage? metadata,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
     if (followedUserId != null) result.followedUserId = followedUserId;
+    if (metadata != null) result.metadata = metadata;
     return result;
   }
 
@@ -784,6 +831,8 @@ class UserFollowMessage extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'userId')
     ..aOS(2, _omitFieldNames ? '' : 'followedUserId')
+    ..aOM<StorageMetadataMessage>(3, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -824,6 +873,17 @@ class UserFollowMessage extends $pb.GeneratedMessage {
   $core.bool hasFollowedUserId() => $_has(1);
   @$pb.TagNumber(2)
   void clearFollowedUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  StorageMetadataMessage get metadata => $_getN(2);
+  @$pb.TagNumber(3)
+  set metadata(StorageMetadataMessage value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMetadata() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMetadata() => $_clearField(3);
+  @$pb.TagNumber(3)
+  StorageMetadataMessage ensureMetadata() => $_ensure(2);
 }
 
 class UserSubscriptionMessage extends $pb.GeneratedMessage {
