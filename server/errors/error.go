@@ -1,8 +1,15 @@
 package errors
 
 import (
+	e "errors"
+
 	"github.com/dghwood/resonate/proto"
 )
+
+// Wrapping this to avoid naming conflicts everywhere
+func Is(err error, target error) bool {
+	return e.Is(err, target)
+}
 
 type Error struct {
 	Enum    proto.ErrorEnum

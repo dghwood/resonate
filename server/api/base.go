@@ -41,20 +41,21 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 	f ApiInterface[request, response], path string) {
 	http.HandleFunc(path,
 		func(w http.ResponseWriter, r *http.Request) {
-			// Check if login is required
-
 			request := f.RequestProto()
 			parseProto(r, request)
 			response := f.ResponseProto()
 
 			token := request.GetRequestInfo().AccessToken
 			userId, err := auth.ValidUserIdFromToken(token)
+
 			if f.RequireSignIn() && err != nil {
-				// Redirect on error
-				response.GetResponseInfo().Success = false
-				// TODO(duncan): I should probably have the right
-				// error here, maybe the token has expired.
-				response.GetResponseInfo().ErrorMessage = err.Error()
+				log.Println(err)
+				if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
+					response.GetResponseInfo().Error = errors.ERROR_TIME_EXPIRED.Enum
+					writeProto(r, w, response)
+					return
+				}
+				response.GetResponseInfo().Error = errors.ERROR_INTERNAL.Enum
 				writeProto(r, w, response)
 				return
 			}

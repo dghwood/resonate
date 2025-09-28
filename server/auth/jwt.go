@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/dghwood/resonate/errors"
 	pb "github.com/dghwood/resonate/proto"
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -66,6 +67,9 @@ func decodeAccessToken(accessToken string) (claim tokenClaims, err error) {
 			return []byte(secret), nil
 		})
 	if err != nil {
+		if errors.Is(err, jwt.ErrTokenExpired) {
+			err = errors.ERROR_TIME_EXPIRED
+		}
 		return
 	}
 	if !token.Valid {
