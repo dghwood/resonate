@@ -1,4 +1,4 @@
-package subscribe
+package listens
 
 import (
 	"github.com/dghwood/resonate/errors"
