@@ -16,7 +16,11 @@ func (m *MemoryCachestore) Put(
 func (m *MemoryCachestore) Get(
 	key string,
 	ttl time.Duration) (response []byte, err error) {
-	response = m.Data[key]
+	response, ok := m.Data[key]
+	if !ok {
+		err = ErrNotFound
+		return
+	}
 	return
 }
 

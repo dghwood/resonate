@@ -3,6 +3,7 @@ package cloudstorage
 import (
 	"bytes"
 	"context"
+	"errors"
 	"io"
 	"log"
 	"time"
@@ -10,8 +11,6 @@ import (
 	"cloud.google.com/go/storage"
 	"github.com/dghwood/resonate/services/cachestore"
 )
-
-// const bucket = "resonate-cache"
 
 type StorageStorageCachestore struct {
 	bucket string
@@ -42,21 +41,6 @@ func getContext(seconds int) (context.Context, context.CancelFunc) {
 	return ctx, cancel
 }
 
-// func generateKey(request Request) (key string, err error) {
-// 	var buf bytes.Buffer
-// 	enc := gob.NewEncoder(&buf)
-// 	err = enc.Encode(request)
-// 	if err != nil {
-// 		return
-// 	}
-// 	hash := sha256.Sum256(buf.Bytes())
-// 	key = base64.StdEncoding.EncodeToString(hash[:])
-// 	key = strings.ReplaceAll(key, "/", "_")
-// 	key = strings.ReplaceAll(key, "+", "-")
-// 	// key = string(latin1)
-// 	return
-// }
-
 func (d *StorageStorageCachestore) Put(key string, response []byte) (err error) {
 	ctx, _ := getContext(10)
 	object := d.client.Bucket(d.bucket).Object(key)
@@ -76,6 +60,10 @@ func (d *StorageStorageCachestore) Get(key string, ttl time.Duration) (response 
 	object := d.client.Bucket(d.bucket).Object(key)
 	attrs, err := object.Attrs(ctx)
 	if err != nil {
+		if errors.Is(err, storage.ErrObjectNotExist) {
+			err = cachestore.ErrNotFound
+			return
+		}
 		return
 	}
 	if time.Since(attrs.Updated) > ttl {
