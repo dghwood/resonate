@@ -6,13 +6,16 @@ import (
 	"os"
 
 	"github.com/dghwood/resonate/api"
+	cacheService "github.com/dghwood/resonate/services/cachestore"
 	datastoreService "github.com/dghwood/resonate/services/datastore"
+	fetchService "github.com/dghwood/resonate/services/fetch"
 	searchService "github.com/dghwood/resonate/services/search"
 
 	"github.com/dghwood/resonate/api/auth"
 	"github.com/dghwood/resonate/api/feed"
 	"github.com/dghwood/resonate/api/follows"
 	"github.com/dghwood/resonate/api/listens"
+	"github.com/dghwood/resonate/api/podcast"
 	"github.com/dghwood/resonate/api/search"
 	"github.com/dghwood/resonate/api/subscribe"
 	"github.com/dghwood/resonate/api/users"
@@ -27,6 +30,8 @@ func main() {
 
 	datastore := datastoreService.NewMemoryDatastore()
 	searchApi := searchService.NewMockSearch()
+	cachestore := cacheService.NewMemoryCachestore()
+	fetch := fetchService.NewCached(cachestore)
 
 	// Login API endpoints
 	api.Attach(auth.Login{
@@ -35,6 +40,13 @@ func main() {
 		Datastore: datastore}, "/api/login/refresh")
 	api.Attach(auth.Request{
 		Datastore: datastore}, "/api/login/request")
+
+	// Podcast
+	api.Attach(&podcast.Get{
+		Datastore: datastore}, "/api/podcast/get")
+	api.Attach(&podcast.List{
+		Datastore:   datastore,
+		FetchClient: fetch}, "/api/podcast/list")
 
 	// Subscriptions
 	api.Attach(&subscribe.List{

@@ -5,10 +5,12 @@ import (
 	"github.com/dghwood/resonate/services/fetch"
 )
 
-func Get(feedUrl string) (podcast models.Podcast, episodes []*models.Episode, err error) {
-	client := fetch.New()
+func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {
+
 	// TODO(duncan): How long should the cache last..
-	body, err := client.Get(fetch.Request{Url: feedUrl})
+	body, err := client.Get(fetch.Request{
+		Url:      feedUrl,
+		CacheTtl: 0})
 	if err != nil {
 		return
 	}

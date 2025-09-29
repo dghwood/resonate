@@ -6,11 +6,13 @@ import (
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/services/fetch"
 	"github.com/dghwood/resonate/services/rss"
 )
 
 type List struct {
-	Datastore datastore.Datastore
+	Datastore   datastore.Datastore
+	FetchClient fetch.Client
 }
 
 func (f List) RequireSignIn() bool { return false }
@@ -60,7 +62,7 @@ func (f *List) Execute(
 		return
 	}
 
-	podcast, episodes, err := rss.Get(model.Url)
+	podcast, episodes, err := rss.Get(model.Url, &f.FetchClient)
 	if err != nil {
 		log.Println(err)
 		return

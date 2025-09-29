@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"time"
 
 	// "time"
 
@@ -13,16 +14,17 @@ import (
 
 // This needs to implement an interface
 type TaddySearchApi struct {
+	Client    fetch.Client
 	UserId    string
 	AuthToken string
 }
 
 // This needs to return podcasts & episodes
-func (t TaddySearchApi) Podcasts(query string) (
+func (t *TaddySearchApi) Podcasts(query string) (
 	podcasts []*models.Podcast,
 	err error) {
 
-	client := fetch.New()
+	client := t.Client
 	queryBytes, err := constructQuery(query)
 	if err != nil {
 		return
@@ -35,6 +37,7 @@ func (t TaddySearchApi) Podcasts(query string) (
 			"X-USER-ID":    t.UserId,
 			"X-API-KEY":    t.AuthToken,
 		},
+		CacheTtl: 24 * time.Hour,
 	}
 	// TODO(duncan): Read TTL from options?
 	responseBytes, err := client.Post(request)
@@ -63,7 +66,7 @@ func (t TaddySearchApi) Podcasts(query string) (
 	return
 }
 
-func (t TaddySearchApi) TopPodcasts(query string) (
+func (t *TaddySearchApi) TopPodcasts(query string) (
 	podcasts []*models.Podcast,
 	err error) {
 
@@ -80,10 +83,10 @@ func (t TaddySearchApi) TopPodcasts(query string) (
 	return
 }
 
-func (t TaddySearchApi) fetchTopPage(pageNum int) (
+func (t *TaddySearchApi) fetchTopPage(pageNum int) (
 	podcasts []*models.Podcast,
 	err error) {
-	client := fetch.New()
+	client := t.Client
 	queryBytes, err := constructTopQuery(pageNum)
 	if err != nil {
 		return
@@ -96,6 +99,7 @@ func (t TaddySearchApi) fetchTopPage(pageNum int) (
 			"X-USER-ID":    t.UserId,
 			"X-API-KEY":    t.AuthToken,
 		},
+		CacheTtl: 24 * time.Hour,
 	}
 	// TODO(duncan): Read TTL from options?
 	responseBytes, err := client.Post(request)

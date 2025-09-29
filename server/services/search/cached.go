@@ -3,8 +3,8 @@ package search
 import "github.com/dghwood/resonate/models"
 
 /*
-	Do I need to use this, or is it easier to
-	just cache the fetch
+Do I need to use this, or is it easier to
+just cache the fetch
 */
 type CachedSearchApi struct {
 	Api Search

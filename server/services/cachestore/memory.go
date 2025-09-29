@@ -19,3 +19,9 @@ func (m *MemoryCachestore) Get(
 	response = m.Data[key]
 	return
 }
+
+func NewMemoryCachestore() *MemoryCachestore {
+	return &MemoryCachestore{
+		Data: make(map[string][]byte),
+	}
+}

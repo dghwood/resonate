@@ -22,17 +22,17 @@ type Client struct {
 	cachestore cachestore.Cachestore
 }
 
-func New() Client {
-	return Client{
+func New() *Client {
+	return &Client{
 		client:     &http.Client{Timeout: 5 * time.Second},
 		cachestore: nil,
 	}
 }
 
-func NewCached() Client {
+func NewCached(store cachestore.Cachestore) Client {
 	return Client{
 		client:     &http.Client{Timeout: 5 * time.Second},
-		cachestore: &cachestore.MemoryCachestore{},
+		cachestore: store,
 	}
 }
 
@@ -44,9 +44,11 @@ func (c Client) Get(request Request) (resp []byte, err error) {
 	if err != nil {
 		return
 	}
-	resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
-	if err == nil {
-		return
+	if request.CacheTtl > 0 {
+		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+		if err == nil {
+			return
+		}
 	}
 	resp, err = c.get(request)
 	if err != nil {
@@ -67,9 +69,11 @@ func (c Client) Post(request Request) (resp []byte, err error) {
 	if err != nil {
 		return
 	}
-	resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
-	if err == nil {
-		return
+	if request.CacheTtl > 0 {
+		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+		if err == nil {
+			return
+		}
 	}
 	resp, err = c.post(request)
 	if err != nil {
