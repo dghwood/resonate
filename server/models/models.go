@@ -33,6 +33,10 @@ func Merge(to, from pb.Message) {
 	pb.Merge(to, from)
 }
 
+func Kind(model Model) string {
+	return string(model.ProtoReflect().Descriptor().FullName())
+}
+
 /* Podcast */
 type Podcast struct {
 	proto.PodcastMessage
