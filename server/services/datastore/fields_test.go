@@ -9,9 +9,9 @@ import (
 
 func TestMessageName(t *testing.T) {
 	model := models.UserListen{}
-	name := MessageName(&model)
-	if name != "UserListenMessage" {
-		t.Errorf("MessageName() = %s; want UserListenMessage", name)
+	name := models.Kind(&model)
+	if name != "resonate.UserListenMessage" {
+		t.Errorf("MessageName() = %s; want resonate.UserListenMessage", name)
 	}
 }
 

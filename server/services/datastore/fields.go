@@ -1,7 +1,6 @@
 package datastore
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/dghwood/resonate/models"
@@ -15,10 +14,6 @@ type Field struct {
 	Number  int32
 	Value   any
 	NoIndex bool
-}
-
-func MessageName(message models.Model) string {
-	return fmt.Sprint(message.ProtoReflect().Descriptor().Name())
 }
 
 func GetFields(message models.Model) (fields []Field) {

@@ -29,7 +29,7 @@ func NewMemoryDatastore() *MemoryDatastore {
 }
 
 func (ds *MemoryDatastore) getDb(entity models.Model) memoryDatabase {
-	dbName := MessageName(entity)
+	dbName := models.Kind(entity)
 	if val, ok := ds.Data[dbName]; ok {
 		return val
 	}
