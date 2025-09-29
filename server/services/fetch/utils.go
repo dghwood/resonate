@@ -9,8 +9,18 @@ import (
 	"strings"
 )
 
-// Generate a string key from a request
 func generateKey(request Request) (key string, err error) {
+
+	url := request.Url
+	body := request.Body
+
+	bytes := sha256.Sum256([]byte(url + string(body)))
+	key = base64.StdEncoding.EncodeToString(bytes[:])
+	return
+}
+
+// Generate a string key from a request
+func _generateKey(request Request) (key string, err error) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err = enc.Encode(request)
