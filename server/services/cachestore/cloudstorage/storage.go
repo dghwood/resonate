@@ -58,11 +58,7 @@ func getContext(seconds int) (context.Context, context.CancelFunc) {
 // }
 
 func (d *StorageStorageCachestore) Put(key string, response []byte) (err error) {
-	log.Println("CACHE::PUT")
 	ctx, _ := getContext(10)
-	if err != nil {
-		return
-	}
 	object := d.client.Bucket(d.bucket).Object(key)
 	writer := object.NewWriter(ctx)
 	buffer := bytes.NewBuffer(response)
@@ -77,11 +73,6 @@ func (d *StorageStorageCachestore) Put(key string, response []byte) (err error) 
 
 func (d *StorageStorageCachestore) Get(key string, ttl time.Duration) (response []byte, err error) {
 	ctx, _ := getContext(10)
-	if err != nil {
-		log.Println(err)
-		err = cachestore.ErrNotFound
-		return
-	}
 	object := d.client.Bucket(d.bucket).Object(key)
 	attrs, err := object.Attrs(ctx)
 	if err != nil {
