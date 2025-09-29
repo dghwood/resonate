@@ -6,34 +6,83 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/dghwood/resonate/services/cachestore"
 )
 
+type Request struct {
+	Url      string
+	Body     []byte
+	Headers  map[string]string
+	CacheTtl time.Duration
+}
+
 type Client struct {
-	client *http.Client
-	// cache  *Cachestore
+	client     *http.Client
+	cachestore cachestore.Cachestore
 }
 
 func New() Client {
 	return Client{
-		client: &http.Client{Timeout: 5 * time.Second},
-		// cache:  NewCachestore(),
+		client:     &http.Client{Timeout: 5 * time.Second},
+		cachestore: nil,
 	}
 }
 
-type Request struct {
-	Url     string
-	Body    []byte
-	Headers map[string]string
+func NewCached() Client {
+	return Client{
+		client:     &http.Client{Timeout: 5 * time.Second},
+		cachestore: &cachestore.MemoryCachestore{},
+	}
 }
 
-func addHeaders(req *http.Request, headers map[string]string) {
-	req.Header.Add("User-Agent", "resonates.xyz")
-	for key, val := range headers {
-		req.Header.Add(key, val)
+func (c Client) Get(request Request) (resp []byte, err error) {
+	if c.cachestore == nil {
+		return c.get(request)
 	}
+	cacheKey, err := generateKey(request)
+	if err != nil {
+		return
+	}
+	resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+	if err == nil {
+		return
+	}
+	resp, err = c.get(request)
+	if err != nil {
+		return
+	}
+	cacheErr := c.cachestore.Put(cacheKey, resp)
+	if cacheErr != nil {
+		log.Printf("Cache failed to put %s", cacheErr)
+	}
+	return
 }
 
 func (c Client) Post(request Request) (resp []byte, err error) {
+	if c.cachestore == nil {
+		return c.post(request)
+	}
+	cacheKey, err := generateKey(request)
+	if err != nil {
+		return
+	}
+	resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+	if err == nil {
+		return
+	}
+	resp, err = c.post(request)
+	if err != nil {
+		return
+	}
+	cacheErr := c.cachestore.Put(cacheKey, resp)
+	if cacheErr != nil {
+		log.Printf("Cache failed to put %s", cacheErr)
+	}
+	return
+}
+
+func (c Client) post(request Request) (resp []byte, err error) {
 	req, err := http.NewRequest("POST", request.Url, bytes.NewBuffer(request.Body))
 	addHeaders(req, request.Headers)
 	if err != nil {
@@ -49,8 +98,7 @@ func (c Client) Post(request Request) (resp []byte, err error) {
 
 }
 
-// DONT USE THESE
-func (c Client) Get(request Request) (resp []byte, err error) {
+func (c Client) get(request Request) (resp []byte, err error) {
 	log.Printf("Fetch::Get::%s", request)
 	req, err := http.NewRequest("GET", request.Url, nil)
 	addHeaders(req, request.Headers)
@@ -65,37 +113,3 @@ func (c Client) Get(request Request) (resp []byte, err error) {
 	resp, err = io.ReadAll(response.Body)
 	return
 }
-
-// func (c Client) CachedPost(request Request, ttl time.Duration) (response []byte, err error) {
-// 	response, err = c.cache.Get(request, ttl)
-// 	if err == nil {
-// 		// log.Println("returned from cache")
-// 		return
-// 	}
-// 	response, err = c.Post(request)
-// 	if err != nil {
-// 		return
-// 	}
-// 	cacheErr := c.cache.Put(request, response)
-// 	if cacheErr != nil {
-// 		log.Println(cacheErr)
-// 	}
-// 	return
-// }
-
-// func (c Client) CachedGet(request Request, ttl time.Duration) (response []byte, err error) {
-// 	response, err = c.cache.Get(request, ttl)
-// 	if err == nil {
-// 		log.Println("returned from cache")
-// 		return
-// 	}
-// 	response, err = c.Get(request)
-// 	if err != nil {
-// 		return
-// 	}
-// 	cacheErr := c.cache.Put(request, response)
-// 	if cacheErr != nil {
-// 		log.Println(cacheErr)
-// 	}
-// 	return
-// }

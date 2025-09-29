@@ -47,15 +47,18 @@ func constructQuery(query string) (response []byte, err error) {
 	// filterForTypes:[PODCASTSERIES, PODCASTEPISODE]
 	formatString := `
 	{
-		search(term:%s, filterForTypes:PODCASTSERIES){
-			searchId
-			podcastSeries{
-			uuid
-			name
-			description
-			imageUrl
-			rssUrl
-			}
+		search(term:%s, 
+			filterForTypes:PODCASTSERIES,
+			limitPerPage:25, 
+			page:1){
+				searchId
+				podcastSeries{
+					uuid
+					name
+					description
+					imageUrl
+					rssUrl
+				}
 		}
 	}`
 
