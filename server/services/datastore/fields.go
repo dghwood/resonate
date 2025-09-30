@@ -50,6 +50,7 @@ func GetFields(message models.Model) (fields []Field) {
 func RetrieveFields(fields []Field, model models.Model) (err error) {
 	for _, field := range fields {
 		num := field.Number
+		log.Print(field)
 		descriptor := model.ProtoReflect().
 			Descriptor().Fields().
 			ByNumber(protoreflect.FieldNumber(num))

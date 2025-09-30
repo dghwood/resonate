@@ -1,2 +1,2 @@
-source taddy.secrets; 
+source source.sh
 go run . 

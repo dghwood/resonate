@@ -56,3 +56,23 @@ func TestFields(t *testing.T) {
 		t.Errorf("UpdatedTimestamp = %d; want 1", retrievedModel.Metadata.UpdatedTimestamp)
 	}
 }
+
+func TestPodcast(t *testing.T) {
+	podcast := models.Podcast{}
+	podcast.Id = "123"
+	podcast.Title = "Test Podcast"
+	podcast.Description = "This is a test podcast"
+	podcast.ImageUrl = "https://example.com/image.png"
+	podcast.Url = "https://example.com/podcast.rss"
+	fields := GetFields(&podcast)
+	retrievedPodcast := models.Podcast{}
+	err := RetrieveFields(fields, &retrievedPodcast)
+	if err != nil {
+		t.Errorf("RetrieveFields() error = %v", err)
+	}
+
+	if retrievedPodcast.Title != "Test Podcast" {
+		t.Errorf("Title = %s; want Test Podcast", retrievedPodcast.Title)
+	}
+
+}

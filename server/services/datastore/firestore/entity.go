@@ -27,14 +27,14 @@ type DatabaseModel struct {
 
 func (d *DatabaseModel) Load(props []firestore.Property) (err error) {
 	fields := make([]datastore.Field, len(props))
-	for _, property := range props {
+	for i, property := range props {
 		field, err := propertyToField(property)
 		if err != nil {
 			return err
 		}
-		fields = append(fields, field)
+		fields[i] = field
 	}
-	datastore.RetrieveFields(fields, d.Model)
+	err = datastore.RetrieveFields(fields, d.Model)
 	return
 }
 

@@ -38,17 +38,6 @@ type FirestoreDatastore struct {
 	projectId  string
 	databaseId string
 	client     *firestore.Client
-	// Put(entity models.Model) (err error)
-	// Get(entity models.Model) (err error)
-	// PutMulti(entities any) (err error)
-	// GetMulti(entities any) (err error)
-	// // This needs to implicitly filter for deleted I think
-	// ListForIds(
-	// 	ids []string,
-	// 	idFieldNum int32,
-	// 	sortFieldNum int32,
-	// 	entity models.Model) (iter Iterator)
-	// Close()
 }
 
 func NewFirestoreDatastore(
@@ -75,7 +64,7 @@ func (f *FirestoreDatastore) Put(entity models.Model) (err error) {
 	ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
-	_, err = f.client.Put(ctx, key, model)
+	_, err = f.client.Put(ctx, key, &model)
 	return
 }
 
