@@ -128,12 +128,18 @@ func (f *FirestoreDatastore) ListForIds(
 	sortFieldNum int32,
 	entity models.Model) (iter datastore.Iterator) {
 
+	// Convert to interface
+	// TODO(duncan): Make the interface accept any instead
+	anyIds := make([]any, len(ids))
+	for i, id := range ids {
+		anyIds[i] = id
+	}
 	ctx, _ := getContext(10)
 	query := firestore.NewQuery(models.Kind(entity))
 	query = query.FilterField(
 		getFieldName(idFieldNum),
 		"in",
-		ids,
+		anyIds,
 	)
 	if sortFieldNum >= 0 {
 		// Descending order (with -)
