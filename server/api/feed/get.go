@@ -13,10 +13,14 @@ type Get struct {
 func (f Get) RequireSignIn() bool { return true }
 
 func (f Get) RequestProto() *proto.GetFeedMessage_Request {
-	return &proto.GetFeedMessage_Request{}
+	return &proto.GetFeedMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Get) ResponseProto() *proto.GetFeedMessage_Response {
-	return &proto.GetFeedMessage_Response{}
+	return &proto.GetFeedMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 /*

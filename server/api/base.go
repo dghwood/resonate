@@ -41,11 +41,19 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 	f ApiInterface[request, response], path string) {
 	http.HandleFunc(path,
 		func(w http.ResponseWriter, r *http.Request) {
+			log.Println(r.URL.Path)
 			request := f.RequestProto()
 			parseProto(r, request)
+			log.Println("parsed proto")
 			response := f.ResponseProto()
 
+			log.Println("got response")
+			requestInfo := request.GetRequestInfo()
+			if requestInfo == nil {
+				log.Println("request info is nil")
+			}
 			token := request.GetRequestInfo().AccessToken
+			log.Printf("getting token %s", token)
 			userId, err := auth.ValidUserIdFromToken(token)
 
 			if f.RequireSignIn() && err != nil {

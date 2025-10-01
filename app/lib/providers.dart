@@ -20,7 +20,8 @@ import 'package:resonate/services/secure_database.dart';
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
 
-  Provider<AbstractHttpService>(create: (context) => mockHttpService),
+  // Provider<AbstractHttpService>(create: (context) => mockHttpService),
+  Provider<AbstractHttpService>(create: (context) => HttpService()),
   Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
   Provider<SecureProtoDatabase>(
     create: (context) => SecureProtoDatabase(secureDatabase: context.read()),

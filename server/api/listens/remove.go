@@ -13,10 +13,14 @@ type Remove struct {
 func (f Remove) RequireSignIn() bool { return true }
 
 func (f Remove) RequestProto() *proto.RemoveListenMessage_Request {
-	return &proto.RemoveListenMessage_Request{}
+	return &proto.RemoveListenMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Remove) ResponseProto() *proto.RemoveListenMessage_Response {
-	return &proto.RemoveListenMessage_Response{}
+	return &proto.RemoveListenMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 func (f *Remove) Execute(

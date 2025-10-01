@@ -19,10 +19,14 @@ type Login struct {
 func (f Login) RequireSignIn() bool { return false }
 
 func (f Login) RequestProto() *proto.LoginUserMessage_Request {
-	return &proto.LoginUserMessage_Request{}
+	return &proto.LoginUserMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Login) ResponseProto() *proto.LoginUserMessage_Response {
-	return &proto.LoginUserMessage_Response{}
+	return &proto.LoginUserMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 // Execute

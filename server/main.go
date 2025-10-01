@@ -34,11 +34,11 @@ func main() {
 	fetch := fetchService.NewCached(cachestore)
 
 	// Login API endpoints
-	api.Attach(auth.Login{
+	api.Attach(&auth.Login{
 		Datastore: datastore}, "/api/login")
-	api.Attach(auth.Refresh{
+	api.Attach(&auth.Refresh{
 		Datastore: datastore}, "/api/login/refresh")
-	api.Attach(auth.Request{
+	api.Attach(&auth.Request{
 		Datastore: datastore}, "/api/login/request")
 
 	// Podcast

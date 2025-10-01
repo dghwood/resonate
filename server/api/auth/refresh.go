@@ -17,10 +17,14 @@ type Refresh struct {
 func (f Refresh) RequireSignIn() bool { return false }
 
 func (f Refresh) RequestProto() *proto.RefreshAuthMessage_Request {
-	return &proto.RefreshAuthMessage_Request{}
+	return &proto.RefreshAuthMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Refresh) ResponseProto() *proto.RefreshAuthMessage_Response {
-	return &proto.RefreshAuthMessage_Response{}
+	return &proto.RefreshAuthMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 // Execute

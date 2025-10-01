@@ -13,10 +13,14 @@ type List struct {
 func (f List) RequireSignIn() bool { return true }
 
 func (f List) RequestProto() *proto.ListListenMessage_Request {
-	return &proto.ListListenMessage_Request{}
+	return &proto.ListListenMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f List) ResponseProto() *proto.ListListenMessage_Response {
-	return &proto.ListListenMessage_Response{}
+	return &proto.ListListenMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 func (f *List) Execute(

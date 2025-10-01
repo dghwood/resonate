@@ -16,10 +16,14 @@ type Top struct {
 func (f Top) RequireSignIn() bool { return false }
 
 func (f Top) RequestProto() *proto.SearchTopMessage_Request {
-	return &proto.SearchTopMessage_Request{}
+	return &proto.SearchTopMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Top) ResponseProto() *proto.SearchTopMessage_Response {
-	return &proto.SearchTopMessage_Response{}
+	return &proto.SearchTopMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 /*

@@ -14,10 +14,14 @@ type Edit struct {
 func (f Edit) RequireSignIn() bool { return true }
 
 func (f Edit) RequestProto() *proto.EditUserMessage_Request {
-	return &proto.EditUserMessage_Request{}
+	return &proto.EditUserMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Edit) ResponseProto() *proto.EditUserMessage_Response {
-	return &proto.EditUserMessage_Response{}
+	return &proto.EditUserMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 func (f *Edit) Execute(

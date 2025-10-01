@@ -22,10 +22,14 @@ func NewQuery() *Query {
 func (f Query) RequireSignIn() bool { return false }
 
 func (f Query) RequestProto() *proto.SearchMessage_Request {
-	return &proto.SearchMessage_Request{}
+	return &proto.SearchMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Query) ResponseProto() *proto.SearchMessage_Response {
-	return &proto.SearchMessage_Response{}
+	return &proto.SearchMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 func (f *Query) Execute(

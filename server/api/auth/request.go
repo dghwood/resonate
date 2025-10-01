@@ -35,13 +35,16 @@ func (f Request) Execute(
 
 	// Send a text with the password
 	phoneNumber := request.PhoneNumber
+	log.Printf("Requesting login for %s", phoneNumber)
 
 	if !utils.IsValidPhoneNumber(phoneNumber) {
 		// The front end should deal with this
+		log.Println("Invalid phone number")
 		return errors.ERROR_INTERNAL
 	}
 
 	password := utils.GenerateUniqueID()
+
 	loginAttempt := models.LoginAttempt{}
 	loginAttempt.PhoneNumber = phoneNumber
 	loginAttempt.Password = password

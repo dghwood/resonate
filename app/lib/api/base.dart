@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
+import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';
-import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/http.dart';
+
+Logger _log = Logger("api/base");
 
 class ApiException implements Exception {
   ApiException(this.message);
@@ -70,6 +72,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final AuthUser? _authUser;
   final AbstractHttpService _client;
   final String _path;
+  // TODO(duncan): This needs to be configurable
   final String _baseUrl = 'http://localhost:8080';
 
   @override
@@ -78,8 +81,9 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     final url = Uri.parse('$_baseUrl/$_path');
     var authToken = "";
     if (_authUser != null) {
-      authToken = _authUser.accessToken?.token ?? '';
+      requestInfo.accessToken = _authUser.accessToken!.toMessage();
       requestInfo.userId = _authUser.user?.id ?? '';
+      _log.info("requesting $url with requestInfo $requestInfo");
     }
     request.requestInfo = requestInfo;
     var resp = await _client.post(

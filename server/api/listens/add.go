@@ -14,10 +14,14 @@ type Add struct {
 func (f Add) RequireSignIn() bool { return true }
 
 func (f Add) RequestProto() *proto.AddListenMessage_Request {
-	return &proto.AddListenMessage_Request{}
+	return &proto.AddListenMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Add) ResponseProto() *proto.AddListenMessage_Response {
-	return &proto.AddListenMessage_Response{}
+	return &proto.AddListenMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 func (f *Add) Execute(
