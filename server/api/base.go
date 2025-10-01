@@ -44,7 +44,7 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 			log.Println(r.URL.Path)
 			request := f.RequestProto()
 			parseProto(r, request)
-			log.Println("parsed proto")
+			log.Println("request", request)
 			response := f.ResponseProto()
 
 			log.Println("got response")
@@ -52,7 +52,7 @@ func Attach[request ApiRequestInterface, response ApiResponseInterface](
 			if requestInfo == nil {
 				log.Println("request info is nil")
 			}
-			token := request.GetRequestInfo().AccessToken
+			token := requestInfo.GetAccessToken()
 			log.Printf("getting token %s", token)
 			userId, err := auth.ValidUserIdFromToken(token)
 

@@ -41,6 +41,10 @@ func GetAccessToken(user *pb.UserMessage, expireIn time.Duration) (tokenPb *pb.T
 }
 
 func ValidUserIdFromToken(tokenPb *pb.TokenMessage) (userId string, err error) {
+	if tokenPb == nil {
+		err = fmt.Errorf("token is nil")
+		return
+	}
 	claim, err := decodeAccessToken(tokenPb.Token)
 	if err != nil {
 		return

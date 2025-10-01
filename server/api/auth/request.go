@@ -18,10 +18,14 @@ type Request struct {
 func (f Request) RequireSignIn() bool { return false }
 
 func (f Request) RequestProto() *proto.LoginRequestMessage_Request {
-	return &proto.LoginRequestMessage_Request{}
+	return &proto.LoginRequestMessage_Request{
+		RequestInfo: &proto.RequestInfo{},
+	}
 }
 func (f Request) ResponseProto() *proto.LoginRequestMessage_Response {
-	return &proto.LoginRequestMessage_Response{}
+	return &proto.LoginRequestMessage_Response{
+		ResponseInfo: &proto.ResponseInfo{},
+	}
 }
 
 // Execute
