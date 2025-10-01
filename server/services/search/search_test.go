@@ -1,12 +1,14 @@
 package search
 
-// package search
+import (
+	"testing"
 
-// import (
-// 	"testing"
+	"github.com/dghwood/resonate/services/search/taddy"
+)
 
-// 	"github.com/dghwood/flutterpod/proto/server"
-// )
+func TestTopType(t *testing.T) {
+	var _ Search = (*taddy.TaddySearchApi)(nil)
+}
 
 // // Needs environment variables to run
 // func TestSearch(t *testing.T) {

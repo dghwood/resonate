@@ -30,7 +30,7 @@ func (f *Top) Execute(
 	request *proto.SearchTopMessage_Request,
 	response *proto.SearchTopMessage_Response) (err error) {
 
-	podcasts, err := f.SearchApi.Podcasts("REPLACE ME")
+	podcasts, err := f.SearchApi.TopPodcasts()
 	if err != nil {
 		return
 	}

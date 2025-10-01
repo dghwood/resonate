@@ -66,7 +66,7 @@ func (t *TaddySearchApi) Podcasts(query string) (
 	return
 }
 
-func (t *TaddySearchApi) TopPodcasts(query string) (
+func (t *TaddySearchApi) TopPodcasts() (
 	podcasts []*models.Podcast,
 	err error) {
 
