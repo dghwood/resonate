@@ -1,0 +1,1 @@
+gcloud emulators firestore start --database-mode=datastore-mode --verbosity=debug --host-port=localhost:8081;

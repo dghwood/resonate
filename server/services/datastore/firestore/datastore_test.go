@@ -23,7 +23,11 @@ func TestPropertyLoadSaver(t *testing.T) {
 var projectID = "resonate-nyc"
 var databaseId = "resonatedb-test"
 
+// gcloud emulators firestore start --database-mode=datastore-mode --verbosity=debug --host-port=localhost:8081
+var host = "localhost:8081"
+
 func TestPut(t *testing.T) {
+	t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast := models.Podcast{}
 	podcast.Id = "123"
@@ -39,6 +43,7 @@ func TestPut(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
+	t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast := models.Podcast{}
 	podcast.Id = "123"
@@ -54,6 +59,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestPutMulti(t *testing.T) {
+	t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast1 := models.Podcast{}
 	podcast1.Id = "123"
@@ -69,6 +75,7 @@ func TestPutMulti(t *testing.T) {
 }
 
 func TestGetMulti(t *testing.T) {
+	t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast1 := models.Podcast{}
 	podcast1.Id = "123"
@@ -87,27 +94,50 @@ func TestGetMulti(t *testing.T) {
 	}
 }
 
+func newEpisodeId(id string) *models.Episode {
+	episode := models.Episode{}
+	episode.Id = id
+	return &episode
+}
+
+func newEpisode(id string, podcastId string, publishTimestamp int64) *models.Episode {
+	episode := newEpisodeId(id)
+	episode.PodcastId = podcastId
+	episode.PublishTimestamp = publishTimestamp
+	return episode
+}
+
 func TestListForIds(t *testing.T) {
+	t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
-	episode1 := models.Episode{}
-	episode1.Id = "123"
-	episode1.PodcastId = "123"
-	episode2 := models.Episode{}
-	episode2.Id = "456"
-	episode2.PodcastId = "123"
-	episode3 := models.Episode{}
-	episode3.Id = "678"
-	episode3.PodcastId = "456"
-	episodes := []*models.Episode{&episode1, &episode2, &episode3}
+	episode1 := newEpisode("123", "123", 1)
+	episode2 := newEpisode("456", "123", 2)
+	episode3 := newEpisode("789", "456", 3)
+
+	episodes := []*models.Episode{episode1, episode2, episode3}
 	err := ds.PutMulti(episodes)
 	if err != nil {
 		t.Errorf("PutMulti() error = %v", err)
 	}
+
+	// Test they are in there
+	episode := newEpisodeId("123")
+	err = ds.Get(episode)
+	if err != nil {
+		t.Errorf("Get() error = %v", err)
+	}
+	if episode.PodcastId != "123" {
+		t.Errorf("PodcastId = %s; want 123", episode.PodcastId)
+	}
+	if episode.PublishTimestamp != 1 {
+		t.Errorf("PublishTimestamp = %d; want 1", episode.PublishTimestamp)
+	}
+
 	it := ds.ListForIds(
 		[]string{"123"},
 		episode1.GetPodcastIdFieldNum(),
 		episode1.GetPublishTimestampFieldNum(),
-		&episode1)
+		episode1)
 
 	retrievedEpisodes := []*models.Episode{}
 	for {
@@ -125,6 +155,7 @@ func TestListForIds(t *testing.T) {
 
 	if len(retrievedEpisodes) != 2 {
 		t.Errorf("retrievedEpisodes = %d; want 2", len(retrievedEpisodes))
+		t.FailNow()
 	}
 
 	if retrievedEpisodes[0].PodcastId != "123" {

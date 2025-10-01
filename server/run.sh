@@ -1,2 +1,2 @@
-source source.sh
-go run . 
+source source.sh;
+go run .

@@ -19,7 +19,7 @@ type FirestoreIterator struct {
 }
 
 func (f *FirestoreIterator) Next(entity models.Model) (err error) {
-	_, err = f.Iterator.Next(DatabaseModel{Model: entity})
+	_, err = f.Iterator.Next(&DatabaseModel{Model: entity})
 	if errors.Is(err, iterator.Done) {
 		return datastore.IteratorDone
 	}
@@ -145,7 +145,7 @@ func (f *FirestoreDatastore) ListForIds(
 		// Descending order (with -)
 		query = query.Order(fmt.Sprintf("-%s", getFieldName(sortFieldNum)))
 	}
-
+	log.Print(query)
 	return &FirestoreIterator{
 		Iterator: f.client.Run(ctx, query),
 	}
