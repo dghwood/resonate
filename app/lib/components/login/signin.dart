@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/command.dart';
+import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/components/common/command.dart';
+import 'package:resonate/components/common/loading.dart';
 
 /* Flow 
 
@@ -40,8 +45,9 @@ class _SigninComponent2State extends State<SigninComponent2> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: PageView(
+    var user = context.read<AuthUser>();
+    return Scaffold(
+      body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
         children: [
@@ -64,10 +70,10 @@ class _SigninComponent2State extends State<SigninComponent2> {
               ],
             ),
           ),
-          SignInRequestComponent(
-            pageController: _pageController,
+          SignInRequestFlowComponent(
+            command: user.requestPasswordCommand(),
             loginInfo: widget.loginInfo,
-            authUser: widget.authUser,
+            pageController: _pageController,
           ),
           SignInValidateComponent(
             pageController: _pageController,
@@ -102,17 +108,58 @@ class _SigninComponent2State extends State<SigninComponent2> {
   }
 }
 
+class SignInRequestFlowComponent extends StatelessWidget {
+  const SignInRequestFlowComponent({
+    super.key,
+    required this.loginInfo,
+    required this.pageController,
+    required this.command,
+  });
+
+  final LoginInfo loginInfo;
+  final ApiResultNotifier1<bool, String> command;
+  final PageController pageController;
+
+  Widget _init(BuildContext context, {Exception? error}) {
+    if (error != null) {
+      _log.info(error);
+      // var scaffold = ScaffoldMessenger.of(context);
+      // _log.info(scaffold);
+      // // scaffold.hideCurrentSnackBar();
+      // scaffold.showSnackBar(SnackBar(content: Text('$error')));
+      context.read<ErrorService>().report(context, error);
+    }
+    return SignInRequestComponent(command: command, loginInfo: loginInfo);
+  }
+
+  Widget _done(BuildContext context, bool result) {
+    pageController.nextPage(
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    return _init(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ApiResultNotifierComponent<bool>(
+      command: command,
+      init: _init,
+      loading: (_) => LoadingSpinnerComponent(),
+      done: _done,
+    );
+  }
+}
+
 class SignInRequestComponent extends StatefulWidget {
   const SignInRequestComponent({
     super.key,
-    required this.authUser,
     required this.loginInfo,
-    required PageController pageController,
-  }) : _pageController = pageController;
+    required ApiResultNotifier1<bool, String> command,
+  }) : _command = command;
 
   final LoginInfo loginInfo;
-  final PageController _pageController;
-  final AuthUser authUser;
+  final ApiResultNotifier1<bool, String> _command;
 
   @override
   State<SignInRequestComponent> createState() => _SignInRequestComponentState();
@@ -126,21 +173,7 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       widget.loginInfo.email = _email;
-      // This is async so you need a spinner
-      widget.authUser.requestPassword(_email).then((result) {
-        switch (result) {
-          case ApiOk():
-            if (!widget._pageController.hasClients) return;
-            widget._pageController.nextPage(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
-          case ApiError():
-            _log.info(result.error);
-            break;
-        }
-      });
-      // Handle sign-in logic here
+      widget._command.execute(_email);
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/command.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
@@ -236,7 +237,10 @@ class AuthUser extends ChangeNotifier {
     }
   }
 
-  Future<ApiResult<bool>> requestPassword(String email) async {
-    return await _loginApi.request(email);
+  // Future<ApiResult<bool>> requestPassword(String email) async {
+  //   return await _loginApi.request(email);
+  // }
+  ApiResultNotifier1<bool, String> requestPasswordCommand() {
+    return ApiResultNotifier1<bool, String>(_loginApi.request);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class ErrorService {
   ErrorService();
@@ -10,10 +11,12 @@ class ErrorService {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>?
   _snackBarController;
 
-  Future<void> report(BuildContext context, Exception error) async {
+  void report(BuildContext context, Exception error) {
     var scaffold = ScaffoldMessenger.of(context);
-    // Close any open snackbars
-    scaffold.hideCurrentSnackBar();
-    _snackBarController = scaffold.showSnackBar(buildMessage(error));
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      // Close any open snackbars
+      scaffold.hideCurrentSnackBar();
+      _snackBarController = scaffold.showSnackBar(buildMessage(error));
+    });
   }
 }
