@@ -3,6 +3,8 @@ package datastore
 import (
 	"github.com/dghwood/resonate/log"
 
+	// "log"
+
 	"github.com/dghwood/resonate/models"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -36,7 +38,7 @@ func GetFields(message models.Model) (fields []Field) {
 					for i := 0; i < v.Len(); i++ {
 						bytes, err := proto.Marshal(v.Get(i).Message().Interface())
 						if err != nil {
-							log.Print("error marshalling proto")
+							log.Error("error marshalling proto")
 							return true
 						}
 						b[i] = bytes
@@ -45,7 +47,7 @@ func GetFields(message models.Model) (fields []Field) {
 				} else {
 					bytes, err := proto.Marshal(value.Message().Interface())
 					if err != nil {
-						log.Print("error marshalling proto")
+						log.Error("error marshalling proto")
 						return true
 					}
 					field.Value = bytes
@@ -64,7 +66,6 @@ func GetFields(message models.Model) (fields []Field) {
 func RetrieveFields(fields []Field, model models.Model) (err error) {
 	for _, field := range fields {
 		num := field.Number
-		log.Print(field)
 		descriptor := model.ProtoReflect().
 			Descriptor().Fields().
 			ByNumber(protoreflect.FieldNumber(num))

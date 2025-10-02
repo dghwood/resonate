@@ -130,7 +130,7 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
   ) {
     var podcast = results[index].podcast!;
     return ListTile(
-      leading: Image.network(podcast.imageUrl),
+      leading: ImageComponent(podcast.imageUrl),
       title: Text(podcast.title),
       subtitle: Text(
         podcast.description,
@@ -151,5 +151,20 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
       next: _next,
       builder: _itemBuilder,
     );
+  }
+}
+
+class ImageComponent extends StatelessWidget {
+  const ImageComponent(this.src, {super.key, this.width, this.height});
+
+  final double? width;
+  final double? height;
+  final String src;
+  @override
+  Widget build(BuildContext context) {
+    if (src == "") {
+      return Icon(Icons.image, size: width);
+    }
+    return Image.network(src, width: width, height: height);
   }
 }

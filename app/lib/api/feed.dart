@@ -37,7 +37,7 @@ class GetFeedApiServer
     : super(
         GetFeedApiRequest(),
         GetFeedApiResponse(),
-        'api/feed',
+        'api/feed/get',
         client: client,
         authUser: authUser,
       );

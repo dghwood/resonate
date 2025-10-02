@@ -3,19 +3,15 @@ package api
 import (
 	"encoding/json"
 	"io"
-	logger "log"
 	"net/http"
-	"os"
 
 	"github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
 )
-
-var log = logger.New(os.Stderr, "REQUEST:",
-	logger.Lshortfile|logger.LstdFlags)
 
 type ApiRequestInterface interface {
 	pb.Message
@@ -61,31 +57,23 @@ func handle[
 		if r.Method == "OPTIONS" {
 			return
 		}
-		log.Print(r.URL.Path)
+		log.Info(r.URL.Path)
 
 		request := f.RequestProto()
 		err := parseProto(r, request)
 		if err != nil {
-			log.Print(err)
+			log.Error(err)
 			return
-		}
-
-		j, err := json.Marshal(request)
-		if err != nil {
-			log.Print(err)
-		} else {
-			log.Print(string(j))
 		}
 
 		response := f.ResponseProto()
 
 		requestInfo := request.GetRequestInfo()
 		token := requestInfo.GetAccessToken()
-		log.Print("token", token.String())
 		userId, err := auth.ValidUserIdFromToken(token)
 
 		if f.RequireSignIn() && err != nil {
-			log.Print("error logging in", err)
+			log.Error("error logging in: ", err)
 			returnErr := errors.ERROR_INTERNAL
 			if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
 				returnErr = errors.ERROR_TIME_EXPIRED
@@ -106,7 +94,7 @@ func handle[
 		err = f.Execute(&user, request, response)
 
 		if err != nil {
-			log.Print(err.Error())
+			log.Error(err)
 			if appErr, ok := err.(errors.Error); ok {
 				response.GetResponseInfo().Error = appErr.Enum
 			} else {
@@ -136,7 +124,7 @@ func writeProto(
 	}
 	responseBytes, err := pb.Marshal(response)
 	if err != nil {
-		log.Printf("failed to marshal response")
+		log.Error("failed to marshal response", err)
 	}
 	w.Header().Set("Content-Type", "application/x-protobuf")
 	w.Write(responseBytes)

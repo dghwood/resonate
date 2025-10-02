@@ -26,7 +26,7 @@ class SearchApiServer extends ServerApi<SearchApiRequest, SearchApiResponse> {
     : super(
         SearchApiRequest(),
         SearchApiResponse(),
-        'api/search',
+        'api/search/query',
         authUser: authUser,
         client: client,
       );

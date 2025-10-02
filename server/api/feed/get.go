@@ -51,6 +51,7 @@ func (f *Get) Execute(
 		return
 	}
 	userFeed := &proto.UserFeedMessage{}
+	userFeed.UserId = loggedInUser.Id
 	for _, episode := range episodes {
 		userFeed.Items = append(userFeed.Items, &proto.UserFeedItemMessage{
 			EpisodeItem: &proto.UserFeedItemEpisodeMessage{
