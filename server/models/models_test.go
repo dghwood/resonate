@@ -26,6 +26,22 @@ func TestNew(t *testing.T) {
 	}
 }
 
+func TestPodcastId(t *testing.T) {
+	model := Podcast{}
+	model.SetIdFromUrl("https://feeds.megaphone.fm/how-long-gone")
+	if model.Id == "" {
+		t.Errorf("Id is empty")
+	}
+	url, err := model.GetUrlFromId()
+	if err != nil {
+		t.Error(err)
+	}
+	if url != "https://feeds.megaphone.fm/how-long-gone" {
+		t.Errorf("Url is %s; want https://feeds.megaphone.fm/how-long-gone", url)
+	}
+
+}
+
 func TestPodcastIsModel(t *testing.T) {
 	var _ Model = (*Podcast)(nil)
 }

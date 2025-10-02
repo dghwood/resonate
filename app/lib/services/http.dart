@@ -22,7 +22,6 @@ class HttpService implements AbstractHttpService {
     Map<String, String>? headers,
     Uint8List? body,
   }) async {
-    _log.info('post::$body');
     try {
       var response = await http.post(
         url,

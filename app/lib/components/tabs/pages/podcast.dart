@@ -10,6 +10,7 @@ import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/subscribe.dart';
 import 'package:resonate/components/tabs/pages/base.dart';
+import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/tabs/pages/podcast');
 
@@ -30,15 +31,15 @@ class PodcastPage extends PageComponent {
   @override
   Widget buildChild(BuildContext context) {
     var podcastStream = _podcastApi.get(podcastId);
-    var episodeStream = _podcastApi.list(podcastId);
+    Stream<ApiResult<Iterable<Episode>>>? episodeStream;
     return StreamBuilder(
       stream: podcastStream,
       builder: (context, snapshot) {
-        _log.info('buildChild');
         if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingSpinnerComponent();
         }
         var result = snapshot.requireData;
+        episodeStream ??= _podcastApi.list(podcastId);
         switch (result) {
           case ApiOk():
             var podcast = result.value;

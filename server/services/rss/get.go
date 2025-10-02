@@ -19,13 +19,11 @@ func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes
 		return
 	}
 	// TODO(duncan): Do I need to set both?
-	podcast.Id = feedUrl
-	podcast.Url = feedUrl
-
+	podcast.SetIdFromUrl(feedUrl)
 	err = parsePodcast(rssFeed, &podcast)
 	if err != nil {
 		return
 	}
-	episodes, err = parseEpisodes(podcast.Id, rssFeed)
+	episodes, err = parseEpisodes(&podcast, rssFeed)
 	return
 }

@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"log"
@@ -57,4 +58,17 @@ func GenerateUniqueID() string {
 		return ""
 	}
 	return hex.EncodeToString(bytes)
+}
+
+func Base64Encode(s string) string {
+	return base64.StdEncoding.EncodeToString([]byte(s))
+}
+
+func Base64Decode(s string) (string, error) {
+	data, err := base64.StdEncoding.DecodeString(s)
+	if err != nil {
+		log.Println("Error decoding base64 string:", err)
+		return "", err
+	}
+	return string(data), nil
 }

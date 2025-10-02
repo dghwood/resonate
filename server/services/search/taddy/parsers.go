@@ -9,7 +9,7 @@ import (
 )
 
 func parsePodcast(podcast TaddyPodcast, message *models.Podcast) (err error) {
-	message.Id = podcast.RssUrl
+	message.SetIdFromUrl(podcast.RssUrl)
 	message.Title = podcast.Name
 	message.Description = podcast.Description
 	message.Url = podcast.RssUrl

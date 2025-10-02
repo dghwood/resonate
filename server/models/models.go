@@ -46,6 +46,21 @@ func (p *Podcast) GetId() string {
 	return p.Id
 }
 
+func (p *Podcast) SetIdFromUrl(url string) string {
+	p.Id = utils.Base64Encode(url)
+	p.Url = url
+	return p.Id
+}
+
+func (p *Podcast) GetUrlFromId() (url string, err error) {
+	url, err = utils.Base64Decode(p.Id)
+	if err != nil {
+		return
+	}
+	p.Url = url
+	return
+}
+
 func (p *Podcast) New() Model {
 	return &Podcast{}
 }

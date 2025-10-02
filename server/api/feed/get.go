@@ -1,6 +1,7 @@
 package feed
 
 import (
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -42,14 +43,19 @@ func (f *Get) Execute(
 	request *proto.GetFeedMessage_Request,
 	response *proto.GetFeedMessage_Response) (err error) {
 
+	log.Infof("Execute:%s", loggedInUser.Id)
 	podcastIds, err := getUserSubscriptionEpisodeIds(loggedInUser.Id, f.Datastore)
 	if err != nil {
+		log.Error(err)
 		return
 	}
+	log.Infof("Found %d subscriptions", len(podcastIds))
 	episodes, err := getEpisodesForPodcastIds(podcastIds, f.Datastore)
 	if err != nil {
+		log.Error(err)
 		return
 	}
+	log.Infof("Found %d episodes", len(episodes))
 	userFeed := &proto.UserFeedMessage{}
 	userFeed.UserId = loggedInUser.Id
 	for _, episode := range episodes {
@@ -59,6 +65,7 @@ func (f *Get) Execute(
 			},
 		})
 	}
+	log.Infof("Returning %d feed items", len(userFeed.Items))
 	response.Feed = userFeed
 	return
 }
@@ -74,7 +81,11 @@ func getEpisodesForPodcastIds(
 		&models.Episode{},
 	)
 	episodes := make([]*models.Episode, 0)
+	i := 0
 	for {
+		if i > 20 {
+			break
+		}
 		model := models.Episode{}
 		err := it.Next(&model)
 		if err == datastore.IteratorDone {
@@ -84,6 +95,7 @@ func getEpisodesForPodcastIds(
 			return episodes, err
 		}
 		episodes = append(episodes, &model)
+		i++
 	}
 	return episodes, nil
 

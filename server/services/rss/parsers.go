@@ -58,18 +58,17 @@ func parseRSS(body []byte) (rssFeed RSSFeed, err error) {
 }
 
 func parsePodcast(rssFeed RSSFeed, podcast *models.Podcast) (err error) {
-	// podcast.Id = "123"
 	podcast.Title = rssFeed.Channel.Title
 	podcast.Description = rssFeed.Channel.Description
 	podcast.ImageUrl = rssFeed.Channel.Image.Url
 	return
 }
 
-func parseEpisodes(podcastId string, rssFeed RSSFeed) (episodes []*models.Episode, err error) {
+func parseEpisodes(podcast *models.Podcast, rssFeed RSSFeed) (episodes []*models.Episode, err error) {
 	failedEpisodes := 0
 	for _, rssItem := range rssFeed.Channel.Item {
 		episode := models.Episode{}
-		err = parseEpisode(podcastId, rssItem, &episode)
+		err = parseEpisode(podcast, rssItem, &episode)
 		if err != nil {
 			// Should I return if only 1 episode doesn't parse
 			failedEpisodes += 1
@@ -83,12 +82,15 @@ func parseEpisodes(podcastId string, rssFeed RSSFeed) (episodes []*models.Episod
 	return
 }
 
-func parseEpisode(podcastId string, rssItem RSSItem, episode *models.Episode) (err error) {
-	episode.Id = fmt.Sprintf("%s::%s", podcastId, rssItem.Guid)
+func parseEpisode(podcast *models.Podcast, rssItem RSSItem, episode *models.Episode) (err error) {
+	// TODO(duncan): Move this to models?
+	episode.Id = fmt.Sprintf("%s::%s", podcast.Id, rssItem.Guid)
 	episode.Title = rssItem.Title
+	episode.PodcastId = podcast.Id
 	episode.Description = rssItem.Description
 	episode.DurationSeconds = parseDurationSeconds(rssItem.Duration)
 	episode.AudioUrl = rssItem.AudioUrl.Url
+	episode.ImageUrl = podcast.ImageUrl
 	episode.PublishTimestamp = parsePubDateTimeSeconds(rssItem.PubDate)
 	return
 }

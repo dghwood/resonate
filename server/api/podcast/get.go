@@ -35,16 +35,21 @@ func (f *Get) Execute(
 	id := request.PodcastId
 	model := models.Podcast{}
 	model.Id = id
-
+	log.Info("fetching podcast with id: ", id)
 	// Try the database, should I try requesting
 	podcastErr := f.Datastore.Get(&model)
 	if podcastErr == nil {
 		response.Podcast = &model.PodcastMessage
 		return
 	}
-
+	url, err := model.GetUrlFromId()
+	if err != nil {
+		log.Error(err)
+		return
+	}
+	log.Info("fetching podcast from: ", url)
 	// This should cache the request for the next request?
-	podcast, _, err := rss.Get(model.Url, f.FetchClient)
+	podcast, _, err := rss.Get(url, f.FetchClient)
 	if err != nil {
 		log.Error(err)
 		return

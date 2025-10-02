@@ -1,10 +1,10 @@
 package datastore
 
 import (
-	"log"
 	"reflect"
 	"sort"
 
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 )
 
@@ -41,7 +41,7 @@ func (ds *MemoryDatastore) getDb(entity models.Model) memoryDatabase {
 func (ds *MemoryDatastore) Put(entity models.Model) error {
 	database := ds.getDb(entity)
 	database.Data[entity.GetId()] = GetFields(entity)
-	log.Println(GetFields(entity))
+
 	return nil
 }
 
@@ -63,7 +63,6 @@ func (ds *MemoryDatastore) PutMulti(src any) error {
 		entity := entities.Index(i).Interface().(models.Model)
 		database := ds.getDb(entity)
 		database.Data[entity.GetId()] = GetFields(entity)
-		log.Println(GetFields(entity))
 	}
 	return nil
 }
@@ -111,8 +110,9 @@ func (ds *MemoryDatastore) ListForIds(
 	idFieldNum int32,
 	sortFieldNum int32,
 	entity models.Model) Iterator {
-
+	log.Infof("ListForIds: %s %d %d", ids, idFieldNum, sortFieldNum)
 	database := ds.getDb(entity)
+	log.Infof("database with %d entries", len(database.Data))
 	data := make([][]Field, 0)
 	for _, fields := range database.Data {
 		for _, field := range fields {
@@ -127,6 +127,7 @@ func (ds *MemoryDatastore) ListForIds(
 			}
 		}
 	}
+	log.Infof("data with %d entries", len(data))
 
 	// I'm sure this will throw an error if the wrong type
 	if sortFieldNum >= 0 {

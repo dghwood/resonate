@@ -155,6 +155,7 @@ class PodcastApi {
     var request = GetPodcastApiRequest();
     var response = GetPodcastApiResponse();
     var podcast = Podcast(id: podcastId);
+    request.requestPb.podcastId = podcastId;
     try {
       await _database.get(podcast);
       // await _episodeDatabase.populatePodcastEpisodes(podcast);

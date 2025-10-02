@@ -1,8 +1,7 @@
 package podcast
 
 import (
-	"log"
-
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -33,24 +32,30 @@ func (f *List) Execute(
 	request *proto.ListPodcastEpisodesMessage_Request,
 	response *proto.ListPodcastEpisodesMessage_Response) (err error) {
 
-	log.Println("List::Execute")
+	log.Info("List::Execute")
 
 	id := request.PodcastId
-	model := models.Podcast{}
-	// TODO(duncan): You can't hardcode the URL here.
-	model.Url = "https://feeds.megaphone.fm/how-long-gone"
-	model.Id = id
+	log.Info("fetching podcast for : ", id)
+
+	podcast := models.Podcast{}
+	podcast.Id = id
+	url, err := podcast.GetUrlFromId()
+	if err != nil {
+		log.Error(err)
+		return
+	}
 
 	// Try the database,
-	if f.Datastore.Get(&model) == nil {
+	if f.Datastore.Get(&podcast) == nil {
 		// Check the updated timestamp, and request the episodes from DB
-		model := models.Episode{}
+		episode := &models.Episode{}
 		it := f.Datastore.ListForIds(
-			[]string{model.Id},
-			model.GetPodcastIdFieldNum(),
-			model.GetPublishTimestampFieldNum(),
-			&model)
+			[]string{podcast.Id},
+			episode.GetPodcastIdFieldNum(),
+			episode.GetPublishTimestampFieldNum(),
+			episode)
 
+		i := 0
 		for {
 			episode := models.Episode{}
 			er := it.Next(&episode)
@@ -58,23 +63,33 @@ func (f *List) Execute(
 				break
 			}
 			if er != nil {
+				log.Error(er)
 				return er
 			}
+			if i > 20 {
+				// TODO(duncan): Need to figure out the cursor options
+				break
+			}
+			i++
 			response.Episodes = append(
 				response.Episodes, &episode.EpisodeMessage)
 		}
+		log.Infof("returning %d episodes", len(response.Episodes))
 		return
 	}
 
-	podcast, episodes, err := rss.Get(model.Url, f.FetchClient)
+	podcast, episodes, err := rss.Get(url, f.FetchClient)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 
 	response.Podcast = &podcast.PodcastMessage
-	for _, episode := range episodes {
-		// Limit to top N
+	for i, episode := range episodes {
+		if i > 20 {
+			break
+		}
+		// Need to figure out the cursor options for this?
 		response.Episodes = append(response.Episodes, &episode.EpisodeMessage)
 	}
 

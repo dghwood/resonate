@@ -15,8 +15,11 @@ func TestParseEpisode(t *testing.T) {
 			Url: "http://example.com/image.mp4",
 		},
 	}
+	podcast := &models.Podcast{}
+	podcast.Id = "213"
+	podcast.ImageUrl = "http://example.com/image.jpg"
 	p := models.Episode{}
-	err := parseEpisode("123", item, &p)
+	err := parseEpisode(podcast, item, &p)
 	if err != nil {
 		t.Error(err)
 	}
@@ -31,6 +34,9 @@ func TestParseEpisode(t *testing.T) {
 	}
 	if p.AudioUrl != "http://example.com/image.mp4" {
 		t.Errorf("expected http://example.com/image.mp4, got %s", p.AudioUrl)
+	}
+	if p.ImageUrl != "http://example.com/image.jpg" {
+		t.Errorf("expected http://example.com/image.jpg, got %s", p.ImageUrl)
 	}
 }
 

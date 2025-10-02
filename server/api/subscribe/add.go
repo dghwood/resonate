@@ -2,6 +2,7 @@ package subscribe
 
 import (
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -30,15 +31,17 @@ func (f *Add) Execute(
 	response *proto.AddSubscriptionMessage_Response) (err error) {
 
 	if loggedInUser.Id != request.Subscription.UserId {
+		log.Error(errors.ERROR_PERMISSION_DENIED)
 		return errors.ERROR_PERMISSION_DENIED
 	}
 
 	subscription := models.Subscription{}
 	models.Merge(&subscription.UserSubscriptionMessage, request.Subscription)
-
+	log.Info(&subscription)
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&subscription)
 	if err != nil {
+		log.Error(err)
 		return
 	}
 	response.Subscription = &subscription.UserSubscriptionMessage

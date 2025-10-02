@@ -39,6 +39,7 @@ func NewCached(store cachestore.Cachestore) *Client {
 
 func (c *Client) Get(request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
+		log.Info("Cache is nil")
 		return c.get(request)
 	}
 	cacheKey, err := generateKey(request)
@@ -63,7 +64,7 @@ func (c *Client) Get(request Request) (resp []byte, err error) {
 }
 
 func (c *Client) Post(request Request) (resp []byte, err error) {
-	log.Info("POST:", request)
+	log.Infof("POST:%s:%d", request.Url, len(request.Body))
 	if c.cachestore == nil {
 		return c.post(request)
 	}
@@ -74,6 +75,7 @@ func (c *Client) Post(request Request) (resp []byte, err error) {
 	if request.CacheTtl > 0 {
 		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
 		if err == nil {
+			log.Info("cache hit:%s", request.Url)
 			return
 		}
 	}

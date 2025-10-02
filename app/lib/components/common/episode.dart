@@ -5,6 +5,7 @@ import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/download.dart';
 import 'package:resonate/components/common/player.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/common/episode');
@@ -19,10 +20,15 @@ class EpisodeComponent extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: Image.network(episode.imageUrl),
+          leading: ImageComponent(episode.imageUrl),
           title: Text(episode.title),
-          subtitle: Text(episode.description),
+          subtitle: Text(
+            episode.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
+        Text(episode.publishTimestamp.toString()),
         Row(
           children: [
             PlayIconComponent(
