@@ -57,6 +57,44 @@ func TestFields(t *testing.T) {
 	}
 }
 
+func TestRepeatedFields(t *testing.T) {
+	repeatedProto := models.RefreshTokens{}
+	repeatedProto.UserId = "123"
+	repeatedProto.Tokens = []*proto.TokenMessage{
+		{
+			Token:              "token1",
+			ExpiryUtcTimestamp: 1,
+		},
+		{
+			Token:              "token2",
+			ExpiryUtcTimestamp: 2,
+		},
+	}
+	fields := GetFields(&repeatedProto)
+	for _, field := range fields {
+		if field.Name == "tokens" {
+			v := field.Value.([][]byte)
+			if len(v) != 2 {
+				t.Errorf("len(v) = %d; want 2", len(v))
+			}
+		}
+	}
+
+	retrievedProto := models.RefreshTokens{}
+	err := RetrieveFields(fields, &retrievedProto)
+	if err != nil {
+		t.Errorf("RetrieveFields() error = %v", err)
+	}
+
+	if retrievedProto.UserId != "123" {
+		t.Errorf("UserId = %s; want 123", retrievedProto.UserId)
+	}
+	if len(retrievedProto.Tokens) != 2 {
+		t.Errorf("len(Tokens) = %d; want 2", len(retrievedProto.Tokens))
+	}
+
+}
+
 func TestPodcast(t *testing.T) {
 	podcast := models.Podcast{}
 	podcast.Id = "123"

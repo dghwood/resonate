@@ -2,12 +2,15 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:protobuf/protobuf.dart';
 
 Logger _log = Logger('services/http');
 
 abstract class AbstractHttpService {
-  Future<Uint8List> post(Uri url, {Map<String, String>? headers, Object? body});
+  Future<Uint8List> post(
+    Uri url, {
+    Map<String, String>? headers,
+    Uint8List? body,
+  });
 }
 
 class HttpService implements AbstractHttpService {
@@ -17,10 +20,19 @@ class HttpService implements AbstractHttpService {
   Future<Uint8List> post(
     Uri url, {
     Map<String, String>? headers,
-    Object? body,
+    Uint8List? body,
   }) async {
+    _log.info('post::$body');
     try {
-      var response = await http.post(url, headers: headers, body: body);
+      var response = await http.post(
+        url,
+        // headers: headers,
+        headers: <String, String>{
+          'Content-Type':
+              'application/octet-stream', // Or other appropriate content type
+        },
+        body: body,
+      );
       if (response.statusCode != 200) {
         throw HttpServiceException(
           'Failed to post to $url: ${response.statusCode} ${response.reasonPhrase}',
@@ -41,7 +53,7 @@ class MockHttpService implements AbstractHttpService {
   Future<Uint8List> post(
     Uri url, {
     Map<String, String>? headers,
-    Object? body,
+    Uint8List? body,
   }) async {
     _log.info('post::$url');
     await Future.delayed(Duration(seconds: 2));

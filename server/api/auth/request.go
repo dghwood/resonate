@@ -39,7 +39,8 @@ func (f Request) Execute(
 
 	// Send a text with the password
 	phoneNumber := request.PhoneNumber
-	log.Printf("Requesting login for %s", phoneNumber)
+	email := request.Email
+	log.Printf("Requesting login for number: %s or email: %s", phoneNumber, email)
 
 	if !utils.IsValidPhoneNumber(phoneNumber) {
 		// The front end should deal with this
@@ -47,7 +48,8 @@ func (f Request) Execute(
 		return errors.ERROR_INTERNAL
 	}
 
-	password := utils.GenerateUniqueID()
+	// TODO(duncan): Make this 5 configurable?
+	password := utils.GenerateRandomNumberString(5)
 
 	loginAttempt := models.LoginAttempt{}
 	loginAttempt.PhoneNumber = phoneNumber

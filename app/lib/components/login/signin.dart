@@ -19,6 +19,7 @@ Logger _log = Logger('SignInComponent');
 
 class LoginInfo {
   String email = '';
+  String phoneNumber = '';
   String verificationCode = '';
 }
 
@@ -40,8 +41,6 @@ class _SigninComponent2State extends State<SigninComponent2> {
     _pageController.dispose();
     super.dispose();
   }
-
-  String email = '';
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +74,10 @@ class _SigninComponent2State extends State<SigninComponent2> {
             loginInfo: widget.loginInfo,
             pageController: _pageController,
           ),
-          SignInValidateComponent(
+          SignInValidateFlowComponent(
             pageController: _pageController,
             loginInfo: widget.loginInfo,
-            authUser: widget.authUser,
+            command: user.loginCommand(),
           ),
           // Consumer<AuthUser>(
           //   builder: (context, user, child) {
@@ -121,14 +120,6 @@ class SignInRequestFlowComponent extends StatelessWidget {
   final PageController pageController;
 
   Widget _init(BuildContext context, {Exception? error}) {
-    if (error != null) {
-      _log.info(error);
-      // var scaffold = ScaffoldMessenger.of(context);
-      // _log.info(scaffold);
-      // // scaffold.hideCurrentSnackBar();
-      // scaffold.showSnackBar(SnackBar(content: Text('$error')));
-      context.read<ErrorService>().report(context, error);
-    }
     return SignInRequestComponent(command: command, loginInfo: loginInfo);
   }
 
@@ -137,6 +128,7 @@ class SignInRequestFlowComponent extends StatelessWidget {
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
+    command.clear();
     return _init(context);
   }
 
@@ -166,14 +158,14 @@ class SignInRequestComponent extends StatefulWidget {
 }
 
 class _SignInRequestComponentState extends State<SignInRequestComponent> {
-  String _email = '';
+  String _phoneNumber = '';
   final _formKey = GlobalKey<FormState>();
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      widget.loginInfo.email = _email;
-      widget._command.execute(_email);
+      widget.loginInfo.phoneNumber = _phoneNumber;
+      widget._command.execute(_phoneNumber);
     }
   }
 
@@ -201,7 +193,7 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
                 return null;
               },
               onSaved: (value) {
-                _email = value ?? '';
+                _phoneNumber = value ?? '';
               },
             ),
           ),
@@ -213,27 +205,58 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
   }
 }
 
-class SignInValidateComponent extends StatefulWidget {
+class SignInValidateFlowComponent extends StatelessWidget {
+  const SignInValidateFlowComponent({
+    super.key,
+    required this.pageController,
+    required this.loginInfo,
+    required this.command,
+  });
+
+  final ApiResultNotifier2<bool, String, String> command;
+  final PageController pageController;
+  final LoginInfo loginInfo;
+
+  Widget init(BuildContext context, {Exception? error}) {
+    return SignInValidateComponent(
+      loginInfo: loginInfo,
+      pageController: pageController,
+      execute: command.execute,
+    );
+  }
+
+  Widget loading(BuildContext context) {
+    return LoadingSpinnerComponent();
+  }
+
+  Widget done(BuildContext context, bool result) {
+    return init(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ApiResultNotifierComponent(
+      command: command,
+      init: init,
+      loading: (_) => LoadingSpinnerComponent(),
+      done: done,
+    );
+  }
+}
+
+class SignInValidateComponent extends StatelessWidget {
   const SignInValidateComponent({
     super.key,
     required this.loginInfo,
     required this.pageController,
-    required this.authUser,
+    required this.execute,
+    // required this.authUser,
   });
 
-  final AuthUser authUser;
+  // final AuthUser authUser;
   final PageController pageController;
   final LoginInfo loginInfo;
-
-  @override
-  State<SignInValidateComponent> createState() =>
-      _SignInValidateComponentState();
-}
-
-class _SignInValidateComponentState extends State<SignInValidateComponent> {
-  _SignInValidateComponentState();
-
-  bool _enabled = true;
+  final Future<void> Function(String phoneNumber, String password) execute;
 
   @override
   Widget build(BuildContext context) {
@@ -242,35 +265,29 @@ class _SignInValidateComponentState extends State<SignInValidateComponent> {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 16,
       children: [
-        Text(widget.loginInfo.email),
+        Text(loginInfo.phoneNumber),
         VerificationCodeField(
-          // placeholder: _value,
           autofocus: true,
-          enabled: _enabled,
+          enabled: true,
           length: 5,
           onFilled: (value) {
-            _log.info('$value::${widget.loginInfo.email}');
-            setState(() {
-              _enabled = false;
-            });
-            widget.authUser.login(widget.loginInfo.email, value).then((result) {
-              switch (result) {
-                case ApiOk():
-                  _log.info('logged in, hopefully this redirects');
-                  // widget.pageController.nextPage(
-                  //   duration: Duration(milliseconds: 500),
-                  //   curve: Curves.easeInOut,
-                  // );
-                  break;
-                case ApiError():
-                  _log.info(result.error);
-              }
-            });
+            _log.info('$value::${loginInfo.phoneNumber}');
+            execute(loginInfo.phoneNumber, value);
           },
           spaceBetween: 16,
           matchingPattern: RegExp(r'^\d+$'),
         ),
-        TextButton(onPressed: () {}, child: Text('Resend')),
+        TextButton(
+          onPressed: () {
+            // TODO(duncan): How do i enable resend?
+            // Definitely a hack as is
+            pageController.previousPage(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          },
+          child: Text('Resend'),
+        ),
       ],
     );
   }

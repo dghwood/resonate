@@ -3,8 +3,9 @@ package api
 import (
 	"encoding/json"
 	"io"
-	"log"
+	logger "log"
 	"net/http"
+	"os"
 
 	"github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
@@ -12,6 +13,9 @@ import (
 	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
 )
+
+var log = logger.New(os.Stderr, "REQUEST:",
+	logger.Lshortfile|logger.LstdFlags)
 
 type ApiRequestInterface interface {
 	pb.Message
@@ -37,62 +41,88 @@ type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] in
 	RequireSignIn() bool
 }
 
+func returnError[R ApiResponseInterface](
+	r *http.Request,
+	w http.ResponseWriter,
+	err errors.Error,
+	response R) {
+	response.GetResponseInfo().Error = err.Enum
+	writeProto(r, w, response)
+}
+func handle[
+	request ApiRequestInterface,
+	response ApiResponseInterface](
+	f ApiInterface[request, response]) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// CORs headers
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		if r.Method == "OPTIONS" {
+			return
+		}
+		log.Print(r.URL.Path)
+
+		request := f.RequestProto()
+		err := parseProto(r, request)
+		if err != nil {
+			log.Print(err)
+			return
+		}
+
+		j, err := json.Marshal(request)
+		if err != nil {
+			log.Print(err)
+		} else {
+			log.Print(string(j))
+		}
+
+		response := f.ResponseProto()
+
+		requestInfo := request.GetRequestInfo()
+		token := requestInfo.GetAccessToken()
+		log.Print("token", token.String())
+		userId, err := auth.ValidUserIdFromToken(token)
+
+		if f.RequireSignIn() && err != nil {
+			log.Print("error logging in", err)
+			returnErr := errors.ERROR_INTERNAL
+			if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
+				returnErr = errors.ERROR_TIME_EXPIRED
+			}
+			returnError(r, w, returnErr, response)
+			return
+		}
+
+		// Only construct this for signed in?
+		user := models.LoggedInUser{
+			UserMessage: proto.UserMessage{
+				Id: userId,
+			},
+			IsLoggedIn: err == nil,
+			Token:      token,
+		}
+
+		err = f.Execute(&user, request, response)
+
+		if err != nil {
+			log.Print(err.Error())
+			if appErr, ok := err.(errors.Error); ok {
+				response.GetResponseInfo().Error = appErr.Enum
+			} else {
+				response.GetResponseInfo().Error = errors.ERROR_INTERNAL.Enum
+				// TODO(duncan): Remove this?
+				response.GetResponseInfo().ErrorMessage = err.Error()
+			}
+		} else {
+			response.GetResponseInfo().Success = true
+		}
+		writeProto(r, w, response)
+	}
+}
 func Attach[request ApiRequestInterface, response ApiResponseInterface](
 	f ApiInterface[request, response], path string) {
-	http.HandleFunc(path,
-		func(w http.ResponseWriter, r *http.Request) {
-			log.Println(r.URL.Path)
-			request := f.RequestProto()
-			parseProto(r, request)
-			log.Println("request", request)
-			response := f.ResponseProto()
-
-			log.Println("got response")
-			requestInfo := request.GetRequestInfo()
-			if requestInfo == nil {
-				log.Println("request info is nil")
-			}
-			token := requestInfo.GetAccessToken()
-			log.Printf("getting token %s", token)
-			userId, err := auth.ValidUserIdFromToken(token)
-
-			if f.RequireSignIn() && err != nil {
-				log.Println(err)
-				if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
-					response.GetResponseInfo().Error = errors.ERROR_TIME_EXPIRED.Enum
-					writeProto(r, w, response)
-					return
-				}
-				response.GetResponseInfo().Error = errors.ERROR_INTERNAL.Enum
-				writeProto(r, w, response)
-				return
-			}
-
-			// Only construct this for signed in?
-			user := models.LoggedInUser{
-				UserMessage: proto.UserMessage{
-					Id: userId,
-				},
-				IsLoggedIn: err == nil,
-				Token:      token,
-			}
-
-			err = f.Execute(&user, request, response)
-
-			if err != nil {
-				log.Println(err)
-				if appErr, ok := err.(errors.Error); ok {
-					response.GetResponseInfo().Error = appErr.Enum
-				} else {
-					response.GetResponseInfo().Error = errors.ERROR_INTERNAL.Enum
-					// TODO(duncan): Remove this?
-					response.GetResponseInfo().ErrorMessage = err.Error()
-				}
-			} else {
-				response.GetResponseInfo().Success = true
-			}
-			writeProto(r, w, response)
-		})
+	http.HandleFunc(path, handle(f))
 }
 
 func writeProto(
@@ -109,18 +139,17 @@ func writeProto(
 		log.Printf("failed to marshal response")
 	}
 	w.Header().Set("Content-Type", "application/x-protobuf")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(responseBytes)
 }
 
-func parseProto(r *http.Request, request pb.Message) {
+func parseProto(r *http.Request, request pb.Message) (err error) {
 	reqBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Print(err)
+		return
 	}
-	log.Println(request)
 	err = pb.Unmarshal(reqBytes, request)
 	if err != nil {
-		log.Print("PARSE ERR", err)
+		return
 	}
+	return
 }

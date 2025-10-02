@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:resonate/api/command.dart';
+import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 
 class ApiResultNotifierComponent<T> extends StatelessWidget {
@@ -33,7 +35,8 @@ class ApiResultNotifierComponent<T> extends StatelessWidget {
                 return done(context, result.value);
               case ApiError():
                 _command.clear();
-                // TODO(duncan): report the error to the error service here?
+                // Report the error
+                context.read<ErrorService>().report(context, result.error);
                 return init(context, error: result.error);
               default:
                 _command.clear();

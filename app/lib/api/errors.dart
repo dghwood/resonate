@@ -12,7 +12,9 @@ class ErrorService {
   _snackBarController;
 
   void report(BuildContext context, Exception error) {
-    var scaffold = ScaffoldMessenger.of(context);
+    // TODO(duncan): Not sure this actually checks
+    var scaffold = ScaffoldMessenger.maybeOf(context);
+    if (scaffold == null) return;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       // Close any open snackbars
       scaffold.hideCurrentSnackBar();

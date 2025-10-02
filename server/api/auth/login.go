@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -39,12 +40,14 @@ func (f Login) Execute(
 	_ *models.LoggedInUser,
 	request *proto.LoginUserMessage_Request,
 	response *proto.LoginUserMessage_Response) (err error) {
-
 	password := request.Password
 	phoneNumber := request.PhoneNumber
 
-	if utils.IsValidPhoneNumber(phoneNumber) {
+	log.Infof("Login number:%s password:%s", phoneNumber, password)
+
+	if !utils.IsValidPhoneNumber(phoneNumber) {
 		// The front end should deal with this
+		log.Error("Invalid phone number")
 		return errors.ERROR_INTERNAL
 	}
 
@@ -61,7 +64,7 @@ func (f Login) Execute(
 		return errors.ERROR_TOO_MANY_ATTEMPTS
 	}
 	// Check the expiry
-	if loginAttempt.ExpiryUtcTimestamp > time.Now().UTC().Unix() {
+	if loginAttempt.ExpiryUtcTimestamp < time.Now().UTC().Unix() {
 		return errors.ERROR_TIME_EXPIRED
 	}
 	// Check the password

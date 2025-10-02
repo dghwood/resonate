@@ -9,6 +9,7 @@ import 'package:resonate/api/result.dart';
 
 typedef CommandAction0<T> = Future<ApiResult<T>> Function();
 typedef CommandAction1<T, A> = Future<ApiResult<T>> Function(A);
+typedef CommandAction2<T, A, B> = Future<ApiResult<T>> Function(A, B);
 
 enum ApiResultStatus { init, loading, done }
 
@@ -63,5 +64,15 @@ class ApiResultNotifier1<T, A> extends ApiResultNotifier<T> {
 
   Future<void> execute(A argument) async {
     await _execute(() => _action(argument));
+  }
+}
+
+class ApiResultNotifier2<T, A, B> extends ApiResultNotifier<T> {
+  ApiResultNotifier2(this._action);
+
+  final CommandAction2<T, A, B> _action;
+
+  Future<void> execute(A argument, B argument2) async {
+    await _execute(() => _action(argument, argument2));
   }
 }

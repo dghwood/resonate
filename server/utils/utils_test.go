@@ -17,3 +17,18 @@ func TestIsValidEmail(t *testing.T) {
 		}
 	}
 }
+
+func TestIsValidPhoneNumber(t *testing.T) {
+	phoneNumbers := map[string]bool{
+		"1234567890":     true,
+		"+1234567890":    true,
+		"123-456-7890":   true,
+		"(123) 456-7890": true,
+		" 123456789":     true,
+	}
+	for phoneNumber, expected := range phoneNumbers {
+		if IsValidPhoneNumber(phoneNumber) != expected {
+			t.Errorf("Expected %s to be valid: %v", phoneNumber, expected)
+		}
+	}
+}

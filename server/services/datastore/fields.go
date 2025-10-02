@@ -1,7 +1,7 @@
 package datastore
 
 import (
-	"log"
+	"github.com/dghwood/resonate/log"
 
 	"github.com/dghwood/resonate/models"
 	"google.golang.org/protobuf/proto"
@@ -30,12 +30,26 @@ func GetFields(message models.Model) (fields []Field) {
 
 			switch fd.Kind() {
 			case protoreflect.MessageKind:
-				bytes, err := proto.Marshal(value.Message().Interface())
-				if err != nil {
-					log.Print("error marshalling proto")
-					return true
+				if fd.IsList() {
+					v := value.List()
+					b := make([][]byte, v.Len())
+					for i := 0; i < v.Len(); i++ {
+						bytes, err := proto.Marshal(v.Get(i).Message().Interface())
+						if err != nil {
+							log.Print("error marshalling proto")
+							return true
+						}
+						b[i] = bytes
+					}
+					field.Value = b
+				} else {
+					bytes, err := proto.Marshal(value.Message().Interface())
+					if err != nil {
+						log.Print("error marshalling proto")
+						return true
+					}
+					field.Value = bytes
 				}
-				field.Value = bytes
 			default:
 				field.Value = value.Interface()
 			}
@@ -57,6 +71,18 @@ func RetrieveFields(fields []Field, model models.Model) (err error) {
 
 		switch descriptor.Kind() {
 		case protoreflect.MessageKind:
+			if descriptor.IsList() {
+				// Seems like there is Mutable vs. Get
+				// TODO(duncan): refactor this file for Mutable?
+				list := model.ProtoReflect().Mutable(descriptor).List()
+				for _, bytes := range field.Value.([][]byte) {
+					nested := list.AppendMutable().Message()
+					proto.Unmarshal(
+						bytes,
+						nested.Interface())
+				}
+				continue
+			}
 			// Need to init the message first
 			nested := model.ProtoReflect().Get(descriptor).
 				Message().New()

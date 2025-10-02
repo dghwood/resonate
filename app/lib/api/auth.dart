@@ -81,9 +81,9 @@ class LoginApi {
   final LoginUserApiServer _userServer;
   final SecureProtoDatabase _secureDatabase;
 
-  Future<ApiResult<bool>> request(String email) async {
+  Future<ApiResult<bool>> request(String phoneNumber) async {
     var request = LoginRequestApiRequest();
-    request.requestPb.email = email;
+    request.requestPb.phoneNumber = phoneNumber;
 
     var response = LoginRequestApiResponse();
     try {
@@ -94,9 +94,12 @@ class LoginApi {
     return ApiResult.ok(true);
   }
 
-  Future<ApiResult<UserStorage>> login(String email, String password) async {
+  Future<ApiResult<UserStorage>> login(
+    String phoneNumber,
+    String password,
+  ) async {
     var request = LoginUserApiRequest();
-    request.requestPb.email = email;
+    request.requestPb.phoneNumber = phoneNumber;
     request.requestPb.password = password;
 
     var response = LoginUserApiResponse();
@@ -220,10 +223,10 @@ class AuthUser extends ChangeNotifier {
     }
   }
 
-  Future<ApiResult<bool>> login(String email, String password) async {
+  Future<ApiResult<bool>> login(String phoneNumber, String password) async {
     _log.info('login');
     _status = AuthUserStatus.loading;
-    var result = await _loginApi.login(email, password);
+    var result = await _loginApi.login(phoneNumber, password);
     switch (result) {
       case ApiOk():
         _log.info('loggedIn');
@@ -232,14 +235,19 @@ class AuthUser extends ChangeNotifier {
         return ApiResult.ok(true);
       case ApiError():
         _log.info('loggedInError');
-        _status = AuthUserStatus.signedOut;
+        // Don't let this notify listeners
+        // Otherwise it just redirects
+        // TODO(duncan): Auto-redirect doesn't seem
+        //               right here
+        __status = AuthUserStatus.signedOut;
         return ApiResult.error(result.error);
     }
   }
 
-  // Future<ApiResult<bool>> requestPassword(String email) async {
-  //   return await _loginApi.request(email);
-  // }
+  ApiResultNotifier2<bool, String, String> loginCommand() {
+    return ApiResultNotifier2<bool, String, String>(login);
+  }
+
   ApiResultNotifier1<bool, String> requestPasswordCommand() {
     return ApiResultNotifier1<bool, String>(_loginApi.request);
   }

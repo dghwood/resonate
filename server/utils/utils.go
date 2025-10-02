@@ -17,12 +17,27 @@ func IsValidEmail(email string) bool {
 	return re.MatchString(email)
 }
 
+func GenerateRandomNumberString(length int) string {
+	const charset = "0123456789"
+	l := len(charset)
+	b := make([]byte, length)
+	_, err := rand.Read(b)
+	if err != nil {
+		log.Println("Error generating random number:", err)
+		return ""
+	}
+	for i := range b {
+		b[i] = charset[int(b[i])%l]
+	}
+	return string(b)
+}
+
 func IsValidPhoneNumber(phoneNumber string) bool {
 	// TODO(duncan)
 	// This is a very basic regex for demonstration purposes.
 	// A more robust solution would involve a dedicated phone number validation library
 	// or a more comprehensive regex that accounts for international formats.
-	// This regex checks for 10-digit numbers, optionally starting with a '+',
+	// This regex checks for 9-digit numbers, optionally starting with a '+',
 	// and allowing spaces, hyphens, or parentheses.
 	match, _ := regexp.MatchString(`^\+?[\d\s\-\(\)]{10,15}$`, phoneNumber)
 	return match
