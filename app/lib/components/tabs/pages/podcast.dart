@@ -30,8 +30,34 @@ class PodcastPage extends PageComponent {
 
   @override
   Widget buildChild(BuildContext context) {
-    var podcastStream = _podcastApi.get(podcastId);
-    Stream<ApiResult<Iterable<Episode>>>? episodeStream;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          PodcastHeaderComponent(
+            authUser: _authUser,
+            podcastStream: _podcastApi.get(podcastId),
+          ),
+          PodcastEpisodeListComponent(
+            episodeStream: _podcastApi.list(podcastId),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PodcastHeaderComponent extends StatelessWidget {
+  const PodcastHeaderComponent({
+    super.key,
+    required this.podcastStream,
+    required this.authUser,
+  });
+
+  final Stream<ApiResult<Podcast>> podcastStream;
+  final AuthUser authUser;
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder(
       stream: podcastStream,
       builder: (context, snapshot) {
@@ -39,54 +65,54 @@ class PodcastPage extends PageComponent {
           return LoadingSpinnerComponent();
         }
         var result = snapshot.requireData;
-        episodeStream ??= _podcastApi.list(podcastId);
         switch (result) {
           case ApiOk():
             var podcast = result.value;
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      Image.network(podcast.imageUrl),
-                      Text('Podcast: ${podcast.title}'),
+            return Column(
+              children: [
+                Image.network(podcast.imageUrl),
+                Text('Podcast: ${podcast.title}'),
 
-                      SubscribeIconCommponent(
-                        authUser: _authUser,
-                        podcast: podcast,
-                      ),
-                    ],
-                  ),
-                  StreamBuilder(
-                    stream: episodeStream,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return LoadingSpinnerComponent();
-                      }
-                      var result = snapshot.requireData;
-                      switch (result) {
-                        case ApiOk():
-                          var results = result.value;
-                          // TODO(duncan): Does this need to be infinite scroll?
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: results.length,
-                            itemBuilder: (context, index) {
-                              var episode = results.elementAt(index);
-                              return EpisodeComponent(episode: episode);
-                            },
-                          );
-                        case ApiError():
-                          return Text('Error: ${result.error}');
-                      }
-                    },
-                  ),
-                ],
-              ),
+                SubscribeIconCommponent(authUser: authUser, podcast: podcast),
+              ],
             );
           case ApiError():
             return Text('error: ${result.error}');
+        }
+      },
+    );
+  }
+}
+
+class PodcastEpisodeListComponent extends StatelessWidget {
+  const PodcastEpisodeListComponent({super.key, required this.episodeStream});
+
+  final Stream<ApiResult<Iterable<Episode>>> episodeStream;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: episodeStream,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return LoadingSpinnerComponent();
+        }
+        var result = snapshot.requireData;
+        switch (result) {
+          case ApiOk():
+            var results = result.value;
+            // TODO(duncan): Does this need to be infinite scroll?
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                var episode = results.elementAt(index);
+                return EpisodeComponent(episode: episode);
+              },
+            );
+          case ApiError():
+            return Text('Error: ${result.error}');
         }
       },
     );
