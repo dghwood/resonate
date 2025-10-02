@@ -29,9 +29,11 @@ func main() {
 	}
 
 	datastore := datastoreService.NewMemoryDatastore()
-	searchApi := searchService.NewMockSearch()
+	// searchApi := searchService.NewMockSearch()
+
 	cachestore := cacheService.NewMemoryCachestore()
 	fetch := fetchService.NewCached(cachestore)
+	searchApi := searchService.NewTaddySearch(fetch)
 
 	// Login API endpoints
 	api.Attach(&auth.Login{
@@ -43,7 +45,8 @@ func main() {
 
 	// Podcast
 	api.Attach(&podcast.Get{
-		Datastore: datastore}, "/api/podcast/get")
+		FetchClient: fetch,
+		Datastore:   datastore}, "/api/podcast/get")
 	api.Attach(&podcast.List{
 		Datastore:   datastore,
 		FetchClient: fetch}, "/api/podcast/list")

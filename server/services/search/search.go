@@ -1,7 +1,10 @@
 package search
 
 import (
+	"os"
+
 	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/services/fetch"
 	"github.com/dghwood/resonate/services/search/taddy"
 )
 
@@ -18,9 +21,10 @@ func NewMockSearch() *MockSearch {
 	return &MockSearch{}
 }
 
-func NewTaddySearch(userId, authToken string) *taddy.TaddySearchApi {
+func NewTaddySearch(client *fetch.Client) *taddy.TaddySearchApi {
 	return &taddy.TaddySearchApi{
-		UserId:    userId,
-		AuthToken: authToken,
+		UserId:    os.Getenv("TADDY_USER_ID"),
+		AuthToken: os.Getenv("TADDY_API_KEY"),
+		Client:    client,
 	}
 }

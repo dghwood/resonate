@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 
@@ -151,20 +152,5 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
       next: _next,
       builder: _itemBuilder,
     );
-  }
-}
-
-class ImageComponent extends StatelessWidget {
-  const ImageComponent(this.src, {super.key, this.width, this.height});
-
-  final double? width;
-  final double? height;
-  final String src;
-  @override
-  Widget build(BuildContext context) {
-    if (src == "") {
-      return Icon(Icons.image, size: width);
-    }
-    return Image.network(src, width: width, height: height);
   }
 }

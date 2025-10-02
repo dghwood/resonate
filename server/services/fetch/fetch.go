@@ -2,11 +2,12 @@ package fetch
 
 import (
 	"bytes"
+	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"time"
 
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/services/cachestore"
 )
 
@@ -29,14 +30,14 @@ func New() *Client {
 	}
 }
 
-func NewCached(store cachestore.Cachestore) Client {
-	return Client{
+func NewCached(store cachestore.Cachestore) *Client {
+	return &Client{
 		client:     &http.Client{Timeout: 5 * time.Second},
 		cachestore: store,
 	}
 }
 
-func (c Client) Get(request Request) (resp []byte, err error) {
+func (c *Client) Get(request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
 		return c.get(request)
 	}
@@ -56,12 +57,13 @@ func (c Client) Get(request Request) (resp []byte, err error) {
 	}
 	cacheErr := c.cachestore.Put(cacheKey, resp)
 	if cacheErr != nil {
-		log.Printf("Cache failed to put %s", cacheErr)
+		log.Errorf("Cache failed to put %s", cacheErr)
 	}
 	return
 }
 
-func (c Client) Post(request Request) (resp []byte, err error) {
+func (c *Client) Post(request Request) (resp []byte, err error) {
+	log.Info("POST:", request)
 	if c.cachestore == nil {
 		return c.post(request)
 	}
@@ -81,15 +83,20 @@ func (c Client) Post(request Request) (resp []byte, err error) {
 	}
 	cacheErr := c.cachestore.Put(cacheKey, resp)
 	if cacheErr != nil {
-		log.Printf("Cache failed to put %s", cacheErr)
+		log.Errorf("Cache failed to put %s", cacheErr)
 	}
 	return
 }
 
-func (c Client) post(request Request) (resp []byte, err error) {
+func (c *Client) post(request Request) (resp []byte, err error) {
+
 	req, err := http.NewRequest("POST", request.Url, bytes.NewBuffer(request.Body))
 	addHeaders(req, request.Headers)
 	if err != nil {
+		return
+	}
+	if c.client == nil {
+		err = fmt.Errorf("client is nil")
 		return
 	}
 	response, err := c.client.Do(req)
@@ -102,8 +109,8 @@ func (c Client) post(request Request) (resp []byte, err error) {
 
 }
 
-func (c Client) get(request Request) (resp []byte, err error) {
-	log.Printf("Fetch::Get::%s", request)
+func (c *Client) get(request Request) (resp []byte, err error) {
+	log.Infof("Fetch::Get::%s", request)
 	req, err := http.NewRequest("GET", request.Url, nil)
 	addHeaders(req, request.Headers)
 	if err != nil {

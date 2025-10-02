@@ -1,13 +1,17 @@
 package podcast
 
 import (
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/services/fetch"
+	"github.com/dghwood/resonate/services/rss"
 )
 
 type Get struct {
-	Datastore datastore.Datastore
+	Datastore   datastore.Datastore
+	FetchClient *fetch.Client
 }
 
 func (f Get) RequireSignIn() bool { return false }
@@ -33,10 +37,21 @@ func (f *Get) Execute(
 	model.Id = id
 
 	// Try the database, should I try requesting
-	err = f.Datastore.Get(&model)
-	if err != nil {
+	podcastErr := f.Datastore.Get(&model)
+	if podcastErr == nil {
+		response.Podcast = &model.PodcastMessage
 		return
 	}
-	response.Podcast = &model.PodcastMessage
+
+	// This should cache the request for the next request?
+	podcast, _, err := rss.Get(model.Url, f.FetchClient)
+	if err != nil {
+		log.Error(err)
+		return
+	}
+	response.Podcast = &podcast.PodcastMessage
+
+	// Not sure if I should add to DB here.
+	// f.Datastore.Put(&podcast)
 	return
 }

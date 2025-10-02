@@ -14,7 +14,7 @@ import (
 
 // This needs to implement an interface
 type TaddySearchApi struct {
-	Client    fetch.Client
+	Client    *fetch.Client
 	UserId    string
 	AuthToken string
 }
@@ -24,7 +24,6 @@ func (t *TaddySearchApi) Podcasts(query string) (
 	podcasts []*models.Podcast,
 	err error) {
 
-	client := t.Client
 	queryBytes, err := constructQuery(query)
 	if err != nil {
 		return
@@ -40,7 +39,7 @@ func (t *TaddySearchApi) Podcasts(query string) (
 		CacheTtl: 24 * time.Hour,
 	}
 	// TODO(duncan): Read TTL from options?
-	responseBytes, err := client.Post(request)
+	responseBytes, err := t.Client.Post(request)
 	if err != nil {
 		return
 	}

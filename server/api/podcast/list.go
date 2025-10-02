@@ -12,7 +12,7 @@ import (
 
 type List struct {
 	Datastore   datastore.Datastore
-	FetchClient fetch.Client
+	FetchClient *fetch.Client
 }
 
 func (f List) RequireSignIn() bool { return false }
@@ -66,7 +66,7 @@ func (f *List) Execute(
 		return
 	}
 
-	podcast, episodes, err := rss.Get(model.Url, &f.FetchClient)
+	podcast, episodes, err := rss.Get(model.Url, f.FetchClient)
 	if err != nil {
 		log.Println(err)
 		return

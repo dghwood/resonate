@@ -10,7 +10,7 @@ import (
 func TestSearch(t *testing.T) {
 	client := fetch.New()
 	api := TaddySearchApi{
-		Client:    *client,
+		Client:    client,
 		UserId:    os.Getenv("TADDY_USER_ID"),
 		AuthToken: os.Getenv("TADDY_API_KEY"),
 	}
@@ -26,7 +26,7 @@ func TestSearch(t *testing.T) {
 func TestTopSearch(t *testing.T) {
 	client := fetch.New()
 	api := TaddySearchApi{
-		Client:    *client,
+		Client:    client,
 		UserId:    os.Getenv("TADDY_USER_ID"),
 		AuthToken: os.Getenv("TADDY_API_KEY"),
 	}
