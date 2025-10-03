@@ -112,10 +112,12 @@ class PodcastApi {
     var request = ListPodcastEpisodesApiRequest();
     request.requestPb.podcastId = podcastId;
     var response = ListPodcastEpisodesApiResponse();
+    var didReturnEpisodes = false;
 
     try {
       var episodes = await _episodeDatabase.listFromPodcastId(podcastId);
       yield ApiResult.ok(episodes);
+      didReturnEpisodes = episodes.isNotEmpty;
     } on DatabaseNotFoundException catch (e) {
       // Do nothing - we will fetch from the server.
     } on Exception catch (e) {
@@ -132,7 +134,9 @@ class PodcastApi {
       await _episodeDatabase.putAll(episodes);
       yield ApiResult.ok(episodes);
     } on Exception catch (e) {
-      yield ApiResult.error(e);
+      if (!didReturnEpisodes) {
+        yield ApiResult.error(e);
+      }
     }
   }
 
@@ -156,11 +160,13 @@ class PodcastApi {
     var response = GetPodcastApiResponse();
     var podcast = Podcast(id: podcastId);
     request.requestPb.podcastId = podcastId;
+    var didReturnPodcast = false;
     try {
       await _database.get(podcast);
       // await _episodeDatabase.populatePodcastEpisodes(podcast);
 
       yield ApiResult.ok(podcast);
+      didReturnPodcast = true;
       if (onlyLocal) return;
     } on Exception catch (e) {
       // Do I return this?
@@ -175,15 +181,12 @@ class PodcastApi {
       podcast.fromMessage(response.responsePb.podcast);
 
       await _database.put(podcast);
-      // await _episodeDatabase.putAll(
-      //   response.responsePb.podcast.episodes
-      //       .map((e) => Episode.fromMessage(e))
-      //       .toList(),
-      // );
 
       yield ApiResult.ok(podcast);
     } on Exception catch (e) {
-      yield ApiResult.error(e);
+      if (!didReturnPodcast) {
+        yield ApiResult.error(e);
+      }
     }
   }
 }

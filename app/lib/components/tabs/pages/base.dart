@@ -83,14 +83,33 @@ abstract class PageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var child = buildChild(context);
-    return Column(
-      children: [
-        AppBar(
-          // leading: BackButton(),
-          title: Text(title),
-        ),
-        Expanded(child: child),
-      ],
+    return Container(
+      decoration: BoxDecoration(color: Theme.of(context).canvasColor),
+      child: Column(
+        children: [
+          AppBar(
+            // leading: BackButton(),
+            title: Text(title),
+          ),
+          Expanded(child: child),
+        ],
+      ),
+    );
+  }
+}
+
+abstract class PageComponentWithScaffold extends StatelessWidget {
+  const PageComponentWithScaffold({super.key, required this.title});
+
+  final String title;
+
+  Widget buildChild(BuildContext context);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: buildChild(context),
     );
   }
 }

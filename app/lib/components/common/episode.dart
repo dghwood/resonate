@@ -7,6 +7,7 @@ import 'package:resonate/components/common/download.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/router/navigation.dart';
 
 Logger _log = Logger('components/common/episode');
 
@@ -20,7 +21,12 @@ class EpisodeComponent extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: ImageComponent(episode.imageUrl),
+          leading: GestureDetector(
+            onTap: () {
+              Navigate(context).toPodcast(episode.podcastId);
+            },
+            child: ImageComponent(episode.imageUrl),
+          ),
           title: Text(episode.title),
           subtitle: Text(
             episode.description,

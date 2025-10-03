@@ -13,7 +13,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 import 'package:resonate/api/errors.dart';
 
-final Logger _log = Logger('HomePage');
+final Logger _log = Logger('components/tabs/home');
 
 class HomePage extends TabComponent {
   const HomePage({super.key}) : super(title: 'Home');
@@ -48,17 +48,20 @@ class HomePage extends TabComponent {
   }
 }
 
-class FeedComponent extends StatelessWidget {
-  const FeedComponent({super.key, required GetFeedApi feedApi})
-    : _feedApi = feedApi;
+class FeedComponent
+    extends RefreshIndicatorComponent<Stream<ApiResult<UserFeed>>> {
+  FeedComponent({super.key, required GetFeedApi feedApi})
+    : super(value: () => feedApi.get());
 
-  final GetFeedApi _feedApi;
+  // final GetFeedApi _feedApi;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, Stream<ApiResult<UserFeed>> value) {
+    _log.info("FeedComponent::build");
     return StreamBuilder(
-      stream: _feedApi.get(),
+      stream: value,
       builder: (context, snapshot) {
+        _log.info("FeedComponent::stream::${snapshot.connectionState}");
         if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingSpinnerComponent();
         }
@@ -70,6 +73,9 @@ class FeedComponent extends StatelessWidget {
             return Text('error::${result.error}');
         }
         var items = result.value.items;
+        if (items.isEmpty) {
+          return Icon(Icons.spoke);
+        }
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
@@ -82,6 +88,43 @@ class FeedComponent extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+abstract class RefreshIndicatorComponent<T> extends StatefulWidget {
+  const RefreshIndicatorComponent({super.key, required this.value});
+
+  final T Function() value;
+  Widget build(BuildContext context, T value) {
+    throw UnimplementedError();
+  }
+
+  @override
+  State<RefreshIndicatorComponent<T>> createState() =>
+      _RefreshIndicatorComponentState<T>();
+}
+
+class _RefreshIndicatorComponentState<T>
+    extends State<RefreshIndicatorComponent<T>> {
+  Future<void> onRefresh() async {
+    setState(() {
+      value = widget.value();
+    });
+  }
+
+  late T value;
+  @override
+  void initState() {
+    super.initState();
+    value = widget.value();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: widget.build(context, value),
     );
   }
 }

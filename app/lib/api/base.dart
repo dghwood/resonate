@@ -83,7 +83,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     if (_authUser != null) {
       requestInfo.accessToken = _authUser.accessToken!.toMessage();
       requestInfo.userId = _authUser.user?.id ?? '';
-      _log.info("requesting $url with requestInfo $requestInfo");
+      _log.info("requesting $url");
     }
     request.requestInfo = requestInfo;
     var resp = await _client.post(
