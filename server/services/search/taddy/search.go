@@ -71,7 +71,7 @@ func (t *TaddySearchApi) TopPodcasts() (
 
 	// TODO(duncan): How many should I request, limit is 25
 	// Currently requesting 50 in total.
-	for i := range 2 {
+	for i := range 1 {
 		topPodcasts, topErr := t.fetchTopPage(i)
 		if topErr != nil {
 			err = topErr

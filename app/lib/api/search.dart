@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
+import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
@@ -32,11 +34,93 @@ class SearchApiServer extends ServerApi<SearchApiRequest, SearchApiResponse> {
       );
 }
 
+class SearchTopApiRequest extends ApiRequest<SearchTopMessage_Request> {
+  SearchTopApiRequest()
+    : super(SearchTopMessage_Request(requestInfo: RequestInfo()));
+
+  @override
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
+}
+
+class SearchTopApiResponse extends ApiResponse<SearchTopMessage_Response> {
+  SearchTopApiResponse() : super(SearchTopMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+}
+
+class SearchTopApiServer
+    extends ServerApi<SearchTopApiRequest, SearchTopApiResponse> {
+  SearchTopApiServer({AbstractHttpService? client, required AuthUser authUser})
+    : super(
+        SearchTopApiRequest(),
+        SearchTopApiResponse(),
+        'api/search/top',
+        authUser: authUser,
+        client: client,
+      );
+}
+
+class TypeaheadApi {
+  TypeaheadApi(SearchResults searchResults) : _searchResults = searchResults;
+
+  final SearchResults _searchResults;
+
+  Iterable<Podcast> search(String query) {
+    if (query.isEmpty) return [];
+    var results = <Podcast>[];
+    for (var result in _searchResults.results) {
+      // Just for podcasts
+      if (result.podcast == null) continue;
+      var podcast = result.podcast!;
+      // Very basic search
+      if (podcast.title.toLowerCase().contains(query.toLowerCase())) {
+        results.add(podcast);
+      }
+    }
+    return results;
+  }
+}
+
 class SearchApi {
   SearchApi({required AbstractHttpService client, required AuthUser authUser})
-    : _server = SearchApiServer(authUser: authUser, client: client);
+    : _server = SearchApiServer(authUser: authUser, client: client),
+      _topServer = SearchTopApiServer(authUser: authUser, client: client);
 
   final SearchApiServer _server;
+  final SearchTopApiServer _topServer;
+
+  // Very lazy in memory cache for now
+  TypeaheadApi? _typeaheadApi;
+
+  Future<ApiResult<TypeaheadApi>> getTypeaheadApi() async {
+    if (_typeaheadApi != null) return ApiResult.ok(_typeaheadApi!);
+    var result = await top();
+    switch (result) {
+      case ApiOk():
+        _typeaheadApi = TypeaheadApi(result.value);
+        return ApiResult.ok(_typeaheadApi!);
+      case ApiError():
+        return ApiResult.error(result.error);
+    }
+  }
+
+  // Returns the top N podcasts of the day
+  // Heavily cache this..
+  Future<ApiResult<SearchResults>> top() async {
+    var request = SearchTopApiRequest();
+    var response = SearchTopApiResponse();
+    try {
+      await _topServer.execute(request, response);
+      return ApiResult.ok(
+        SearchResults.fromMessage(response.responsePb.searchResults),
+      );
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
 
   // I feel like this needs to return various types..
   Future<ApiResult<SearchResults>> search(
