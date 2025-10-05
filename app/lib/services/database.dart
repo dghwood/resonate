@@ -35,6 +35,11 @@ abstract class AbstractDatabaseService {
     String indexName,
     String value,
   );
+  Future<Iterable<DatabaseStoreType>> getAllValuesFromSortedIndex(
+    String storeName,
+    String indexName,
+    Object value,
+  );
   Future<Iterable<DatabaseStoreType>> getAllValuesFromLowerBoundIndex(
     String storeName,
     String indexName,
@@ -109,6 +114,34 @@ class DatabaseService implements AbstractDatabaseService {
         values.add(c.value as DatabaseStoreType);
       }
     }
+    await txn.completed;
+    return values;
+  }
+
+  @override
+  Future<Iterable<DatabaseStoreType>> getAllValuesFromSortedIndex(
+    String storeName,
+    String indexName,
+    Object value,
+  ) async {
+    if (_authUser == null || !_authUser!.isSignedInForDb) {
+      throw UserNotSignedInError();
+    }
+    var txn = _db.transaction(storeName, 'readonly');
+    var store = txn.objectStore(storeName);
+    var index = store.index(indexName);
+    var cursor = index.openCursor(
+      // The index is [podcastId, timestamp]
+      range: idb.KeyRange.bound([value, 0], [value, -1 >>> 1]),
+      autoAdvance: true,
+      direction: idb.idbDirectionPrev, // descending
+    );
+    var values = <DatabaseStoreType>[];
+    await cursor.forEach((c) {
+      if (c.value is DatabaseStoreType) {
+        values.add(c.value as DatabaseStoreType);
+      }
+    });
     await txn.completed;
     return values;
   }
@@ -265,6 +298,7 @@ abstract class AbstractProtoModelDatabase<
   Future<void> getMany(Iterable<T> models);
   Future<Iterable<T>> list();
   Future<Iterable<T>> listFromIndex(String indexName, String value);
+  Future<Iterable<T>> listFromSortedIndex(String indexName, Object value);
   Future<Iterable<T>> getAllValuesFromLowerBoundIndex(
     String indexName,
     Object lowerBound,
@@ -278,7 +312,10 @@ abstract class AbstractProtoModelDatabase<
   I need this to able to be created multiple times, given I 
   don't want to pass around a single reference everywhere. 
 */
-class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
+abstract class ProtoModelDatabase<
+  K extends GeneratedMessage,
+  T extends BaseModel<K>
+>
     implements AbstractProtoModelDatabase<K, T> {
   ProtoModelDatabase(this.databaseService);
 
@@ -344,6 +381,19 @@ class ProtoModelDatabase<K extends GeneratedMessage, T extends BaseModel<K>>
   @override
   Future<Iterable<T>> listFromIndex(String indexName, String value) async {
     final values = await databaseService.getAllValuesFromIndex(
+      storeName,
+      indexName,
+      value,
+    );
+    return values.map((v) => newInstance()..fromStore(v));
+  }
+
+  @override
+  Future<Iterable<T>> listFromSortedIndex(
+    String indexName,
+    Object value,
+  ) async {
+    final values = await databaseService.getAllValuesFromSortedIndex(
       storeName,
       indexName,
       value,

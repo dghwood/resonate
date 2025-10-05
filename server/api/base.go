@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
@@ -58,6 +59,11 @@ func handle[
 			return
 		}
 		log.Info(r.URL.Path)
+
+		// TODO(duncan): Remove
+		// Add some delay, in dev the server is responding too
+		// quickly
+		time.Sleep(1 * time.Second)
 
 		request := f.RequestProto()
 		err := parseProto(r, request)

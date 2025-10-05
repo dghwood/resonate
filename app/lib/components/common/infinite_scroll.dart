@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/loading.dart';
 
+final Logger _log = Logger('components/common/infinite_scroll');
+
 enum InfiniteScrollComponentState { ready, loading, error }
 
-class SliverInfinitScrollComponent<T> extends StatefulWidget {
-  const SliverInfinitScrollComponent({
+class SliverInfiniteScrollComponent<T> extends StatefulWidget {
+  const SliverInfiniteScrollComponent({
     super.key,
     required this.iterableApiResult,
     required this.scrollController,
@@ -13,16 +16,16 @@ class SliverInfinitScrollComponent<T> extends StatefulWidget {
   });
 
   final ScrollController scrollController;
-  final IterableApiResult<Iterable<T>> iterableApiResult;
-  final Widget Function(BuildContext context, int index) itemBuilder;
+  final ApiOkIterable<Iterable<T>> iterableApiResult;
+  final Widget Function(BuildContext context, T item) itemBuilder;
 
   @override
-  State<SliverInfinitScrollComponent<T>> createState() =>
-      _SliverInfinitScrollComponentState<T>();
+  State<SliverInfiniteScrollComponent<T>> createState() =>
+      _SliverInfiniteScrollComponentState<T>();
 }
 
-class _SliverInfinitScrollComponentState<T>
-    extends State<SliverInfinitScrollComponent<T>> {
+class _SliverInfiniteScrollComponentState<T>
+    extends State<SliverInfiniteScrollComponent<T>> {
   Iterable<T> _items = [];
   Future<IterableApiResult<Iterable<T>>> Function()? _next;
   InfiniteScrollComponentState _state = InfiniteScrollComponentState.ready;
@@ -30,15 +33,11 @@ class _SliverInfinitScrollComponentState<T>
   @override
   void initState() {
     super.initState();
-    var result = widget.iterableApiResult.result;
-    switch (result) {
-      case ApiOk():
-        _items = _items.followedBy(result.value);
-        _next = widget.iterableApiResult.next;
-        widget.scrollController.addListener(_onScrollEvent);
-      case ApiError():
-        _state = InfiniteScrollComponentState.error;
-    }
+    // Load up the items
+    _log.info('initState::${widget.iterableApiResult.result.length}');
+    _items = _items.followedBy(widget.iterableApiResult.result);
+    _next = widget.iterableApiResult.next;
+    widget.scrollController.addListener(_onScrollEvent);
   }
 
   @override
@@ -56,20 +55,23 @@ class _SliverInfinitScrollComponentState<T>
   }
 
   void _load() async {
+    _log.info('load::${_next != null}::$_state');
     if (_next == null || _state == InfiniteScrollComponentState.loading) {
       return;
     }
     setState(() => _state = InfiniteScrollComponentState.loading);
     var apiResult = await _next!();
-    var result = apiResult.result;
-    switch (result) {
-      case ApiOk():
+    switch (apiResult) {
+      case ApiOkIterable():
         setState(() {
-          _items = _items.followedBy(result.value);
+          _items = _items.followedBy(apiResult.result);
+          _next = apiResult.next;
           _state = InfiniteScrollComponentState.ready;
         });
-      case ApiError():
+      case ApiErrorIterable():
         setState(() {
+          // Next remains the same here...
+          // So setState will refire the call
           _state = InfiniteScrollComponentState.error;
         });
         break;
@@ -78,6 +80,7 @@ class _SliverInfinitScrollComponentState<T>
 
   @override
   Widget build(BuildContext context) {
+    _log.info('build::${_items.length}::$_state');
     return SliverList.builder(
       itemCount: _items.length + 1,
       itemBuilder: (context, index) {
@@ -89,7 +92,9 @@ class _SliverInfinitScrollComponentState<T>
             case InfiniteScrollComponentState.error:
               return IconButton(
                 onPressed: () {
-                  // Retry?
+                  setState(() {
+                    // This call will just refire the next function
+                  });
                 },
                 icon: Icon(Icons.error_outline),
               );
@@ -97,7 +102,7 @@ class _SliverInfinitScrollComponentState<T>
               return SizedBox();
           }
         }
-        return widget.itemBuilder(context, index);
+        return widget.itemBuilder(context, _items.elementAt(index));
       },
     );
     //

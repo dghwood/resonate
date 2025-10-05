@@ -47,6 +47,14 @@ func (f *List) Execute(
 
 	// Try the database,
 	if f.Datastore.Get(&podcast) == nil {
+		var cursor *models.QueryCursor
+		cursorPb := request.Cursor
+		log.Info("cursorPb: ", cursorPb)
+		if cursorPb != nil {
+			cursor = &models.QueryCursor{}
+			models.Merge(cursor, cursorPb)
+			log.Info("cursor: ", cursor)
+		}
 		// Check the updated timestamp, and request the episodes from DB
 		episode := &models.Episode{}
 		it := f.Datastore.ListForIds(
@@ -55,6 +63,7 @@ func (f *List) Execute(
 				IdFieldNum:   episode.GetPodcastIdFieldNum(),
 				SortFieldNum: episode.GetPublishTimestampFieldNum(),
 				Entity:       episode,
+				Cursor:       cursor,
 			})
 
 		i := 0
@@ -72,6 +81,7 @@ func (f *List) Execute(
 				cursor := it.Cursor()
 				if cursor != nil {
 					response.Cursor = &cursor.QueryCursor
+					log.Info("returned cursor: ", response.Cursor)
 				}
 				break
 			}

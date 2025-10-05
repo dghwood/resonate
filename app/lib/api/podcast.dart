@@ -107,30 +107,20 @@ class PodcastApi {
   final PodcastDatabase _database;
   final EpisodeDatabase _episodeDatabase;
 
-  Stream<IterableApiResult<Iterable<Episode>>> listEpisodes(
+  Future<IterableApiResult<Iterable<Episode>>> listEpisodesServer(
     String podcastId, {
     QueryCursor? cursor,
-  }) async* {
-    _log.info('listEpisodes');
+  }) async {
+    _log.info('listEpisodesServer');
     var request = ListPodcastEpisodesApiRequest();
+    var response = ListPodcastEpisodesApiResponse();
+
+    // build request
     request.requestPb.podcastId = podcastId;
     if (cursor != null) {
       request.requestPb.cursor = cursor.toMessage();
     }
-    var response = ListPodcastEpisodesApiResponse();
-    var didReturnEpisodes = false;
 
-    try {
-      var episodes = await _episodeDatabase.listFromPodcastId(podcastId);
-      yield IterableApiResult(ApiResult.ok(episodes));
-      didReturnEpisodes = episodes.isNotEmpty;
-    } on DatabaseNotFoundException catch (e) {
-      // Do nothing - we will fetch from the server.
-    } on Exception catch (e) {
-      yield IterableApiResult(ApiResult.error(e));
-    }
-
-    // TODO(duncan): I think you need to merge these two results..
     try {
       await _listServer.execute(request, response);
       var episodes = response.responsePb.episodes.map(
@@ -138,19 +128,58 @@ class PodcastApi {
       );
       // Update the cache
       await _episodeDatabase.putAll(episodes);
-      yield IterableApiResult(
-        ApiResult.ok(episodes),
+      return IterableApiResult.ok(
+        episodes,
         next:
-            () =>
-                listEpisodes(
-                  podcastId,
-                  cursor: QueryCursor.fromMessage(response.responsePb.cursor),
-                ).first,
+            () => listEpisodesServer(
+              podcastId,
+              cursor: QueryCursor.fromMessage(response.responsePb.cursor),
+            ),
       );
     } on Exception catch (e) {
-      if (!didReturnEpisodes) {
-        yield IterableApiResult(ApiResult.error(e));
-      }
+      return IterableApiResult.error(e);
+    }
+  }
+
+  Future<IterableApiResult<Iterable<Episode>>> listEpisodesLocal(
+    String podcastId, {
+    QueryCursor? cursor,
+  }) async {
+    _log.info('listEpisodesLocal');
+    try {
+      var episodes = await _episodeDatabase.listFromPodcastId(podcastId);
+      _log.info('returning ${episodes.length} episodes');
+      return IterableApiResult.ok(episodes);
+    } on DatabaseNotFoundException catch (e) {
+      _log.info(e);
+      return IterableApiResult.error(e);
+    } on Exception catch (e) {
+      _log.info(e);
+      return IterableApiResult.error(e);
+    }
+  }
+
+  Stream<IterableApiResult<Iterable<Episode>>> listEpisodes(
+    String podcastId, {
+    QueryCursor? cursor,
+  }) async* {
+    var didReturnLocal = false;
+    var local = await listEpisodesLocal(podcastId, cursor: cursor);
+    switch (local) {
+      case ApiOkIterable():
+        didReturnLocal = true;
+        yield local;
+      case ApiErrorIterable():
+      // yield local;
+    }
+    var server = await listEpisodesServer(podcastId, cursor: cursor);
+    switch (server) {
+      case ApiOkIterable():
+        yield server;
+      case ApiErrorIterable():
+        if (!didReturnLocal) {
+          yield server;
+        }
     }
   }
 

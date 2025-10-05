@@ -142,7 +142,7 @@ func (ds *MemoryDatastore) ListForIds(
 				if field.Number == sortFieldNum {
 					for _, field2 := range data[j] {
 						if field2.Number == sortFieldNum {
-							return field.Value.(int64) < field2.Value.(int64)
+							return field.Value.(int64) > field2.Value.(int64)
 						}
 					}
 				}
@@ -151,9 +151,15 @@ func (ds *MemoryDatastore) ListForIds(
 		})
 	}
 
+	i := 0
+	// Check if Cursor is filled out
+	if params.Cursor != nil && params.Cursor.Offset > 0 {
+		i = int(params.Cursor.Offset)
+	}
+
 	return &MemoryDatastoreIterator{
 		data: data,
 		// This should just default to 0
-		i: int(params.Cursor.Offset),
+		i: i,
 	}
 }

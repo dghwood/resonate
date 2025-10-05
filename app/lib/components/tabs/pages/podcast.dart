@@ -6,6 +6,7 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/components/common/episode.dart';
+import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/refresh.dart';
@@ -32,13 +33,16 @@ class PodcastPage extends PageComponentWithScaffold {
 
   @override
   Widget buildChild(BuildContext context) {
+    var scrollController = ScrollController();
     return CustomScrollView(
+      controller: scrollController,
       slivers: [
         PodcastHeaderComponent(
           authUser: _authUser,
           podcastStream: _podcastApi.get(podcastId),
         ),
-        PodcastEpisodeListComponent(
+        PodcastEpisodeInfiniteListComponent(
+          scrollController: scrollController,
           podcastId: podcastId,
           // refreshFunc: () => _podcastApi.list(podcastId),
         ),
@@ -100,7 +104,6 @@ class PodcastHeaderComponent extends StatelessWidget {
   }
 }
 
-// I have a feeling this isn't going to work with a sliver
 class PodcastEpisodeListComponent extends StatelessWidget {
   const PodcastEpisodeListComponent({super.key, required this.podcastId});
 
@@ -139,35 +142,49 @@ class PodcastEpisodeListComponent extends StatelessWidget {
 class PodcastEpisodeInfiniteListComponent extends StatelessWidget {
   const PodcastEpisodeInfiniteListComponent({
     super.key,
-    required this.episodeStream,
+    required this.podcastId,
     required this.scrollController,
   });
 
-  final Stream<IterableApiResult<Iterable<Episode>>> episodeStream;
+  final String podcastId;
   final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
+    var podcastApi = context.read<PodcastApi>();
+    var apiResultStream = podcastApi.listEpisodes(podcastId);
+
     return StreamBuilder(
-      stream: episodeStream,
+      stream: apiResultStream,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return SliverFillRemaining(child: LoadingSpinnerComponent());
         }
-        var iterableApiResult = snapshot.requireData;
-        var result = iterableApiResult.result;
+
+        _log.info('build::podcastEpisodeInfinite::stream');
+        var result = snapshot.requireData;
         switch (result) {
-          case ApiOk():
-            var results = result.value;
-            // TODO(duncan): Infinite scroll?
-            return SliverList.builder(
-              itemCount: results.length,
-              itemBuilder: (context, index) {
-                var episode = results.elementAt(index);
-                return EpisodeComponent(episode: episode);
-              },
+          case ApiOkIterable():
+            _log.info(
+              'build::podcastEpisodeInfinite::stream::ok::${result.next != null}',
             );
-          case ApiError():
+            return SliverMainAxisGroup(
+              slivers: [
+                if (snapshot.connectionState != ConnectionState.done)
+                  SliverToBoxAdapter(child: LinearProgressIndicator()),
+                SliverInfiniteScrollComponent(
+                  // Needed to put this here, since
+                  // the stream would cache this component
+                  key: Key(result.hashCode.toString()),
+                  iterableApiResult: result,
+                  scrollController: scrollController,
+                  itemBuilder: (context, item) {
+                    return EpisodeComponent(episode: item);
+                  },
+                ),
+              ],
+            );
+          case ApiErrorIterable():
             return SliverToBoxAdapter(child: Text('Error: ${result.error}'));
         }
       },

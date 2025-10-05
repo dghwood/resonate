@@ -32,32 +32,29 @@ final class ApiError<T> extends ApiResult<T> {
   String toString() => 'Result<$T>.error($error)';
 }
 
-// Stream Api Result
-class StreamApiResult<P extends ApiResult, R extends ApiResult> {
-  StreamApiResult() {
-    _progressController = StreamController<P>(
-      onCancel: () {},
-      onListen: () {},
-      onPause: () {},
-      onResume: () {},
-    );
-    _doneController = StreamController<R>(
-      onCancel: () {},
-      onListen: () {},
-      onPause: () {},
-      onResume: () {},
-    );
-  }
+/* Iterable ApiResult */
+sealed class IterableApiResult<T extends Iterable> {
+  const IterableApiResult();
+  // final ApiResult<T> result;
+  // final Future<IterableApiResult<T>> Function()? next;
 
-  late final StreamController<P> _progressController;
-  Stream<P> get progress => _progressController.stream;
-  late final StreamController<R> _doneController;
-  Future<R> get done => _doneController.stream.first;
+  const factory IterableApiResult.ok(
+    T value, {
+    Future<IterableApiResult<T>> Function()? next,
+  }) = ApiOkIterable._;
+
+  const factory IterableApiResult.error(Exception error) = ApiErrorIterable._;
 }
 
-/* Iterable ApiResult */
-class IterableApiResult<T> {
-  IterableApiResult(this.result, {this.next});
-  final ApiResult<T> result;
+final class ApiOkIterable<T extends Iterable> extends IterableApiResult<T> {
+  const ApiOkIterable._(this.result, {this.next});
+
+  final T result;
   final Future<IterableApiResult<T>> Function()? next;
+}
+
+final class ApiErrorIterable<T extends Iterable> extends IterableApiResult<T> {
+  const ApiErrorIterable._(this.error);
+
+  final Exception error;
 }

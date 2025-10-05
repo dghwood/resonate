@@ -12,6 +12,7 @@ import 'package:resonate/services/database.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/services/download.dart';
 import 'package:resonate/utils/proto.dart';
+import 'package:resonate/utils/time.dart';
 
 final Logger _log = Logger('models');
 
@@ -195,6 +196,7 @@ class Episode extends BaseModel<EpisodeMessage> {
   String get description => _message.description;
   String get audioUrl => _message.audioUrl;
   String get imageUrl => _message.imageUrl;
+  DateTime get publishDateTime => fromProtoTimestamp(_message.publishTimestamp);
   int get publishTimestamp => _message.publishTimestamp.toInt();
   int get durationSeconds => _message.durationSeconds.toInt();
   int get episodeNumber => _message.episodeNumber.toInt();

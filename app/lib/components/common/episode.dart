@@ -8,6 +8,7 @@ import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
+import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/episode');
 
@@ -34,7 +35,7 @@ class EpisodeComponent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        Text(episode.publishTimestamp.toString()),
+        Text(formatTimeAgo(episode.publishDateTime)),
         Row(
           children: [
             PlayIconComponent(
