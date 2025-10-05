@@ -36,7 +36,7 @@ class AddListenApiServer
     : super(
         AddListenApiRequest(),
         AddListenApiResponse(),
-        'api/listen/add',
+        'api/listens/add',
         client: client,
         authUser: authUser,
       );

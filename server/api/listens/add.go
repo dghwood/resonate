@@ -2,6 +2,7 @@ package listens
 
 import (
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -30,17 +31,19 @@ func (f *Add) Execute(
 	response *proto.AddListenMessage_Response) (err error) {
 
 	if loggedInUser.Id != request.Listen.UserId {
+		log.Error(errors.ERROR_PERMISSION_DENIED)
 		return errors.ERROR_PERMISSION_DENIED
 	}
 
-	Listen := models.Listen{}
-	models.Merge(&Listen.UserListenMessage, request.Listen)
-
+	listen := models.Listen{}
+	models.Merge(&listen.UserListenMessage, request.Listen)
+	log.Info(&listen)
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&Listen)
+	err = f.Datastore.Put(&listen)
 	if err != nil {
+		log.Error(err)
 		return
 	}
-	response.Listen = &Listen.UserListenMessage
+	response.Listen = &listen.UserListenMessage
 	return
 }
