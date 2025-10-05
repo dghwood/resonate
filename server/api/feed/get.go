@@ -75,11 +75,12 @@ func getEpisodesForPodcastIds(
 	ds datastore.Datastore) ([]*models.Episode, error) {
 	model := models.Episode{}
 	it := ds.ListForIds(
-		podcastIds,
-		model.GetPodcastIdFieldNum(),
-		model.GetPublishTimestampFieldNum(),
-		&models.Episode{},
-	)
+		datastore.ListForIdsParams{
+			Ids:          podcastIds,
+			IdFieldNum:   model.GetPodcastIdFieldNum(),
+			SortFieldNum: model.GetPublishTimestampFieldNum(),
+			Entity:       &model,
+		})
 	episodes := make([]*models.Episode, 0)
 	i := 0
 	for {
@@ -106,11 +107,12 @@ func getUserSubscriptionEpisodeIds(
 	ds datastore.Datastore) ([]string, error) {
 	model := models.Subscription{}
 	it := ds.ListForIds(
-		[]string{userId},
-		model.GetUserIdFieldNum(),
-		-1, // Sort by something?
-		&models.Subscription{},
-	)
+		datastore.ListForIdsParams{
+			Ids:          []string{userId},
+			IdFieldNum:   model.GetUserIdFieldNum(),
+			SortFieldNum: -1,
+			Entity:       &model,
+		})
 
 	podcastIds := make([]string, 0)
 	for {

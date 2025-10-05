@@ -141,16 +141,27 @@ message GetPodcastMessage {
     Response response = 2;
 }
 
+// Used for getting the next page 
+message QueryCursor {
+    // For datastore queries 
+    string cursor = 1;
+    // For limit / offset queries eg. SQL/Memory
+    int32 offset = 2;
+}
+
 // Used to list the podcast episodes
 message ListPodcastEpisodesMessage {
     message Request {
         RequestInfo request_info = 1; 
         string podcast_id = 2; 
+        QueryCursor cursor = 3;
     }
     message Response {
         ResponseInfo response_info = 1;
         repeated EpisodeMessage episodes = 2; 
+        // TODO(duncan): Am I using this? 
         PodcastMessage podcast = 3;
+        QueryCursor cursor = 4;
     }
     Request request = 1;
     Response response = 2;

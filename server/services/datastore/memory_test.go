@@ -92,10 +92,12 @@ func TestMemoryListIdsDatastore(t *testing.T) {
 
 	model := models.Episode{}
 	iter := ds.ListForIds(
-		[]string{"2"},
-		2, // PodcastId field num
-		8, // publish_timestamp
-		&model)
+		ListForIdsParams{
+			Ids:          []string{"2"},
+			IdFieldNum:   model.GetPodcastIdFieldNum(),
+			SortFieldNum: model.GetPublishTimestampFieldNum(),
+			Entity:       &model,
+		})
 
 	results := make([]*models.Episode, 0)
 

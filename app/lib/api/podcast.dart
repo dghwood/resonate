@@ -6,7 +6,7 @@ import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
@@ -107,10 +107,63 @@ class PodcastApi {
   final PodcastDatabase _database;
   final EpisodeDatabase _episodeDatabase;
 
-  Stream<ApiResult<Iterable<Episode>>> list(String podcastId) async* {
+  Stream<IterableApiResult<Iterable<Episode>>> listEpisodes(
+    String podcastId, {
+    QueryCursor? cursor,
+  }) async* {
+    _log.info('listEpisodes');
+    var request = ListPodcastEpisodesApiRequest();
+    request.requestPb.podcastId = podcastId;
+    if (cursor != null) {
+      request.requestPb.cursor = cursor.toMessage();
+    }
+    var response = ListPodcastEpisodesApiResponse();
+    var didReturnEpisodes = false;
+
+    try {
+      var episodes = await _episodeDatabase.listFromPodcastId(podcastId);
+      yield IterableApiResult(ApiResult.ok(episodes));
+      didReturnEpisodes = episodes.isNotEmpty;
+    } on DatabaseNotFoundException catch (e) {
+      // Do nothing - we will fetch from the server.
+    } on Exception catch (e) {
+      yield IterableApiResult(ApiResult.error(e));
+    }
+
+    // TODO(duncan): I think you need to merge these two results..
+    try {
+      await _listServer.execute(request, response);
+      var episodes = response.responsePb.episodes.map(
+        (e) => Episode.fromMessage(e),
+      );
+      // Update the cache
+      await _episodeDatabase.putAll(episodes);
+      yield IterableApiResult(
+        ApiResult.ok(episodes),
+        next:
+            () =>
+                listEpisodes(
+                  podcastId,
+                  cursor: QueryCursor.fromMessage(response.responsePb.cursor),
+                ).first,
+      );
+    } on Exception catch (e) {
+      if (!didReturnEpisodes) {
+        yield IterableApiResult(ApiResult.error(e));
+      }
+    }
+  }
+
+  Stream<ApiResult<Iterable<Episode>>> list(
+    String podcastId, {
+    QueryCursor? cursor,
+  }) async* {
     _log.info('list');
     var request = ListPodcastEpisodesApiRequest();
     request.requestPb.podcastId = podcastId;
+    if (cursor != null) {
+      request.requestPb.cursor = cursor.toMessage();
+    }
     var response = ListPodcastEpisodesApiResponse();
     var didReturnEpisodes = false;
 

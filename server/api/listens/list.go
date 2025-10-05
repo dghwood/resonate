@@ -31,10 +31,12 @@ func (f *List) Execute(
 	// TODO(duncan): Do I need to have permissions here?
 	model := models.Listen{}
 	Listens := f.Datastore.ListForIds(
-		[]string{request.UserId},
-		model.GetUserIdFieldNum(),
-		-1, // Sort by something?
-		&models.Listen{})
+		datastore.ListForIdsParams{
+			Ids:          []string{request.UserId},
+			IdFieldNum:   model.GetUserIdFieldNum(),
+			SortFieldNum: -1, // Sort by something?
+			Entity:       &model,
+		})
 
 	for {
 		model := models.Listen{}

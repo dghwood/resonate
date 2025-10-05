@@ -2241,14 +2241,86 @@ class GetPodcastMessage extends $pb.GeneratedMessage {
   GetPodcastMessage_Response ensureResponse() => $_ensure(1);
 }
 
+/// Used for getting the next page
+class QueryCursor extends $pb.GeneratedMessage {
+  factory QueryCursor({
+    $core.String? cursor,
+    $core.int? offset,
+  }) {
+    final result = create();
+    if (cursor != null) result.cursor = cursor;
+    if (offset != null) result.offset = offset;
+    return result;
+  }
+
+  QueryCursor._();
+
+  factory QueryCursor.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory QueryCursor.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'QueryCursor',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'cursor')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'offset', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  QueryCursor clone() => QueryCursor()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  QueryCursor copyWith(void Function(QueryCursor) updates) =>
+      super.copyWith((message) => updates(message as QueryCursor))
+          as QueryCursor;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static QueryCursor create() => QueryCursor._();
+  @$core.override
+  QueryCursor createEmptyInstance() => create();
+  static $pb.PbList<QueryCursor> createRepeated() => $pb.PbList<QueryCursor>();
+  @$core.pragma('dart2js:noInline')
+  static QueryCursor getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryCursor>(create);
+  static QueryCursor? _defaultInstance;
+
+  /// For datastore queries
+  @$pb.TagNumber(1)
+  $core.String get cursor => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set cursor($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCursor() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCursor() => $_clearField(1);
+
+  /// For limit / offset queries eg. SQL/Memory
+  @$pb.TagNumber(2)
+  $core.int get offset => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set offset($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasOffset() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearOffset() => $_clearField(2);
+}
+
 class ListPodcastEpisodesMessage_Request extends $pb.GeneratedMessage {
   factory ListPodcastEpisodesMessage_Request({
     RequestInfo? requestInfo,
     $core.String? podcastId,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (podcastId != null) result.podcastId = podcastId;
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -2269,6 +2341,8 @@ class ListPodcastEpisodesMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'podcastId')
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -2316,6 +2390,17 @@ class ListPodcastEpisodesMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasPodcastId() => $_has(1);
   @$pb.TagNumber(2)
   void clearPodcastId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
@@ -2323,11 +2408,13 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
     ResponseInfo? responseInfo,
     $core.Iterable<$0.EpisodeMessage>? episodes,
     $0.PodcastMessage? podcast,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (episodes != null) result.episodes.addAll(episodes);
     if (podcast != null) result.podcast = podcast;
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -2352,6 +2439,8 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
         subBuilder: $0.EpisodeMessage.create)
     ..aOM<$0.PodcastMessage>(3, _omitFieldNames ? '' : 'podcast',
         subBuilder: $0.PodcastMessage.create)
+    ..aOM<QueryCursor>(4, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -2394,6 +2483,7 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $pb.PbList<$0.EpisodeMessage> get episodes => $_getList(1);
 
+  /// TODO(duncan): Am I using this?
   @$pb.TagNumber(3)
   $0.PodcastMessage get podcast => $_getN(2);
   @$pb.TagNumber(3)
@@ -2404,6 +2494,17 @@ class ListPodcastEpisodesMessage_Response extends $pb.GeneratedMessage {
   void clearPodcast() => $_clearField(3);
   @$pb.TagNumber(3)
   $0.PodcastMessage ensurePodcast() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  QueryCursor get cursor => $_getN(3);
+  @$pb.TagNumber(4)
+  set cursor(QueryCursor value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasCursor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCursor() => $_clearField(4);
+  @$pb.TagNumber(4)
+  QueryCursor ensureCursor() => $_ensure(3);
 }
 
 /// Used to list the podcast episodes

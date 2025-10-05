@@ -183,3 +183,7 @@ type RefreshTokens struct {
 func (p *RefreshTokens) GetId() string {
 	return fmt.Sprintf("refresh-token-%s", p.UserId)
 }
+
+type QueryCursor struct {
+	proto.QueryCursor
+}

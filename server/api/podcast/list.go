@@ -50,10 +50,12 @@ func (f *List) Execute(
 		// Check the updated timestamp, and request the episodes from DB
 		episode := &models.Episode{}
 		it := f.Datastore.ListForIds(
-			[]string{podcast.Id},
-			episode.GetPodcastIdFieldNum(),
-			episode.GetPublishTimestampFieldNum(),
-			episode)
+			datastore.ListForIdsParams{
+				Ids:          []string{podcast.Id},
+				IdFieldNum:   episode.GetPodcastIdFieldNum(),
+				SortFieldNum: episode.GetPublishTimestampFieldNum(),
+				Entity:       episode,
+			})
 
 		i := 0
 		for {
@@ -67,7 +69,10 @@ func (f *List) Execute(
 				return er
 			}
 			if i > 20 {
-				// TODO(duncan): Need to figure out the cursor options
+				cursor := it.Cursor()
+				if cursor != nil {
+					response.Cursor = &cursor.QueryCursor
+				}
 				break
 			}
 			i++

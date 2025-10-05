@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
 sealed class ApiResult<T> {
   const ApiResult();
 
@@ -55,4 +53,11 @@ class StreamApiResult<P extends ApiResult, R extends ApiResult> {
   Stream<P> get progress => _progressController.stream;
   late final StreamController<R> _doneController;
   Future<R> get done => _doneController.stream.first;
+}
+
+/* Iterable ApiResult */
+class IterableApiResult<T> {
+  IterableApiResult(this.result, {this.next});
+  final ApiResult<T> result;
+  final Future<IterableApiResult<T>> Function()? next;
 }

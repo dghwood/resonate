@@ -23,7 +23,15 @@ var (
 
 type Iterator interface {
 	Next(entity models.Model) (err error)
-	Cursor() string
+	Cursor() *models.QueryCursor
+}
+
+type ListForIdsParams struct {
+	Ids          []string
+	IdFieldNum   int32
+	SortFieldNum int32
+	Entity       models.Model
+	Cursor       *models.QueryCursor
 }
 
 type Datastore interface {
@@ -32,10 +40,6 @@ type Datastore interface {
 	PutMulti(entities any) (err error)
 	GetMulti(entities any) (err error)
 	// This needs to implicitly filter for deleted I think
-	ListForIds(
-		ids []string,
-		idFieldNum int32,
-		sortFieldNum int32,
-		entity models.Model) (iter Iterator)
+	ListForIds(params ListForIdsParams) (iter Iterator)
 	Close()
 }

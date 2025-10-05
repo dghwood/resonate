@@ -31,11 +31,14 @@ func (f *List) Execute(
 	// Need to query db for all subscriptions (paging?)
 	// a user
 	model := models.Subscription{}
+
 	subscriptions := f.Datastore.ListForIds(
-		[]string{request.UserId},
-		model.GetUserIdFieldNum(),
-		-1, // Sort by something?
-		&models.Subscription{})
+		datastore.ListForIdsParams{
+			Ids:          []string{request.UserId},
+			IdFieldNum:   model.GetUserIdFieldNum(),
+			SortFieldNum: -1, // Sort by something?
+			Entity:       &model,
+		})
 
 	for {
 		model := models.Subscription{}

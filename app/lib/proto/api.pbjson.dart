@@ -754,6 +754,20 @@ final $typed_data.Uint8List getPodcastMessageDescriptor = $convert.base64Decode(
     'SW5mbxIyCgdwb2RjYXN0GAIgASgLMhgucmVzb25hdGUuUG9kY2FzdE1lc3NhZ2VSB3BvZGNhc3'
     'Q=');
 
+@$core.Deprecated('Use queryCursorDescriptor instead')
+const QueryCursor$json = {
+  '1': 'QueryCursor',
+  '2': [
+    {'1': 'cursor', '3': 1, '4': 1, '5': 9, '10': 'cursor'},
+    {'1': 'offset', '3': 2, '4': 1, '5': 5, '10': 'offset'},
+  ],
+};
+
+/// Descriptor for `QueryCursor`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List queryCursorDescriptor = $convert.base64Decode(
+    'CgtRdWVyeUN1cnNvchIWCgZjdXJzb3IYASABKAlSBmN1cnNvchIWCgZvZmZzZXQYAiABKAVSBm'
+    '9mZnNldA==');
+
 @$core.Deprecated('Use listPodcastEpisodesMessageDescriptor instead')
 const ListPodcastEpisodesMessage$json = {
   '1': 'ListPodcastEpisodesMessage',
@@ -794,6 +808,14 @@ const ListPodcastEpisodesMessage_Request$json = {
       '10': 'requestInfo'
     },
     {'1': 'podcast_id', '3': 2, '4': 1, '5': 9, '10': 'podcastId'},
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -825,6 +847,14 @@ const ListPodcastEpisodesMessage_Response$json = {
       '6': '.resonate.PodcastMessage',
       '10': 'podcast'
     },
+    {
+      '1': 'cursor',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -833,12 +863,14 @@ final $typed_data.Uint8List listPodcastEpisodesMessageDescriptor = $convert.base
     'ChpMaXN0UG9kY2FzdEVwaXNvZGVzTWVzc2FnZRJKCgdyZXF1ZXN0GAEgASgLMjAucmVzb25hdG'
     'UuYXBpLkxpc3RQb2RjYXN0RXBpc29kZXNNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSTQoIcmVz'
     'cG9uc2UYAiABKAsyMS5yZXNvbmF0ZS5hcGkuTGlzdFBvZGNhc3RFcGlzb2Rlc01lc3NhZ2UuUm'
-    'VzcG9uc2VSCHJlc3BvbnNlGmYKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVz'
-    'b25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIdCgpwb2RjYXN0X2lkGAIgASgJUg'
-    'lwb2RjYXN0SWQatQEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0'
-    'ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SNAoIZXBpc29kZXMYAiADKAsyGC5yZX'
-    'NvbmF0ZS5FcGlzb2RlTWVzc2FnZVIIZXBpc29kZXMSMgoHcG9kY2FzdBgDIAEoCzIYLnJlc29u'
-    'YXRlLlBvZGNhc3RNZXNzYWdlUgdwb2RjYXN0');
+    'VzcG9uc2VSCHJlc3BvbnNlGpkBCgdSZXF1ZXN0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJl'
+    'c29uYXRlLmFwaS5SZXF1ZXN0SW5mb1ILcmVxdWVzdEluZm8SHQoKcG9kY2FzdF9pZBgCIAEoCV'
+    'IJcG9kY2FzdElkEjEKBmN1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIG'
+    'Y3Vyc29yGugBCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYX'
+    'BpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjQKCGVwaXNvZGVzGAIgAygLMhgucmVzb25h'
+    'dGUuRXBpc29kZU1lc3NhZ2VSCGVwaXNvZGVzEjIKB3BvZGNhc3QYAyABKAsyGC5yZXNvbmF0ZS'
+    '5Qb2RjYXN0TWVzc2FnZVIHcG9kY2FzdBIxCgZjdXJzb3IYBCABKAsyGS5yZXNvbmF0ZS5hcGku'
+    'UXVlcnlDdXJzb3JSBmN1cnNvcg==');
 
 @$core.Deprecated('Use getEpisodeMessageDescriptor instead')
 const GetEpisodeMessage$json = {

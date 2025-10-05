@@ -134,10 +134,12 @@ func TestListForIds(t *testing.T) {
 	}
 
 	it := ds.ListForIds(
-		[]string{"123"},
-		episode1.GetPodcastIdFieldNum(),
-		episode1.GetPublishTimestampFieldNum(),
-		episode1)
+		datastore.ListForIdsParams{
+			Ids:          []string{"123"},
+			IdFieldNum:   episode1.GetPodcastIdFieldNum(),
+			SortFieldNum: episode1.GetPublishTimestampFieldNum(),
+			Entity:       episode,
+		})
 
 	retrievedEpisodes := []*models.Episode{}
 	for {

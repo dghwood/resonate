@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
+
 	"reflect"
 	"time"
 
 	firestore "cloud.google.com/go/datastore"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/datastore"
 	"google.golang.org/api/iterator"
@@ -25,13 +26,16 @@ func (f *FirestoreIterator) Next(entity models.Model) (err error) {
 	}
 	return
 }
-func (f *FirestoreIterator) Cursor() string {
+func (f *FirestoreIterator) Cursor() *models.QueryCursor {
 	cursor, err := f.Iterator.Cursor()
 	if err != nil {
 		// TODO(duncan): Throw an error?
-		return ""
+		log.Error(err)
+		return nil
 	}
-	return cursor.String()
+	queryCursor := &models.QueryCursor{}
+	queryCursor.Cursor = cursor.String()
+	return queryCursor
 }
 
 type FirestoreDatastore struct {
@@ -46,7 +50,7 @@ func NewFirestoreDatastore(
 	ctx, _ := getContext(10)
 	client, err := firestore.NewClientWithDatabase(ctx, projectId, databaseId)
 	if err != nil {
-		log.Fatalf("Failed to create client: %v", err)
+		log.Errorf("Failed to create client: %v", err)
 	}
 
 	return &FirestoreDatastore{
@@ -123,10 +127,13 @@ func (f *FirestoreDatastore) GetMulti(src any) (err error) {
 }
 
 func (f *FirestoreDatastore) ListForIds(
-	ids []string,
-	idFieldNum int32,
-	sortFieldNum int32,
-	entity models.Model) (iter datastore.Iterator) {
+	params datastore.ListForIdsParams) (iter datastore.Iterator) {
+
+	ids := params.Ids
+	idFieldNum := params.IdFieldNum
+	sortFieldNum := params.SortFieldNum
+	entity := params.Entity
+	// cursor := params.Cursor
 
 	// Convert to interface
 	// TODO(duncan): Make the interface accept any instead
@@ -144,6 +151,14 @@ func (f *FirestoreDatastore) ListForIds(
 	if sortFieldNum >= 0 {
 		// Descending order (with -)
 		query = query.Order(fmt.Sprintf("-%s", getFieldName(sortFieldNum)))
+	}
+	if params.Cursor != nil && params.Cursor.Cursor != "" {
+		cursor, err := firestore.DecodeCursor(params.Cursor.Cursor)
+		if err != nil {
+			// Throw an error?
+			log.Error(err)
+		}
+		query = query.Start(cursor)
 	}
 	log.Print(query)
 	return &FirestoreIterator{

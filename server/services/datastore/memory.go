@@ -101,15 +101,21 @@ func (it *MemoryDatastoreIterator) Next(entity models.Model) (err error) {
 	it.i += 1
 	return
 }
-func (it *MemoryDatastoreIterator) Cursor() string {
-	return ""
+func (it *MemoryDatastoreIterator) Cursor() *models.QueryCursor {
+	cursor := &models.QueryCursor{}
+	cursor.Offset = int32(it.i)
+	return cursor
 }
 
 func (ds *MemoryDatastore) ListForIds(
-	ids []string,
-	idFieldNum int32,
-	sortFieldNum int32,
-	entity models.Model) Iterator {
+	params ListForIdsParams,
+) Iterator {
+	ids := params.Ids
+	idFieldNum := params.IdFieldNum
+	sortFieldNum := params.SortFieldNum
+	entity := params.Entity
+	// cursor := params.Cursor
+
 	log.Infof("ListForIds: %s %d %d", ids, idFieldNum, sortFieldNum)
 	database := ds.getDb(entity)
 	log.Infof("database with %d entries", len(database.Data))
@@ -147,5 +153,7 @@ func (ds *MemoryDatastore) ListForIds(
 
 	return &MemoryDatastoreIterator{
 		data: data,
+		// This should just default to 0
+		i: int(params.Cursor.Offset),
 	}
 }

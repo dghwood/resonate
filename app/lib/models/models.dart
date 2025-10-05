@@ -1,10 +1,10 @@
 /* Wrappers around Proto message 
 
 */
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:protobuf/protobuf.dart';
+import 'package:resonate/proto/api.pb.dart' as api;
 import 'package:resonate/proto/common.pb.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:resonate/proto/common.pbjson.dart';
@@ -504,4 +504,10 @@ class UserDownload extends BaseModel<UserDownloadMessage> {
 
   // Used for download
   DownloadItem? downloadItem;
+}
+
+class QueryCursor extends BaseModel<api.QueryCursor> {
+  QueryCursor() : super(api.QueryCursor());
+
+  QueryCursor.fromMessage(super.message);
 }
