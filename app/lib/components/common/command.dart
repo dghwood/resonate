@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/errors.dart';
@@ -11,12 +12,14 @@ class ApiResultNotifierComponent<T> extends StatelessWidget {
     required this.init,
     required this.loading,
     required this.done,
+    this.onDone,
   }) : _command = command;
 
   final ApiResultNotifier<T> _command;
   final Widget Function(BuildContext context, {Exception? error}) init;
   final Widget Function(BuildContext context) loading;
   final Widget Function(BuildContext context, T result) done;
+  final void Function(T result)? onDone;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,12 @@ class ApiResultNotifierComponent<T> extends StatelessWidget {
             var result = _command.result;
             switch (result) {
               case ApiOk():
+                if (onDone != null) {
+                  // Is this a hack?
+                  SchedulerBinding.instance.addPostFrameCallback(
+                    (_) => onDone!(result.value),
+                  );
+                }
                 return done(context, result.value);
               case ApiError():
                 _command.clear();

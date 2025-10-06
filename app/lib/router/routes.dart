@@ -131,8 +131,14 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
           // navigatorKey: _shellNavigatorKeyHome,
           routes: [
             GoRoute(
-              // redirect: _signInRedirect,
-              builder: (context, state) => ProfilePage(),
+              // TODO(duncan): Update this to consume a user id
+              builder: (context, state) {
+                var user = context.read<AuthUser>().user;
+                if (user == null) {
+                  return Text('User not found');
+                }
+                return ProfileComponent(user: user);
+              },
               path: Routes.profile,
               // routes: sharedRoutes,
             ),

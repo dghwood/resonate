@@ -6,6 +6,7 @@ import 'package:resonate/components/common/downloads.dart';
 import 'package:resonate/components/common/listens.dart';
 import 'package:resonate/components/common/subscriptions.dart';
 import 'package:resonate/components/tabs/base.dart';
+import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 
 /* Needs 
@@ -19,26 +20,39 @@ import 'package:resonate/router/navigation.dart';
   * Following 
 
 */
-class ProfilePage extends TabComponent {
-  const ProfilePage({super.key}) : super(title: 'profile');
+// class ProfilePage extends TabComponent {
+//   const ProfilePage({super.key}) : super(title: 'profile');
+
+//   @override
+//   Widget buildChild(BuildContext context) {
+//     return ProfileComponent();
+//   }
+// }
+
+class ProfileComponentHeader extends StatelessWidget {
+  const ProfileComponentHeader({super.key, required this.user});
+
+  final User user;
 
   @override
-  Widget buildChild(BuildContext context) {
-    return ProfileComponent();
+  Widget build(BuildContext context) {
+    return SizedBox(height: 200, child: Row(children: [Text(user.name)]));
   }
 }
 
 class ProfileComponent extends StatelessWidget {
-  const ProfileComponent({super.key});
+  const ProfileComponent({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppBar(
             actions: [
+              // TODO(duncan): Only show these on logged in profile
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () => Navigate(context).editProfile(),
@@ -53,14 +67,7 @@ class ProfileComponent extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: [
-              SizedBox(
-                height: 200,
-                child: Column(children: [ProfilePhotoComponent()]),
-              ),
-            ],
-          ),
+          ProfileComponentHeader(user: user),
           DefaultTabController(
             length: 4,
             child: Column(
@@ -69,7 +76,7 @@ class ProfileComponent extends StatelessWidget {
                   tabs: [
                     Tab(text: 'Listens'),
                     Tab(text: 'Subscriptions'),
-                    Tab(text: 'Stars'),
+                    // Tab(text: 'Stars'),
                     Tab(text: 'Downloads'),
                   ],
                 ),
@@ -82,7 +89,7 @@ class ProfileComponent extends StatelessWidget {
                       SubscriptionListComponent(
                         subscriptionsApi: context.read(),
                       ),
-                      Center(child: Text('Starts')),
+                      // Center(child: Text('Starts')),
                       DownloadsListComponent(downloadsApi: context.read()),
                     ],
                   ),

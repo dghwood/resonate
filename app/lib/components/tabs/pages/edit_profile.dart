@@ -18,14 +18,12 @@ class EditProfileComponent extends StatelessWidget {
   final AuthUser authUser;
   final formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
-  late ApiResultNotifier1<User, User> command;
+  late final ApiResultNotifier1<User, User> command;
 
   void onSubmit() {
-    _log.info('onSubmit');
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var name = nameEditingController.text;
-      _log.info('name: $name');
       command.execute(User(name: name));
     }
   }
@@ -36,7 +34,6 @@ class EditProfileComponent extends StatelessWidget {
     nameEditingController.text = user.name;
 
     Widget init(BuildContext context, {Exception? error}) {
-      _log.info('init::$error');
       if (error != null) {
         context.read<ErrorService>().report(context, error);
       }
@@ -70,6 +67,9 @@ class EditProfileComponent extends StatelessWidget {
           command: command,
           loading: (_) => LoadingSpinnerComponent(),
           done: (context, result) => init(context),
+          onDone: (result) {
+            Navigator.pop(context);
+          },
         ),
       ),
     );
