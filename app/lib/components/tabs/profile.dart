@@ -40,6 +40,10 @@ class ProfileComponent extends StatelessWidget {
           AppBar(
             actions: [
               IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () => Navigate(context).editProfile(),
+              ),
+              IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: () => Navigate(context).toSettings(),
               ),

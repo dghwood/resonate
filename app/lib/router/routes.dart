@@ -6,6 +6,7 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/login/signin.dart';
 import 'package:resonate/components/tabs/home.dart';
+import 'package:resonate/components/tabs/pages/edit_profile.dart';
 import 'package:resonate/components/tabs/pages/podcast.dart';
 import 'package:resonate/components/tabs/pages/settings.dart';
 import 'package:resonate/components/tabs/profile.dart';
@@ -61,6 +62,10 @@ final List<RouteBase> sharedRoutes = [
     },
   ),
   GoRoute(path: Routes.settings, builder: (context, state) => SettingsPage()),
+  GoRoute(
+    path: Routes.editProfile,
+    builder: (context, state) => EditProfileComponent(authUser: context.read()),
+  ),
 ];
 
 GoRouter appRouter(AuthUser authUser) => GoRouter(

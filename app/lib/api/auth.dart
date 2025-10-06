@@ -14,6 +14,11 @@ import 'package:resonate/services/secure_database.dart';
 
 Logger _log = Logger('api/auth');
 
+String secureStorageUserIdKey = 'user';
+String secureStorageUserKey(String userId) => '$userId-user';
+String secureStorageAccessTokenKey(String userId) => '$userId-access';
+String secureStorageRefreshTokenKey(String userId) => '$userId-refresh';
+
 class LoginRequestApiRequest extends ApiRequest<LoginRequestMessage_Request> {
   LoginRequestApiRequest()
     : super(LoginRequestMessage_Request(requestInfo: RequestInfo()));
@@ -114,10 +119,106 @@ class LoginApi {
       await _secureDatabase.writeKey("user", user.id);
       // Do i need this to be able to support multiple users.
       // This should have ~16mb of space, so should be good enough.
-      await _secureDatabase.write(userStorage.id, userStorage);
+      // await _secureDatabase.write(userStorage.id, userStorage);
+      await _secureDatabase.write(
+        secureStorageUserKey(user.id),
+        userStorage.user,
+      );
+      await _secureDatabase.write(
+        secureStorageAccessTokenKey(user.id),
+        userStorage.accessToken!,
+      );
+      await _secureDatabase.write(
+        secureStorageRefreshTokenKey(user.id),
+        userStorage.refreshToken!,
+      );
 
       // Store them in the secureStorage
       return ApiResult.ok(userStorage);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+}
+
+class EditUserApiRequest extends ApiRequest<EditUserMessage_Request> {
+  EditUserApiRequest()
+    : super(EditUserMessage_Request(requestInfo: RequestInfo()));
+
+  @override
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
+}
+
+class EditUserApiResponse extends ApiResponse<EditUserMessage_Response> {
+  EditUserApiResponse() : super(EditUserMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+}
+
+class EditUserApiServer
+    extends ServerApi<EditUserApiRequest, EditUserApiResponse> {
+  EditUserApiServer({AbstractHttpService? client})
+    : super(
+        EditUserApiRequest(),
+        EditUserApiResponse(),
+        'api/user/edit',
+        client: client,
+      );
+}
+
+class EditUserApi {
+  EditUserApi({
+    required AbstractHttpService httpClient,
+    required SecureProtoDatabase secureDatabase,
+  }) : _server = EditUserApiServer(client: httpClient),
+       _secureDatabase = secureDatabase;
+
+  final EditUserApiServer _server;
+  final SecureProtoDatabase _secureDatabase;
+
+  Future<ApiResult<User>> edit(User user) async {
+    // The user message here, should only contain edited fields
+    // not the full user object.
+    var server = await editServer(user);
+    switch (server) {
+      case ApiOk():
+        // Now we have the updates from the server
+        // we can save locally.
+        var serverUser = server.value;
+        var local = await editLocal(serverUser);
+        switch (local) {
+          case ApiOk():
+            return ApiResult.ok(serverUser);
+          case ApiError():
+            return ApiResult.error(local.error);
+        }
+      case ApiError():
+        return ApiResult.error(server.error);
+    }
+  }
+
+  Future<ApiResult<User>> editLocal(User user) async {
+    try {
+      var userId = await _secureDatabase.readKey(secureStorageUserIdKey);
+      if (userId != user.id) {
+        throw Exception('User id mismatch');
+      }
+      await _secureDatabase.write(secureStorageUserKey(user.id), user);
+      return ApiResult.ok(user);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
+  Future<ApiResult<User>> editServer(User user) async {
+    var request = EditUserApiRequest();
+    request.requestPb.user = user.toMessage();
+    var response = EditUserApiResponse();
+    try {
+      await _server.execute(request, response);
+      return ApiResult.ok(User.fromMessage(response.responsePb.user));
     } on Exception catch (e) {
       return ApiResult.error(e);
     }
@@ -151,6 +252,11 @@ class AuthUser extends ChangeNotifier {
       databaseService: databaseService,
       httpService: httpService,
     );
+    _editUserApi = EditUserApi(
+      httpClient: httpService,
+      secureDatabase: secureDatabase,
+    );
+
     downloadApi = DownloadApi(authUser: this, databaseService: databaseService);
     loadFromStorage();
   }
@@ -158,14 +264,28 @@ class AuthUser extends ChangeNotifier {
   late final SubscriptionApi subscriptionApi;
   late final ListenApi listenApi;
   late final DownloadApi downloadApi;
+  late final EditUserApi _editUserApi;
+
+  final User _user = User();
+  final Token _accessToken = Token();
+  final Token _refreshToken = Token();
 
   // load from secure storage
   Future<void> loadFromStorage() async {
     try {
       _status = AuthUserStatus.loading;
       // These error out if they doesn't exist
-      var userId = await _secureDatabase.readKey('user');
-      await _secureDatabase.read(userId, _userStorage);
+      var userId = await _secureDatabase.readKey(secureStorageUserIdKey);
+      // await _secureDatabase.read(userId, _userStorage);
+      await _secureDatabase.read(secureStorageUserKey(userId), _user);
+      await _secureDatabase.read(
+        secureStorageRefreshTokenKey(userId),
+        _refreshToken,
+      );
+      await _secureDatabase.read(
+        secureStorageAccessTokenKey(userId),
+        _accessToken,
+      );
       await _setupPostLogin();
     } on Exception catch (_) {
       _status = AuthUserStatus.signedOut;
@@ -178,9 +298,9 @@ class AuthUser extends ChangeNotifier {
   final AbstractDatabaseService _databaseService;
 
   final UserStorage _userStorage = UserStorage();
-  User? get user => isSignedInForDb ? _userStorage.user : null;
-  Token? get accessToken => isSignedInForDb ? _userStorage.accessToken : null;
-  Token? get refreshToken => isSignedInForDb ? _userStorage.refreshToken : null;
+  User? get user => isSignedInForDb ? _user : null;
+  Token? get accessToken => isSignedInForDb ? _accessToken : null;
+  Token? get refreshToken => isSignedInForDb ? _refreshToken : null;
 
   AuthUserStatus __status = AuthUserStatus.signedOut;
   set _status(AuthUserStatus newStatus) {
@@ -230,7 +350,10 @@ class AuthUser extends ChangeNotifier {
     switch (result) {
       case ApiOk():
         _log.info('loggedIn');
-        _userStorage.fromMessage(result.value.toMessage());
+        _user.fromMessage(result.value.user.toMessage());
+        _accessToken.fromMessage(result.value.accessToken!.toMessage());
+        _refreshToken.fromMessage(result.value.refreshToken!.toMessage());
+
         await _setupPostLogin();
         return ApiResult.ok(true);
       case ApiError():
@@ -240,6 +363,20 @@ class AuthUser extends ChangeNotifier {
         // TODO(duncan): Auto-redirect doesn't seem
         //               right here
         __status = AuthUserStatus.signedOut;
+        return ApiResult.error(result.error);
+    }
+  }
+
+  Future<ApiResult<User>> edit(User user) async {
+    // This should be able to change all the fields
+    // so this user object, should just contain
+    // changed fields.
+    var result = await _editUserApi.edit(user);
+    switch (result) {
+      case ApiOk():
+        _user.fromMessage(result.value.toMessage());
+        return ApiResult.ok(_user);
+      case ApiError():
         return ApiResult.error(result.error);
     }
   }

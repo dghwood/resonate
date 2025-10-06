@@ -254,6 +254,7 @@ class User extends BaseModel<UserMessage> {
     String? id,
     String? name,
     String? email,
+    String? phoneNumber,
     String? imageUrl,
     List<UserSubscription>? subscriptions,
     List<UserListen>? listens,
@@ -264,6 +265,7 @@ class User extends BaseModel<UserMessage> {
            id: id,
            name: name,
            email: email,
+           phoneNumber: phoneNumber,
            imageUrl: imageUrl,
            subscriptions: subscriptions?.map((s) => s.toMessage()).toList(),
            listens: listens?.map((l) => l.toMessage()).toList(),
@@ -274,6 +276,8 @@ class User extends BaseModel<UserMessage> {
        );
 
   User.fromMessage(super.message);
+  User.copy(User model)
+    : super(UserMessage()..mergeFromMessage(model.toMessage()));
 
   @override
   Uint8List get descriptor => userMessageDescriptor;
@@ -282,6 +286,7 @@ class User extends BaseModel<UserMessage> {
   String get id => _message.id;
   String get name => _message.name;
   String get email => _message.email;
+  String get phoneNumber => _message.phoneNumber;
   String? get imageUrl => _message.imageUrl;
   List<UserSubscription> get subscriptions =>
       _message.subscriptions
