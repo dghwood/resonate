@@ -159,20 +159,24 @@ class EditUserApiResponse extends ApiResponse<EditUserMessage_Response> {
 
 class EditUserApiServer
     extends ServerApi<EditUserApiRequest, EditUserApiResponse> {
-  EditUserApiServer({AbstractHttpService? client})
-    : super(
-        EditUserApiRequest(),
-        EditUserApiResponse(),
-        'api/user/edit',
-        client: client,
-      );
+  EditUserApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         EditUserApiRequest(),
+         EditUserApiResponse(),
+         'api/users/edit',
+         client: client,
+         authUser: authUser,
+       );
 }
 
 class EditUserApi {
   EditUserApi({
     required AbstractHttpService httpClient,
     required SecureProtoDatabase secureDatabase,
-  }) : _server = EditUserApiServer(client: httpClient),
+    required AuthUser authUser,
+  }) : _server = EditUserApiServer(client: httpClient, authUser: authUser),
        _secureDatabase = secureDatabase;
 
   final EditUserApiServer _server;
@@ -255,6 +259,7 @@ class AuthUser extends ChangeNotifier {
     _editUserApi = EditUserApi(
       httpClient: httpService,
       secureDatabase: secureDatabase,
+      authUser: this,
     );
 
     downloadApi = DownloadApi(authUser: this, databaseService: databaseService);
@@ -286,6 +291,9 @@ class AuthUser extends ChangeNotifier {
         secureStorageAccessTokenKey(userId),
         _accessToken,
       );
+      _log.info('accessToken: $_accessToken');
+      _log.info('refreshToken: $_refreshToken');
+      _log.info('user: $_user');
       await _setupPostLogin();
     } on Exception catch (_) {
       _status = AuthUserStatus.signedOut;
@@ -354,6 +362,9 @@ class AuthUser extends ChangeNotifier {
         _accessToken.fromMessage(result.value.accessToken!.toMessage());
         _refreshToken.fromMessage(result.value.refreshToken!.toMessage());
 
+        _log.info('accessToken: $_accessToken');
+        _log.info('refreshToken: $_refreshToken');
+        _log.info('user: $_user');
         await _setupPostLogin();
         return ApiResult.ok(true);
       case ApiError():
@@ -368,6 +379,7 @@ class AuthUser extends ChangeNotifier {
   }
 
   Future<ApiResult<User>> edit(User user) async {
+    _log.info('edit $user');
     // This should be able to change all the fields
     // so this user object, should just contain
     // changed fields.
@@ -379,6 +391,10 @@ class AuthUser extends ChangeNotifier {
       case ApiError():
         return ApiResult.error(result.error);
     }
+  }
+
+  ApiResultNotifier1<User, User> editCommand() {
+    return ApiResultNotifier1<User, User>(edit);
   }
 
   ApiResultNotifier2<bool, String, String> loginCommand() {

@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	ErrorEntityNotFound      = errors.New("Datastore not found")
+	ErrorEntityNotFound      = errors.New("Datastore entity not found")
 	ErrorParameterNotCorrect = errors.New("parameters are not correct")
 	IteratorDone             = errors.New("iterator done")
 )

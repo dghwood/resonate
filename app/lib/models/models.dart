@@ -76,6 +76,9 @@ class BaseModel<T extends GeneratedMessage> {
   @override
   // Is this right?
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() => _message.toString();
 }
 
 class StorageMetadata extends BaseModel<StorageMetadataMessage> {

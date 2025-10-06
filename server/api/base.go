@@ -63,7 +63,7 @@ func handle[
 		// TODO(duncan): Remove
 		// Add some delay, in dev the server is responding too
 		// quickly
-		time.Sleep(1 * time.Second)
+		time.Sleep(2 * time.Second)
 
 		request := f.RequestProto()
 		err := parseProto(r, request)

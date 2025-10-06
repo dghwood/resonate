@@ -88,6 +88,14 @@ func (f Login) Execute(
 	}
 	userExists := userErr == nil
 
+	// Add the new user since they don't exist
+	if !userExists {
+		err = f.Datastore.Put(&user)
+		if err != nil {
+			return
+		}
+	}
+
 	refreshTokens := models.RefreshTokens{}
 	refreshTokens.UserId = user.Id
 
