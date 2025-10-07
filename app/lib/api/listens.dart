@@ -5,7 +5,7 @@ import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/player.dart';
@@ -37,6 +37,40 @@ class AddListenApiServer
         AddListenApiRequest(),
         AddListenApiResponse(),
         'api/listens/add',
+        client: client,
+        authUser: authUser,
+      );
+}
+
+class ListListenApiRequest extends ApiRequest<ListListenMessage_Request> {
+  ListListenApiRequest({String? userId, bool? includeEpisodes})
+    : super(
+        ListListenMessage_Request(
+          userId: userId,
+          includeEpisodes: includeEpisodes,
+          requestInfo: RequestInfo(),
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
+}
+
+class ListListenApiResponse extends ApiResponse<ListListenMessage_Response> {
+  ListListenApiResponse() : super(ListListenMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+}
+
+class ListListenApiServer
+    extends ServerApi<ListListenApiRequest, ListListenApiResponse> {
+  ListListenApiServer({AbstractHttpService? client, required AuthUser authUser})
+    : super(
+        ListListenApiRequest(),
+        ListListenApiResponse(),
+        'api/listens/list',
         client: client,
         authUser: authUser,
       );
@@ -78,7 +112,7 @@ class ListenApi {
 
   UserListen? get(String episodeId) => _listens[episodeId];
 
-  Future<ApiResult<Iterable<UserListen>>> list() async {
+  Future<ApiResult<Iterable<UserListen>>> list({User? user}) async {
     // Do I need to check with the server?
     try {
       var result = await _database.list();
@@ -150,16 +184,43 @@ class ListenApi {
 }
 
 class ListensApi {
-  const ListensApi({
+  ListensApi({
     required AuthUser authUser,
     required GetEpisodeApi episodeApi,
+    required AbstractHttpService httpService,
   }) : _authUser = authUser,
-       _episodeApi = episodeApi;
+       _episodeApi = episodeApi,
+       _listServer = ListListenApiServer(
+         authUser: authUser,
+         client: httpService,
+       );
 
   final AuthUser _authUser;
+  final ListListenApiServer _listServer;
   final GetEpisodeApi _episodeApi;
 
-  Future<ApiResult<Iterable<Episode>>> get() async {
+  Future<IterableApiResult<Iterable<UserListen>>> listForUser(
+    String userId, {
+    QueryCursor? cursor,
+  }) async {
+    var request = ListListenApiRequest(userId: userId, includeEpisodes: true);
+    var response = ListListenApiResponse();
+    try {
+      await _listServer.execute(request, response);
+      return IterableApiResult.ok(
+        response.responsePb.listens.map((e) => UserListen.fromMessage(e)),
+        next:
+            () => listForUser(
+              userId,
+              cursor: QueryCursor.fromMessage(response.responsePb.cursor),
+            ),
+      );
+    } on Exception catch (e) {
+      return IterableApiResult.error(e);
+    }
+  }
+
+  Future<ApiResult<Iterable<UserListen>>> get() async {
     var listenApi = _authUser.listenApi;
     var result = await listenApi.list();
     _log.info('got $result');
@@ -182,7 +243,16 @@ class ListensApi {
       case ApiError():
         return ApiResult.error(episodeResult.error);
     }
-
-    return ApiResult.ok(episodeResult.value);
+    Map<String, UserListen> listensMap = {};
+    for (var listen in listens) {
+      listensMap[listen.episodeId] = listen;
+    }
+    for (var episode in episodeResult.value) {
+      var listen = listensMap[episode.id];
+      if (listen == null) continue;
+      listensMap[episode.id] = listen.copyWithEpisode(episode);
+    }
+    // TODO(duncan): I need to sort this list..
+    return ApiResult.ok(listensMap.values);
   }
 }

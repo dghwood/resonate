@@ -1,6 +1,8 @@
 package listens
 
 import (
+	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -28,27 +30,76 @@ func (f *List) Execute(
 	request *proto.ListListenMessage_Request,
 	response *proto.ListListenMessage_Response) (err error) {
 
+	userId := request.UserId
+	if userId == "" {
+		userId = loggedInUser.Id
+	}
+	if userId == "" {
+		return errors.ERROR_INTERNAL
+	}
+	var cursor *models.QueryCursor
+	cursorPb := request.Cursor
+	log.Info("cursorPb: ", cursorPb)
+	if cursorPb != nil {
+		cursor = &models.QueryCursor{}
+		models.Merge(cursor, cursorPb)
+		log.Info("cursor: ", cursor)
+	}
+
 	// TODO(duncan): Do I need to have permissions here?
 	model := models.Listen{}
-	Listens := f.Datastore.ListForIds(
+	it := f.Datastore.ListForIds(
 		datastore.ListForIdsParams{
-			Ids:          []string{request.UserId},
+			Ids:          []string{userId},
 			IdFieldNum:   model.GetUserIdFieldNum(),
 			SortFieldNum: -1, // Sort by something?
 			Entity:       &model,
+			Cursor:       cursor,
 		})
 
+	listens := make([]*models.Listen, 0)
+	episodes := make([]*models.Episode, 0)
+	i := 0
 	for {
 		model := models.Listen{}
-		err := Listens.Next(&model)
+		err := it.Next(&model)
 		if err == datastore.IteratorDone {
 			break
 		}
 		if err != nil {
 			return err
 		}
-		response.Listens = append(
-			response.Listens, &model.UserListenMessage)
+		if request.IncludeEpisodes {
+			listens = append(listens, &model)
+			episode := &models.Episode{}
+			episode.Id = model.EpisodeId
+			episodes = append(episodes, episode)
+		} else {
+			response.Listens = append(
+				response.Listens, &model.UserListenMessage)
+		}
+		if i > 20 {
+			response.Cursor = &it.Cursor().QueryCursor
+		}
+		i++
 	}
+
+	if !request.IncludeEpisodes {
+		return
+	}
+	// Now get the episodes
+	err = f.Datastore.GetMulti(episodes)
+	if err != nil {
+		return
+	}
+	for _, listen := range listens {
+		for _, episode := range episodes {
+			if listen.EpisodeId == episode.Id {
+				listen.Episode = &episode.EpisodeMessage
+				response.Listens = append(response.Listens, &listen.UserListenMessage)
+			}
+		}
+	}
+
 	return
 }

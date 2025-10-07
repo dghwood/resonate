@@ -1392,6 +1392,15 @@ const ListListenMessage_Request$json = {
       '10': 'requestInfo'
     },
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'include_episodes', '3': 3, '4': 1, '5': 8, '10': 'includeEpisodes'},
+    {
+      '1': 'cursor',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -1415,6 +1424,14 @@ const ListListenMessage_Response$json = {
       '6': '.resonate.UserListenMessage',
       '10': 'listens'
     },
+    {
+      '1': 'cursor',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -1422,11 +1439,14 @@ const ListListenMessage_Response$json = {
 final $typed_data.Uint8List listListenMessageDescriptor = $convert.base64Decode(
     'ChFMaXN0TGlzdGVuTWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLkxpc3'
     'RMaXN0ZW5NZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
-    'bmF0ZS5hcGkuTGlzdExpc3Rlbk1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmAKB1JlcXVlc3'
-    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
-    'ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQaggEKCFJlc3BvbnNlEj8KDXJlc3Bvbn'
-    'NlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8S'
-    'NQoHbGlzdGVucxgCIAMoCzIbLnJlc29uYXRlLlVzZXJMaXN0ZW5NZXNzYWdlUgdsaXN0ZW5z');
+    'bmF0ZS5hcGkuTGlzdExpc3Rlbk1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGr4BCgdSZXF1ZX'
+    'N0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5mb1ILcmVx'
+    'dWVzdEluZm8SFwoHdXNlcl9pZBgCIAEoCVIGdXNlcklkEikKEGluY2x1ZGVfZXBpc29kZXMYAy'
+    'ABKAhSD2luY2x1ZGVFcGlzb2RlcxIxCgZjdXJzb3IYBCABKAsyGS5yZXNvbmF0ZS5hcGkuUXVl'
+    'cnlDdXJzb3JSBmN1cnNvchq1AQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLn'
+    'Jlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxI1CgdsaXN0ZW5zGAIgAygL'
+    'MhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSMQoGY3Vyc29yGAUgASgLMh'
+    'kucmVzb25hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZjdXJzb3I=');
 
 @$core.Deprecated('Use getFeedMessageDescriptor instead')
 const GetFeedMessage$json = {

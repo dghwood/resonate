@@ -3,6 +3,8 @@ import 'package:logging/logging.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/utils.dart';
+import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/common/listens');
 
@@ -32,19 +34,15 @@ class ListensListComponent extends StatelessWidget {
         return ListView.builder(
           itemCount: episodes.length,
           itemBuilder: (context, index) {
-            var episode = episodes.elementAt(index);
+            var episode = episodes.elementAt(index).episode;
+            if (episode == null) {
+              return Text('episode not found');
+            }
             return ListTile(
               // onTap: () => Navigate(context).toPodcast(episodes.id),
-              leading:
-                  episode.imageUrl != ''
-                      ? Image.network(episode.imageUrl)
-                      : null,
+              leading: ImageComponent(episode.imageUrl),
               title: Text(episode.title),
               subtitle: Text(episode.description, maxLines: 2),
-              // trailing: SubscribeIconCommponent(
-              //   authUser: context.read(),
-              //   podcast: podcast,
-              // ),
             );
           },
         );

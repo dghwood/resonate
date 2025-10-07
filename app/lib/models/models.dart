@@ -371,6 +371,12 @@ class UserListen extends BaseModel<UserListenMessage> {
   bool get completed => _message.completed;
   Episode? get episode =>
       _message.hasEpisode() ? Episode.fromMessage(_message.episode) : null;
+
+  UserListen copyWithEpisode(Episode episode) {
+    var message = UserListenMessage()..mergeFromMessage(_message);
+    message.episode = episode.toMessage();
+    return UserListen.fromMessage(message);
+  }
 }
 
 class UserFollow extends BaseModel<UserFollowMessage> {

@@ -251,10 +251,14 @@ message ListListenMessage {
     message Request {
         RequestInfo request_info = 1; 
         string user_id = 2; 
+        // Return the episodes in the UserListenMessage 
+        bool include_episodes = 3; 
+        QueryCursor cursor = 4;
     }
     message Response {
         ResponseInfo response_info = 1; 
         repeated UserListenMessage listens = 2; 
+        QueryCursor cursor = 5;
     }
 
     Request request = 1; 

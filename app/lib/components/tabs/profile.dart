@@ -40,6 +40,11 @@ class ProfileComponentHeader extends StatelessWidget {
   }
 }
 
+/* ProfileComponent 
+
+  Should be generic for any user object, including 
+  viewing other profiles. 
+*/
 class ProfileComponent extends StatelessWidget {
   const ProfileComponent({super.key, required this.user});
 
@@ -90,6 +95,7 @@ class ProfileComponent extends StatelessWidget {
                         subscriptionsApi: context.read(),
                       ),
                       // Center(child: Text('Starts')),
+                      // TODO(duncan): Don't show this one for non logged in users.
                       DownloadsListComponent(downloadsApi: context.read()),
                     ],
                   ),

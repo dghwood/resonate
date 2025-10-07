@@ -3971,10 +3971,14 @@ class ListListenMessage_Request extends $pb.GeneratedMessage {
   factory ListListenMessage_Request({
     RequestInfo? requestInfo,
     $core.String? userId,
+    $core.bool? includeEpisodes,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (userId != null) result.userId = userId;
+    if (includeEpisodes != null) result.includeEpisodes = includeEpisodes;
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -3994,6 +3998,9 @@ class ListListenMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOB(3, _omitFieldNames ? '' : 'includeEpisodes')
+    ..aOM<QueryCursor>(4, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4038,16 +4045,39 @@ class ListListenMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
   void clearUserId() => $_clearField(2);
+
+  /// Return the episodes in the UserListenMessage
+  @$pb.TagNumber(3)
+  $core.bool get includeEpisodes => $_getBF(2);
+  @$pb.TagNumber(3)
+  set includeEpisodes($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasIncludeEpisodes() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearIncludeEpisodes() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  QueryCursor get cursor => $_getN(3);
+  @$pb.TagNumber(4)
+  set cursor(QueryCursor value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasCursor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCursor() => $_clearField(4);
+  @$pb.TagNumber(4)
+  QueryCursor ensureCursor() => $_ensure(3);
 }
 
 class ListListenMessage_Response extends $pb.GeneratedMessage {
   factory ListListenMessage_Response({
     ResponseInfo? responseInfo,
     $core.Iterable<$0.UserListenMessage>? listens,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (listens != null) result.listens.addAll(listens);
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -4069,6 +4099,8 @@ class ListListenMessage_Response extends $pb.GeneratedMessage {
     ..pc<$0.UserListenMessage>(
         2, _omitFieldNames ? '' : 'listens', $pb.PbFieldType.PM,
         subBuilder: $0.UserListenMessage.create)
+    ..aOM<QueryCursor>(5, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4108,6 +4140,17 @@ class ListListenMessage_Response extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$0.UserListenMessage> get listens => $_getList(1);
+
+  @$pb.TagNumber(5)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(5)
+  set cursor(QueryCursor value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(5)
+  void clearCursor() => $_clearField(5);
+  @$pb.TagNumber(5)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class ListListenMessage extends $pb.GeneratedMessage {

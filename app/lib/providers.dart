@@ -90,6 +90,7 @@ final providers =
       Provider<ListensApi>(
         create:
             (context) => ListensApi(
+              httpService: context.read(),
               authUser: context.read(),
               episodeApi: context.read(),
             ),
