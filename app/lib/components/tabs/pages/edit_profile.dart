@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/errors.dart';
+import 'package:resonate/components/common/add_photo.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/models/models.dart';
@@ -45,6 +46,19 @@ class EditProfileComponent extends StatelessWidget {
             spacing: 16,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              IconButton(
+                icon: Icon(Icons.person),
+                iconSize: 150,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return EditableProfilePhotoComponent();
+                      },
+                    ),
+                  );
+                },
+              ),
               TextFormField(
                 controller: nameEditingController,
                 decoration: InputDecoration(labelText: 'Name'),
