@@ -1,8 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:vector_math/vector_math_64.dart' as vector_math;
 
 import 'dart:ui' as ui;
 
@@ -13,7 +16,65 @@ class ProfileImage extends ChangeNotifier {
   Uint8List? imageBytes;
   Uint8List? newBytes;
 
-  Future<bool> transform(TransformationController controller) async {
+  Future<bool> transform2(
+    Matrix4 transformationMatrix, {
+    double targetSize = 300,
+  }) async {
+    _log.info('transform2');
+    if (imageBytes == null) return false;
+    final ui.Image image = await decodeImageFromList(imageBytes!);
+    final originalWidth = image.width.toDouble();
+    final originalHeight = image.height.toDouble();
+    final maxLength =
+        originalWidth > originalHeight ? originalWidth : originalHeight;
+    final scale = targetSize / maxLength;
+
+    _log.info('original image dimensions: $originalWidth, $originalHeight');
+
+    // Center the image
+    final paddingX = (maxLength - originalWidth) / 2;
+    final paddingY = (maxLength - originalHeight) / 2;
+    _log.info('padding: $paddingX, $paddingY');
+    _log.info('scale: $scale');
+
+    final recorder = ui.PictureRecorder();
+    // create the canvas to the target size
+    final canvasSize = Rect.fromLTWH(0, 0, targetSize, targetSize);
+    final ui.Canvas canvas = ui.Canvas(recorder, canvasSize);
+    // give it a blue background, so you can see the actual size.
+    canvas.drawRect(canvasSize, Paint()..color = Colors.blue);
+    canvas.save();
+    final matrix = transformationMatrix; // Matrix4.identity();
+    // scale the coordinates to the size of the original image.
+    matrix.scaleByDouble(scale, scale, scale, 1.0);
+    // place the image offset in the center
+    matrix.translateByDouble(paddingX, paddingY, 0, 1.0);
+
+    canvas.transform(matrix.storage);
+    // canvas.transform(transformationMatrix.storage);
+
+    // Before I draw the image, i need to transform
+    canvas.drawImage(image, Offset.zero, Paint());
+    canvas.restore();
+    // Translate the matrix to the default preview coords.
+    // final matrix = Matrix4.identity();
+    // // Scale up to the original size
+    // // matrix.scaleByDouble(scale, scale, scale, 1.0);
+    // // Put it into the center
+    // matrix.translateByDouble(paddingX, paddingY, 0, 1.0);
+    // _log.info(matrix);
+
+    var finalImage = await recorder.endRecording().toImage(
+      canvasSize.width.toInt(),
+      canvasSize.height.toInt(),
+    );
+    var byteData = await finalImage.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData == null) return false;
+    newBytes = byteData.buffer.asUint8List();
+    return true;
+  }
+
+  Future<bool> transform(Matrix4 transformationMatrix) async {
     if (imageBytes == null) return false;
 
     final ui.Codec codec = await ui.instantiateImageCodec(
@@ -29,7 +90,6 @@ class ProfileImage extends ChangeNotifier {
     // load the right size image to end up at 300x300
     _log.info('original image dimensions: ${image.width}, ${image.height}');
 
-    var transformationMatrix = controller.value;
     final double scale = transformationMatrix.getMaxScaleOnAxis();
     // transformed image dimensions
     double viewerScale = 1;
@@ -104,6 +164,8 @@ class EditableProfilePhotoComponent extends StatelessWidget {
 
   final PageController pageController = PageController();
   final ProfileImage profileImage = ProfileImage();
+  final transformationController = TransformationController();
+  final double targetSize = 450;
 
   @override
   Widget build(BuildContext context) {
@@ -134,27 +196,65 @@ class EditableProfilePhotoComponent extends StatelessWidget {
                     if (profileImage.imageBytes == null) {
                       return Text('No image available');
                     }
-                    var transformationController = TransformationController();
+                    transformationController.value = Matrix4.identity();
+
                     return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 300,
-                          height: 300,
-                          child: InteractiveViewer(
-                            constrained: false,
-                            transformationController: transformationController,
-                            child: Image.memory(
-                              imageBytes!,
-                              width: 300,
-                              height: 300,
+                        ClipRRect(
+                          borderRadius: BorderRadiusGeometry.all(
+                            Radius.circular(targetSize),
+                          ),
+                          child: SizedBox(
+                            width: targetSize,
+                            height: targetSize,
+                            child: Container(
+                              color: Colors.blue,
+                              child: InteractiveViewer(
+                                constrained: false,
+                                transformationController:
+                                    transformationController,
+                                child: Image.memory(
+                                  imageBytes!,
+                                  width: targetSize,
+                                  height: targetSize,
+                                ),
+                              ),
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.rotate_right),
+                              onPressed: () {
+                                _log.info("rotate");
+
+                                var matrix = Matrix4.identity();
+
+                                final originalCenter = vector_math.Vector3(
+                                  targetSize / 2,
+                                  targetSize / 2,
+                                  0,
+                                );
+
+                                matrix.translateByVector3(originalCenter);
+                                matrix.rotateZ(math.pi / 2);
+                                matrix.translateByVector3(-originalCenter);
+                                matrix.multiply(transformationController.value);
+
+                                transformationController.value = matrix;
+                              },
+                            ),
+                          ],
                         ),
                         TextButton(
                           child: Text("Save"),
                           onPressed: () async {
-                            if (await profileImage.transform(
-                              transformationController,
+                            if (await profileImage.transform2(
+                              transformationController.value,
+                              targetSize: targetSize,
                             )) {
                               _log.info('next page');
                               pageController.nextPage(
@@ -178,8 +278,8 @@ class EditableProfilePhotoComponent extends StatelessWidget {
                   return Text('No image selected');
                 }
                 return SizedBox(
-                  width: 300,
-                  height: 300,
+                  width: targetSize,
+                  height: targetSize,
                   child: Image.memory(profileImage.newBytes!),
                 );
               },
