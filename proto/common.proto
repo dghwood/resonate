@@ -85,7 +85,9 @@ message UserMessage {
     string name = 2;
     string email = 3;
     // What about country code, etc. 
+    // TODO(duncan): Maybe I should just not store this?
     string phone_number = 10;
+    string encrypted_phone_number = 11; 
     // Should this be a data url? 
     string image_url = 4;
     repeated UserSubscriptionMessage subscriptions = 5;

@@ -253,6 +253,13 @@ const UserMessage$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
     {'1': 'phone_number', '3': 10, '4': 1, '5': 9, '10': 'phoneNumber'},
+    {
+      '1': 'encrypted_phone_number',
+      '3': 11,
+      '4': 1,
+      '5': 9,
+      '10': 'encryptedPhoneNumber'
+    },
     {'1': 'image_url', '3': 4, '4': 1, '5': 9, '10': 'imageUrl'},
     {
       '1': 'subscriptions',
@@ -293,13 +300,14 @@ const UserMessage$json = {
 /// Descriptor for `UserMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode(
     'CgtVc2VyTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVlbW'
-    'FpbBgDIAEoCVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAogASgJUgtwaG9uZU51bWJlchIbCglp'
-    'bWFnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5yZXNvbm'
-    'F0ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW5zGAYg'
-    'AygLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93aW5nGA'
-    'cgAygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxIjCg1udW1fZm9s'
-    'bG93ZXJzGAggASgDUgxudW1Gb2xsb3dlcnMSPAoIbWV0YWRhdGEYCSABKAsyIC5yZXNvbmF0ZS'
-    '5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
+    'FpbBgDIAEoCVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAogASgJUgtwaG9uZU51bWJlchI0ChZl'
+    'bmNyeXB0ZWRfcGhvbmVfbnVtYmVyGAsgASgJUhRlbmNyeXB0ZWRQaG9uZU51bWJlchIbCglpbW'
+    'FnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5yZXNvbmF0'
+    'ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW5zGAYgAy'
+    'gLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93aW5nGAcg'
+    'AygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxIjCg1udW1fZm9sbG'
+    '93ZXJzGAggASgDUgxudW1Gb2xsb3dlcnMSPAoIbWV0YWRhdGEYCSABKAsyIC5yZXNvbmF0ZS5T'
+    'dG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
 
 @$core.Deprecated('Use publicUserMessageDescriptor instead')
 const PublicUserMessage$json = {

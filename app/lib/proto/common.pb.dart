@@ -802,6 +802,7 @@ class UserMessage extends $pb.GeneratedMessage {
     $fixnum.Int64? numFollowers,
     StorageMetadataMessage? metadata,
     $core.String? phoneNumber,
+    $core.String? encryptedPhoneNumber,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -814,6 +815,8 @@ class UserMessage extends $pb.GeneratedMessage {
     if (numFollowers != null) result.numFollowers = numFollowers;
     if (metadata != null) result.metadata = metadata;
     if (phoneNumber != null) result.phoneNumber = phoneNumber;
+    if (encryptedPhoneNumber != null)
+      result.encryptedPhoneNumber = encryptedPhoneNumber;
     return result;
   }
 
@@ -847,6 +850,7 @@ class UserMessage extends $pb.GeneratedMessage {
     ..aOM<StorageMetadataMessage>(9, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
     ..aOS(10, _omitFieldNames ? '' : 'phoneNumber')
+    ..aOS(11, _omitFieldNames ? '' : 'encryptedPhoneNumber')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -936,6 +940,7 @@ class UserMessage extends $pb.GeneratedMessage {
   StorageMetadataMessage ensureMetadata() => $_ensure(8);
 
   /// What about country code, etc.
+  /// TODO(duncan): Maybe I should just not store this?
   @$pb.TagNumber(10)
   $core.String get phoneNumber => $_getSZ(9);
   @$pb.TagNumber(10)
@@ -944,6 +949,15 @@ class UserMessage extends $pb.GeneratedMessage {
   $core.bool hasPhoneNumber() => $_has(9);
   @$pb.TagNumber(10)
   void clearPhoneNumber() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get encryptedPhoneNumber => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set encryptedPhoneNumber($core.String value) => $_setString(10, value);
+  @$pb.TagNumber(11)
+  $core.bool hasEncryptedPhoneNumber() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearEncryptedPhoneNumber() => $_clearField(11);
 }
 
 /// Stripped down UserMessage for more public consumption

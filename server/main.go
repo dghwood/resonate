@@ -30,6 +30,21 @@ func main() {
 		port = "8080"
 	}
 
+	env_variables := []string{
+		"USER_ID_SALT",
+		"TADDY_USER_ID",
+		"TADDY_API_KEY",
+		"GOOGLE_APPLICATION_CREDENTIALS",
+	}
+
+	for _, env_var := range env_variables {
+		_, ok := os.LookupEnv(env_var)
+		if !ok {
+			log.Errorf("Environment variable %s not set", env_var)
+			return
+		}
+	}
+
 	datastore := datastoreService.NewMemoryDatastore()
 	// searchApi := searchService.NewMockSearch()
 

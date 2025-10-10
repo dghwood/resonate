@@ -15,6 +15,11 @@ import (
 	pb "google.golang.org/protobuf/proto"
 )
 
+const (
+	// TODO(duncan): Move to ENV variables
+	USER_ID_SALT = "this-is-a-salt-dont-leave-it-here"
+)
+
 type Model interface {
 	pb.Message
 	GetId() string
@@ -109,6 +114,11 @@ type StorageMetadata struct {
 
 type User struct {
 	proto.UserMessage
+}
+
+func (p *User) SetIdFromPhoneNumber(phoneNumber string) {
+	p.Id = utils.HashPhoneNumber(phoneNumber)
+	p.PhoneNumber = phoneNumber
 }
 
 func (p *User) New() Model {

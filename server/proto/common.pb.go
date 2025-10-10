@@ -593,7 +593,9 @@ type UserMessage struct {
 	Name  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Email string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	// What about country code, etc.
-	PhoneNumber string `protobuf:"bytes,10,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	// TODO(duncan): Maybe I should just not store this?
+	PhoneNumber          string `protobuf:"bytes,10,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	EncryptedPhoneNumber string `protobuf:"bytes,11,opt,name=encrypted_phone_number,json=encryptedPhoneNumber,proto3" json:"encrypted_phone_number,omitempty"`
 	// Should this be a data url?
 	ImageUrl      string                     `protobuf:"bytes,4,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
 	Subscriptions []*UserSubscriptionMessage `protobuf:"bytes,5,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
@@ -659,6 +661,13 @@ func (x *UserMessage) GetEmail() string {
 func (x *UserMessage) GetPhoneNumber() string {
 	if x != nil {
 		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *UserMessage) GetEncryptedPhoneNumber() string {
+	if x != nil {
+		return x.EncryptedPhoneNumber
 	}
 	return ""
 }
@@ -1461,13 +1470,14 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12.\n" +
 	"\x06tokens\x18\x03 \x03(\v2\x16.resonate.TokenMessageR\x06tokens\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xa5\x03\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xdb\x03\n" +
 	"\vUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12!\n" +
 	"\fphone_number\x18\n" +
-	" \x01(\tR\vphoneNumber\x12\x1b\n" +
+	" \x01(\tR\vphoneNumber\x124\n" +
+	"\x16encrypted_phone_number\x18\v \x01(\tR\x14encryptedPhoneNumber\x12\x1b\n" +
 	"\timage_url\x18\x04 \x01(\tR\bimageUrl\x12G\n" +
 	"\rsubscriptions\x18\x05 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\x125\n" +
 	"\alistens\x18\x06 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x129\n" +

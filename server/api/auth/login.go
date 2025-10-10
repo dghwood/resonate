@@ -78,8 +78,7 @@ func (f Login) Execute(
 	}
 	// Now the user is authenticated
 	user := models.User{}
-	user.Id = utils.HashString(phoneNumber)
-	user.PhoneNumber = phoneNumber
+	user.SetIdFromPhoneNumber(phoneNumber)
 
 	// Get the user if they already exist
 	userErr := f.Datastore.Get(&user)

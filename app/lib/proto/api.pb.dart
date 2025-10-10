@@ -6233,6 +6233,220 @@ class UploadImageMessage extends $pb.GeneratedMessage {
   UploadImageMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class FindContactsMessage_Request extends $pb.GeneratedMessage {
+  factory FindContactsMessage_Request({
+    RequestInfo? requestInfo,
+    $core.Iterable<$core.String>? phoneNumbers,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (phoneNumbers != null) result.phoneNumbers.addAll(phoneNumbers);
+    return result;
+  }
+
+  FindContactsMessage_Request._();
+
+  factory FindContactsMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FindContactsMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FindContactsMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..pPS(2, _omitFieldNames ? '' : 'phoneNumbers')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage_Request clone() =>
+      FindContactsMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage_Request copyWith(
+          void Function(FindContactsMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as FindContactsMessage_Request))
+          as FindContactsMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage_Request create() =>
+      FindContactsMessage_Request._();
+  @$core.override
+  FindContactsMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<FindContactsMessage_Request> createRepeated() =>
+      $pb.PbList<FindContactsMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FindContactsMessage_Request>(create);
+  static FindContactsMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.String> get phoneNumbers => $_getList(1);
+}
+
+class FindContactsMessage_Response extends $pb.GeneratedMessage {
+  factory FindContactsMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.PublicUserMessage>? users,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (users != null) result.users.addAll(users);
+    return result;
+  }
+
+  FindContactsMessage_Response._();
+
+  factory FindContactsMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FindContactsMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FindContactsMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.PublicUserMessage>(
+        2, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM,
+        subBuilder: $0.PublicUserMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage_Response clone() =>
+      FindContactsMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage_Response copyWith(
+          void Function(FindContactsMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as FindContactsMessage_Response))
+          as FindContactsMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage_Response create() =>
+      FindContactsMessage_Response._();
+  @$core.override
+  FindContactsMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<FindContactsMessage_Response> createRepeated() =>
+      $pb.PbList<FindContactsMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FindContactsMessage_Response>(create);
+  static FindContactsMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.PublicUserMessage> get users => $_getList(1);
+}
+
+class FindContactsMessage extends $pb.GeneratedMessage {
+  factory FindContactsMessage({
+    FindContactsMessage_Request? request,
+    FindContactsMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  FindContactsMessage._();
+
+  factory FindContactsMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FindContactsMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FindContactsMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<FindContactsMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: FindContactsMessage_Request.create)
+    ..aOM<FindContactsMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: FindContactsMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage clone() => FindContactsMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FindContactsMessage copyWith(void Function(FindContactsMessage) updates) =>
+      super.copyWith((message) => updates(message as FindContactsMessage))
+          as FindContactsMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage create() => FindContactsMessage._();
+  @$core.override
+  FindContactsMessage createEmptyInstance() => create();
+  static $pb.PbList<FindContactsMessage> createRepeated() =>
+      $pb.PbList<FindContactsMessage>();
+  @$core.pragma('dart2js:noInline')
+  static FindContactsMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FindContactsMessage>(create);
+  static FindContactsMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  FindContactsMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(FindContactsMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  FindContactsMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  FindContactsMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(FindContactsMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  FindContactsMessage_Response ensureResponse() => $_ensure(1);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

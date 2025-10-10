@@ -1,12 +1,14 @@
 package utils
 
 import (
+	"crypto/hmac"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"log"
+	"os"
 	"regexp"
 )
 
@@ -47,6 +49,13 @@ func IsValidPhoneNumber(phoneNumber string) bool {
 func HashString(s string) string {
 	// TODO(duncan): Is this the right hash function
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(s)))
+}
+
+func HashPhoneNumber(phoneNumber string) string {
+	key := []byte(os.Getenv("USER_ID_SALT"))
+	h := hmac.New(sha256.New, key)
+	h.Write([]byte(phoneNumber))
+	return hex.EncodeToString(h.Sum(nil))
 }
 
 // GenerateUniqueID generates a random 32-character hexadecimal string.
