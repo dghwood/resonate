@@ -2158,6 +2158,14 @@ const FindContactsMessage_Request$json = {
       '10': 'requestInfo'
     },
     {'1': 'phone_numbers', '3': 2, '4': 3, '5': 9, '10': 'phoneNumbers'},
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -2181,6 +2189,14 @@ const FindContactsMessage_Response$json = {
       '6': '.resonate.PublicUserMessage',
       '10': 'users'
     },
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -2188,9 +2204,11 @@ const FindContactsMessage_Response$json = {
 final $typed_data.Uint8List findContactsMessageDescriptor = $convert.base64Decode(
     'ChNGaW5kQ29udGFjdHNNZXNzYWdlEkMKB3JlcXVlc3QYASABKAsyKS5yZXNvbmF0ZS5hcGkuRm'
     'luZENvbnRhY3RzTWVzc2FnZS5SZXF1ZXN0UgdyZXF1ZXN0EkYKCHJlc3BvbnNlGAIgASgLMiou'
-    'cmVzb25hdGUuYXBpLkZpbmRDb250YWN0c01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmwKB1'
-    'JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZv'
-    'UgtyZXF1ZXN0SW5mbxIjCg1waG9uZV9udW1iZXJzGAIgAygJUgxwaG9uZU51bWJlcnMafgoIUm'
-    'VzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUlu'
-    'Zm9SDHJlc3BvbnNlSW5mbxIxCgV1c2VycxgCIAMoCzIbLnJlc29uYXRlLlB1YmxpY1VzZXJNZX'
-    'NzYWdlUgV1c2Vycw==');
+    'cmVzb25hdGUuYXBpLkZpbmRDb250YWN0c01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGp8BCg'
+    'dSZXF1ZXN0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5m'
+    'b1ILcmVxdWVzdEluZm8SIwoNcGhvbmVfbnVtYmVycxgCIAMoCVIMcGhvbmVOdW1iZXJzEjEKBm'
+    'N1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3Vyc29yGrEBCghSZXNw'
+    'b25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1'
+    'IMcmVzcG9uc2VJbmZvEjEKBXVzZXJzGAIgAygLMhsucmVzb25hdGUuUHVibGljVXNlck1lc3Nh'
+    'Z2VSBXVzZXJzEjEKBmN1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3'
+    'Vyc29y');

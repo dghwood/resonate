@@ -6237,10 +6237,12 @@ class FindContactsMessage_Request extends $pb.GeneratedMessage {
   factory FindContactsMessage_Request({
     RequestInfo? requestInfo,
     $core.Iterable<$core.String>? phoneNumbers,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (phoneNumbers != null) result.phoneNumbers.addAll(phoneNumbers);
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -6260,6 +6262,8 @@ class FindContactsMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..pPS(2, _omitFieldNames ? '' : 'phoneNumbers')
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6300,16 +6304,29 @@ class FindContactsMessage_Request extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$core.String> get phoneNumbers => $_getList(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class FindContactsMessage_Response extends $pb.GeneratedMessage {
   factory FindContactsMessage_Response({
     ResponseInfo? responseInfo,
     $core.Iterable<$0.PublicUserMessage>? users,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (users != null) result.users.addAll(users);
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -6331,6 +6348,8 @@ class FindContactsMessage_Response extends $pb.GeneratedMessage {
     ..pc<$0.PublicUserMessage>(
         2, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM,
         subBuilder: $0.PublicUserMessage.create)
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6371,6 +6390,17 @@ class FindContactsMessage_Response extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$0.PublicUserMessage> get users => $_getList(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class FindContactsMessage extends $pb.GeneratedMessage {

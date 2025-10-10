@@ -4380,6 +4380,7 @@ type FindContactsMessage_Request struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
 	PhoneNumbers  []string               `protobuf:"bytes,2,rep,name=phone_numbers,json=phoneNumbers,proto3" json:"phone_numbers,omitempty"`
+	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4428,10 +4429,18 @@ func (x *FindContactsMessage_Request) GetPhoneNumbers() []string {
 	return nil
 }
 
+func (x *FindContactsMessage_Request) GetCursor() *QueryCursor {
+	if x != nil {
+		return x.Cursor
+	}
+	return nil
+}
+
 type FindContactsMessage_Response struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
 	Users         []*PublicUserMessage   `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4476,6 +4485,13 @@ func (x *FindContactsMessage_Response) GetResponseInfo() *ResponseInfo {
 func (x *FindContactsMessage_Response) GetUsers() []*PublicUserMessage {
 	if x != nil {
 		return x.Users
+	}
+	return nil
+}
+
+func (x *FindContactsMessage_Response) GetCursor() *QueryCursor {
+	if x != nil {
+		return x.Cursor
 	}
 	return nil
 }
@@ -4741,16 +4757,18 @@ const file_proto_api_proto_rawDesc = "" +
 	"imageBytes\x1ah\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12\x1b\n" +
-	"\timage_url\x18\x02 \x01(\tR\bimageUrl\"\x90\x03\n" +
+	"\timage_url\x18\x02 \x01(\tR\bimageUrl\"\xf8\x03\n" +
 	"\x13FindContactsMessage\x12C\n" +
 	"\arequest\x18\x01 \x01(\v2).resonate.api.FindContactsMessage.RequestR\arequest\x12F\n" +
-	"\bresponse\x18\x02 \x01(\v2*.resonate.api.FindContactsMessage.ResponseR\bresponse\x1al\n" +
+	"\bresponse\x18\x02 \x01(\v2*.resonate.api.FindContactsMessage.ResponseR\bresponse\x1a\x9f\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12#\n" +
-	"\rphone_numbers\x18\x02 \x03(\tR\fphoneNumbers\x1a~\n" +
+	"\rphone_numbers\x18\x02 \x03(\tR\fphoneNumbers\x121\n" +
+	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\x1a\xb1\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x121\n" +
-	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05usersB#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05users\x121\n" +
+	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursorB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_api_proto_rawDescOnce sync.Once
@@ -5012,13 +5030,15 @@ var file_proto_api_proto_depIdxs = []int32{
 	1,   // 146: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
 	0,   // 147: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
 	1,   // 148: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 149: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 150: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	151, // [151:151] is the sub-list for method output_type
-	151, // [151:151] is the sub-list for method input_type
-	151, // [151:151] is the sub-list for extension type_name
-	151, // [151:151] is the sub-list for extension extendee
-	0,   // [0:151] is the sub-list for field type_name
+	11,  // 149: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	0,   // 150: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 151: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	11,  // 152: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	153, // [153:153] is the sub-list for method output_type
+	153, // [153:153] is the sub-list for method input_type
+	153, // [153:153] is the sub-list for extension type_name
+	153, // [153:153] is the sub-list for extension extendee
+	0,   // [0:153] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }

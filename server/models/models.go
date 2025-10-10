@@ -116,6 +116,10 @@ type User struct {
 	proto.UserMessage
 }
 
+func (p *User) GetUserIdFieldNum() int32 {
+	return 1
+}
+
 func (p *User) SetIdFromPhoneNumber(phoneNumber string) {
 	p.Id = utils.HashPhoneNumber(phoneNumber)
 	p.PhoneNumber = phoneNumber
