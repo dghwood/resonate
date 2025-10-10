@@ -50,4 +50,9 @@ var (
 		Enum:    proto.ErrorEnum_ERROR_TIME_EXPIRED,
 		Message: "The time has expired.",
 	}
+
+	ERROR_UPLOAD_SIZE_EXCEEDED = Error{
+		Enum:    proto.ErrorEnum_ERROR_UPLOAD_SIZE_EXCEEDED,
+		Message: "The upload size has exceeded the limit.",
+	}
 )

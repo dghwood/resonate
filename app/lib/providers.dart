@@ -10,6 +10,7 @@ import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/api/subscription.dart';
+import 'package:resonate/api/upload.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
@@ -111,5 +112,10 @@ final providers =
               episodeApi: context.read(),
               authUser: context.read(),
             ),
+      ),
+      Provider<UploadApi>(
+        create:
+            (context) =>
+                UploadApi(authUser: context.read(), client: context.read()),
       ),
     ];

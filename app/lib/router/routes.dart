@@ -64,7 +64,11 @@ final List<RouteBase> sharedRoutes = [
   GoRoute(path: Routes.settings, builder: (context, state) => SettingsPage()),
   GoRoute(
     path: Routes.editProfile,
-    builder: (context, state) => EditProfileComponent(authUser: context.read()),
+    builder:
+        (context, state) => EditProfileComponent(
+          authUser: context.read(),
+          uploadApi: context.read(),
+        ),
   ),
 ];
 

@@ -2054,3 +2054,69 @@ final $typed_data.Uint8List listUserMessageDescriptor = $convert.base64Decode(
     'bxIZCgh1c2VyX2lkcxgCIAMoCVIHdXNlcklkcxp+CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbm'
     'ZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjEKBXVz'
     'ZXJzGAIgAygLMhsucmVzb25hdGUuUHVibGljVXNlck1lc3NhZ2VSBXVzZXJz');
+
+@$core.Deprecated('Use uploadImageMessageDescriptor instead')
+const UploadImageMessage$json = {
+  '1': 'UploadImageMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.UploadImageMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.UploadImageMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [UploadImageMessage_Request$json, UploadImageMessage_Response$json],
+};
+
+@$core.Deprecated('Use uploadImageMessageDescriptor instead')
+const UploadImageMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'image_bytes', '3': 2, '4': 1, '5': 12, '10': 'imageBytes'},
+  ],
+};
+
+@$core.Deprecated('Use uploadImageMessageDescriptor instead')
+const UploadImageMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {'1': 'image_url', '3': 2, '4': 1, '5': 9, '10': 'imageUrl'},
+  ],
+};
+
+/// Descriptor for `UploadImageMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List uploadImageMessageDescriptor = $convert.base64Decode(
+    'ChJVcGxvYWRJbWFnZU1lc3NhZ2USQgoHcmVxdWVzdBgBIAEoCzIoLnJlc29uYXRlLmFwaS5VcG'
+    'xvYWRJbWFnZU1lc3NhZ2UuUmVxdWVzdFIHcmVxdWVzdBJFCghyZXNwb25zZRgCIAEoCzIpLnJl'
+    'c29uYXRlLmFwaS5VcGxvYWRJbWFnZU1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmgKB1JlcX'
+    'Vlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgty'
+    'ZXF1ZXN0SW5mbxIfCgtpbWFnZV9ieXRlcxgCIAEoDFIKaW1hZ2VCeXRlcxpoCghSZXNwb25zZR'
+    'I/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVz'
+    'cG9uc2VJbmZvEhsKCWltYWdlX3VybBgCIAEoCVIIaW1hZ2VVcmw=');

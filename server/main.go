@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
@@ -9,6 +8,7 @@ import (
 	cacheService "github.com/dghwood/resonate/services/cachestore"
 	datastoreService "github.com/dghwood/resonate/services/datastore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
+	imagestoreService "github.com/dghwood/resonate/services/imagestore"
 	searchService "github.com/dghwood/resonate/services/search"
 
 	"github.com/dghwood/resonate/api/auth"
@@ -18,11 +18,13 @@ import (
 	"github.com/dghwood/resonate/api/podcast"
 	"github.com/dghwood/resonate/api/search"
 	"github.com/dghwood/resonate/api/subscribe"
+	"github.com/dghwood/resonate/api/upload"
 	"github.com/dghwood/resonate/api/users"
+	"github.com/dghwood/resonate/log"
 )
 
 func main() {
-	log.Println("Starting server...")
+	log.Info("Starting server...")
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
 		port = "8080"
@@ -32,6 +34,7 @@ func main() {
 	// searchApi := searchService.NewMockSearch()
 
 	cachestore := cacheService.NewMemoryCachestore()
+	imagestore := imagestoreService.NewMemoryImageStore()
 	fetch := fetchService.NewCached(cachestore)
 	searchApi := searchService.NewTaddySearch(fetch)
 
@@ -95,5 +98,35 @@ func main() {
 		SearchApi: searchApi,
 		Datastore: datastore}, "/api/search/top")
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	// Upload
+	api.Attach(&upload.Image{
+		Datastore: imagestore}, "/api/upload/image")
+
+	// Matches all paths /images/users/.*
+	http.HandleFunc("/images/users/", func(w http.ResponseWriter, r *http.Request) {
+		// CORs headers
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		if r.Method == "OPTIONS" {
+			return
+		}
+		log.Info(r.URL.Path)
+		resourceId := r.URL.Path[len("/images/users/"):]
+		if len(resourceId) == 0 {
+			http.Error(w, "Invalid resourceId", http.StatusBadRequest)
+			return
+		}
+		log.Infof("getting resourceId: %s", resourceId)
+		image, err := imagestore.Get(resourceId, 0)
+		if err != nil {
+			log.Error(err)
+			http.Error(w, "Image not found", http.StatusNotFound)
+			return
+		}
+		// w.Header().Set("Content-Type", "image/png")
+		w.Write(image)
+	})
+
+	log.Error(http.ListenAndServe(":"+port, nil))
 }

@@ -377,3 +377,17 @@ message ListUserMessage {
     Request request = 1; 
     Response response = 2; 
 }
+
+message UploadImageMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        bytes image_bytes = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        string image_url = 2;
+    }
+
+    Request request = 1; 
+    Response response = 2; 
+}

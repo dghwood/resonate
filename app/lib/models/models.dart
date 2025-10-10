@@ -290,7 +290,7 @@ class User extends BaseModel<UserMessage> {
   String get name => _message.name;
   String get email => _message.email;
   String get phoneNumber => _message.phoneNumber;
-  String? get imageUrl => _message.imageUrl;
+  String get imageUrl => _message.imageUrl;
   List<UserSubscription> get subscriptions =>
       _message.subscriptions
           .map((s) => UserSubscription.fromMessage(s))

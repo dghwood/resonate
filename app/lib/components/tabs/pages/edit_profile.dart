@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/errors.dart';
+import 'package:resonate/api/result.dart';
+import 'package:resonate/api/upload.dart';
 import 'package:resonate/components/common/add_photo.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
@@ -12,13 +14,18 @@ import 'package:resonate/models/models.dart';
 final Logger _log = Logger('tabs/pages/edit_profile');
 
 class EditProfileComponent extends StatelessWidget {
-  EditProfileComponent({super.key, required this.authUser}) {
+  EditProfileComponent({
+    super.key,
+    required this.authUser,
+    required this.uploadApi,
+  }) {
     command = authUser.editCommand();
   }
 
   final AuthUser authUser;
   final formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
+  final UploadApi uploadApi;
   late final ApiResultNotifier1<User, User> command;
 
   void onSubmit() {
@@ -53,7 +60,19 @@ class EditProfileComponent extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return EditableProfilePhotoComponent();
+                        return EditableProfilePhotoComponent(
+                          onImageUpdated: (imageBytes) async {
+                            var result = await uploadApi.upload(imageBytes);
+                            switch (result) {
+                              case ApiOk():
+                                var imageUrl = result.value;
+                                command.execute(User(imageUrl: imageUrl));
+                                return ApiResult.ok(true);
+                              case ApiError():
+                                return ApiResult.error(result.error);
+                            }
+                          },
+                        );
                       },
                     ),
                   );

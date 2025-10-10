@@ -6009,6 +6009,230 @@ class ListUserMessage extends $pb.GeneratedMessage {
   ListUserMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class UploadImageMessage_Request extends $pb.GeneratedMessage {
+  factory UploadImageMessage_Request({
+    RequestInfo? requestInfo,
+    $core.List<$core.int>? imageBytes,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (imageBytes != null) result.imageBytes = imageBytes;
+    return result;
+  }
+
+  UploadImageMessage_Request._();
+
+  factory UploadImageMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UploadImageMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UploadImageMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..a<$core.List<$core.int>>(
+        2, _omitFieldNames ? '' : 'imageBytes', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage_Request clone() =>
+      UploadImageMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage_Request copyWith(
+          void Function(UploadImageMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as UploadImageMessage_Request))
+          as UploadImageMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage_Request create() => UploadImageMessage_Request._();
+  @$core.override
+  UploadImageMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<UploadImageMessage_Request> createRepeated() =>
+      $pb.PbList<UploadImageMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UploadImageMessage_Request>(create);
+  static UploadImageMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get imageBytes => $_getN(1);
+  @$pb.TagNumber(2)
+  set imageBytes($core.List<$core.int> value) => $_setBytes(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasImageBytes() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearImageBytes() => $_clearField(2);
+}
+
+class UploadImageMessage_Response extends $pb.GeneratedMessage {
+  factory UploadImageMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.String? imageUrl,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (imageUrl != null) result.imageUrl = imageUrl;
+    return result;
+  }
+
+  UploadImageMessage_Response._();
+
+  factory UploadImageMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UploadImageMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UploadImageMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..aOS(2, _omitFieldNames ? '' : 'imageUrl')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage_Response clone() =>
+      UploadImageMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage_Response copyWith(
+          void Function(UploadImageMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as UploadImageMessage_Response))
+          as UploadImageMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage_Response create() =>
+      UploadImageMessage_Response._();
+  @$core.override
+  UploadImageMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<UploadImageMessage_Response> createRepeated() =>
+      $pb.PbList<UploadImageMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UploadImageMessage_Response>(create);
+  static UploadImageMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get imageUrl => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set imageUrl($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasImageUrl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearImageUrl() => $_clearField(2);
+}
+
+class UploadImageMessage extends $pb.GeneratedMessage {
+  factory UploadImageMessage({
+    UploadImageMessage_Request? request,
+    UploadImageMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  UploadImageMessage._();
+
+  factory UploadImageMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UploadImageMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UploadImageMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<UploadImageMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: UploadImageMessage_Request.create)
+    ..aOM<UploadImageMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: UploadImageMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage clone() => UploadImageMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UploadImageMessage copyWith(void Function(UploadImageMessage) updates) =>
+      super.copyWith((message) => updates(message as UploadImageMessage))
+          as UploadImageMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage create() => UploadImageMessage._();
+  @$core.override
+  UploadImageMessage createEmptyInstance() => create();
+  static $pb.PbList<UploadImageMessage> createRepeated() =>
+      $pb.PbList<UploadImageMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UploadImageMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UploadImageMessage>(create);
+  static UploadImageMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  UploadImageMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(UploadImageMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  UploadImageMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  UploadImageMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(UploadImageMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  UploadImageMessage_Response ensureResponse() => $_ensure(1);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

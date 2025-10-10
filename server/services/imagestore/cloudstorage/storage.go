@@ -12,24 +12,24 @@ import (
 	"github.com/dghwood/resonate/services/cachestore"
 )
 
-type StorageCachestore struct {
+type StorageImagestore struct {
 	bucket string
 	client *storage.Client
 }
 
-func (d *StorageCachestore) Close() {
+func (d *StorageImagestore) Close() {
 	d.client.Close()
 }
 
-func NewStorageCachestore() *StorageCachestore {
+func NewStorageCachestore() *StorageImagestore {
 	ctx, _ := getContext(10)
 	client, err := storage.NewClient(ctx)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
-	return &StorageCachestore{
+	return &StorageImagestore{
 		client: client,
-		bucket: "resonate-cache",
+		bucket: "resonate-images",
 	}
 }
 
@@ -41,7 +41,7 @@ func getContext(seconds int) (context.Context, context.CancelFunc) {
 	return ctx, cancel
 }
 
-func (d *StorageCachestore) Put(key string, response []byte) (err error) {
+func (d *StorageImagestore) Put(key string, response []byte) (err error) {
 	ctx, _ := getContext(10)
 	object := d.client.Bucket(d.bucket).Object(key)
 	writer := object.NewWriter(ctx)
@@ -55,7 +55,7 @@ func (d *StorageCachestore) Put(key string, response []byte) (err error) {
 	return
 }
 
-func (d *StorageCachestore) Get(key string, ttl time.Duration) (response []byte, err error) {
+func (d *StorageImagestore) Get(key string, ttl time.Duration) (response []byte, err error) {
 	ctx, _ := getContext(10)
 	object := d.client.Bucket(d.bucket).Object(key)
 	attrs, err := object.Attrs(ctx)
