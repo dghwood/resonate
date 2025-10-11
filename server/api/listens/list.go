@@ -32,11 +32,13 @@ func (f *List) Execute(
 
 	userId := request.UserId
 	if userId == "" {
+		log.Info("userId is null, using current user")
 		userId = loggedInUser.Id
 	}
 	if userId == "" {
 		return errors.ERROR_INTERNAL
 	}
+	log.Infof("listens for user %s", userId)
 	var cursor *models.QueryCursor
 	cursorPb := request.Cursor
 	log.Info("cursorPb: ", cursorPb)

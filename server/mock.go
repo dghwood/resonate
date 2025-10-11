@@ -6,6 +6,7 @@ import (
 	"os"
 
 	podcastService "github.com/dghwood/resonate/api/podcast"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/datastore"
 	"github.com/dghwood/resonate/services/fetch"
@@ -103,8 +104,9 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		for _, user := range users {
 			for _, episode := range response.Episodes {
 				if rand.Intn(5) == 0 { // Randomly select some episodes
-					// log.Infof("Adding listen for user %s to episode %s", user.Name, episode.Title)
+					log.Infof("Adding listen for user %s to episode %s", user.Id, episode.Title)
 					listen := models.Listen{}
+					listen.Id = fmt.Sprintf("%s-%s", user.Id, episode.Id)
 					listen.UserId = user.Id
 					listen.EpisodeId = episode.Id
 					listen.ListenTimestamp = episode.PublishTimestamp

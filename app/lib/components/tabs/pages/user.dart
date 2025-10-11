@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
@@ -24,7 +25,11 @@ class PublicUserProfileComponent extends StatelessWidget {
     //   body: body)
     return FutureBuilder(
       future: Future.delayed(Duration(seconds: 1), () {
-        return PublicUser(imageUrl: "/images/users/stock", name: "Test user");
+        return PublicUser(
+          id: userId,
+          imageUrl: "/images/users/stock",
+          name: "Test user",
+        );
       }),
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.connectionState == ConnectionState.waiting) {
@@ -106,7 +111,11 @@ class PublicUserListensComponent extends StatelessWidget {
           iterableApiResult: result,
           scrollController: scrollController,
           itemBuilder: (context, item) {
-            return Text("listen");
+            var episode = item.episode;
+            if (episode == null) {
+              return Text("No episode info found");
+            }
+            return EpisodeComponent(episode: item.episode!);
           },
         );
       },

@@ -303,8 +303,8 @@ class User extends BaseModel<UserMessage> {
 }
 
 class PublicUser extends BaseModel<PublicUserMessage> {
-  PublicUser({String? name, String? imageUrl})
-    : super(PublicUserMessage(name: name, imageUrl: imageUrl));
+  PublicUser({String? id, String? name, String? imageUrl})
+    : super(PublicUserMessage(id: id, name: name, imageUrl: imageUrl));
 
   PublicUser.fromMessage(super.message);
 
