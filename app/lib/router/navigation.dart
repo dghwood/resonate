@@ -13,6 +13,7 @@ class Routes {
   static const settings = '/settings';
   static const loading = '/loading';
   static const editProfile = '/profile/edit';
+  static const publicProfile = '/profile/:id';
 }
 
 class Navigate {
@@ -29,4 +30,6 @@ class Navigate {
       _context.push(Routes.podcast.replaceFirst(':id', id));
   void toSearch() => _context.push(Routes.search);
   void editProfile() => _context.push(Routes.editProfile);
+  void toPublicProfile(String id) =>
+      _context.push(Routes.publicProfile.replaceFirst(':id', id));
 }

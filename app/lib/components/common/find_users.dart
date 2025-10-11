@@ -5,6 +5,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
+import 'package:resonate/router/navigation.dart';
 
 final Logger _log = Logger('/components/common/find_users');
 
@@ -42,6 +43,9 @@ class FindUsersComponent extends StatelessWidget {
               scrollController: scrollController,
               itemBuilder: (context, user) {
                 return ListTile(
+                  onTap: () {
+                    Navigate(context).toPublicProfile(user.id);
+                  },
                   leading: ImageComponent(user.imageUrl),
                   title: Text(user.name),
                   trailing: IconButton(

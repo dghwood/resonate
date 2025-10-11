@@ -43,6 +43,14 @@ class HomePage extends TabComponent {
             Navigate(context).toPodcast('123');
           },
         ),
+        TextButton(
+          child: Text("Go to user"),
+          onPressed: () {
+            Navigate(context).toPublicProfile(
+              '3f2b211a4333b7c1a7a5df915549d262a25207290e8063ae7a4edee36094b109',
+            );
+          },
+        ),
         Expanded(child: FeedComponent(feedApi: context.read())),
       ],
     );

@@ -9,6 +9,7 @@ import 'package:resonate/components/tabs/home.dart';
 import 'package:resonate/components/tabs/pages/edit_profile.dart';
 import 'package:resonate/components/tabs/pages/podcast.dart';
 import 'package:resonate/components/tabs/pages/settings.dart';
+import 'package:resonate/components/tabs/pages/user.dart';
 import 'package:resonate/components/tabs/profile.dart';
 import 'package:resonate/components/tabs/search.dart';
 import 'package:resonate/router/navigation.dart';
@@ -69,6 +70,17 @@ final List<RouteBase> sharedRoutes = [
           authUser: context.read(),
           uploadApi: context.read(),
         ),
+  ),
+  GoRoute(
+    path: Routes.publicProfile,
+    builder: (context, state) {
+      _log.info('publicUser ${state.pathParameters}');
+      var userId = state.pathParameters['id'];
+      if (userId == null) {
+        return Text('User ID is required');
+      }
+      return PublicUserProfileComponent(userId: userId);
+    },
   ),
 ];
 
