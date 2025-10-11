@@ -6,13 +6,13 @@ import (
 
 	"github.com/dghwood/resonate/api"
 	cacheService "github.com/dghwood/resonate/services/cachestore"
-	datastoreService "github.com/dghwood/resonate/services/datastore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
 	imagestoreService "github.com/dghwood/resonate/services/imagestore"
 	searchService "github.com/dghwood/resonate/services/search"
 
 	"github.com/dghwood/resonate/api/auth"
 	"github.com/dghwood/resonate/api/feed"
+	"github.com/dghwood/resonate/api/find"
 	"github.com/dghwood/resonate/api/follows"
 	"github.com/dghwood/resonate/api/listens"
 	"github.com/dghwood/resonate/api/podcast"
@@ -45,12 +45,12 @@ func main() {
 		}
 	}
 
-	datastore := datastoreService.NewMemoryDatastore()
-	// searchApi := searchService.NewMockSearch()
-
 	cachestore := cacheService.NewMemoryCachestore()
-	imagestore := imagestoreService.NewMemoryImageStore()
 	fetch := fetchService.NewCached(cachestore)
+	imagestore := imagestoreService.NewMemoryImageStore()
+	// datastore := datastoreService.NewMemoryDatastore()
+	datastore := NewMockDatastore(fetch, imagestore)
+	// searchApi := searchService.NewMockSearch()
 	searchApi := searchService.NewTaddySearch(fetch)
 
 	// Login API endpoints
@@ -117,6 +117,11 @@ func main() {
 	api.Attach(&upload.Image{
 		Datastore: imagestore}, "/api/upload/image")
 
+	// Find
+	api.Attach(&find.Users{
+		Datastore: datastore,
+	}, "/api/find/users")
+
 	// Matches all paths /images/users/.*
 	http.HandleFunc("/images/users/", func(w http.ResponseWriter, r *http.Request) {
 		// CORs headers
@@ -143,5 +148,6 @@ func main() {
 		w.Write(image)
 	})
 
+	log.Info("listening on port " + port + "...")
 	log.Error(http.ListenAndServe(":"+port, nil))
 }

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/feed.dart';
@@ -12,6 +13,7 @@ import 'package:resonate/api/search.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/upload.dart';
 import 'package:resonate/mock_http.dart';
+import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
@@ -117,5 +119,13 @@ final providers =
         create:
             (context) =>
                 UploadApi(authUser: context.read(), client: context.read()),
+      ),
+      Provider<FindUsersApi>(
+        create:
+            (context) => FindUsersApi(
+              authUser: context.read(),
+              client: context.read(),
+              contactsSerivce: MockContacts(),
+            ),
       ),
     ];

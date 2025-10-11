@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
+import 'package:resonate/components/common/find_users.dart';
 import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
@@ -18,76 +19,69 @@ final Logger _log = Logger('components/tabs/search');
    * SearchResultsComponent 
     * InfiniteScrollComponent
 */
-class SearchComponent extends StatefulWidget {
+class SearchComponent extends StatelessWidget {
   const SearchComponent({super.key});
-
   @override
-  State<SearchComponent> createState() => _SearchComponentState();
+  Widget build(BuildContext context) {
+    return Material(
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            TabBar(tabs: [Tab(text: 'Podcasts'), Tab(text: 'Users')]),
+            Expanded(
+              child: TabBarView(
+                children: [PodcastSearchComponent(), UsersSearchComponent()],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _SearchComponentState extends State<SearchComponent> {
+class PodcastSearchComponent extends StatefulWidget {
+  const PodcastSearchComponent({super.key});
+
+  @override
+  State<PodcastSearchComponent> createState() => _PodcastSearchComponentState();
+}
+
+class _PodcastSearchComponentState extends State<PodcastSearchComponent> {
   final ValueNotifier<String> query = ValueNotifier<String>('');
   final ValueNotifier<String> typeAheadQuery = ValueNotifier<String>('');
 
   @override
   Widget build(BuildContext context) {
     var searchApi = context.read<SearchApi>();
-    return Material(
-      child: Column(
-        children: [
-          SearchBar(
-            leading: Icon(Icons.search),
-            hintText: 'Search',
-            autoFocus: true,
-            onChanged: (value) {
-              typeAheadQuery.value = value;
-            },
-            onSubmitted: (value) {
-              setState(() => query.value = value);
-            },
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                DefaultTabController(
-                  length: 3,
-                  child: Column(
-                    children: [
-                      TabBar(
-                        tabs: [
-                          Tab(text: 'Podcasts'),
-                          Tab(text: 'Episodes'),
-                          Tab(text: 'Users'),
-                        ],
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          children: [
-                            SearchResultsComponent(
-                              query: query,
-                              searchApi: searchApi,
-                            ),
-                            Text('Episodes'),
-                            Text('Users'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+    return Column(
+      children: [
+        SearchBar(
+          leading: Icon(Icons.search),
+          hintText: 'Search',
+          autoFocus: true,
+          onChanged: (value) {
+            typeAheadQuery.value = value;
+          },
+          onSubmitted: (value) {
+            setState(() => query.value = value);
+          },
+        ),
+        Expanded(
+          child: Stack(
+            children: [
+              SearchResultsComponent(query: query, searchApi: searchApi),
+              Positioned(
+                child: TypeAheadSearchResultsComponent(
+                  query: typeAheadQuery,
+                  searchApi: searchApi,
                 ),
-                Positioned(
-                  child: TypeAheadSearchResultsComponent(
-                    query: typeAheadQuery,
-                    searchApi: searchApi,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          // ),
-          //SearchResultsComponent(query: query),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -225,5 +219,14 @@ class _SearchResultsComponentState extends State<SearchResultsComponent> {
       next: _next,
       builder: _itemBuilder,
     );
+  }
+}
+
+class UsersSearchComponent extends StatelessWidget {
+  const UsersSearchComponent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FindUsersComponent(findUsersApi: context.read());
   }
 }

@@ -25,7 +25,7 @@ class ProfileComponentHeader extends StatelessWidget {
       height: 200,
       child: Row(
         children: [
-          Image.network('http://localhost:8080${user.imageUrl}'),
+          ImageComponent(user.imageUrl),
           // ImageComponent(user.imageUrl, width: 150, height: 150),
           Text(user.name),
         ],

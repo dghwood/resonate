@@ -1,15 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
-import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/http.dart';
 
-Logger _log = Logger('api/episode');
+final Logger _log = Logger('api/episode');
 
 class FindContactsApiRequest extends ApiRequest<FindContactsMessage_Request> {
   FindContactsApiRequest({Iterable<String>? phoneNumbers, QueryCursor? cursor})
@@ -56,16 +54,16 @@ class FindUsersApi {
   FindUsersApi({
     required AbstractHttpService client,
     required AuthUser authUser,
-  }) : _server = FindContactsApiServer(client: client, authUser: authUser);
+    required AbstractContactsService contactsSerivce,
+  }) : _contactsService = contactsSerivce,
+       _server = FindContactsApiServer(client: client, authUser: authUser);
 
   final FindContactsApiServer _server;
+  final AbstractContactsService _contactsService;
 
   Future<IterableApiResult<Iterable<PublicUser>>> requestAndFind() async {
-    if (kIsWeb) {
-      return IterableApiResult.error(Exception("not support on web"));
-    }
     try {
-      return find(await Contacts.getPhoneNumbers());
+      return find(await _contactsService.getPhoneNumbers());
     } on Exception catch (e) {
       return IterableApiResult.error(e);
     }
