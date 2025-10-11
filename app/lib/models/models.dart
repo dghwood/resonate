@@ -302,6 +302,17 @@ class User extends BaseModel<UserMessage> {
   int? get numFollowers => _message.numFollowers.toInt();
 }
 
+class PublicUser extends BaseModel<PublicUserMessage> {
+  PublicUser() : super(PublicUserMessage());
+
+  PublicUser.fromMessage(super.message);
+
+  @override
+  String get id => _message.id;
+  String get name => _message.name;
+  String get imageUrl => _message.imageUrl;
+}
+
 class UserSubscription extends BaseModel<UserSubscriptionMessage> {
   UserSubscription({
     String? id,
