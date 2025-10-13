@@ -342,6 +342,9 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
   String get podcastId => _message.podcastId;
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
+
+  Podcast? get podcast =>
+      _message.hasPodcast() ? Podcast.fromMessage(_message.podcast) : null;
 }
 
 class UserListen extends BaseModel<UserListenMessage> {

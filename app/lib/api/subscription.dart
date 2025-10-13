@@ -5,7 +5,7 @@ import 'package:resonate/api/base.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
@@ -76,6 +76,49 @@ class RemoveSubscriptionApiServer
          RemoveSubscriptionApiRequest(),
          RemoveSubscriptionApiResponse(),
          'api/subscribe/remove',
+         authUser: authUser,
+         client: client,
+       );
+}
+
+class ListSubscriptionApiRequest
+    extends ApiRequest<ListSubscriptionMessage_Request> {
+  ListSubscriptionApiRequest({String? userId, bool? includePodcasts})
+    : super(
+        ListSubscriptionMessage_Request(
+          userId: userId,
+          includePodcasts: includePodcasts,
+          requestInfo: RequestInfo(),
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
+}
+
+class ListSubscriptionApiResponse
+    extends ApiResponse<ListSubscriptionMessage_Response> {
+  ListSubscriptionApiResponse() : super(ListSubscriptionMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  QueryCursor get cursor => QueryCursor.fromMessage(responsePb.cursor);
+  Iterable<UserSubscription> get subscriptions =>
+      responsePb.subscriptions.map((s) => UserSubscription.fromMessage(s));
+}
+
+class ListSubscriptionApiServer
+    extends ServerApi<ListSubscriptionApiRequest, ListSubscriptionApiResponse> {
+  ListSubscriptionApiServer({
+    AbstractHttpService? client,
+    required AuthUser authUser,
+  }) : super(
+         ListSubscriptionApiRequest(),
+         ListSubscriptionApiResponse(),
+         'api/subscribe/list',
          authUser: authUser,
          client: client,
        );
@@ -229,14 +272,41 @@ class SubscriptionApi extends ChangeNotifier {
 }
 
 class SubscriptionsApi {
-  const SubscriptionsApi({
+  SubscriptionsApi({
     required AuthUser authUser,
+    required AbstractHttpService httpService,
     required PodcastApi podcastApi,
   }) : _authUser = authUser,
+       _listServer = ListSubscriptionApiServer(
+         authUser: authUser,
+         client: httpService,
+       ),
        _podcastApi = podcastApi;
 
   final AuthUser _authUser;
   final PodcastApi _podcastApi;
+  final ListSubscriptionApiServer _listServer;
+
+  Future<IterableApiResult<Iterable<UserSubscription>>> listForUser(
+    String userId, {
+    QueryCursor? cusor,
+  }) async {
+    var request = ListSubscriptionApiRequest(
+      userId: userId,
+      includePodcasts: true,
+    );
+    var response = ListSubscriptionApiResponse();
+    try {
+      await _listServer.execute(request, response);
+      var subscriptions = response.subscriptions;
+      return IterableApiResult.ok(
+        subscriptions,
+        next: () => listForUser(userId, cusor: response.cursor),
+      );
+    } on Exception catch (e) {
+      return IterableApiResult.error(e);
+    }
+  }
 
   Future<ApiResult<Iterable<Podcast>>> get() async {
     var subscriptionApi = _authUser.subscriptionApi;

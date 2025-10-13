@@ -210,10 +210,13 @@ message ListSubscriptionMessage {
     message Request {
         RequestInfo request_info = 1; 
         string user_id = 2; 
+        bool include_podcasts = 3; 
+        QueryCursor cursor = 4;
     }
     message Response {
         ResponseInfo response_info = 1;
         repeated UserSubscriptionMessage subscriptions = 2; 
+        QueryCursor cursor = 3;
     }
     Request request = 1;
     Response response = 2;

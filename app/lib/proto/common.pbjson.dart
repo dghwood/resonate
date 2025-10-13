@@ -363,6 +363,14 @@ const UserSubscriptionMessage$json = {
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
     },
+    {
+      '1': 'podcast',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PodcastMessage',
+      '10': 'podcast'
+    },
   ],
 };
 
@@ -370,7 +378,8 @@ const UserSubscriptionMessage$json = {
 final $typed_data.Uint8List userSubscriptionMessageDescriptor = $convert.base64Decode(
     'ChdVc2VyU3Vic2NyaXB0aW9uTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIA'
     'EoCVIGdXNlcklkEh0KCnBvZGNhc3RfaWQYAyABKAlSCXBvZGNhc3RJZBI8CghtZXRhZGF0YRgE'
-    'IAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRh');
+    'IAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRhEjIKB3BvZG'
+    'Nhc3QYBSABKAsyGC5yZXNvbmF0ZS5Qb2RjYXN0TWVzc2FnZVIHcG9kY2FzdA==');
 
 @$core.Deprecated('Use userListenMessageDescriptor instead')
 const UserListenMessage$json = {

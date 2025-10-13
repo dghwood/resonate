@@ -1156,6 +1156,15 @@ const ListSubscriptionMessage_Request$json = {
       '10': 'requestInfo'
     },
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'include_podcasts', '3': 3, '4': 1, '5': 8, '10': 'includePodcasts'},
+    {
+      '1': 'cursor',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -1179,6 +1188,14 @@ const ListSubscriptionMessage_Response$json = {
       '6': '.resonate.UserSubscriptionMessage',
       '10': 'subscriptions'
     },
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
   ],
 };
 
@@ -1187,11 +1204,14 @@ final $typed_data.Uint8List listSubscriptionMessageDescriptor = $convert.base64D
     'ChdMaXN0U3Vic2NyaXB0aW9uTWVzc2FnZRJHCgdyZXF1ZXN0GAEgASgLMi0ucmVzb25hdGUuYX'
     'BpLkxpc3RTdWJzY3JpcHRpb25NZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSSgoIcmVzcG9uc2UY'
     'AiABKAsyLi5yZXNvbmF0ZS5hcGkuTGlzdFN1YnNjcmlwdGlvbk1lc3NhZ2UuUmVzcG9uc2VSCH'
-    'Jlc3BvbnNlGmAKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBp'
-    'LlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAIgASgJUgZ1c2VySWQalAEKCF'
-    'Jlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJ'
-    'bmZvUgxyZXNwb25zZUluZm8SRwoNc3Vic2NyaXB0aW9ucxgCIAMoCzIhLnJlc29uYXRlLlVzZX'
-    'JTdWJzY3JpcHRpb25NZXNzYWdlUg1zdWJzY3JpcHRpb25z');
+    'Jlc3BvbnNlGr4BCgdSZXF1ZXN0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFw'
+    'aS5SZXF1ZXN0SW5mb1ILcmVxdWVzdEluZm8SFwoHdXNlcl9pZBgCIAEoCVIGdXNlcklkEikKEG'
+    'luY2x1ZGVfcG9kY2FzdHMYAyABKAhSD2luY2x1ZGVQb2RjYXN0cxIxCgZjdXJzb3IYBCABKAsy'
+    'GS5yZXNvbmF0ZS5hcGkuUXVlcnlDdXJzb3JSBmN1cnNvchrHAQoIUmVzcG9uc2USPwoNcmVzcG'
+    '9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5m'
+    'bxJHCg1zdWJzY3JpcHRpb25zGAIgAygLMiEucmVzb25hdGUuVXNlclN1YnNjcmlwdGlvbk1lc3'
+    'NhZ2VSDXN1YnNjcmlwdGlvbnMSMQoGY3Vyc29yGAMgASgLMhkucmVzb25hdGUuYXBpLlF1ZXJ5'
+    'Q3Vyc29yUgZjdXJzb3I=');
 
 @$core.Deprecated('Use addListenMessageDescriptor instead')
 const AddListenMessage$json = {

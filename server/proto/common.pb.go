@@ -850,6 +850,7 @@ type UserSubscriptionMessage struct {
 	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	PodcastId     string                  `protobuf:"bytes,3,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
 	Metadata      *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Podcast       *PodcastMessage         `protobuf:"bytes,5,opt,name=podcast,proto3" json:"podcast,omitempty"` // this is optional, used for feed items
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -908,6 +909,13 @@ func (x *UserSubscriptionMessage) GetPodcastId() string {
 func (x *UserSubscriptionMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
 		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UserSubscriptionMessage) GetPodcast() *PodcastMessage {
+	if x != nil {
+		return x.Podcast
 	}
 	return nil
 }
@@ -1492,13 +1500,14 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12(\n" +
 	"\x10followed_user_id\x18\x03 \x01(\tR\x0efollowedUserId\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x9f\x01\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xd3\x01\n" +
 	"\x17UserSubscriptionMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
 	"\n" +
 	"podcast_id\x18\x03 \x01(\tR\tpodcastId\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xb0\x02\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x122\n" +
+	"\apodcast\x18\x05 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\xb0\x02\n" +
 	"\x11UserListenMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
@@ -1587,27 +1596,28 @@ var file_proto_common_proto_depIdxs = []int32{
 	0,  // 12: resonate.UserMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	0,  // 13: resonate.UserFollowMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	0,  // 14: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	2,  // 15: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
-	0,  // 16: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	2,  // 17: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
-	8,  // 18: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
-	2,  // 19: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
-	1,  // 20: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
-	8,  // 21: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
-	8,  // 22: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
-	12, // 23: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
-	13, // 24: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
-	14, // 25: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	1,  // 26: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
-	7,  // 27: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
-	2,  // 28: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
-	16, // 29: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
-	0,  // 30: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	31, // [31:31] is the sub-list for method output_type
-	31, // [31:31] is the sub-list for method input_type
-	31, // [31:31] is the sub-list for extension type_name
-	31, // [31:31] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	1,  // 15: resonate.UserSubscriptionMessage.podcast:type_name -> resonate.PodcastMessage
+	2,  // 16: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
+	0,  // 17: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	2,  // 18: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
+	8,  // 19: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
+	2,  // 20: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
+	1,  // 21: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
+	8,  // 22: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
+	8,  // 23: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
+	12, // 24: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
+	13, // 25: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
+	14, // 26: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
+	1,  // 27: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	7,  // 28: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	2,  // 29: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	16, // 30: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	0,  // 31: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	32, // [32:32] is the sub-list for extension extendee
+	0,  // [0:32] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }

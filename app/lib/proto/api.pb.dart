@@ -3289,10 +3289,14 @@ class ListSubscriptionMessage_Request extends $pb.GeneratedMessage {
   factory ListSubscriptionMessage_Request({
     RequestInfo? requestInfo,
     $core.String? userId,
+    $core.bool? includePodcasts,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (userId != null) result.userId = userId;
+    if (includePodcasts != null) result.includePodcasts = includePodcasts;
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -3312,6 +3316,9 @@ class ListSubscriptionMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOB(3, _omitFieldNames ? '' : 'includePodcasts')
+    ..aOM<QueryCursor>(4, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3359,16 +3366,38 @@ class ListSubscriptionMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
   void clearUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get includePodcasts => $_getBF(2);
+  @$pb.TagNumber(3)
+  set includePodcasts($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasIncludePodcasts() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearIncludePodcasts() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  QueryCursor get cursor => $_getN(3);
+  @$pb.TagNumber(4)
+  set cursor(QueryCursor value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasCursor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCursor() => $_clearField(4);
+  @$pb.TagNumber(4)
+  QueryCursor ensureCursor() => $_ensure(3);
 }
 
 class ListSubscriptionMessage_Response extends $pb.GeneratedMessage {
   factory ListSubscriptionMessage_Response({
     ResponseInfo? responseInfo,
     $core.Iterable<$0.UserSubscriptionMessage>? subscriptions,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (subscriptions != null) result.subscriptions.addAll(subscriptions);
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -3391,6 +3420,8 @@ class ListSubscriptionMessage_Response extends $pb.GeneratedMessage {
     ..pc<$0.UserSubscriptionMessage>(
         2, _omitFieldNames ? '' : 'subscriptions', $pb.PbFieldType.PM,
         subBuilder: $0.UserSubscriptionMessage.create)
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3432,6 +3463,17 @@ class ListSubscriptionMessage_Response extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$0.UserSubscriptionMessage> get subscriptions => $_getList(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class ListSubscriptionMessage extends $pb.GeneratedMessage {

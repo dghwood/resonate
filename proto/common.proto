@@ -117,6 +117,7 @@ message UserSubscriptionMessage {
     string user_id = 2;
     string podcast_id = 3;
     StorageMetadataMessage metadata = 4; 
+    PodcastMessage podcast = 5; // this is optional
 }
 
 message UserListenMessage {

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/api/subscription.dart';
 import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/router/navigation.dart';
 
 class PublicUserProfileComponent extends StatelessWidget {
   const PublicUserProfileComponent({super.key, required this.userId});
@@ -64,7 +66,10 @@ class PublicUserProfileComponent extends StatelessWidget {
                   user: user,
                   scrollController: controller,
                 ),
-                PublicUserSubscriptionsComponent(user: user),
+                PublicUserSubscriptionsComponent(
+                  user: user,
+                  scrollController: controller,
+                ),
               ],
             ),
           ),
@@ -124,11 +129,61 @@ class PublicUserListensComponent extends StatelessWidget {
 }
 
 class PublicUserSubscriptionsComponent extends StatelessWidget {
-  const PublicUserSubscriptionsComponent({super.key, required this.user});
+  const PublicUserSubscriptionsComponent({
+    super.key,
+    required this.user,
+    required this.scrollController,
+  });
 
   final PublicUser user;
+  final ScrollController scrollController;
+
   @override
   Widget build(BuildContext context) {
-    return Text('Subscriptions');
+    var subscriptionsApi = context.read<SubscriptionsApi>();
+    var future = subscriptionsApi.listForUser(user.id);
+    return FutureBuilder(
+      future: future,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return LoadingSpinnerComponent();
+        }
+        var result = snapshot.requireData;
+        switch (result) {
+          case ApiOkIterable():
+            break;
+          case ApiErrorIterable():
+            return Text('Error: ${result.error}');
+        }
+
+        if (result.result.isEmpty) return Text('No listens');
+
+        return InfiniteScrollComponent(
+          // Needed to put this here, since
+          // the stream would cache this component
+          key: Key(result.hashCode.toString()),
+          iterableApiResult: result,
+          scrollController: scrollController,
+          itemBuilder: (context, item) {
+            var podcast = item.podcast;
+            if (podcast == null) {
+              return Text("No podcast info found");
+            }
+            return ListTile(
+              leading: ImageComponent(podcast.imageUrl),
+              title: Text(podcast.title),
+              subtitle: Text(
+                podcast.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () {
+                Navigate(context).toPodcast(podcast.id);
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }

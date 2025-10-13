@@ -1143,12 +1143,14 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
     $core.String? userId,
     $core.String? podcastId,
     StorageMetadataMessage? metadata,
+    PodcastMessage? podcast,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (userId != null) result.userId = userId;
     if (podcastId != null) result.podcastId = podcastId;
     if (metadata != null) result.metadata = metadata;
+    if (podcast != null) result.podcast = podcast;
     return result;
   }
 
@@ -1170,6 +1172,8 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'podcastId')
     ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aOM<PodcastMessage>(5, _omitFieldNames ? '' : 'podcast',
+        subBuilder: PodcastMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1232,6 +1236,17 @@ class UserSubscriptionMessage extends $pb.GeneratedMessage {
   void clearMetadata() => $_clearField(4);
   @$pb.TagNumber(4)
   StorageMetadataMessage ensureMetadata() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  PodcastMessage get podcast => $_getN(4);
+  @$pb.TagNumber(5)
+  set podcast(PodcastMessage value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasPodcast() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPodcast() => $_clearField(5);
+  @$pb.TagNumber(5)
+  PodcastMessage ensurePodcast() => $_ensure(4);
 }
 
 class UserListenMessage extends $pb.GeneratedMessage {

@@ -86,6 +86,7 @@ final providers =
       Provider<SubscriptionsApi>(
         create:
             (context) => SubscriptionsApi(
+              httpService: context.read(),
               authUser: context.read(),
               podcastApi: context.read(),
             ),

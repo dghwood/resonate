@@ -2999,11 +2999,13 @@ func (x *RemoveSubscriptionMessage_Response) GetSubscription() *UserSubscription
 }
 
 type ListSubscriptionMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RequestInfo     *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
+	UserId          string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	IncludePodcasts bool                   `protobuf:"varint,3,opt,name=include_podcasts,json=includePodcasts,proto3" json:"include_podcasts,omitempty"`
+	Cursor          *QueryCursor           `protobuf:"bytes,4,opt,name=cursor,proto3" json:"cursor,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ListSubscriptionMessage_Request) Reset() {
@@ -3050,10 +3052,25 @@ func (x *ListSubscriptionMessage_Request) GetUserId() string {
 	return ""
 }
 
+func (x *ListSubscriptionMessage_Request) GetIncludePodcasts() bool {
+	if x != nil {
+		return x.IncludePodcasts
+	}
+	return false
+}
+
+func (x *ListSubscriptionMessage_Request) GetCursor() *QueryCursor {
+	if x != nil {
+		return x.Cursor
+	}
+	return nil
+}
+
 type ListSubscriptionMessage_Response struct {
 	state         protoimpl.MessageState     `protogen:"open.v1"`
 	ResponseInfo  *ResponseInfo              `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
 	Subscriptions []*UserSubscriptionMessage `protobuf:"bytes,2,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
+	Cursor        *QueryCursor               `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3098,6 +3115,13 @@ func (x *ListSubscriptionMessage_Response) GetResponseInfo() *ResponseInfo {
 func (x *ListSubscriptionMessage_Response) GetSubscriptions() []*UserSubscriptionMessage {
 	if x != nil {
 		return x.Subscriptions
+	}
+	return nil
+}
+
+func (x *ListSubscriptionMessage_Response) GetCursor() *QueryCursor {
+	if x != nil {
+		return x.Cursor
 	}
 	return nil
 }
@@ -4636,16 +4660,19 @@ const file_proto_api_proto_rawDesc = "" +
 	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscription\x1a\x92\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12E\n" +
-	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscription\"\xa7\x03\n" +
+	"\fsubscription\x18\x02 \x01(\v2!.resonate.UserSubscriptionMessageR\fsubscription\"\xb9\x04\n" +
 	"\x17ListSubscriptionMessage\x12G\n" +
 	"\arequest\x18\x01 \x01(\v2-.resonate.api.ListSubscriptionMessage.RequestR\arequest\x12J\n" +
-	"\bresponse\x18\x02 \x01(\v2..resonate.api.ListSubscriptionMessage.ResponseR\bresponse\x1a`\n" +
+	"\bresponse\x18\x02 \x01(\v2..resonate.api.ListSubscriptionMessage.ResponseR\bresponse\x1a\xbe\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x1a\x94\x01\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12)\n" +
+	"\x10include_podcasts\x18\x03 \x01(\bR\x0fincludePodcasts\x121\n" +
+	"\x06cursor\x18\x04 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\x1a\xc7\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12G\n" +
-	"\rsubscriptions\x18\x02 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\"\x9a\x03\n" +
+	"\rsubscriptions\x18\x02 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\x121\n" +
+	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\"\x9a\x03\n" +
 	"\x10AddListenMessage\x12@\n" +
 	"\arequest\x18\x01 \x01(\v2&.resonate.api.AddListenMessage.RequestR\arequest\x12C\n" +
 	"\bresponse\x18\x02 \x01(\v2'.resonate.api.AddListenMessage.ResponseR\bresponse\x1a|\n" +
@@ -4986,59 +5013,61 @@ var file_proto_api_proto_depIdxs = []int32{
 	0,   // 102: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
 	90,  // 103: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
 	1,   // 104: resonate.api.ListSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 105: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	90,  // 106: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	1,   // 107: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	91,  // 108: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	0,   // 109: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	91,  // 110: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	1,   // 111: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	91,  // 112: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	0,   // 113: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	91,  // 114: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	1,   // 115: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	11,  // 116: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	0,   // 117: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	91,  // 118: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
-	11,  // 119: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 120: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 121: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	92,  // 122: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
-	1,   // 123: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	93,  // 124: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	0,   // 125: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 126: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	1,   // 127: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	93,  // 128: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	0,   // 129: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 130: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	1,   // 131: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 132: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 133: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
-	1,   // 134: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 135: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 136: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
-	1,   // 137: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	86,  // 138: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
-	0,   // 139: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	86,  // 140: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
-	1,   // 141: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 142: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	1,   // 143: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 144: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 145: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
-	1,   // 146: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	0,   // 147: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	1,   // 148: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	11,  // 149: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	0,   // 150: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 151: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	11,  // 152: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	153, // [153:153] is the sub-list for method output_type
-	153, // [153:153] is the sub-list for method input_type
-	153, // [153:153] is the sub-list for extension type_name
-	153, // [153:153] is the sub-list for extension extendee
-	0,   // [0:153] is the sub-list for field type_name
+	11,  // 105: resonate.api.ListSubscriptionMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	0,   // 106: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	90,  // 107: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	11,  // 108: resonate.api.ListSubscriptionMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 109: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	91,  // 110: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	0,   // 111: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	91,  // 112: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	1,   // 113: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	91,  // 114: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	0,   // 115: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	91,  // 116: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	1,   // 117: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	11,  // 118: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	0,   // 119: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	91,  // 120: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
+	11,  // 121: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 122: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 123: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	92,  // 124: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
+	1,   // 125: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	93,  // 126: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	0,   // 127: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 128: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	1,   // 129: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	93,  // 130: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	0,   // 131: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 132: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	1,   // 133: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 134: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 135: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
+	1,   // 136: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 137: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 138: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
+	1,   // 139: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	86,  // 140: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
+	0,   // 141: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	86,  // 142: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
+	1,   // 143: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 144: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	1,   // 145: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 146: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 147: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
+	1,   // 148: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	0,   // 149: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	1,   // 150: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	11,  // 151: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	0,   // 152: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 153: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	11,  // 154: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	155, // [155:155] is the sub-list for method output_type
+	155, // [155:155] is the sub-list for method input_type
+	155, // [155:155] is the sub-list for extension type_name
+	155, // [155:155] is the sub-list for extension extendee
+	0,   // [0:155] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }

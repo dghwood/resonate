@@ -1,6 +1,7 @@
 package subscribe
 
 import (
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -28,29 +29,68 @@ func (f *List) Execute(
 	request *proto.ListSubscriptionMessage_Request,
 	response *proto.ListSubscriptionMessage_Response) (err error) {
 
+	log.Infof("ListSubscriptions for userId %s", request.UserId)
 	// Need to query db for all subscriptions (paging?)
 	// a user
 	model := models.Subscription{}
 
-	subscriptions := f.Datastore.ListForIds(
+	var cursor *models.QueryCursor
+	cursorPb := request.Cursor
+	if cursorPb != nil {
+		cursor = &models.QueryCursor{}
+		models.Merge(cursor, cursorPb)
+	}
+
+	it := f.Datastore.ListForIds(
 		datastore.ListForIdsParams{
 			Ids:          []string{request.UserId},
 			IdFieldNum:   model.GetUserIdFieldNum(),
 			SortFieldNum: -1, // Sort by something?
 			Entity:       &model,
+			Cursor:       cursor,
 		})
 
-	for {
+	hasMore := true
+
+	podcasts := make([]*models.Podcast, 0)
+	for range 20 {
 		model := models.Subscription{}
-		err := subscriptions.Next(&model)
+		err := it.Next(&model)
 		if err == datastore.IteratorDone {
+			hasMore = false
 			break
 		}
 		if err != nil {
 			return err
 		}
+
+		podcast := &models.Podcast{}
+		podcast.Id = model.PodcastId
+		podcasts = append(podcasts, podcast)
+
 		response.Subscriptions = append(
 			response.Subscriptions, &model.UserSubscriptionMessage)
 	}
+	if hasMore {
+		response.Cursor = &it.Cursor().QueryCursor
+	}
+
+	if !request.IncludePodcasts {
+		return
+	}
+	// Now get the podcast
+	err = f.Datastore.GetMulti(podcasts)
+	if err != nil {
+		return
+	}
+
+	for _, subscription := range response.Subscriptions {
+		for _, podcast := range podcasts {
+			if subscription.PodcastId == podcast.Id {
+				subscription.Podcast = &podcast.PodcastMessage
+			}
+		}
+	}
+
 	return
 }
