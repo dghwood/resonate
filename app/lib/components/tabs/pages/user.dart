@@ -5,6 +5,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/user.dart';
 import 'package:resonate/components/common/episode.dart';
+import 'package:resonate/components/common/follow.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
@@ -44,9 +45,9 @@ class PublicUserProfileComponent extends StatelessWidget {
           child: NestedScrollView(
             controller: controller,
             headerSliverBuilder: (context, someBool) {
-              print(someBool);
               return [
                 SliverAppBar(
+                  actions: [],
                   leading: ImageComponent(user.imageUrl),
                   pinned: true,
                   floating: true,
@@ -55,6 +56,12 @@ class PublicUserProfileComponent extends StatelessWidget {
                   title: Text(user.name),
                   bottom: TabBar(
                     tabs: [Tab(text: 'Listens'), Tab(text: 'Subscriptions')],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: FollowIconComponent(
+                    followApi: context.read(),
+                    user: user,
                   ),
                 ),
               ];

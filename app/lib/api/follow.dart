@@ -75,7 +75,9 @@ class FollowApi {
 
   // Local DB for quick look ups..
   final Map<String, UserFollow> _followDb = {};
-  UserFollow? get(String userId) => _followDb[userId];
+  Future<UserFollow?> get(String userId) async {
+    return _followDb[userId];
+  }
 
   Future<ApiResult<bool>> sync() async {
     try {
@@ -156,7 +158,7 @@ class AddFollowApiServer
     : super(
         AddFollowApiRequest(),
         AddFollowApiResponse(),
-        '/api/follow/add',
+        'api/follow/add',
         authUser: authUser,
         client: client,
       );
@@ -195,7 +197,7 @@ class RemoveFollowApiServer
   }) : super(
          RemoveFollowApiRequest(),
          RemoveFollowApiResponse(),
-         '/api/follow/remove',
+         'api/follow/remove',
          authUser: authUser,
          client: client,
        );
@@ -242,7 +244,7 @@ class ListFollowApiServer
     : super(
         ListFollowApiRequest(),
         ListFollowApiResponse(),
-        '/api/follow/list',
+        'api/follow/list',
         authUser: authUser,
         client: client,
       );

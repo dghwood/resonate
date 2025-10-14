@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resonate/api/command.dart';
+import 'package:resonate/api/errors.dart';
+import 'package:resonate/api/follow.dart';
+import 'package:resonate/api/result.dart';
+import 'package:resonate/components/common/command.dart';
+import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/models/models.dart';
+
+/* FollowIconComponent 
+
+  This has a bunch of stages 
+
+  * First it needs to check if you follow the user 
+  * The follow / unfollow 
+  * catch the error and retry 
+*/
+enum FollowNotifierStatus { loading, error, followed, unfollowed }
+
+class FollowNotifier extends ChangeNotifier {
+  FollowNotifier({required this.followApi, required this.user});
+
+  final FollowApi followApi;
+  final PublicUser user;
+
+  Exception? error;
+
+  FollowNotifierStatus __status = FollowNotifierStatus.loading;
+  set _status(FollowNotifierStatus status) {
+    __status = status;
+    notifyListeners();
+  }
+
+  FollowNotifierStatus get _status => __status;
+  FollowNotifierStatus get status => _status;
+
+  void init() async {
+    _status = FollowNotifierStatus.loading;
+    if (await followApi.get(user.id) != null) {
+      _status = FollowNotifierStatus.followed;
+    } else {
+      _status = FollowNotifierStatus.unfollowed;
+    }
+  }
+
+  void follow() async {
+    _status = FollowNotifierStatus.loading;
+    var result = await followApi.add(user);
+    switch (result) {
+      case ApiOk():
+        _status = FollowNotifierStatus.followed;
+        break;
+      case ApiError():
+        error = result.error;
+        _status = FollowNotifierStatus.error;
+        break;
+    }
+  }
+
+  void unfollow() async {
+    _status = FollowNotifierStatus.loading;
+    var result = await followApi.remove(user);
+    switch (result) {
+      case ApiOk():
+        _status = FollowNotifierStatus.unfollowed;
+      case ApiError():
+        error = result.error;
+        _status = FollowNotifierStatus.error;
+        break;
+    }
+  }
+}
+
+class FollowIconComponent extends StatelessWidget {
+  const FollowIconComponent({
+    super.key,
+    required this.followApi,
+    required this.user,
+  });
+
+  final FollowApi followApi;
+  final PublicUser user;
+
+  @override
+  Widget build(BuildContext context) {
+    var notifier = FollowNotifier(followApi: followApi, user: user);
+    notifier.init();
+
+    return ListenableBuilder(
+      listenable: notifier,
+      builder: (context, _) {
+        switch (notifier.status) {
+          case FollowNotifierStatus.loading:
+            return LoadingSpinnerComponent();
+          case FollowNotifierStatus.error:
+            context.read<ErrorService>().report(context, notifier.error!);
+            return IconButton(
+              icon: Icon(Icons.error_outline),
+              onPressed: () {
+                notifier.init();
+              },
+            );
+          case FollowNotifierStatus.followed:
+            return IconButton(
+              icon: Icon(Icons.check_circle_outline),
+              onPressed: () {
+                notifier.unfollow();
+              },
+            );
+          case FollowNotifierStatus.unfollowed:
+            return IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: () {
+                notifier.follow();
+              },
+            );
+        }
+      },
+    );
+  }
+}

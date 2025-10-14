@@ -6,6 +6,7 @@ import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/feed.dart';
+import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
@@ -135,6 +136,15 @@ final providers =
             (context) => PublicUserApi(
               authUser: context.read(),
               httpService: context.read(),
+            ),
+      ),
+      Provider<FollowApi>(
+        lazy: false,
+        create:
+            (context) => FollowApi(
+              authUser: context.read(),
+              client: context.read(),
+              databaseService: context.read(),
             ),
       ),
     ];
