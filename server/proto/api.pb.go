@@ -3785,11 +3785,13 @@ func (x *RemoveFollowMessage_Response) GetFollow() *UserFollowMessage {
 }
 
 type ListFollowMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	IncludeUsers  bool                   `protobuf:"varint,4,opt,name=include_users,json=includeUsers,proto3" json:"include_users,omitempty"`
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
+	UserId       string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
+	IncludeUsers bool                   `protobuf:"varint,4,opt,name=include_users,json=includeUsers,proto3" json:"include_users,omitempty"`
+	// Whether or not to return following or followed users
+	IsFollowed    bool `protobuf:"varint,5,opt,name=is_followed,json=isFollowed,proto3" json:"is_followed,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3848,6 +3850,13 @@ func (x *ListFollowMessage_Request) GetCursor() *QueryCursor {
 func (x *ListFollowMessage_Request) GetIncludeUsers() bool {
 	if x != nil {
 		return x.IncludeUsers
+	}
+	return false
+}
+
+func (x *ListFollowMessage_Request) GetIsFollowed() bool {
+	if x != nil {
+		return x.IsFollowed
 	}
 	return false
 }
@@ -4754,15 +4763,17 @@ const file_proto_api_proto_rawDesc = "" +
 	"\x06follow\x18\x02 \x01(\v2\x1b.resonate.UserFollowMessageR\x06follow\x1a\x80\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x123\n" +
-	"\x06follow\x18\x02 \x01(\v2\x1b.resonate.UserFollowMessageR\x06follow\"\x8f\x04\n" +
+	"\x06follow\x18\x02 \x01(\v2\x1b.resonate.UserFollowMessageR\x06follow\"\xb0\x04\n" +
 	"\x11ListFollowMessage\x12A\n" +
 	"\arequest\x18\x01 \x01(\v2'.resonate.api.ListFollowMessage.RequestR\arequest\x12D\n" +
-	"\bresponse\x18\x02 \x01(\v2(.resonate.api.ListFollowMessage.ResponseR\bresponse\x1a\xb8\x01\n" +
+	"\bresponse\x18\x02 \x01(\v2(.resonate.api.ListFollowMessage.ResponseR\bresponse\x1a\xd9\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x121\n" +
 	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\x12#\n" +
-	"\rinclude_users\x18\x04 \x01(\bR\fincludeUsers\x1a\xb5\x01\n" +
+	"\rinclude_users\x18\x04 \x01(\bR\fincludeUsers\x12\x1f\n" +
+	"\vis_followed\x18\x05 \x01(\bR\n" +
+	"isFollowed\x1a\xb5\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x125\n" +
 	"\afollows\x18\x02 \x03(\v2\x1b.resonate.UserFollowMessageR\afollows\x121\n" +

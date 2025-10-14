@@ -181,6 +181,14 @@ func (p *Follow) GetUserIdFieldNum() int32 {
 	return 2
 }
 
+func (p *Follow) GetFollowedUserIdFieldNum() int32 {
+	return 3
+}
+
+func (p *Follow) GetFollowTimestampFieldNum() int32 {
+	return 4
+}
+
 type LoginAttempt struct {
 	proto.LoginAttempt
 }

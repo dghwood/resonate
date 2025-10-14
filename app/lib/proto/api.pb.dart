@@ -4967,12 +4967,14 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
     $core.String? userId,
     QueryCursor? cursor,
     $core.bool? includeUsers,
+    $core.bool? isFollowed,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (userId != null) result.userId = userId;
     if (cursor != null) result.cursor = cursor;
     if (includeUsers != null) result.includeUsers = includeUsers;
+    if (isFollowed != null) result.isFollowed = isFollowed;
     return result;
   }
 
@@ -4995,6 +4997,7 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
     ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
         subBuilder: QueryCursor.create)
     ..aOB(4, _omitFieldNames ? '' : 'includeUsers')
+    ..aOB(5, _omitFieldNames ? '' : 'isFollowed')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -5059,6 +5062,16 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasIncludeUsers() => $_has(3);
   @$pb.TagNumber(4)
   void clearIncludeUsers() => $_clearField(4);
+
+  /// Whether or not to return following or followed users
+  @$pb.TagNumber(5)
+  $core.bool get isFollowed => $_getBF(4);
+  @$pb.TagNumber(5)
+  set isFollowed($core.bool value) => $_setBool(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasIsFollowed() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsFollowed() => $_clearField(5);
 }
 
 class ListFollowMessage_Response extends $pb.GeneratedMessage {

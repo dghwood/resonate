@@ -108,10 +108,12 @@ class FollowApi {
   Future<IterableApiResult<Iterable<UserFollow>>> list(
     String userId, {
     QueryCursor? cursor,
+    bool isFollowed = false,
   }) async {
     var request = ListFollowApiRequest(
       userId: userId,
       includeUsers: true,
+      isFollowed: isFollowed,
       cursor: cursor,
     );
     var response = ListFollowApiResponse();
@@ -122,7 +124,11 @@ class FollowApi {
         response.follows,
         next:
             response.cursor != null
-                ? () => list(userId, cursor: response.cursor)
+                ? () => list(
+                  userId,
+                  cursor: response.cursor,
+                  isFollowed: isFollowed,
+                )
                 : null,
       );
     } on Exception catch (e) {
@@ -211,9 +217,11 @@ class ListFollowApiRequest extends ApiRequest<ListFollowMessage_Request> {
     String? userId,
     QueryCursor? cursor,
     bool? includeUsers,
+    bool? isFollowed,
   }) : super(
          ListFollowMessage_Request(
            userId: userId,
+           isFollowed: isFollowed,
            includeUsers: includeUsers,
            cursor: cursor?.toMessage(),
            requestInfo: RequestInfo(),

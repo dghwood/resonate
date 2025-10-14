@@ -41,7 +41,7 @@ class PublicUserProfileComponent extends StatelessWidget {
         var user = result.value;
 
         return DefaultTabController(
-          length: 3,
+          length: 4,
           child: NestedScrollView(
             controller: controller,
             headerSliverBuilder: (context, someBool) {
@@ -60,6 +60,7 @@ class PublicUserProfileComponent extends StatelessWidget {
                       Tab(text: 'Listens'),
                       Tab(text: 'Subscriptions'),
                       Tab(text: 'Following'),
+                      Tab(text: 'Followers'),
                     ],
                   ),
                 ),
@@ -86,6 +87,12 @@ class PublicUserProfileComponent extends StatelessWidget {
                   user: user,
                   followApi: context.read(),
                   scrollController: controller,
+                ),
+                FollowListComponent(
+                  user: user,
+                  followApi: context.read(),
+                  scrollController: controller,
+                  isFollowed: true,
                 ),
               ],
             ),

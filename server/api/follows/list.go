@@ -31,6 +31,9 @@ func (f *List) Execute(
 
 	userId := request.UserId
 	includeUsers := request.IncludeUsers
+	// Whether to return followed or following users
+	isFollowed := request.IsFollowed
+
 	log.Infof("follows for user %s", userId)
 
 	var cursor *models.QueryCursor
@@ -41,11 +44,15 @@ func (f *List) Execute(
 
 	// TODO(duncan): Do I need to have permissions here?
 	model := models.Follow{}
+	idFieldNum := model.GetUserIdFieldNum()
+	if isFollowed {
+		idFieldNum = model.GetFollowedUserIdFieldNum()
+	}
 	follows := f.Datastore.ListForIds(
 		datastore.ListForIdsParams{
 			Ids:          []string{request.UserId},
-			IdFieldNum:   model.GetUserIdFieldNum(),
-			SortFieldNum: -1, // Sort by something?
+			IdFieldNum:   idFieldNum,
+			SortFieldNum: model.GetFollowTimestampFieldNum(),
 			Entity:       &model,
 		})
 
@@ -66,7 +73,11 @@ func (f *List) Execute(
 			response.Follows, &model.UserFollowMessage)
 		if includeUsers {
 			user := &models.User{}
-			user.Id = model.FollowedUserId
+			if isFollowed {
+				user.Id = model.UserId
+			} else {
+				user.Id = model.FollowedUserId
+			}
 			users = append(users, user)
 		}
 	}
@@ -82,8 +93,14 @@ func (f *List) Execute(
 	err = f.Datastore.GetMulti(users)
 	for _, follow := range response.Follows {
 		for _, user := range users {
-			if follow.FollowedUserId == user.Id {
-				follow.User = user.ToPublicUser()
+			if isFollowed {
+				if follow.UserId == user.Id {
+					follow.User = user.ToPublicUser()
+				}
+			} else {
+				if follow.FollowedUserId == user.Id {
+					follow.User = user.ToPublicUser()
+				}
 			}
 		}
 	}

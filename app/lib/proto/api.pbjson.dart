@@ -1757,6 +1757,7 @@ const ListFollowMessage_Request$json = {
       '10': 'cursor'
     },
     {'1': 'include_users', '3': 4, '4': 1, '5': 8, '10': 'includeUsers'},
+    {'1': 'is_followed', '3': 5, '4': 1, '5': 8, '10': 'isFollowed'},
   ],
 };
 
@@ -1795,14 +1796,15 @@ const ListFollowMessage_Response$json = {
 final $typed_data.Uint8List listFollowMessageDescriptor = $convert.base64Decode(
     'ChFMaXN0Rm9sbG93TWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLkxpc3'
     'RGb2xsb3dNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
-    'bmF0ZS5hcGkuTGlzdEZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGrgBCgdSZXF1ZX'
+    'bmF0ZS5hcGkuTGlzdEZvbGxvd01lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGtkBCgdSZXF1ZX'
     'N0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5mb1ILcmVx'
     'dWVzdEluZm8SFwoHdXNlcl9pZBgCIAEoCVIGdXNlcklkEjEKBmN1cnNvchgDIAEoCzIZLnJlc2'
     '9uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3Vyc29yEiMKDWluY2x1ZGVfdXNlcnMYBCABKAhSDGlu'
-    'Y2x1ZGVVc2Vycxq1AQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYX'
-    'RlLmFwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxI1Cgdmb2xsb3dzGAIgAygLMhsucmVz'
-    'b25hdGUuVXNlckZvbGxvd01lc3NhZ2VSB2ZvbGxvd3MSMQoGY3Vyc29yGAMgASgLMhkucmVzb2'
-    '5hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZjdXJzb3I=');
+    'Y2x1ZGVVc2VycxIfCgtpc19mb2xsb3dlZBgFIAEoCFIKaXNGb2xsb3dlZBq1AQoIUmVzcG9uc2'
+    'USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9SDHJl'
+    'c3BvbnNlSW5mbxI1Cgdmb2xsb3dzGAIgAygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2'
+    'VSB2ZvbGxvd3MSMQoGY3Vyc29yGAMgASgLMhkucmVzb25hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZj'
+    'dXJzb3I=');
 
 @$core.Deprecated('Use getPublicUserMessageDescriptor instead')
 const GetPublicUserMessage$json = {

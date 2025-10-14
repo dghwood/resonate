@@ -130,16 +130,18 @@ class FollowListComponent extends StatelessWidget {
     required this.user,
     required this.followApi,
     required this.scrollController,
+    this.isFollowed = false,
   });
 
   final FollowApi followApi;
   final PublicUser user;
   final ScrollController scrollController;
+  final bool isFollowed;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: followApi.list(user.id),
+      future: followApi.list(user.id, isFollowed: isFollowed),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return LoadingSpinnerComponent();
@@ -162,6 +164,11 @@ class FollowListComponent extends StatelessWidget {
             return ListTile(
               leading: ImageComponent(user.imageUrl),
               title: Text(user.name),
+              // TODO(duncan): For long lists this might be really slow
+              trailing:
+                  isFollowed
+                      ? null
+                      : FollowIconComponent(followApi: followApi, user: user),
               onTap: () {
                 Navigate(context).toPublicProfile(user.id);
               },

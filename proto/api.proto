@@ -318,6 +318,8 @@ message ListFollowMessage {
         string user_id = 2; 
         QueryCursor cursor = 3;
         bool include_users = 4; 
+        // Whether or not to return following or followed users
+        bool is_followed = 5;
     }
     message Response {
         ResponseInfo response_info = 1; 
