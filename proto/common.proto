@@ -109,7 +109,9 @@ message UserFollowMessage {
     string id = 1;
     string user_id = 2; 
     string followed_user_id = 3;
-    StorageMetadataMessage metadata = 4; 
+    int64 follow_utc_timestamp_ms = 4;
+    StorageMetadataMessage metadata = 5; 
+    PublicUserMessage user = 6; // optional user 
 }
 
 message UserSubscriptionMessage {

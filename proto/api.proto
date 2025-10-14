@@ -316,10 +316,13 @@ message ListFollowMessage {
     message Request {
         RequestInfo request_info = 1; 
         string user_id = 2; 
+        QueryCursor cursor = 3;
+        bool include_users = 4; 
     }
     message Response {
         ResponseInfo response_info = 1; 
         repeated UserFollowMessage follows = 2; 
+        QueryCursor cursor = 3;
     }
 
     Request request = 1; 

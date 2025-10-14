@@ -1047,13 +1047,18 @@ class UserFollowMessage extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? userId,
     $core.String? followedUserId,
+    $fixnum.Int64? followUtcTimestampMs,
     StorageMetadataMessage? metadata,
+    PublicUserMessage? user,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (userId != null) result.userId = userId;
     if (followedUserId != null) result.followedUserId = followedUserId;
+    if (followUtcTimestampMs != null)
+      result.followUtcTimestampMs = followUtcTimestampMs;
     if (metadata != null) result.metadata = metadata;
+    if (user != null) result.user = user;
     return result;
   }
 
@@ -1073,8 +1078,11 @@ class UserFollowMessage extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'userId')
     ..aOS(3, _omitFieldNames ? '' : 'followedUserId')
-    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
+    ..aInt64(4, _omitFieldNames ? '' : 'followUtcTimestampMs')
+    ..aOM<StorageMetadataMessage>(5, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aOM<PublicUserMessage>(6, _omitFieldNames ? '' : 'user',
+        subBuilder: PublicUserMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1126,15 +1134,35 @@ class UserFollowMessage extends $pb.GeneratedMessage {
   void clearFollowedUserId() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  StorageMetadataMessage get metadata => $_getN(3);
+  $fixnum.Int64 get followUtcTimestampMs => $_getI64(3);
   @$pb.TagNumber(4)
-  set metadata(StorageMetadataMessage value) => $_setField(4, value);
+  set followUtcTimestampMs($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
-  $core.bool hasMetadata() => $_has(3);
+  $core.bool hasFollowUtcTimestampMs() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMetadata() => $_clearField(4);
-  @$pb.TagNumber(4)
-  StorageMetadataMessage ensureMetadata() => $_ensure(3);
+  void clearFollowUtcTimestampMs() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  StorageMetadataMessage get metadata => $_getN(4);
+  @$pb.TagNumber(5)
+  set metadata(StorageMetadataMessage value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasMetadata() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMetadata() => $_clearField(5);
+  @$pb.TagNumber(5)
+  StorageMetadataMessage ensureMetadata() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  PublicUserMessage get user => $_getN(5);
+  @$pb.TagNumber(6)
+  set user(PublicUserMessage value) => $_setField(6, value);
+  @$pb.TagNumber(6)
+  $core.bool hasUser() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearUser() => $_clearField(6);
+  @$pb.TagNumber(6)
+  PublicUserMessage ensureUser() => $_ensure(5);
 }
 
 class UserSubscriptionMessage extends $pb.GeneratedMessage {

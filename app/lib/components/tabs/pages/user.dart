@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
+import 'package:resonate/api/user.dart';
 import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
@@ -11,33 +12,32 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
 
 class PublicUserProfileComponent extends StatelessWidget {
-  const PublicUserProfileComponent({super.key, required this.userId});
+  const PublicUserProfileComponent({
+    super.key,
+    required this.userId,
+    required this.publicUserApi,
+  });
 
   final String userId;
+  final PublicUserApi publicUserApi;
 
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
-    // return NestedScrollView(
-    //   controller: controller,
-    //   headerSliverBuilder: SliverAppBar(
-    //       leading: ImageComponent(user.imageUrl),
-    //       title: Text(user.name),
-    //     ),
-    //   body: body)
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 1), () {
-        return PublicUser(
-          id: userId,
-          imageUrl: "/images/users/stock",
-          name: "Test user",
-        );
-      }),
+      future: publicUserApi.get(userId),
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.connectionState == ConnectionState.waiting) {
           return LoadingSpinnerComponent();
         }
-        var user = asyncSnapshot.requireData;
+        var result = asyncSnapshot.requireData;
+        switch (result) {
+          case ApiOk():
+            break;
+          case ApiError():
+            return Text('Error: ${result.error}');
+        }
+        var user = result.value;
 
         return DefaultTabController(
           length: 2,

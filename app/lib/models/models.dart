@@ -395,18 +395,33 @@ class UserListen extends BaseModel<UserListenMessage> {
 }
 
 class UserFollow extends BaseModel<UserFollowMessage> {
-  UserFollow({required String userId, required String followedUserId})
-    : super(UserFollowMessage(userId: userId, followedUserId: followedUserId));
+  UserFollow({
+    required String userId,
+    required String followedUserId,
+    StorageMetadata? metadata,
+  }) : super(
+         UserFollowMessage(
+           id: '$userId-$followedUserId',
+           userId: userId,
+           followedUserId: followedUserId,
+           metadata: metadata?.toMessage(),
+         ),
+       );
 
   UserFollow.fromMessage(super.message);
+
+  UserFollow.copy(UserFollow model)
+    : super(UserFollowMessage()..mergeFromMessage(model.toMessage()));
 
   @override
   Uint8List get descriptor => userFollowMessageDescriptor;
 
   @override
-  String get id => '$userId-$followedUserId';
+  String get id => _message.id;
   String get userId => _message.userId;
   String get followedUserId => _message.followedUserId;
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
 // Search Results

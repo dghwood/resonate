@@ -12,6 +12,7 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/upload.dart';
+import 'package:resonate/api/user.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/database.dart';
@@ -127,6 +128,13 @@ final providers =
               authUser: context.read(),
               client: context.read(),
               contactsSerivce: MockContacts(),
+            ),
+      ),
+      Provider<PublicUserApi>(
+        create:
+            (context) => PublicUserApi(
+              authUser: context.read(),
+              httpService: context.read(),
             ),
       ),
     ];

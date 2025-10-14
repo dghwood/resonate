@@ -4965,10 +4965,14 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
   factory ListFollowMessage_Request({
     RequestInfo? requestInfo,
     $core.String? userId,
+    QueryCursor? cursor,
+    $core.bool? includeUsers,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (userId != null) result.userId = userId;
+    if (cursor != null) result.cursor = cursor;
+    if (includeUsers != null) result.includeUsers = includeUsers;
     return result;
   }
 
@@ -4988,6 +4992,9 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
+    ..aOB(4, _omitFieldNames ? '' : 'includeUsers')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -5032,16 +5039,38 @@ class ListFollowMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasUserId() => $_has(1);
   @$pb.TagNumber(2)
   void clearUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.bool get includeUsers => $_getBF(3);
+  @$pb.TagNumber(4)
+  set includeUsers($core.bool value) => $_setBool(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasIncludeUsers() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIncludeUsers() => $_clearField(4);
 }
 
 class ListFollowMessage_Response extends $pb.GeneratedMessage {
   factory ListFollowMessage_Response({
     ResponseInfo? responseInfo,
     $core.Iterable<$0.UserFollowMessage>? follows,
+    QueryCursor? cursor,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
     if (follows != null) result.follows.addAll(follows);
+    if (cursor != null) result.cursor = cursor;
     return result;
   }
 
@@ -5063,6 +5092,8 @@ class ListFollowMessage_Response extends $pb.GeneratedMessage {
     ..pc<$0.UserFollowMessage>(
         2, _omitFieldNames ? '' : 'follows', $pb.PbFieldType.PM,
         subBuilder: $0.UserFollowMessage.create)
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -5102,6 +5133,17 @@ class ListFollowMessage_Response extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$0.UserFollowMessage> get follows => $_getList(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
 }
 
 class ListFollowMessage extends $pb.GeneratedMessage {

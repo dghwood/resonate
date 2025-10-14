@@ -105,7 +105,10 @@ class ListSubscriptionApiResponse
   @override
   ResponseInfo get responseInfo => responsePb.responseInfo;
 
-  QueryCursor get cursor => QueryCursor.fromMessage(responsePb.cursor);
+  QueryCursor? get cursor =>
+      responsePb.hasCursor()
+          ? QueryCursor.fromMessage(responsePb.cursor)
+          : null;
   Iterable<UserSubscription> get subscriptions =>
       responsePb.subscriptions.map((s) => UserSubscription.fromMessage(s));
 }
@@ -301,7 +304,10 @@ class SubscriptionsApi {
       var subscriptions = response.subscriptions;
       return IterableApiResult.ok(
         subscriptions,
-        next: () => listForUser(userId, cusor: response.cursor),
+        next:
+            response.cursor != null
+                ? () => listForUser(userId, cusor: response.cursor)
+                : null,
       );
     } on Exception catch (e) {
       return IterableApiResult.error(e);

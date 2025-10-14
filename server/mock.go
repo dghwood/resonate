@@ -92,6 +92,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		// Subscribe the users
 		for _, user := range users {
 			subscribe := models.Subscription{}
+			subscribe.Id = fmt.Sprintf("%s-%s", user.Id, podcast.Id)
 			subscribe.UserId = user.Id
 			subscribe.PodcastId = podcast.Id
 			err = ds.Put(&subscribe)

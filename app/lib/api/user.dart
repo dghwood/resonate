@@ -1,137 +1,70 @@
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
-import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
-import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 
-final Logger _log = Logger('UserApi');
+final Logger _log = Logger('PublicUserApi');
 
-class UserApi {
-  UserApi({
+class PublicUserApi {
+  PublicUserApi({
     required AbstractHttpService httpService,
-    required AbstractDatabaseService databaseService,
     required AuthUser authUser,
-  }) : _databaseService = databaseService,
-       _getUserApi = GetUserApi(client: httpService, authUser: authUser),
-       _createUserApi = CreateUserApi(client: httpService, authUser: authUser);
+  }) : _server = GetPublicUserApiServer(
+         client: httpService,
+         authUser: authUser,
+       );
 
-  // This should be a UserDatabase
-  final AbstractDatabaseService _databaseService;
-  final CreateUserApi _createUserApi;
-  final GetUserApi _getUserApi;
+  final GetPublicUserApiServer _server;
 
-  Stream<ApiResult<User>> create() async* {
-    var request = CreateUserApiRequest();
-    var response = CreateUserApiResponse();
+  Future<ApiResult<PublicUser>> get(String userId) async {
+    var request = GetPublicUserApiRequest(userId: userId);
+    var response = GetPublicUserApiResponse();
     try {
-      await _createUserApi.execute(request, response);
-      var user = User.fromMessage(response.responsePb.user);
-      yield ApiResult.ok(user!);
-      // TODO(duncanwood): Store in DB?
+      await _server.execute(request, response);
+      return ApiResult.ok(response.user);
     } on Exception catch (e) {
-      yield ApiResult.error(e);
-    }
-  }
-
-  Stream<ApiResult<User>> get(String userId) async* {
-    var request = GetUserApiRequest();
-    var response = GetUserApiResponse();
-    try {
-      await _getUserApi.execute(request, response);
-      var user = User.fromMessage(response.responsePb.user);
-      yield ApiResult.ok(user);
-    } on Exception catch (e) {
-      yield ApiResult.error(e);
+      return ApiResult.error(e);
     }
   }
 }
 
-class CreateUserApiRequest extends ApiRequest<CreateUserMessage_Request> {
-  CreateUserApiRequest()
-    : super(CreateUserMessage_Request(requestInfo: RequestInfo()));
-
-  @override
-  set requestInfo(RequestInfo info) {
-    _log.info('Setting requestInfo');
-    requestPb.requestInfo.mergeFromMessage(info);
-  }
-}
-
-class CreateUserApiResponse extends ApiResponse<CreateUserMessage_Response> {
-  CreateUserApiResponse() : super(CreateUserMessage_Response());
-
-  @override
-  ResponseInfo get responseInfo => responsePb.responseInfo;
-}
-
-class CreateUserApi
-    extends ServerApi<CreateUserApiRequest, CreateUserApiResponse> {
-  CreateUserApi({AbstractHttpService? client, required AuthUser authUser})
+class GetPublicUserApiRequest extends ApiRequest<GetPublicUserMessage_Request> {
+  GetPublicUserApiRequest({String? userId})
     : super(
-        CreateUserApiRequest(),
-        CreateUserApiResponse(),
-        'api/user/create',
-        authUser: authUser,
-        client: client,
+        GetPublicUserMessage_Request(
+          userId: userId,
+          requestInfo: RequestInfo(),
+        ),
       );
-}
-
-class UpdateUserApiRequest extends ApiRequest<UpdateUserMessage_Request> {
-  UpdateUserApiRequest()
-    : super(UpdateUserMessage_Request(requestInfo: RequestInfo()));
 
   @override
   set requestInfo(RequestInfo info) =>
       requestPb.requestInfo.mergeFromMessage(info);
 }
 
-class UpdateUserApiResponse extends ApiResponse<UpdateUserMessage_Response> {
-  UpdateUserApiResponse() : super(UpdateUserMessage_Response());
+class GetPublicUserApiResponse
+    extends ApiResponse<GetPublicUserMessage_Response> {
+  GetPublicUserApiResponse() : super(GetPublicUserMessage_Response());
 
   @override
   ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  PublicUser get user => PublicUser.fromMessage(responsePb.user);
 }
 
-class UpdateUserApi
-    extends ServerApi<UpdateUserApiRequest, UpdateUserApiResponse> {
-  UpdateUserApi({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        UpdateUserApiRequest(),
-        UpdateUserApiResponse(),
-        'api/user/update',
-        authUser: authUser,
-        client: client,
-      );
-}
-
-class GetUserApiRequest extends ApiRequest<GetUserMessage_Request> {
-  GetUserApiRequest()
-    : super(GetUserMessage_Request(requestInfo: RequestInfo()));
-
-  @override
-  set requestInfo(RequestInfo info) =>
-      requestPb.requestInfo.mergeFromMessage(info);
-}
-
-class GetUserApiResponse extends ApiResponse<GetUserMessage_Response> {
-  GetUserApiResponse() : super(GetUserMessage_Response());
-
-  @override
-  ResponseInfo get responseInfo => responsePb.responseInfo;
-}
-
-class GetUserApi extends ServerApi<GetUserApiRequest, GetUserApiResponse> {
-  GetUserApi({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        GetUserApiRequest(),
-        GetUserApiResponse(),
-        'api/user/get',
-        authUser: authUser,
-        client: client,
-      );
+class GetPublicUserApiServer
+    extends ServerApi<GetPublicUserApiRequest, GetPublicUserApiResponse> {
+  GetPublicUserApiServer({
+    AbstractHttpService? client,
+    required AuthUser authUser,
+  }) : super(
+         GetPublicUserApiRequest(),
+         GetPublicUserApiResponse(),
+         'api/users/get',
+         authUser: authUser,
+         client: client,
+       );
 }

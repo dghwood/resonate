@@ -332,12 +332,27 @@ const UserFollowMessage$json = {
     {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'followed_user_id', '3': 3, '4': 1, '5': 9, '10': 'followedUserId'},
     {
-      '1': 'metadata',
+      '1': 'follow_utc_timestamp_ms',
       '3': 4,
+      '4': 1,
+      '5': 3,
+      '10': 'followUtcTimestampMs'
+    },
+    {
+      '1': 'metadata',
+      '3': 5,
       '4': 1,
       '5': 11,
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
+    },
+    {
+      '1': 'user',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'user'
     },
   ],
 };
@@ -345,8 +360,10 @@ const UserFollowMessage$json = {
 /// Descriptor for `UserFollowMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userFollowMessageDescriptor = $convert.base64Decode(
     'ChFVc2VyRm9sbG93TWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSFwoHdXNlcl9pZBgCIAEoCVIGdX'
-    'NlcklkEigKEGZvbGxvd2VkX3VzZXJfaWQYAyABKAlSDmZvbGxvd2VkVXNlcklkEjwKCG1ldGFk'
-    'YXRhGAQgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');
+    'NlcklkEigKEGZvbGxvd2VkX3VzZXJfaWQYAyABKAlSDmZvbGxvd2VkVXNlcklkEjUKF2ZvbGxv'
+    'd191dGNfdGltZXN0YW1wX21zGAQgASgDUhRmb2xsb3dVdGNUaW1lc3RhbXBNcxI8CghtZXRhZG'
+    'F0YRgFIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRhEi8K'
+    'BHVzZXIYBiABKAsyGy5yZXNvbmF0ZS5QdWJsaWNVc2VyTWVzc2FnZVIEdXNlcg==');
 
 @$core.Deprecated('Use userSubscriptionMessageDescriptor instead')
 const UserSubscriptionMessage$json = {

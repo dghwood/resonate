@@ -79,7 +79,10 @@ final List<RouteBase> sharedRoutes = [
       if (userId == null) {
         return Text('User ID is required');
       }
-      return PublicUserProfileComponent(userId: userId);
+      return PublicUserProfileComponent(
+        userId: userId,
+        publicUserApi: context.read(),
+      );
     },
   ),
 ];

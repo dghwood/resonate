@@ -777,13 +777,15 @@ func (x *PublicUserMessage) GetImageUrl() string {
 }
 
 type UserFollowMessage struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Id             string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId         string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	FollowedUserId string                  `protobuf:"bytes,3,opt,name=followed_user_id,json=followedUserId,proto3" json:"followed_user_id,omitempty"`
-	Metadata       *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state                protoimpl.MessageState  `protogen:"open.v1"`
+	Id                   string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId               string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	FollowedUserId       string                  `protobuf:"bytes,3,opt,name=followed_user_id,json=followedUserId,proto3" json:"followed_user_id,omitempty"`
+	FollowUtcTimestampMs int64                   `protobuf:"varint,4,opt,name=follow_utc_timestamp_ms,json=followUtcTimestampMs,proto3" json:"follow_utc_timestamp_ms,omitempty"`
+	Metadata             *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	User                 *PublicUserMessage      `protobuf:"bytes,6,opt,name=user,proto3" json:"user,omitempty"` // optional user
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *UserFollowMessage) Reset() {
@@ -837,9 +839,23 @@ func (x *UserFollowMessage) GetFollowedUserId() string {
 	return ""
 }
 
+func (x *UserFollowMessage) GetFollowUtcTimestampMs() int64 {
+	if x != nil {
+		return x.FollowUtcTimestampMs
+	}
+	return 0
+}
+
 func (x *UserFollowMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
 		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UserFollowMessage) GetUser() *PublicUserMessage {
+	if x != nil {
+		return x.User
 	}
 	return nil
 }
@@ -850,7 +866,7 @@ type UserSubscriptionMessage struct {
 	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	PodcastId     string                  `protobuf:"bytes,3,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
 	Metadata      *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	Podcast       *PodcastMessage         `protobuf:"bytes,5,opt,name=podcast,proto3" json:"podcast,omitempty"` // this is optional, used for feed items
+	Podcast       *PodcastMessage         `protobuf:"bytes,5,opt,name=podcast,proto3" json:"podcast,omitempty"` // this is optional
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1495,12 +1511,14 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x11PublicUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\xa4\x01\n" +
+	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\x8c\x02\n" +
 	"\x11UserFollowMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12(\n" +
-	"\x10followed_user_id\x18\x03 \x01(\tR\x0efollowedUserId\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xd3\x01\n" +
+	"\x10followed_user_id\x18\x03 \x01(\tR\x0efollowedUserId\x125\n" +
+	"\x17follow_utc_timestamp_ms\x18\x04 \x01(\x03R\x14followUtcTimestampMs\x12<\n" +
+	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12/\n" +
+	"\x04user\x18\x06 \x01(\v2\x1b.resonate.PublicUserMessageR\x04user\"\xd3\x01\n" +
 	"\x17UserSubscriptionMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
@@ -1595,29 +1613,30 @@ var file_proto_common_proto_depIdxs = []int32{
 	9,  // 11: resonate.UserMessage.following:type_name -> resonate.UserFollowMessage
 	0,  // 12: resonate.UserMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	0,  // 13: resonate.UserFollowMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 14: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	1,  // 15: resonate.UserSubscriptionMessage.podcast:type_name -> resonate.PodcastMessage
-	2,  // 16: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
-	0,  // 17: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	2,  // 18: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
-	8,  // 19: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
-	2,  // 20: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
-	1,  // 21: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
-	8,  // 22: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
-	8,  // 23: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
-	12, // 24: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
-	13, // 25: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
-	14, // 26: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	1,  // 27: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
-	7,  // 28: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
-	2,  // 29: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
-	16, // 30: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
-	0,  // 31: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	32, // [32:32] is the sub-list for method output_type
-	32, // [32:32] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	32, // [32:32] is the sub-list for extension extendee
-	0,  // [0:32] is the sub-list for field type_name
+	8,  // 14: resonate.UserFollowMessage.user:type_name -> resonate.PublicUserMessage
+	0,  // 15: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 16: resonate.UserSubscriptionMessage.podcast:type_name -> resonate.PodcastMessage
+	2,  // 17: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
+	0,  // 18: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	2,  // 19: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
+	8,  // 20: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
+	2,  // 21: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
+	1,  // 22: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
+	8,  // 23: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
+	8,  // 24: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
+	12, // 25: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
+	13, // 26: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
+	14, // 27: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
+	1,  // 28: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	7,  // 29: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	2,  // 30: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	16, // 31: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	0,  // 32: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	33, // [33:33] is the sub-list for method output_type
+	33, // [33:33] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }

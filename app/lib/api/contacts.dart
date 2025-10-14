@@ -50,6 +50,7 @@ class FindContactsApiServer
        );
 }
 
+// TODO(duncan): Move this to PublicUserApi?
 class FindUsersApi {
   FindUsersApi({
     required AbstractHttpService client,

@@ -62,6 +62,13 @@ class ListListenApiResponse extends ApiResponse<ListListenMessage_Response> {
 
   @override
   ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  QueryCursor? get cursor =>
+      responsePb.hasCursor()
+          ? QueryCursor.fromMessage(responsePb.cursor)
+          : null;
+  Iterable<UserListen> get listens =>
+      responsePb.listens.map((l) => UserListen.fromMessage(l));
 }
 
 class ListListenApiServer
@@ -208,12 +215,11 @@ class ListensApi {
     try {
       await _listServer.execute(request, response);
       return IterableApiResult.ok(
-        response.responsePb.listens.map((e) => UserListen.fromMessage(e)),
+        response.listens,
         next:
-            () => listForUser(
-              userId,
-              cursor: QueryCursor.fromMessage(response.responsePb.cursor),
-            ),
+            response.cursor != null
+                ? () => listForUser(userId, cursor: response.cursor)
+                : null,
       );
     } on Exception catch (e) {
       return IterableApiResult.error(e);
