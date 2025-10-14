@@ -35,6 +35,7 @@ func (f *Add) Execute(
 
 	follow := models.Follow{}
 	models.Merge(&follow.UserFollowMessage, request.Follow)
+	// TODO(duncan): I need to validate the ID is correct
 
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&follow)

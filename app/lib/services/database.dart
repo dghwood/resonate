@@ -127,6 +127,8 @@ class DatabaseService implements AbstractDatabaseService {
     if (_authUser == null || !_authUser!.isSignedInForDb) {
       throw UserNotSignedInError();
     }
+    // TODO(duncan): This throws an error when the object store
+    // doesn't exixt.
     var txn = _db.transaction(storeName, 'readonly');
     var store = txn.objectStore(storeName);
     var index = store.index(indexName);

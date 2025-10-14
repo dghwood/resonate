@@ -422,6 +422,8 @@ class UserFollow extends BaseModel<UserFollowMessage> {
   String get followedUserId => _message.followedUserId;
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
+  PublicUser? get user =>
+      _message.hasUser() ? PublicUser.fromMessage(_message.user) : null;
 }
 
 // Search Results

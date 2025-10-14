@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 
 	podcastService "github.com/dghwood/resonate/api/podcast"
 	"github.com/dghwood/resonate/log"
@@ -63,6 +64,20 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		panic(err)
 	}
 
+	// Follow each other
+	for i := range len(users) {
+		for j := range len(users) {
+			if i == j {
+				continue
+			}
+			follow := models.Follow{}
+			follow.Id = fmt.Sprintf("%s-%s", users[i].Id, users[j].Id)
+			follow.UserId = users[i].Id
+			follow.FollowUtcTimestampMs = time.Now().UTC().UnixMilli()
+			follow.FollowedUserId = users[j].Id
+			ds.Put(&follow)
+		}
+	}
 	// Add some podcasts (these are real)
 	podcastUrls := []string{
 		"https://feeds.simplecast.com/dxZsm5kX", // Pod Save America

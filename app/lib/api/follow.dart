@@ -1,3 +1,4 @@
+import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
@@ -6,6 +7,8 @@ import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/storage/follows.dart';
+
+final Logger _log = Logger('/api/follow');
 
 class FollowApi {
   FollowApi({
@@ -44,7 +47,7 @@ class FollowApi {
       await _addServer.execute(request, response);
       follow = response.follow;
       await _followsDatabase.put(follow);
-      _followDb[follow.userId] = follow;
+      _followDb[follow.followedUserId] = follow;
       return ApiResult.ok(response.follow);
     } on Exception catch (e) {
       return ApiResult.error(e);
@@ -66,7 +69,7 @@ class FollowApi {
       await _removeServer.execute(request, response);
       follow = response.follow;
       await _followsDatabase.put(follow);
-      _followDb[follow.userId] = follow;
+      _followDb.remove(follow.followedUserId);
       return ApiResult.ok(response.follow);
     } on Exception catch (e) {
       return ApiResult.error(e);

@@ -1,6 +1,7 @@
 package follows
 
 import (
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -28,6 +29,16 @@ func (f *List) Execute(
 	request *proto.ListFollowMessage_Request,
 	response *proto.ListFollowMessage_Response) (err error) {
 
+	userId := request.UserId
+	includeUsers := request.IncludeUsers
+	log.Infof("follows for user %s", userId)
+
+	var cursor *models.QueryCursor
+	if cursorPb := request.Cursor; cursorPb != nil {
+		cursor = &models.QueryCursor{}
+		models.Merge(cursor, cursorPb)
+	}
+
 	// TODO(duncan): Do I need to have permissions here?
 	model := models.Follow{}
 	follows := f.Datastore.ListForIds(
@@ -38,10 +49,14 @@ func (f *List) Execute(
 			Entity:       &model,
 		})
 
-	for {
+	users := make([]*models.User, 0)
+
+	more := true
+	for range 20 {
 		model := models.Follow{}
 		err := follows.Next(&model)
 		if err == datastore.IteratorDone {
+			more = true
 			break
 		}
 		if err != nil {
@@ -49,6 +64,28 @@ func (f *List) Execute(
 		}
 		response.Follows = append(
 			response.Follows, &model.UserFollowMessage)
+		if includeUsers {
+			user := &models.User{}
+			user.Id = model.FollowedUserId
+			users = append(users, user)
+		}
+	}
+
+	if more {
+		response.Cursor = &follows.Cursor().QueryCursor
+	}
+
+	if !includeUsers {
+		return
+	}
+	// Now get the users
+	err = f.Datastore.GetMulti(users)
+	for _, follow := range response.Follows {
+		for _, user := range users {
+			if follow.FollowedUserId == user.Id {
+				follow.User = user.ToPublicUser()
+			}
+		}
 	}
 	return
 }

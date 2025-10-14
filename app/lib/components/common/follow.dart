@@ -5,8 +5,11 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/command.dart';
+import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/router/navigation.dart';
 
 /* FollowIconComponent 
 
@@ -92,7 +95,7 @@ class FollowIconComponent extends StatelessWidget {
       builder: (context, _) {
         switch (notifier.status) {
           case FollowNotifierStatus.loading:
-            return LoadingSpinnerComponent();
+            return LoadingSpinnerComponent(size: 16);
           case FollowNotifierStatus.error:
             context.read<ErrorService>().report(context, notifier.error!);
             return IconButton(
@@ -116,6 +119,55 @@ class FollowIconComponent extends StatelessWidget {
               },
             );
         }
+      },
+    );
+  }
+}
+
+class FollowListComponent extends StatelessWidget {
+  const FollowListComponent({
+    super.key,
+    required this.user,
+    required this.followApi,
+    required this.scrollController,
+  });
+
+  final FollowApi followApi;
+  final PublicUser user;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: followApi.list(user.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return LoadingSpinnerComponent();
+        }
+        var iterableApiResult = snapshot.requireData;
+        switch (iterableApiResult) {
+          case ApiOkIterable():
+            break;
+          case ApiErrorIterable():
+            return Text('Error: ${iterableApiResult.error}');
+        }
+        return InfiniteScrollComponent(
+          iterableApiResult: iterableApiResult,
+          scrollController: scrollController,
+          itemBuilder: (context, follow) {
+            if (follow.user == null) {
+              return Text('User Not Found: ${follow.followedUserId}');
+            }
+            var user = follow.user!;
+            return ListTile(
+              leading: ImageComponent(user.imageUrl),
+              title: Text(user.name),
+              onTap: () {
+                Navigate(context).toPublicProfile(user.id);
+              },
+            );
+          },
+        );
       },
     );
   }

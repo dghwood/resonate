@@ -41,21 +41,26 @@ class PublicUserProfileComponent extends StatelessWidget {
         var user = result.value;
 
         return DefaultTabController(
-          length: 2,
+          length: 3,
           child: NestedScrollView(
             controller: controller,
             headerSliverBuilder: (context, someBool) {
               return [
                 SliverAppBar(
                   actions: [],
-                  leading: ImageComponent(user.imageUrl),
                   pinned: true,
                   floating: true,
-                  flexibleSpace: FlexibleSpaceBar(),
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: ImageComponent(user.imageUrl),
+                  ),
                   expandedHeight: 200.0,
                   title: Text(user.name),
                   bottom: TabBar(
-                    tabs: [Tab(text: 'Listens'), Tab(text: 'Subscriptions')],
+                    tabs: [
+                      Tab(text: 'Listens'),
+                      Tab(text: 'Subscriptions'),
+                      Tab(text: 'Following'),
+                    ],
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -75,6 +80,11 @@ class PublicUserProfileComponent extends StatelessWidget {
                 ),
                 PublicUserSubscriptionsComponent(
                   user: user,
+                  scrollController: controller,
+                ),
+                FollowListComponent(
+                  user: user,
+                  followApi: context.read(),
                   scrollController: controller,
                 ),
               ],
