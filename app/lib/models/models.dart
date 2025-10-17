@@ -312,6 +312,10 @@ class PublicUser extends BaseModel<PublicUserMessage> {
   String get id => _message.id;
   String get name => _message.name;
   String get imageUrl => _message.imageUrl;
+
+  factory PublicUser.fromUser(User user) {
+    return PublicUser(id: user.id, name: user.name, imageUrl: user.imageUrl);
+  }
 }
 
 class UserSubscription extends BaseModel<UserSubscriptionMessage> {

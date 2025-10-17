@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/result.dart';
@@ -9,6 +10,7 @@ import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/common/refresh.dart';
+import 'package:resonate/components/common/subscriptions.dart';
 import 'package:resonate/components/tabs/base.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -16,11 +18,11 @@ import 'package:resonate/api/errors.dart';
 
 final Logger _log = Logger('components/tabs/home');
 
-class HomePage extends TabComponent {
-  const HomePage({super.key}) : super(title: 'Home');
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
-  Widget buildChild(BuildContext context) {
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Text('home'),
@@ -51,7 +53,21 @@ class HomePage extends TabComponent {
             );
           },
         ),
-        Expanded(child: FeedComponent(feedApi: context.read())),
+        Expanded(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 150,
+                child: SubscriptionGridComponent(
+                  subscriptionsApi: context.read(),
+                  user: PublicUser.fromUser(context.read<AuthUser>().user!),
+                  scrollController: ScrollController(),
+                ),
+              ),
+              Expanded(child: FeedComponent(feedApi: context.read())),
+            ],
+          ),
+        ),
       ],
     );
   }
