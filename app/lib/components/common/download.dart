@@ -101,7 +101,10 @@ class _DownloadIconComponentState extends State<DownloadIconComponent> {
   Widget build(BuildContext context) {
     switch (_status) {
       case DownloadIconStatus.init:
-        return IconButton(icon: Icon(Icons.download), onPressed: initDownload);
+        return IconButton(
+          icon: Icon(Icons.download_for_offline_outlined),
+          onPressed: initDownload,
+        );
       case DownloadIconStatus.queued:
         return IconButton(icon: Icon(Icons.refresh), onPressed: initCancel);
       case DownloadIconStatus.canceled:

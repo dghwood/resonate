@@ -23,52 +23,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('home'),
-        TextButton(
-          child: Text('show playlist'),
-          onPressed: () {
-            PlaylistComponent.show(context);
-          },
-        ),
-        TextButton(
-          child: Text('show error'),
-          onPressed: () {
-            var errorService = context.read<ErrorService>();
-            errorService.report(context, Exception('This is an error'));
-          },
-        ),
-        TextButton(
-          child: Text('Go to podcast'),
-          onPressed: () {
-            Navigate(context).toPodcast('123');
-          },
-        ),
-        TextButton(
-          child: Text("Go to user"),
-          onPressed: () {
-            Navigate(context).toPublicProfile(
-              '3f2b211a4333b7c1a7a5df915549d262a25207290e8063ae7a4edee36094b109',
-            );
-          },
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-                child: SubscriptionGridComponent(
-                  subscriptionsApi: context.read(),
-                  user: PublicUser.fromUser(context.read<AuthUser>().user!),
-                  scrollController: ScrollController(),
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: NestedScrollView(
+        headerSliverBuilder: (context, _) {
+          return [
+            SliverAppBar(title: Text('RESONATES'), floating: true),
+            SliverToBoxAdapter(
+              child: SubscriptionGridComponent(
+                height: 120,
+                subscriptionsApi: context.read(),
+                user: PublicUser.fromUser(context.read<AuthUser>().user!),
+                scrollController: ScrollController(),
               ),
-              Expanded(child: FeedComponent(feedApi: context.read())),
-            ],
-          ),
+            ),
+            SliverToBoxAdapter(child: Divider()),
+          ];
+        },
+        body: Column(
+          spacing: 5,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 8),
+            Text("FEED", style: Theme.of(context).textTheme.labelMedium),
+            Expanded(child: FeedComponent(feedApi: context.read())),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

@@ -13,48 +13,80 @@ import 'package:resonate/router/navigation.dart';
 
 Logger _log = Logger('components/common/subscriptions');
 
-class SubscriptionGridComponent extends StatelessWidget {
+class SubscriptionGridComponent extends StatefulWidget {
   const SubscriptionGridComponent({
     super.key,
     required this.subscriptionsApi,
     required this.user,
     required this.scrollController,
+    this.height = 150,
   });
 
   final SubscriptionsApi subscriptionsApi;
   final PublicUser user;
   final ScrollController scrollController;
+  final double height;
+
+  @override
+  State<SubscriptionGridComponent> createState() =>
+      _SubscriptionGridComponentState();
+}
+
+class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
+  late Future<IterableApiResult<Iterable<UserSubscription>>> _future;
+  @override
+  void initState() {
+    super.initState();
+    _future = widget.subscriptionsApi.listForUser(widget.user.id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: subscriptionsApi.listForUser(user.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingSpinnerComponent();
-        }
-        var result = snapshot.requireData;
-        switch (result) {
-          case ApiOkIterable():
-            break;
-          case ApiErrorIterable():
-            return Text('Error loading subscriptions: ${result.error}');
-        }
+    return SizedBox(
+      height: widget.height,
+      child: Column(
+        spacing: 5,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('SUBSCRIPTIONS', style: Theme.of(context).textTheme.labelMedium),
+          Expanded(
+            child: FutureBuilder(
+              future: _future,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return LoadingSpinnerComponent();
+                }
+                var result = snapshot.requireData;
+                switch (result) {
+                  case ApiOkIterable():
+                    break;
+                  case ApiErrorIterable():
+                    return Text('Error loading subscriptions: ${result.error}');
+                }
 
-        return InfiniteScrollGridComponent(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+                return InfiniteScrollGridComponent(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  iterableApiResult: result,
+                  scrollController: widget.scrollController,
+                  itemBuilder: (BuildContext context, userSubscription) {
+                    var podcast = userSubscription.podcast!;
+                    return GridTile(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: ImageComponent(podcast.imageUrl),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
-          iterableApiResult: result,
-          scrollController: scrollController,
-          itemBuilder: (BuildContext context, userSubscription) {
-            var podcast = userSubscription.podcast!;
-            return GridTile(child: ImageComponent(podcast.imageUrl));
-          },
-        );
-      },
+        ],
+      ),
     );
   }
 }

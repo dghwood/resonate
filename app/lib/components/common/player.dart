@@ -9,6 +9,7 @@ import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/reordable_listview.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player.dart';
+import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/player');
 
@@ -314,72 +315,200 @@ class PlayButtonComponent extends StatelessWidget {
   }
 }
 
-class PlayIconComponent extends StatefulWidget {
-  const PlayIconComponent({
-    super.key,
-    required PlayerApi playerApi,
-    required Episode episode,
-    // Optional?
-    required AuthUser authUser,
-  }) : _playerApi = playerApi,
-       _episode = episode,
-       _authUser = authUser;
+enum PlayIconNotifierStatus { init, listening, listened, finished }
 
-  final PlayerApi _playerApi;
-  final Episode _episode;
-  final AuthUser _authUser;
+class PlayIconNotifier extends ChangeNotifier {
+  PlayIconNotifier({
+    required this.playerApi,
+    required this.episode,
+    required this.authUser,
+  }) {
+    _duration = episode.duration;
+    var listen = authUser.listenApi.get(episode.id);
+    if (listen == null) return;
 
-  @override
-  State<PlayIconComponent> createState() => _PlayIconComponentState();
-}
-
-class _PlayIconComponentState extends State<PlayIconComponent> {
-  double _value = 100;
-  StreamSubscription<PlayerProgress>? _stream;
-
-  @override
-  void initState() {
-    var listen = widget._authUser.listenApi.get(widget._episode.id);
-    if (listen != null) {
-      _value = listen.seconds.toInt() / widget._episode.durationSeconds.toInt();
+    _duration = episode.duration - Duration(seconds: listen.seconds);
+    _status = PlayIconNotifierStatus.listened;
+    if (listen.completed) {
+      _status = PlayIconNotifierStatus.finished;
     }
+  }
 
-    super.initState();
+  final PlayerApi playerApi;
+  final Episode episode;
+  final AuthUser authUser;
+  PlayIconNotifierStatus _status = PlayIconNotifierStatus.init;
+  PlayIconNotifierStatus get status => _status;
+  Duration _duration = Duration.zero;
+  Duration get duration => _duration;
+  StreamSubscription<PlayerProgress>? _progressStream;
+
+  void _onProgress(PlayerProgress progress) {
+    if (progress.duration == null) return;
+
+    _duration =
+        progress.duration! - (progress.progressDuration ?? Duration.zero);
+    if (progress.completed) {
+      _status = PlayIconNotifierStatus.finished;
+    }
+    notifyListeners();
+  }
+
+  void listen() {
+    _status = PlayIconNotifierStatus.listening;
+    _progressStream = playerApi.progressStream.listen(_onProgress);
   }
 
   @override
   void dispose() {
-    _stream?.cancel();
+    _progressStream?.cancel();
     super.dispose();
   }
+}
 
-  void _onData(PlayerProgress progress) {
-    _log.info('_onData::$progress');
-    setState(() {
-      _value = progress.percentProgress;
-    });
+class PlayIconComponent extends StatelessWidget {
+  PlayIconComponent({
+    super.key,
+    required this.playerApi,
+    required this.episode,
+    required this.authUser,
+  }) {
+    notifier = PlayIconNotifier(
+      playerApi: playerApi,
+      episode: episode,
+      authUser: authUser,
+    );
   }
 
+  final PlayerApi playerApi;
+  final Episode episode;
+  final AuthUser authUser;
+  late final PlayIconNotifier notifier;
+
   void _onPressed() async {
-    _log.info('onPressed');
-    var currentEpisode = widget._playerApi.episode;
-    if (currentEpisode != null && widget._episode.id == currentEpisode.id) {
-      _log.info('current episode playing');
+    var currentEpisode = playerApi.episode;
+    if (currentEpisode != null && episode.id == currentEpisode.id) {
       return;
     }
-    await widget._playerApi.load(widget._episode);
-    _log.info('listening to stream');
-    _stream = widget._playerApi.progressStream.listen(_onData);
-    _log.info('listened to stream');
+    await playerApi.load(episode);
+    notifier.listen();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CircularProgressIndicator(value: _value),
-        IconButton(icon: Icon(Icons.play_arrow), onPressed: _onPressed),
-      ],
+    return ListenableBuilder(
+      listenable: notifier,
+      builder: (context, _) {
+        return GestureDetector(
+          onTap: _onPressed,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1.0,
+                color: Theme.of(context).dividerColor,
+              ),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Bit lazy, but icon button here just keep the
+                // sizing and padding equal with the other buttons
+                IconButton(
+                  icon: Icon(Icons.play_circle_outline),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {},
+                ),
+                Text(formatDuration(notifier.duration)),
+                SizedBox(width: 8),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
+
+// class PlayIconComponent extends StatefulWidget {
+//   const PlayIconComponent({
+//     super.key,
+//     required this.playerApi,
+//     required this.episode,
+//     // Optional?
+//     required this.authUser,
+//   });
+
+//   final PlayerApi playerApi;
+//   final Episode episode;
+//   final AuthUser authUser;
+
+//   @override
+//   State<PlayIconComponent> createState() => _PlayIconComponentState();
+// }
+
+// class _PlayIconComponentState extends State<PlayIconComponent> {
+//   double _value = 100;
+//   Duration _duration = Duration.zero;
+//   StreamSubscription<PlayerProgress>? _stream;
+
+//   @override
+//   void initState() {
+//     _duration = widget.episode.duration;
+//     var listen = widget.authUser.listenApi.get(widget.episode.id);
+//     if (listen != null) {
+//       _duration = widget.episode.duration - Duration(seconds: listen.seconds);
+//       _value = listen.seconds.toInt() / widget.episode.durationSeconds.toInt();
+//     }
+
+//     super.initState();
+//   }
+
+//   @override
+//   void dispose() {
+//     _stream?.cancel();
+//     super.dispose();
+//   }
+
+//   void _onData(PlayerProgress progress) {
+//     setState(() {
+//       if (progress.duration != null) {
+//         _duration =
+//             progress.duration! - (progress.progressDuration ?? Duration.zero);
+//       }
+//       _value = progress.percentProgress;
+//     });
+//   }
+
+//   void _onPressed() async {
+//     var currentEpisode = widget.playerApi.episode;
+//     if (currentEpisode != null && widget.episode.id == currentEpisode.id) {
+//       return;
+//     }
+//     await widget.playerApi.load(widget.episode);
+//     _stream = widget.playerApi.progressStream.listen(_onData);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         border: Border.all(width: 1.0, color: Theme.of(context).dividerColor),
+//         borderRadius: BorderRadius.circular(50.0),
+//       ),
+//       width: 100,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           IconButton(
+//             icon: Icon(Icons.play_circle_outline),
+//             onPressed: _onPressed,
+//           ),
+//           Text(formatDuration(_duration)),
+//           SizedBox(width: 8),
+//         ],
+//       ),
+//     );
+//   }
+// }

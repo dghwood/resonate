@@ -202,6 +202,7 @@ class Episode extends BaseModel<EpisodeMessage> {
   DateTime get publishDateTime => fromProtoTimestamp(_message.publishTimestamp);
   int get publishTimestamp => _message.publishTimestamp.toInt();
   int get durationSeconds => _message.durationSeconds.toInt();
+  Duration get duration => Duration(seconds: _message.durationSeconds.toInt());
   int get episodeNumber => _message.episodeNumber.toInt();
   bool? get explicit => _message.explicit;
 }

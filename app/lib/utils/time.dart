@@ -34,11 +34,24 @@ String formatTimeAgo(DateTime datetime) {
 
   Conviencence function to format Durations into 00:00:00 
 */
-String formatDuration(Duration duration) {
+String formatDurationHHMMSS(Duration duration) {
   String padWith0(int n) => n.toString().padLeft(2, '0');
   String hours = padWith0(duration.inHours);
   String mins = padWith0(duration.inMinutes.remainder(60));
   String seconds = padWith0(duration.inSeconds.remainder(60));
 
   return '$hours:$mins:$seconds';
+}
+
+String formatDuration(Duration duration) {
+  var hours = duration.inHours;
+  var minutes = duration.inMinutes;
+
+  if (hours > 0) {
+    return '${hours}h${minutes % 60}m';
+  }
+  if (minutes > 0) {
+    return '${minutes}mins';
+  }
+  return '1min';
 }
