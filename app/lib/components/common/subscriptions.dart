@@ -13,6 +13,39 @@ import 'package:resonate/router/navigation.dart';
 
 Logger _log = Logger('components/common/subscriptions');
 
+class SubscriptionComponent extends StatelessWidget {
+  const SubscriptionComponent({super.key, required this.subscription});
+
+  final UserSubscription subscription;
+
+  static Widget mock = ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: AspectRatio(
+      aspectRatio: 1,
+      child: Container(width: 100, height: 100, color: Colors.red),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    if (subscription.podcast == null) {
+      return Text('Podcast not found');
+    }
+    var podcast = subscription.podcast!;
+    return GestureDetector(
+      onTap: () {
+        Navigate(context).toPodcast(podcast.id);
+      },
+      child: GridTile(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: ImageComponent(podcast.imageUrl),
+        ),
+      ),
+    );
+  }
+}
+
 class SubscriptionGridComponent extends StatefulWidget {
   const SubscriptionGridComponent({
     super.key,
@@ -42,6 +75,11 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
 
   @override
   Widget build(BuildContext context) {
+    var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 1,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+    );
     return SizedBox(
       height: widget.height,
       child: Column(
@@ -54,8 +92,18 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
               future: _future,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return LoadingSpinnerComponent();
+                  return SkeletonLoadingComponent(
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      gridDelegate: gridDelegate,
+                      itemBuilder: (context, _) {
+                        return SubscriptionComponent.mock;
+                      },
+                    ),
+                  );
                 }
+                ;
                 var result = snapshot.requireData;
                 switch (result) {
                   case ApiOkIterable():
@@ -65,20 +113,12 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
                 }
 
                 return InfiniteScrollGridComponent(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
+                  gridDelegate: gridDelegate,
                   iterableApiResult: result,
                   scrollController: widget.scrollController,
                   itemBuilder: (BuildContext context, userSubscription) {
-                    var podcast = userSubscription.podcast!;
-                    return GridTile(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: ImageComponent(podcast.imageUrl),
-                      ),
+                    return SubscriptionComponent(
+                      subscription: userSubscription,
                     );
                   },
                 );

@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 final Logger _log = Logger('components/common/utils');
+
+class SkeletonLoadingComponent extends StatelessWidget {
+  const SkeletonLoadingComponent({
+    super.key,
+    required this.child,
+    this.enabled = true,
+  });
+
+  final Widget child;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Skeletonizer(enabled: enabled, child: child);
+  }
+}
 
 class ImageComponent extends StatelessWidget {
   const ImageComponent(this.src, {super.key, this.width, this.height});

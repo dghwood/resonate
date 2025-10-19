@@ -417,7 +417,7 @@ class PlayIconComponent extends StatelessWidget {
                 // sizing and padding equal with the other buttons
                 IconButton(
                   icon: Icon(Icons.play_circle_outline),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   onPressed: () {},
                 ),
                 Text(formatDuration(notifier.duration)),

@@ -3,18 +3,13 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/feed.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/episode.dart';
-import 'package:resonate/components/common/infinite_scroll2.dart';
-import 'package:resonate/components/common/loading.dart';
-import 'package:resonate/components/common/player.dart';
 import 'package:resonate/components/common/refresh.dart';
 import 'package:resonate/components/common/subscriptions.dart';
-import 'package:resonate/components/tabs/base.dart';
+import 'package:resonate/components/common/utils.dart';
+import 'package:resonate/mock_http.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/router/navigation.dart';
-import 'package:resonate/api/errors.dart';
 
 final Logger _log = Logger('components/tabs/home');
 
@@ -69,7 +64,17 @@ class FeedComponent
       builder: (context, snapshot) {
         _log.info("FeedComponent::stream::${snapshot.connectionState}");
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingSpinnerComponent();
+          return SkeletonLoadingComponent(
+            enabled: true,
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return EpisodeComponent(
+                  episode: Episode.fromMessage(mockEpisodeMessage()),
+                );
+              },
+            ),
+          );
         }
         var result = snapshot.requireData;
         switch (result) {

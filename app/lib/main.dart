@@ -40,11 +40,16 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           AuthUser authUser = context.read<AuthUser>();
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,
+              // iconTheme: IconThemeData(
+              //   weight: 700,
+              //   color: Colors.lightBlueAccent,
+              // ),
               // brightness: Brightness.dark,
               colorScheme: ColorScheme.fromSeed(
-                brightness: Brightness.light,
+                brightness: Brightness.dark,
                 seedColor: Colors.lightBlueAccent,
               ),
             ),

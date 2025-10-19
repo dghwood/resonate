@@ -29,9 +29,12 @@ class EpisodeComponent extends StatelessWidget {
           Row(
             spacing: 8,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: ImageComponent(episode.imageUrl, height: 60),
+              GestureDetector(
+                onTap: () => Navigate(context).toPodcast(episode.podcastId),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: ImageComponent(episode.imageUrl, height: 60),
+                ),
               ),
 
               Expanded(
