@@ -52,13 +52,19 @@ class SubscriptionGridComponent extends StatefulWidget {
     required this.subscriptionsApi,
     required this.user,
     required this.scrollController,
+    this.showTitle = true,
+    this.axis = Axis.horizontal,
+    this.crossAxisCount = 1,
     this.height = 150,
   });
 
   final SubscriptionsApi subscriptionsApi;
   final PublicUser user;
   final ScrollController scrollController;
+  final bool showTitle;
+  final Axis axis;
   final double height;
+  final int crossAxisCount;
 
   @override
   State<SubscriptionGridComponent> createState() =>
@@ -76,7 +82,7 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
   @override
   Widget build(BuildContext context) {
     var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 1,
+      crossAxisCount: widget.crossAxisCount,
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
     );
@@ -86,7 +92,11 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
         spacing: 5,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('SUBSCRIPTIONS', style: Theme.of(context).textTheme.labelMedium),
+          if (widget.showTitle)
+            Text(
+              'SUBSCRIPTIONS',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
           Expanded(
             child: FutureBuilder(
               future: _future,
@@ -94,7 +104,7 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SkeletonLoadingComponent(
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: widget.axis,
                       itemCount: 10,
                       gridDelegate: gridDelegate,
                       itemBuilder: (context, _) {
@@ -113,6 +123,7 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
                 }
 
                 return InfiniteScrollGridComponent(
+                  axis: widget.axis,
                   gridDelegate: gridDelegate,
                   iterableApiResult: result,
                   scrollController: widget.scrollController,

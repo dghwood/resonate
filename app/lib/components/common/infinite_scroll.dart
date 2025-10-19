@@ -166,9 +166,11 @@ class InfiniteScrollGridComponent<T>
     required super.scrollController,
     required super.itemBuilder,
     required this.gridDelegate,
+    this.axis = Axis.horizontal,
   });
 
   final SliverGridDelegate gridDelegate;
+  final Axis axis;
 
   @override
   State<AbstractInfiniteScrollComponent<T>> createState() =>
@@ -183,7 +185,7 @@ class _InfiniteScrollGridComponentState<T>
   Widget build(BuildContext context) {
     var w = widget as InfiniteScrollGridComponent<T>;
     return GridView.builder(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: w.axis,
       gridDelegate: w.gridDelegate,
       itemCount: _items.length + 1,
       itemBuilder: _wrappedItemBuilder,
