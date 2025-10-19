@@ -28,7 +28,6 @@ class ImageComponent extends StatelessWidget {
   final String src;
   @override
   Widget build(BuildContext context) {
-    _log.info(src);
     var prefix = '';
     if (src == "") {
       return Icon(Icons.image, size: width);
@@ -42,6 +41,7 @@ class ImageComponent extends StatelessWidget {
       '$prefix$src',
       width: width,
       height: height,
+      fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
         return Icon(Icons.image, size: width);
       },

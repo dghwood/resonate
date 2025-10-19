@@ -28,20 +28,50 @@ final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(
 /* TODO(duncan): Fix the redirection or move it. 
 
 */
+class RouteState {
+  RouteState();
+
+  String? path = Routes.signIn;
+  AuthUserStatus status = AuthUserStatus.signedOut;
+  Map<String, String>? pathParameters;
+
+  void setState(GoRouterState state, AuthUserStatus status) {
+    path = state.fullPath;
+    pathParameters = state.pathParameters;
+    this.status = status;
+  }
+
+  String? getPath() {
+    if (pathParameters == null) return path;
+    var newPath = path;
+    for (var key in pathParameters!.keys) {
+      newPath = newPath!.replaceAll(':$key', pathParameters![key]!);
+    }
+    return newPath;
+  }
+}
+
+final routeState = RouteState();
 
 String? _signInRedirect(BuildContext context, GoRouterState state) {
   AuthUser authUser = context.read();
-  _log.info('_signinRedirect::${authUser.status}::${state.fullPath}');
+
+  _log.info(
+    '_signinRedirect::${authUser.status}::${state.fullPath}::${routeState.path}',
+  );
   switch (authUser.status) {
     case AuthUserStatus.loading:
+      routeState.setState(state, authUser.status);
       return Routes.loading;
     case AuthUserStatus.signedIn:
+      var route = state.fullPath == Routes.signIn ? routeState.getPath() : null;
+      // var route = state.fullPath == Routes.signIn ? routeState.path : null;
+      routeState.setState(state, authUser.status);
       // Note: This doesn't persist the previous screen you were on.
-      return state.fullPath == Routes.loading ? Routes.home : null;
+      return state.fullPath == Routes.loading ? Routes.home : route;
     case AuthUserStatus.signedOut:
+      routeState.setState(state, authUser.status);
       return Routes.signIn;
-    default:
-      return null;
   }
 }
 

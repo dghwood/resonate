@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
@@ -17,30 +20,156 @@ import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/tabs/pages/podcast');
 
-class PodcastPage extends PageComponentWithScaffold {
+const samplePodcastUrl =
+    'https://image.simplecastcdn.com/images/3b29236c-8a35-4012-9d27-62c02dd189a8/c750eec7-c202-404d-a5bc-eee317e2ce3d/3000x3000/uploads-2f1595947484360-nc4atf9w7ur-dbbaa7ee07a1ee325ec48d2e666ac261-2fpodsave100daysfinal1800.jpg?aid=rss_feed';
+
+class PodcastHeaderDelegate extends SliverPersistentHeaderDelegate {
+  const PodcastHeaderDelegate({
+    this.minHeight = 64,
+    this.maxHeight = 148,
+    required this.stream,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Stream<ApiResult<Podcast>> stream;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    var shrink = shrinkOffset / maxExtent;
+    return StreamBuilder(
+      stream: stream,
+      builder: (context, snapshot) {
+        Podcast podcast;
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          podcast = Podcast(id: '', title: 'Loading...');
+        } else {
+          var result = snapshot.requireData;
+          switch (result) {
+            case ApiOk():
+              podcast = result.value;
+            case ApiError():
+              podcast = Podcast(id: '', title: '${result.error}');
+          }
+        }
+        return SkeletonLoadingComponent(
+          enabled: snapshot.connectionState == ConnectionState.waiting,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (Navigator.of(context).canPop()) BackButton(),
+                  Expanded(
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 8,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              podcast.title,
+                              style: TextStyle(
+                                fontSize: lerpDouble(24, 16, shrink),
+                              ),
+                            ),
+                            // SubscribeIconCommponent(
+                            //   authUser: context.read(),
+                            //   podcast: podcast,
+                            //   size: 16,
+                            // ),
+                          ],
+                        ),
+                        // if (shrink < 0.5) Text(podcast.author),
+                        if (shrink < 0.4)
+                          SubscribeButtonComponent(
+                            podcast: podcast,
+                            subscriptionApi:
+                                context.read<AuthUser>().subscriptionApi,
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: lerpDouble(maxHeight - 8, minHeight - 8, shrink),
+                    height: lerpDouble(maxHeight - 8, minHeight - 8, shrink),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: ImageComponent(podcast.imageUrl),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  FloatingHeaderSnapConfiguration? get snapConfiguration =>
+      FloatingHeaderSnapConfiguration(
+        curve: Curves.bounceIn,
+        duration: Duration(seconds: 1),
+      );
+
+  @override
+  bool shouldRebuild(covariant PodcastHeaderDelegate oldDelegate) {
+    return minHeight != oldDelegate.minHeight ||
+        maxHeight != oldDelegate.maxHeight ||
+        stream != oldDelegate.stream;
+  }
+}
+
+class PodcastPage extends StatelessWidget {
   const PodcastPage({
     super.key,
     required this.podcastId,
     required PodcastApi podcastApi,
     required AuthUser authUser,
   }) : _podcastApi = podcastApi,
-       _authUser = authUser,
-       super(title: 'Podcast');
+       _authUser = authUser;
 
   final String podcastId;
   final PodcastApi _podcastApi;
   final AuthUser _authUser;
 
   @override
-  Widget buildChild(BuildContext context) {
+  Widget build(BuildContext context) {
     var scrollController = ScrollController();
+    var podcastStream = _podcastApi.get(podcastId).asBroadcastStream();
     return CustomScrollView(
       controller: scrollController,
       slivers: [
-        PodcastHeaderComponent(
-          authUser: _authUser,
-          podcastStream: _podcastApi.get(podcastId),
+        SliverPersistentHeader(
+          delegate: PodcastHeaderDelegate(stream: podcastStream),
+          pinned: true,
         ),
+
         PodcastEpisodeInfiniteListComponent(
           scrollController: scrollController,
           podcastId: podcastId,
@@ -48,19 +177,6 @@ class PodcastPage extends PageComponentWithScaffold {
         ),
       ],
     );
-    // return SingleChildScrollView(
-    //   child: Column(
-    //     children: [
-    //       PodcastHeaderComponent(
-    //         authUser: _authUser,
-    //         podcastStream: _podcastApi.get(podcastId),
-    //       ),
-    //       PodcastEpisodeListComponent(
-    //         episodeStream: _podcastApi.list(podcastId),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
 
@@ -83,22 +199,48 @@ class PodcastHeaderComponent extends StatelessWidget {
           return SliverFillRemaining(child: LoadingSpinnerComponent());
         }
         var result = snapshot.requireData;
+        Podcast podcast;
         switch (result) {
           case ApiOk():
-            var podcast = result.value;
-            return SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  ImageComponent(podcast.imageUrl, width: 200, height: 200),
-                  Text('Podcast: ${podcast.title}'),
-
-                  SubscribeIconCommponent(authUser: authUser, podcast: podcast),
-                ],
-              ),
-            );
+            podcast = result.value;
           case ApiError():
             return SliverToBoxAdapter(child: Text('error: ${result.error}'));
         }
+
+        return SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            podcast.title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          // Text(podcast.description, maxLines: 5),
+                        ],
+                      ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: ImageComponent(
+                        podcast.imageUrl,
+                        width: 120,
+                        height: 120,
+                      ),
+                    ),
+                  ],
+                ),
+                // Row(children: [Text(podcast.description)]),
+              ],
+            ),
+          ),
+        );
       },
     );
   }
