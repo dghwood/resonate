@@ -61,6 +61,7 @@ func (f *List) Execute(
 			break
 		}
 		if err != nil {
+			log.Errorf("error in subscription it %s", err)
 			return err
 		}
 
@@ -81,6 +82,7 @@ func (f *List) Execute(
 	// Now get the podcast
 	err = f.Datastore.GetMulti(podcasts)
 	if err != nil {
+		log.Errorf("getPodcasts %s", err)
 		return
 	}
 

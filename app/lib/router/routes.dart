@@ -111,6 +111,7 @@ final List<RouteBase> sharedRoutes = [
       }
       return PublicUserProfileComponent(
         userId: userId,
+        authUser: context.read(),
         publicUserApi: context.read(),
       );
     },
@@ -184,9 +185,16 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
               builder: (context, state) {
                 var user = context.read<AuthUser>().user;
                 if (user == null) {
+                  // TODO(duncan): Have a sign in page or something?
                   return Text('User not found');
                 }
-                return ProfileComponent(user: user);
+                // return ProfileComponent(user: user);
+                _log.info('profilePage::${user.id}');
+                return PublicUserProfileComponent(
+                  publicUserApi: context.read(),
+                  authUser: context.read(),
+                  userId: user.id,
+                );
               },
               path: Routes.profile,
               // routes: sharedRoutes,

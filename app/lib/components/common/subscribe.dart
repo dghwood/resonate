@@ -44,6 +44,7 @@ class SubscribeNotifier extends ChangeNotifier {
         _status = SubscribeNotifierStatus.subscribed;
         break;
       case ApiError():
+        _log.info(result.error);
         error = result.error;
         _status = SubscribeNotifierStatus.error;
         break;

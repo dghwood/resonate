@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/user.dart';
+import 'package:resonate/components/common/downloads.dart';
 import 'package:resonate/components/common/episode.dart';
 import 'package:resonate/components/common/follow.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
@@ -76,19 +78,47 @@ class _PublicUserProfileAppBarState extends State<PublicUserProfileAppBar> {
   }
 }
 
+class ProfileMetricComponent extends StatelessWidget {
+  const ProfileMetricComponent({
+    super.key,
+    required this.value,
+    required this.metricName,
+  });
+
+  final int? value;
+  final String metricName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${value ?? 0}', style: Theme.of(context).textTheme.labelLarge),
+          Text(metricName, style: Theme.of(context).textTheme.labelSmall),
+        ],
+      ),
+    );
+  }
+}
+
 class PublicUserProfileComponent extends StatelessWidget {
   const PublicUserProfileComponent({
     super.key,
     required this.userId,
     required this.publicUserApi,
+    required this.authUser,
   });
 
   final String userId;
+
   final PublicUserApi publicUserApi;
+  final AuthUser authUser;
 
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
+    final isAuthUser = authUser.user?.id == userId;
     return FutureBuilder(
       future: publicUserApi.get(userId),
       builder: (context, asyncSnapshot) {
@@ -105,22 +135,29 @@ class PublicUserProfileComponent extends StatelessWidget {
         var user = result.value;
 
         return DefaultTabController(
-          length: 4,
+          length: 4 + (isAuthUser ? 1 : 0),
           child: NestedScrollView(
             controller: controller,
             headerSliverBuilder:
                 (context, _) => <Widget>[
                   PublicUserProfileAppBar(controller: controller, user: user),
-                  // SliverAppBar(
-                  //   title: Text(user.name),
-                  //   pinned: true,
-                  //   floating: true,
-                  // ),
                   SliverToBoxAdapter(
-                    child: Row(
-                      children: [ImageComponent(user.imageUrl, height: 120)],
-                    ),
+                    child: PublicUserHeaderComponent(user: user),
                   ),
+                  if (isAuthUser)
+                    SliverToBoxAdapter(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {
+                              Navigate(context).editProfile();
+                            },
+                            child: Text('Edit Profile'),
+                          ),
+                        ],
+                      ),
+                    ),
                   PinnedHeaderSliver(
                     child: Container(
                       color: Theme.of(context).colorScheme.surface,
@@ -128,6 +165,7 @@ class PublicUserProfileComponent extends StatelessWidget {
                         tabs: [
                           Tab(text: 'Listens'),
                           Tab(text: 'Subscriptions'),
+                          if (isAuthUser) Tab(text: 'Downloads'),
                           Tab(text: 'Following'),
                           Tab(text: 'Followers'),
                         ],
@@ -153,10 +191,8 @@ class PublicUserProfileComponent extends StatelessWidget {
                     scrollController: controller,
                   ),
                 ),
-                // PublicUserSubscriptionsComponent(
-                //   user: user,
-                //   scrollController: controller,
-                // ),
+                if (isAuthUser)
+                  DownloadsListComponent(downloadsApi: context.read()),
                 FollowListComponent(
                   user: user,
                   followApi: context.read(),
@@ -173,6 +209,59 @@ class PublicUserProfileComponent extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class PublicUserHeaderComponent extends StatelessWidget {
+  const PublicUserHeaderComponent({super.key, required this.user});
+
+  final PublicUser user;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        spacing: 16,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(64),
+            child: ImageComponent(user.imageUrl, height: 120),
+          ),
+          Expanded(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 8,
+              children: [
+                Text(user.name, style: Theme.of(context).textTheme.titleLarge),
+                Row(
+                  spacing: 8,
+                  children: [
+                    ProfileMetricComponent(value: 72, metricName: 'listens'),
+                    ProfileMetricComponent(value: 72, metricName: 'followers'),
+                    ProfileMetricComponent(value: 72, metricName: 'following'),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  spacing: 8,
+                  // crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: Text('Edit Profile'),
+                    ),
+                    OutlinedButton(onPressed: () {}, child: Text('Signout')),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
