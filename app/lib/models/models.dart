@@ -311,7 +311,7 @@ class PublicUser extends BaseModel<PublicUserMessage> {
 
   @override
   String get id => _message.id;
-  String get name => _message.name;
+  String get name => _message.hasName() ? _message.name : 'Username';
   String get imageUrl => _message.imageUrl;
 
   factory PublicUser.fromUser(User user) {

@@ -4,6 +4,31 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 final Logger _log = Logger('components/common/utils');
 
+enum ButtonState { loading, error, on, off }
+
+class OutlinedButtonComponent extends StatelessWidget {
+  const OutlinedButtonComponent({
+    super.key,
+    required this.child,
+    required this.onPressed,
+    required this.icon,
+    this.showIcon = false,
+    this.state = ButtonState.off,
+  });
+  final ButtonState state;
+  final Widget child;
+  final Icon icon;
+  final Function() onPressed;
+  final bool showIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return showIcon
+        ? IconButton(icon: icon, onPressed: onPressed)
+        : OutlinedButton(onPressed: onPressed, child: child);
+  }
+}
+
 class SkeletonLoadingComponent extends StatelessWidget {
   const SkeletonLoadingComponent({
     super.key,
@@ -21,10 +46,17 @@ class SkeletonLoadingComponent extends StatelessWidget {
 }
 
 class ImageComponent extends StatelessWidget {
-  const ImageComponent(this.src, {super.key, this.width, this.height});
+  const ImageComponent(
+    this.src, {
+    super.key,
+    this.width,
+    this.height,
+    this.radius = 0,
+  });
 
   final double? width;
   final double? height;
+  final double radius;
   final String src;
   @override
   Widget build(BuildContext context) {
@@ -37,14 +69,17 @@ class ImageComponent extends StatelessWidget {
       // server address.
       prefix = 'http://localhost:8080';
     }
-    return Image.network(
-      '$prefix$src',
-      width: width,
-      height: height,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Icon(Icons.image, size: width);
-      },
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(radius),
+      child: Image.network(
+        '$prefix$src',
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Icon(Icons.image, size: width);
+        },
+      ),
     );
   }
 }

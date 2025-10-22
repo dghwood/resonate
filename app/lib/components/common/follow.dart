@@ -80,10 +80,53 @@ class FollowIconComponent extends StatelessWidget {
     super.key,
     required this.followApi,
     required this.user,
+    this.icon = true,
   });
 
   final FollowApi followApi;
   final PublicUser user;
+  final bool icon;
+
+  Widget unfollowButton(Function() onPressed) {
+    return OutlinedButtonComponent(
+      icon: Icon(Icons.add_circle_outline),
+      showIcon: icon,
+      state: ButtonState.off,
+      onPressed: onPressed,
+      child: Text('Follow'),
+    );
+  }
+
+  Widget errorButton(Function() onPressed) {
+    return OutlinedButtonComponent(
+      icon: Icon(Icons.error_outline),
+      showIcon: icon,
+      state: ButtonState.error,
+      onPressed: onPressed,
+      child: Text('Error'),
+    );
+  }
+
+  Widget followButton(Function() onPressed) {
+    return OutlinedButtonComponent(
+      icon: Icon(Icons.check_circle_outline),
+      showIcon: icon,
+      state: ButtonState.on,
+      onPressed: onPressed,
+      child: Text('Following'),
+    );
+  }
+
+  Widget loadingButton(Function() onPressed) {
+    // TODO(duncan): Needs some work...
+    return OutlinedButtonComponent(
+      icon: Icon(Icons.refresh),
+      showIcon: icon,
+      state: ButtonState.loading,
+      onPressed: onPressed,
+      child: Text('Loading'),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,29 +138,14 @@ class FollowIconComponent extends StatelessWidget {
       builder: (context, _) {
         switch (notifier.status) {
           case FollowNotifierStatus.loading:
-            return LoadingSpinnerComponent(size: 16);
+            return loadingButton(notifier.init);
           case FollowNotifierStatus.error:
             context.read<ErrorService>().report(context, notifier.error!);
-            return IconButton(
-              icon: Icon(Icons.error_outline),
-              onPressed: () {
-                notifier.init();
-              },
-            );
+            return errorButton(notifier.init);
           case FollowNotifierStatus.followed:
-            return IconButton(
-              icon: Icon(Icons.check_circle_outline),
-              onPressed: () {
-                notifier.unfollow();
-              },
-            );
+            return followButton(notifier.unfollow);
           case FollowNotifierStatus.unfollowed:
-            return IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () {
-                notifier.follow();
-              },
-            );
+            return unfollowButton(notifier.follow);
         }
       },
     );

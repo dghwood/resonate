@@ -142,22 +142,12 @@ class PublicUserProfileComponent extends StatelessWidget {
                 (context, _) => <Widget>[
                   PublicUserProfileAppBar(controller: controller, user: user),
                   SliverToBoxAdapter(
-                    child: PublicUserHeaderComponent(user: user),
-                  ),
-                  if (isAuthUser)
-                    SliverToBoxAdapter(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          OutlinedButton(
-                            onPressed: () {
-                              Navigate(context).editProfile();
-                            },
-                            child: Text('Edit Profile'),
-                          ),
-                        ],
-                      ),
+                    child: PublicUserHeaderComponent(
+                      user: user,
+                      authUser: authUser,
                     ),
+                  ),
+
                   PinnedHeaderSliver(
                     child: Container(
                       color: Theme.of(context).colorScheme.surface,
@@ -214,12 +204,18 @@ class PublicUserProfileComponent extends StatelessWidget {
 }
 
 class PublicUserHeaderComponent extends StatelessWidget {
-  const PublicUserHeaderComponent({super.key, required this.user});
+  const PublicUserHeaderComponent({
+    super.key,
+    required this.user,
+    required this.authUser,
+  });
 
   final PublicUser user;
+  final AuthUser authUser;
 
   @override
   Widget build(BuildContext context) {
+    var isAuthUser = authUser.user?.id == user.id;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -227,7 +223,7 @@ class PublicUserHeaderComponent extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(64),
-            child: ImageComponent(user.imageUrl, height: 120),
+            child: ImageComponent(user.imageUrl, height: 120, width: 120),
           ),
           Expanded(
             child: Column(
@@ -245,16 +241,28 @@ class PublicUserHeaderComponent extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 16),
+
                 Row(
                   spacing: 8,
                   // crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    OutlinedButton(
-                      onPressed: () {},
-                      child: Text('Edit Profile'),
-                    ),
-                    OutlinedButton(onPressed: () {}, child: Text('Signout')),
+                    if (!isAuthUser)
+                      FollowIconComponent(
+                        followApi: context.read(),
+                        user: user,
+                        icon: false,
+                      ),
+                    if (isAuthUser)
+                      OutlinedButton(
+                        onPressed: () => Navigate(context).editProfile(),
+                        child: Text('Edit Profile'),
+                      ),
+                    if (isAuthUser)
+                      OutlinedButton(
+                        onPressed: () => authUser.signout(),
+                        child: Text('Signout'),
+                      ),
                   ],
                 ),
               ],

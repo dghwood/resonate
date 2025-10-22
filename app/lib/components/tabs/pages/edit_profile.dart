@@ -9,6 +9,7 @@ import 'package:resonate/api/upload.dart';
 import 'package:resonate/components/common/add_photo.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 
 final Logger _log = Logger('tabs/pages/edit_profile');
@@ -36,6 +37,28 @@ class EditProfileComponent extends StatelessWidget {
     }
   }
 
+  void onPressed(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return EditableProfilePhotoComponent(
+            onImageUpdated: (imageBytes) async {
+              var result = await uploadApi.upload(imageBytes);
+              switch (result) {
+                case ApiOk():
+                  var imageUrl = result.value;
+                  command.execute(User(imageUrl: imageUrl));
+                  return ApiResult.ok(true);
+                case ApiError():
+                  return ApiResult.error(result.error);
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = authUser.user!;
@@ -53,31 +76,21 @@ class EditProfileComponent extends StatelessWidget {
             spacing: 16,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                icon: Icon(Icons.person),
-                iconSize: 150,
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return EditableProfilePhotoComponent(
-                          onImageUpdated: (imageBytes) async {
-                            var result = await uploadApi.upload(imageBytes);
-                            switch (result) {
-                              case ApiOk():
-                                var imageUrl = result.value;
-                                command.execute(User(imageUrl: imageUrl));
-                                return ApiResult.ok(true);
-                              case ApiError():
-                                return ApiResult.error(result.error);
-                            }
-                          },
-                        );
-                      },
+              authUser.user?.imageUrl != ''
+                  ? GestureDetector(
+                    child: ImageComponent(
+                      authUser.user!.imageUrl,
+                      height: 250,
+                      width: 250,
+                      radius: 250,
                     ),
-                  );
-                },
-              ),
+                    onTap: () => onPressed(context),
+                  )
+                  : IconButton(
+                    icon: Icon(Icons.person),
+                    iconSize: 150,
+                    onPressed: () => onPressed(context),
+                  ),
               TextFormField(
                 controller: nameEditingController,
                 decoration: InputDecoration(labelText: 'Name'),
