@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>svgEditor</title>
+</head>
+
+<body>
+    <!-- <div id="canvas" style="width: 400px; height: 400px; background: blue;"></div> -->
+    <script type="text/javascript" src="svgEditor.js"></script>
+    <script type="text/javascript">
+        var size = 256;
+        var svgEditor = new SVGEditor(document, size, size);
+
+        var l = 256 / 6;
+        var p = svgEditor.newPath()
+            .Move(0, 0)
+            .vline(2 * l)
+            .vsigmoid(l / 2, l)
+            .vline(2 * l)
+            .rhend(l / 2, l / 4)
+            .vline(-5 * l)
+            .rhend(-l, l / 2)
+            // .translate(16, 24)
+            .ctranslate(size / 2 - l * 2, size / 2)
+            .rotate(180);
+
+        var q = svgEditor.newPath()
+            .Move(0, 0)
+            .vline(2 * l)
+            .vsigmoid(l / 2, l)
+            .vline(2 * l)
+            .rhend(l / 2, l / 4)
+            .vline(-5 * l)
+            .rhend(-l, l / 2)
+            // .translate(16, 24)
+            .ctranslate(size / 2 + l / 2, size / 2);
+
+
+
+
+
+
+
+
+        ;
+
+
+    </script>
+</body>
+
+</html>
