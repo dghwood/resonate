@@ -88,12 +88,41 @@ class EditableProfilePhotoComponent extends StatelessWidget {
   final double targetSize = 450;
   final Future<ApiResult<bool>> Function(Uint8List imageBytes) onImageUpdated;
 
+  void onSave() async {
+    if (await profileImage.transform(
+      transformationController.value,
+      targetSize: targetSize,
+    )) {
+      pageController.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  void onRotate(double degrees) {
+    var matrix = Matrix4.identity();
+
+    final originalCenter = vector_math.Vector3(
+      targetSize / 2,
+      targetSize / 2,
+      0,
+    );
+
+    matrix.translateByVector3(originalCenter);
+    matrix.rotateZ(degrees);
+    matrix.translateByVector3(-originalCenter);
+    matrix.multiply(transformationController.value);
+
+    transformationController.value = matrix;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit profile photo'),
-        actions: [IconButton(icon: Icon(Icons.check), onPressed: () {})],
+        actions: [IconButton(icon: Icon(Icons.check), onPressed: onSave)],
       ),
       body: Center(
         child: PageView(
@@ -122,15 +151,23 @@ class EditableProfilePhotoComponent extends StatelessWidget {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadiusGeometry.all(
-                            Radius.circular(targetSize),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(targetSize),
+                            ),
                           ),
-                          child: SizedBox(
-                            width: targetSize,
-                            height: targetSize,
-                            child: Container(
-                              color: Colors.blue,
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.all(
+                              Radius.circular(targetSize),
+                            ),
+                            child: SizedBox(
+                              width: targetSize,
+                              height: targetSize,
                               child: InteractiveViewer(
                                 constrained: false,
                                 transformationController:
@@ -146,45 +183,17 @@ class EditableProfilePhotoComponent extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 16,
                           children: [
                             IconButton(
+                              icon: Icon(Icons.rotate_left),
+                              onPressed: () => onRotate(-math.pi / 2),
+                            ),
+                            IconButton(
                               icon: Icon(Icons.rotate_right),
-                              onPressed: () {
-                                _log.info("rotate");
-
-                                var matrix = Matrix4.identity();
-
-                                final originalCenter = vector_math.Vector3(
-                                  targetSize / 2,
-                                  targetSize / 2,
-                                  0,
-                                );
-
-                                matrix.translateByVector3(originalCenter);
-                                matrix.rotateZ(math.pi / 2);
-                                matrix.translateByVector3(-originalCenter);
-                                matrix.multiply(transformationController.value);
-
-                                transformationController.value = matrix;
-                              },
+                              onPressed: () => onRotate(math.pi / 2),
                             ),
                           ],
-                        ),
-                        TextButton(
-                          child: Text("Save"),
-                          onPressed: () async {
-                            if (await profileImage.transform(
-                              transformationController.value,
-                              targetSize: targetSize,
-                            )) {
-                              _log.info('next page');
-                              pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            }
-                            ;
-                          },
                         ),
                       ],
                     );

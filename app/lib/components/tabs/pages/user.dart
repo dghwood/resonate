@@ -68,8 +68,10 @@ class _PublicUserProfileAppBarState extends State<PublicUserProfileAppBar> {
       title: Opacity(
         opacity: opacity,
         child: Row(
+          spacing: 16,
           children: [
-            ImageComponent(widget.user.imageUrl, height: 32),
+            ProfileImageComponent(widget.user.imageUrl, width: 32, height: 32),
+            // ImageComponent(widget.user.imageUrl, height: 32),
             Text(widget.user.name),
           ],
         ),
@@ -135,7 +137,7 @@ class PublicUserProfileComponent extends StatelessWidget {
         var user = result.value;
 
         return DefaultTabController(
-          length: 4 + (isAuthUser ? 1 : 0),
+          length: 2 + (isAuthUser ? 1 : 0),
           child: NestedScrollView(
             controller: controller,
             headerSliverBuilder:
@@ -156,8 +158,6 @@ class PublicUserProfileComponent extends StatelessWidget {
                           Tab(text: 'Listens'),
                           Tab(text: 'Subscriptions'),
                           if (isAuthUser) Tab(text: 'Downloads'),
-                          Tab(text: 'Following'),
-                          Tab(text: 'Followers'),
                         ],
                       ),
                     ),
@@ -183,17 +183,6 @@ class PublicUserProfileComponent extends StatelessWidget {
                 ),
                 if (isAuthUser)
                   DownloadsListComponent(downloadsApi: context.read()),
-                FollowListComponent(
-                  user: user,
-                  followApi: context.read(),
-                  scrollController: controller,
-                ),
-                FollowListComponent(
-                  user: user,
-                  followApi: context.read(),
-                  scrollController: controller,
-                  isFollowed: true,
-                ),
               ],
             ),
           ),
@@ -232,13 +221,24 @@ class PublicUserHeaderComponent extends StatelessWidget {
               spacing: 8,
               children: [
                 Text(user.name, style: Theme.of(context).textTheme.titleLarge),
-                Row(
-                  spacing: 8,
-                  children: [
-                    ProfileMetricComponent(value: 72, metricName: 'listens'),
-                    ProfileMetricComponent(value: 72, metricName: 'followers'),
-                    ProfileMetricComponent(value: 72, metricName: 'following'),
-                  ],
+                InkWell(
+                  onTap: () {
+                    Navigate(context).toFollowersPage(user);
+                  },
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      ProfileMetricComponent(value: 72, metricName: 'listens'),
+                      ProfileMetricComponent(
+                        value: 72,
+                        metricName: 'followers',
+                      ),
+                      ProfileMetricComponent(
+                        value: 72,
+                        metricName: 'following',
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 16),
 
@@ -248,10 +248,12 @@ class PublicUserHeaderComponent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (!isAuthUser)
-                      FollowIconComponent(
-                        followApi: context.read(),
-                        user: user,
-                        icon: false,
+                      Expanded(
+                        child: FollowIconComponent(
+                          followApi: context.read(),
+                          user: user,
+                          icon: false,
+                        ),
                       ),
                     if (isAuthUser)
                       OutlinedButton(

@@ -45,6 +45,27 @@ class SkeletonLoadingComponent extends StatelessWidget {
   }
 }
 
+class ProfileImageComponent extends StatelessWidget {
+  const ProfileImageComponent(
+    this.src, {
+    super.key,
+    this.width = 24,
+    this.height = 24,
+  });
+
+  final String src;
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(width > height ? width : height),
+      child: ImageComponent(src, width: width, height: height),
+    );
+  }
+}
+
 class ImageComponent extends StatelessWidget {
   const ImageComponent(
     this.src, {

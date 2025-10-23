@@ -157,13 +157,13 @@ class FollowListComponent extends StatelessWidget {
     super.key,
     required this.user,
     required this.followApi,
-    required this.scrollController,
+    this.scrollController,
     this.isFollowed = false,
   });
 
   final FollowApi followApi;
   final PublicUser user;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
   final bool isFollowed;
 
   @override
@@ -183,7 +183,7 @@ class FollowListComponent extends StatelessWidget {
         }
         return InfiniteScrollComponent(
           iterableApiResult: iterableApiResult,
-          scrollController: scrollController,
+          scrollController: scrollController ?? ScrollController(),
           itemBuilder: (context, follow) {
             if (follow.user == null) {
               return Text('User Not Found: ${follow.followedUserId}');

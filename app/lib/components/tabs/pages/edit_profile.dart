@@ -11,10 +11,11 @@ import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/router/navigation.dart';
 
 final Logger _log = Logger('tabs/pages/edit_profile');
 
-class EditProfileComponent extends StatelessWidget {
+class EditProfileComponent extends StatefulWidget {
   EditProfileComponent({
     super.key,
     required this.authUser,
@@ -24,18 +25,28 @@ class EditProfileComponent extends StatelessWidget {
   }
 
   final AuthUser authUser;
-  final formKey = GlobalKey<FormState>();
-  final nameEditingController = TextEditingController();
   final UploadApi uploadApi;
   late final ApiResultNotifier1<User, User> command;
+
+  @override
+  State<EditProfileComponent> createState() => _EditProfileComponentState();
+}
+
+class _EditProfileComponentState extends State<EditProfileComponent> {
+  final formKey = GlobalKey<FormState>();
+
+  final nameEditingController = TextEditingController();
 
   void onSubmit() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var name = nameEditingController.text;
-      command.execute(User(name: name));
+      // if newImageUrl is null it won't update the image.
+      widget.command.execute(User(name: name, imageUrl: newImageUrl));
     }
   }
+
+  String? newImageUrl;
 
   void onPressed(BuildContext context) {
     Navigator.of(context).push(
@@ -43,11 +54,16 @@ class EditProfileComponent extends StatelessWidget {
         builder: (context) {
           return EditableProfilePhotoComponent(
             onImageUpdated: (imageBytes) async {
-              var result = await uploadApi.upload(imageBytes);
+              var result = await widget.uploadApi.upload(imageBytes);
               switch (result) {
                 case ApiOk():
-                  var imageUrl = result.value;
-                  command.execute(User(imageUrl: imageUrl));
+                  // var imageUrl = result.value;
+
+                  setState(() {
+                    newImageUrl = result.value;
+                  });
+                  // I actually want to move this
+                  // widget.command.execute(User(imageUrl: imageUrl));
                   return ApiResult.ok(true);
                 case ApiError():
                   return ApiResult.error(result.error);
@@ -61,7 +77,7 @@ class EditProfileComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = authUser.user!;
+    var user = widget.authUser.user!;
     nameEditingController.text = user.name;
 
     Widget init(BuildContext context, {Exception? error}) {
@@ -76,10 +92,10 @@ class EditProfileComponent extends StatelessWidget {
             spacing: 16,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              authUser.user?.imageUrl != ''
+              widget.authUser.user?.imageUrl != ''
                   ? GestureDetector(
                     child: ImageComponent(
-                      authUser.user!.imageUrl,
+                      newImageUrl ?? widget.authUser.user!.imageUrl,
                       height: 250,
                       width: 250,
                       radius: 250,
@@ -92,6 +108,7 @@ class EditProfileComponent extends StatelessWidget {
                     onPressed: () => onPressed(context),
                   ),
               TextFormField(
+                maxLength: 64,
                 controller: nameEditingController,
                 decoration: InputDecoration(labelText: 'Name'),
                 keyboardType: TextInputType.name,
@@ -110,11 +127,15 @@ class EditProfileComponent extends StatelessWidget {
       body: Center(
         child: ApiResultNotifierComponent(
           init: init,
-          command: command,
+          command: widget.command,
           loading: (_) => LoadingSpinnerComponent(),
           done: (context, result) => init(context),
           onDone: (result) {
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigate(context).toProfilePage();
+            }
           },
         ),
       ),
