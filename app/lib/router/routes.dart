@@ -170,7 +170,7 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
           routes: [
             GoRoute(
               // redirect: _signInRedirect,
-              builder: (context, state) => SearchComponent(),
+              builder: (context, state) => SearchPageComponent(),
               path: Routes.search,
               // routes: sharedRoutes,
             ),

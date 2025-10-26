@@ -437,6 +437,17 @@ class SearchResults extends BaseModel<SearchResultsMessage> {
 
   SearchResults.fromMessage(super.message);
 
+  factory SearchResults.copyWithFilter(
+    SearchResults results,
+    bool Function(SearchResult result) filter,
+  ) {
+    var message = SearchResultsMessage()..mergeFromMessage(results.toMessage());
+    message.results.retainWhere(
+      (message) => filter(SearchResult.fromMessage(message)),
+    );
+    return SearchResults.fromMessage(message);
+  }
+
   @override
   Uint8List get descriptor => searchResultsMessageDescriptor;
   List<SearchResult> get results =>

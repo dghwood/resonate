@@ -3,10 +3,16 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 
 abstract class AbstractContactsService {
   Future<Iterable<String>> getPhoneNumbers();
+  Future<bool> requestPermission();
 }
 
 class MockContacts implements AbstractContactsService {
   MockContacts();
+  @override
+  Future<bool> requestPermission() async {
+    return true;
+  }
+
   @override
   Future<Iterable<String>> getPhoneNumbers() async {
     await Future.delayed(Duration(seconds: 1));
@@ -26,7 +32,7 @@ class Contacts implements AbstractContactsService {
   bool _hasPermission = false;
   bool get hasPermission => _hasPermission;
 
-  Future<bool> _requestPermission() async {
+  Future<bool> requestPermission() async {
     _hasPermission = await FlutterContacts.requestPermission(readonly: true);
     return _hasPermission;
   }
@@ -36,7 +42,7 @@ class Contacts implements AbstractContactsService {
     if (kIsWeb) {
       throw Exception("not support on web");
     }
-    if (!await _requestPermission()) {
+    if (!await requestPermission()) {
       throw Exception("No permission");
     }
     var contacts = await FlutterContacts.getContacts(withProperties: true);

@@ -70,6 +70,14 @@ class FindUsersApi {
     }
   }
 
+  Future<ApiResult<bool>> requestPermission() async {
+    try {
+      return ApiResult.ok(await _contactsService.requestPermission());
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
   Future<IterableApiResult<Iterable<PublicUser>>> find(
     Iterable<String> phoneNumbers, {
     QueryCursor? cursor,

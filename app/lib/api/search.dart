@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/podcast.dart';
@@ -6,6 +7,8 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/http.dart';
+
+final Logger _log = Logger('api/search');
 
 class SearchApiRequest extends ApiRequest<SearchMessage_Request> {
   SearchApiRequest() : super(SearchMessage_Request(requestInfo: RequestInfo()));
@@ -110,16 +113,38 @@ class SearchApi {
   // Returns the top N podcasts of the day
   // Heavily cache this..
   Future<ApiResult<SearchResults>> top() async {
+    if (_autocompleteResults != null) {
+      return ApiResult.ok(_autocompleteResults!);
+    }
     var request = SearchTopApiRequest();
     var response = SearchTopApiResponse();
     try {
       await _topServer.execute(request, response);
-      return ApiResult.ok(
-        SearchResults.fromMessage(response.responsePb.searchResults),
+      _autocompleteResults = SearchResults.fromMessage(
+        response.responsePb.searchResults,
       );
+      return ApiResult.ok(_autocompleteResults!);
     } on Exception catch (e) {
       return ApiResult.error(e);
     }
+  }
+
+  SearchResults? _autocompleteResults;
+  Future<ApiResult<SearchResults>> autocomplete(String query) async {
+    if (query.isEmpty) return ApiResult.ok(SearchResults());
+    if (_autocompleteResults == null) {
+      var result = await top();
+      if (result is! ApiOk) return result;
+    }
+
+    // Implement simple search
+    return ApiResult.ok(
+      SearchResults.copyWithFilter(_autocompleteResults!, (result) {
+        if (result.podcast == null) return false;
+        var podcast = result.podcast!;
+        return podcast.title.toLowerCase().contains(query.toLowerCase());
+      }),
+    );
   }
 
   // I feel like this needs to return various types..
