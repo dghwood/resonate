@@ -2254,3 +2254,86 @@ final $typed_data.Uint8List findContactsMessageDescriptor = $convert.base64Decod
     'IMcmVzcG9uc2VJbmZvEjEKBXVzZXJzGAIgAygLMhsucmVzb25hdGUuUHVibGljVXNlck1lc3Nh'
     'Z2VSBXVzZXJzEjEKBmN1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3'
     'Vyc29y');
+
+@$core.Deprecated('Use searchContactsMessageDescriptor instead')
+const SearchContactsMessage$json = {
+  '1': 'SearchContactsMessage',
+  '3': [
+    SearchContactsMessage_Request$json,
+    SearchContactsMessage_Response$json
+  ],
+};
+
+@$core.Deprecated('Use searchContactsMessageDescriptor instead')
+const SearchContactsMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'contacts',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.UserContactsMessage',
+      '10': 'contacts'
+    },
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
+    {'1': 'query', '3': 4, '4': 1, '5': 9, '10': 'query'},
+  ],
+};
+
+@$core.Deprecated('Use searchContactsMessageDescriptor instead')
+const SearchContactsMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'users',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'users'
+    },
+    {
+      '1': 'cursor',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.QueryCursor',
+      '10': 'cursor'
+    },
+  ],
+};
+
+/// Descriptor for `SearchContactsMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchContactsMessageDescriptor = $convert.base64Decode(
+    'ChVTZWFyY2hDb250YWN0c01lc3NhZ2UaywEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgAS'
+    'gLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxI5Cghjb250YWN0cxgC'
+    'IAEoCzIdLnJlc29uYXRlLlVzZXJDb250YWN0c01lc3NhZ2VSCGNvbnRhY3RzEjEKBmN1cnNvch'
+    'gDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3Vyc29yEhQKBXF1ZXJ5GAQgASgJ'
+    'UgVxdWVyeRqxAQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLm'
+    'FwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxIxCgV1c2VycxgCIAMoCzIbLnJlc29uYXRl'
+    'LlB1YmxpY1VzZXJNZXNzYWdlUgV1c2VycxIxCgZjdXJzb3IYAyABKAsyGS5yZXNvbmF0ZS5hcG'
+    'kuUXVlcnlDdXJzb3JSBmN1cnNvcg==');

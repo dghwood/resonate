@@ -176,3 +176,15 @@ message UserDownloadMessage {
 
     StorageMetadataMessage metadata = 5; 
 }
+
+message UserContactsMessage {
+    string id = 1; 
+    string user_id = 2; 
+    repeated UserContactMessage contacts = 3; 
+    StorageMetadataMessage metadata = 4; 
+}
+message UserContactMessage {
+    // This is the contact id from their phone
+    string id = 1; 
+    string encrypted_phone_number = 3; 
+}

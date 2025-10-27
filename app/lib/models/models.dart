@@ -575,3 +575,47 @@ class QueryCursor extends BaseModel<api.QueryCursor> {
 
   QueryCursor.fromMessage(super.message);
 }
+
+class UserContact extends BaseModel<UserContactMessage> {
+  UserContact({String? id, String? phoneNumber})
+    : super(
+        // TODO(duncan): Encrypt the phoneNumber
+        UserContactMessage(id: id, encryptedPhoneNumber: phoneNumber),
+      );
+
+  @override
+  Uint8List get descriptor => userContactMessageDescriptor;
+
+  @override
+  String get id => _message.id;
+  String get encryptedPhoneNumber => _message.encryptedPhoneNumber;
+
+  UserContact.fromMessage(super.message);
+  UserContact.copy(UserContact model)
+    : super(UserContactMessage()..mergeFromMessage(model.toMessage()));
+}
+
+class UserContacts extends BaseModel<UserContactsMessage> {
+  UserContacts({String? userId, Iterable<UserContact>? contacts})
+    : super(
+        UserContactsMessage(
+          id: 'contacts-$userId',
+          userId: userId,
+          contacts: contacts?.map((e) => e.toMessage()),
+        ),
+      );
+
+  @override
+  Uint8List get descriptor => userContactsMessageDescriptor;
+
+  @override
+  String get id => _message.id;
+  String get userId => _message.userId;
+
+  UserContacts.fromMessage(super.message);
+  UserContacts.copy(UserContacts model)
+    : super(UserContactsMessage()..mergeFromMessage(model.toMessage()));
+
+  Iterable<UserContact> get contacts =>
+      _message.contacts.map((c) => UserContact.fromMessage(c));
+}

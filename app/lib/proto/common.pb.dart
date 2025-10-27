@@ -1975,6 +1975,167 @@ class UserDownloadMessage extends $pb.GeneratedMessage {
   StorageMetadataMessage ensureMetadata() => $_ensure(4);
 }
 
+class UserContactsMessage extends $pb.GeneratedMessage {
+  factory UserContactsMessage({
+    $core.String? id,
+    $core.String? userId,
+    $core.Iterable<UserContactMessage>? contacts,
+    StorageMetadataMessage? metadata,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (userId != null) result.userId = userId;
+    if (contacts != null) result.contacts.addAll(contacts);
+    if (metadata != null) result.metadata = metadata;
+    return result;
+  }
+
+  UserContactsMessage._();
+
+  factory UserContactsMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserContactsMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserContactsMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'userId')
+    ..pc<UserContactMessage>(
+        3, _omitFieldNames ? '' : 'contacts', $pb.PbFieldType.PM,
+        subBuilder: UserContactMessage.create)
+    ..aOM<StorageMetadataMessage>(4, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserContactsMessage clone() => UserContactsMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserContactsMessage copyWith(void Function(UserContactsMessage) updates) =>
+      super.copyWith((message) => updates(message as UserContactsMessage))
+          as UserContactsMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserContactsMessage create() => UserContactsMessage._();
+  @$core.override
+  UserContactsMessage createEmptyInstance() => create();
+  static $pb.PbList<UserContactsMessage> createRepeated() =>
+      $pb.PbList<UserContactsMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UserContactsMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserContactsMessage>(create);
+  static UserContactsMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get userId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userId($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUserId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserId() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<UserContactMessage> get contacts => $_getList(2);
+
+  @$pb.TagNumber(4)
+  StorageMetadataMessage get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(StorageMetadataMessage value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => $_clearField(4);
+  @$pb.TagNumber(4)
+  StorageMetadataMessage ensureMetadata() => $_ensure(3);
+}
+
+class UserContactMessage extends $pb.GeneratedMessage {
+  factory UserContactMessage({
+    $core.String? id,
+    $core.String? encryptedPhoneNumber,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (encryptedPhoneNumber != null)
+      result.encryptedPhoneNumber = encryptedPhoneNumber;
+    return result;
+  }
+
+  UserContactMessage._();
+
+  factory UserContactMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserContactMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserContactMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(3, _omitFieldNames ? '' : 'encryptedPhoneNumber')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserContactMessage clone() => UserContactMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserContactMessage copyWith(void Function(UserContactMessage) updates) =>
+      super.copyWith((message) => updates(message as UserContactMessage))
+          as UserContactMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserContactMessage create() => UserContactMessage._();
+  @$core.override
+  UserContactMessage createEmptyInstance() => create();
+  static $pb.PbList<UserContactMessage> createRepeated() =>
+      $pb.PbList<UserContactMessage>();
+  @$core.pragma('dart2js:noInline')
+  static UserContactMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserContactMessage>(create);
+  static UserContactMessage? _defaultInstance;
+
+  /// This is the contact id from their phone
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(3)
+  $core.String get encryptedPhoneNumber => $_getSZ(1);
+  @$pb.TagNumber(3)
+  set encryptedPhoneNumber($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(3)
+  $core.bool hasEncryptedPhoneNumber() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearEncryptedPhoneNumber() => $_clearField(3);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

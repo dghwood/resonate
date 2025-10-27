@@ -7,7 +7,7 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/components/common/find_users.dart';
-import 'package:resonate/components/common/infinite_scroll2.dart';
+import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/podcast.dart';
 import 'package:resonate/components/common/subscribe.dart';
@@ -89,7 +89,10 @@ class SearchPageComponent extends StatelessWidget {
                     controller: textEditingController,
                     searchApi: context.read(),
                   ),
-                  UserSearchPageComponent(controller: textEditingController),
+                  UserSearchPageComponent(
+                    controller: textEditingController,
+                    searchContactsApi: context.read(),
+                  ),
                 ],
               ),
             ),
@@ -173,17 +176,41 @@ class PodcastSearchPageComponent extends StatelessWidget {
   }
 }
 
+/* UserSearchPageComponent 
+
+  I'm trying to think this through. 
+  * You need to ask for permission to the contacts. 
+    * Can you search without that permission 
+      * Yes? 
+    * You need to be able to give permission 
+      * Then how does search behave differently 
+    
+  In the search api above we have two things 
+    * Search 
+      * This searches all the users 
+    * Top 
+      * This provides your contacts (if you have permission) 
+      * If no permission then just all users (?) 
+        * need to think about ranking here. 
+
+*/
 class UserSearchPageComponent extends StatelessWidget {
   const UserSearchPageComponent({
     super.key,
     required this.controller,
-    required this.findUsersApi,
+    required this.searchContactsApi,
   });
 
   final SearchEditingController controller;
-  final FindUsersApi findUsersApi;
+  final SearchContactsApi searchContactsApi;
+
   @override
   Widget build(BuildContext context) {
+    var topFuture = searchContactsApi.top();
+    var scrollController = ScrollController();
+    _log.info(
+      'hasContactsPermission ${searchContactsApi.hasContactsPermission}',
+    );
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
@@ -191,17 +218,60 @@ class UserSearchPageComponent extends StatelessWidget {
           // This doesn't happen
           return Text('No search term');
         }
-        Future<ApiResult<SearchResults>> future;
+        Future<IterableApiResult<Iterable<PublicUser>>> future;
         switch (controller.state) {
           case SearchEditingControllerState.init:
-            return Text('share your contacts');
+            future = topFuture;
           case SearchEditingControllerState.autocomplete:
-            return Text('share your contacts');
+            future = topFuture;
           case SearchEditingControllerState.search:
-            future = findUsersApi.find(phoneNumbers)
+            future = searchContactsApi.search(controller.value!);
         }
 
-        return Text('user ${controller.value}');
+        return Column(
+          children: [
+            if (!searchContactsApi.hasContactsPermission)
+              ListTile(
+                title: Text('Share your contacts, find your friends'),
+                leading: Icon(Icons.person),
+                onTap: () async {
+                  await searchContactsApi.requestPermission();
+                  // This will refresh the whole widget.
+                  controller.onSubmit(null);
+                },
+              ),
+            Expanded(
+              child: FutureBuilder(
+                future: future,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return LoadingSpinnerComponent();
+                  }
+                  var result = snapshot.requireData;
+                  switch (result) {
+                    case ApiOkIterable():
+                      break;
+                    case ApiErrorIterable():
+                      return Text('Error: ${result.error}');
+                  }
+                  return InfiniteScrollComponent(
+                    iterableApiResult: result,
+                    scrollController: scrollController,
+                    itemBuilder: (BuildContext context, item) {
+                      return ListTile(
+                        leading: ImageComponent(item.imageUrl),
+                        title: Text(item.name),
+                        onTap: () {
+                          Navigate(context).toPublicProfile(item.id);
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        );
       },
     );
   }

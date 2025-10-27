@@ -131,6 +131,14 @@ final providers =
               contactsSerivce: MockContacts(),
             ),
       ),
+      Provider<SearchContactsApi>(
+        create:
+            (context) => SearchContactsApi(
+              authUser: context.read(),
+              client: context.read(),
+              contactsSerivce: MockContacts(),
+            ),
+      ),
       Provider<PublicUserApi>(
         create:
             (context) => PublicUserApi(

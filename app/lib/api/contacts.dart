@@ -99,3 +99,131 @@ class FindUsersApi {
     }
   }
 }
+
+/* Contacts */
+
+class SearchContactsApiRequest
+    extends ApiRequest<SearchContactsMessage_Request> {
+  SearchContactsApiRequest({
+    UserContacts? contacts,
+    QueryCursor? cursor,
+    String? query,
+  }) : super(
+         SearchContactsMessage_Request(
+           contacts: contacts?.toMessage(),
+           query: query,
+           cursor: cursor?.toMessage(),
+           requestInfo: RequestInfo(),
+         ),
+       );
+
+  @override
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
+}
+
+class SearchContactsApiResponse
+    extends ApiResponse<SearchContactsMessage_Response> {
+  SearchContactsApiResponse() : super(SearchContactsMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  QueryCursor get cursor => QueryCursor.fromMessage(responsePb.cursor);
+  Iterable<PublicUser> get users =>
+      responsePb.users.map((u) => PublicUser.fromMessage(u));
+}
+
+class SearchContactsApiServer
+    extends ServerApi<SearchContactsApiRequest, SearchContactsApiResponse> {
+  SearchContactsApiServer({
+    AbstractHttpService? client,
+    required AuthUser authUser,
+  }) : super(
+         SearchContactsApiRequest(),
+         SearchContactsApiResponse(),
+         'api/search/users',
+         client: client,
+         authUser: authUser,
+       );
+}
+
+class SearchContactsApi {
+  SearchContactsApi({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+    required AbstractContactsService contactsSerivce,
+  }) : _contactsService = contactsSerivce,
+       _server = SearchContactsApiServer(client: client, authUser: authUser);
+
+  final SearchContactsApiServer _server;
+  final AbstractContactsService _contactsService;
+
+  // This needs to be checked at some point..
+  bool _hasContactsPermission = false;
+  bool get hasContactsPermission => _hasContactsPermission;
+
+  Future<ApiResult<bool>> requestPermission() async {
+    try {
+      var result = await _contactsService.requestPermission();
+      _hasContactsPermission = result;
+      return ApiResult.ok(result);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
+  final List<PublicUser> _contacts = [];
+  // Returns top users, or your contacts? or merged?
+  Future<IterableApiResult<Iterable<PublicUser>>> top({
+    QueryCursor? cursor,
+  }) async {
+    Iterable<UserContact> contacts = [];
+
+    try {
+      // This might error
+      if (cursor == null) {
+        // Only do this on the first request
+        contacts = await _contactsService.getContacts();
+      }
+    } on Exception catch (e) {
+      _log.info(e);
+    }
+
+    try {
+      var request = SearchContactsApiRequest(
+        contacts: UserContacts(contacts: contacts),
+        cursor: cursor,
+      );
+      var response = SearchContactsApiResponse();
+      await _server.execute(request, response);
+      var users = response.users;
+      // Delete duplicates.
+      _contacts.addAll(users);
+      return IterableApiResult.ok(
+        response.users,
+        next: () => top(cursor: response.cursor),
+      );
+    } on Exception catch (e) {
+      return IterableApiResult.error(e);
+    }
+  }
+
+  Future<IterableApiResult<Iterable<PublicUser>>> search(
+    String query, {
+    QueryCursor? cursor,
+  }) async {
+    try {
+      var request = SearchContactsApiRequest(query: query, cursor: cursor);
+      var response = SearchContactsApiResponse();
+      await _server.execute(request, response);
+
+      return IterableApiResult.ok(
+        response.users,
+        next: () => top(cursor: response.cursor),
+      );
+    } on Exception catch (e) {
+      return IterableApiResult.error(e);
+    }
+  }
+}

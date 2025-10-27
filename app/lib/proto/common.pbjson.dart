@@ -648,3 +648,55 @@ final $typed_data.Uint8List userDownloadMessageDescriptor = $convert.base64Decod
     'gJUgllcGlzb2RlSWQSGwoJZmlsZV9wYXRoGAMgASgJUghmaWxlUGF0aBIjCg1pc19kb3dubG9h'
     'ZGVkGAQgASgIUgxpc0Rvd25sb2FkZWQSPAoIbWV0YWRhdGEYBSABKAsyIC5yZXNvbmF0ZS5TdG'
     '9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
+
+@$core.Deprecated('Use userContactsMessageDescriptor instead')
+const UserContactsMessage$json = {
+  '1': 'UserContactsMessage',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    {
+      '1': 'contacts',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserContactMessage',
+      '10': 'contacts'
+    },
+    {
+      '1': 'metadata',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+  ],
+};
+
+/// Descriptor for `UserContactsMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userContactsMessageDescriptor = $convert.base64Decode(
+    'ChNVc2VyQ29udGFjdHNNZXNzYWdlEg4KAmlkGAEgASgJUgJpZBIXCgd1c2VyX2lkGAIgASgJUg'
+    'Z1c2VySWQSOAoIY29udGFjdHMYAyADKAsyHC5yZXNvbmF0ZS5Vc2VyQ29udGFjdE1lc3NhZ2VS'
+    'CGNvbnRhY3RzEjwKCG1ldGFkYXRhGAQgASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTW'
+    'Vzc2FnZVIIbWV0YWRhdGE=');
+
+@$core.Deprecated('Use userContactMessageDescriptor instead')
+const UserContactMessage$json = {
+  '1': 'UserContactMessage',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {
+      '1': 'encrypted_phone_number',
+      '3': 3,
+      '4': 1,
+      '5': 9,
+      '10': 'encryptedPhoneNumber'
+    },
+  ],
+};
+
+/// Descriptor for `UserContactMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userContactMessageDescriptor = $convert.base64Decode(
+    'ChJVc2VyQ29udGFjdE1lc3NhZ2USDgoCaWQYASABKAlSAmlkEjQKFmVuY3J5cHRlZF9waG9uZV'
+    '9udW1iZXIYAyABKAlSFGVuY3J5cHRlZFBob25lTnVtYmVy');

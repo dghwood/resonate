@@ -6574,6 +6574,239 @@ class FindContactsMessage extends $pb.GeneratedMessage {
   FindContactsMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class SearchContactsMessage_Request extends $pb.GeneratedMessage {
+  factory SearchContactsMessage_Request({
+    RequestInfo? requestInfo,
+    $0.UserContactsMessage? contacts,
+    QueryCursor? cursor,
+    $core.String? query,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (contacts != null) result.contacts = contacts;
+    if (cursor != null) result.cursor = cursor;
+    if (query != null) result.query = query;
+    return result;
+  }
+
+  SearchContactsMessage_Request._();
+
+  factory SearchContactsMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchContactsMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchContactsMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..aOM<$0.UserContactsMessage>(2, _omitFieldNames ? '' : 'contacts',
+        subBuilder: $0.UserContactsMessage.create)
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
+    ..aOS(4, _omitFieldNames ? '' : 'query')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage_Request clone() =>
+      SearchContactsMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage_Request copyWith(
+          void Function(SearchContactsMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as SearchContactsMessage_Request))
+          as SearchContactsMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage_Request create() =>
+      SearchContactsMessage_Request._();
+  @$core.override
+  SearchContactsMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<SearchContactsMessage_Request> createRepeated() =>
+      $pb.PbList<SearchContactsMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchContactsMessage_Request>(create);
+  static SearchContactsMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.UserContactsMessage get contacts => $_getN(1);
+  @$pb.TagNumber(2)
+  set contacts($0.UserContactsMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasContacts() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearContacts() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.UserContactsMessage ensureContacts() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.String get query => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set query($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasQuery() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearQuery() => $_clearField(4);
+}
+
+class SearchContactsMessage_Response extends $pb.GeneratedMessage {
+  factory SearchContactsMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.PublicUserMessage>? users,
+    QueryCursor? cursor,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (users != null) result.users.addAll(users);
+    if (cursor != null) result.cursor = cursor;
+    return result;
+  }
+
+  SearchContactsMessage_Response._();
+
+  factory SearchContactsMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchContactsMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchContactsMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.PublicUserMessage>(
+        2, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM,
+        subBuilder: $0.PublicUserMessage.create)
+    ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: QueryCursor.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage_Response clone() =>
+      SearchContactsMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage_Response copyWith(
+          void Function(SearchContactsMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as SearchContactsMessage_Response))
+          as SearchContactsMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage_Response create() =>
+      SearchContactsMessage_Response._();
+  @$core.override
+  SearchContactsMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<SearchContactsMessage_Response> createRepeated() =>
+      $pb.PbList<SearchContactsMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchContactsMessage_Response>(create);
+  static SearchContactsMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.PublicUserMessage> get users => $_getList(1);
+
+  @$pb.TagNumber(3)
+  QueryCursor get cursor => $_getN(2);
+  @$pb.TagNumber(3)
+  set cursor(QueryCursor value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCursor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCursor() => $_clearField(3);
+  @$pb.TagNumber(3)
+  QueryCursor ensureCursor() => $_ensure(2);
+}
+
+class SearchContactsMessage extends $pb.GeneratedMessage {
+  factory SearchContactsMessage() => create();
+
+  SearchContactsMessage._();
+
+  factory SearchContactsMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SearchContactsMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SearchContactsMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage clone() =>
+      SearchContactsMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SearchContactsMessage copyWith(
+          void Function(SearchContactsMessage) updates) =>
+      super.copyWith((message) => updates(message as SearchContactsMessage))
+          as SearchContactsMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage create() => SearchContactsMessage._();
+  @$core.override
+  SearchContactsMessage createEmptyInstance() => create();
+  static $pb.PbList<SearchContactsMessage> createRepeated() =>
+      $pb.PbList<SearchContactsMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SearchContactsMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchContactsMessage>(create);
+  static SearchContactsMessage? _defaultInstance;
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

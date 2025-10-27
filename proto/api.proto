@@ -415,3 +415,17 @@ message FindContactsMessage {
     Request request = 1; 
     Response response = 2; 
 }
+
+message SearchContactsMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        UserContactsMessage contacts = 2;
+        QueryCursor cursor = 3;
+        string query = 4; 
+    }
+    message Response {
+        ResponseInfo response_info = 1; 
+        repeated PublicUserMessage users = 2; 
+        QueryCursor cursor = 3;
+    }
+}
