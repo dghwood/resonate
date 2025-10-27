@@ -103,7 +103,7 @@ class SearchPageComponent extends StatelessWidget {
   }
 }
 
-class PodcastSearchPageComponent extends StatelessWidget {
+class PodcastSearchPageComponent extends StatefulWidget {
   const PodcastSearchPageComponent({
     super.key,
     required this.controller,
@@ -114,22 +114,30 @@ class PodcastSearchPageComponent extends StatelessWidget {
   final SearchApi searchApi;
 
   @override
+  State<PodcastSearchPageComponent> createState() =>
+      _PodcastSearchPageComponentState();
+}
+
+class _PodcastSearchPageComponentState
+    extends State<PodcastSearchPageComponent> {
+  late Future<ApiResult<SearchResults>> future;
+
+  @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: controller,
+      listenable: widget.controller,
       builder: (context, _) {
-        if (controller.value == null) {
+        if (widget.controller.value == null) {
           // This doesn't happen
           return Text('No search term');
         }
-        Future<ApiResult<SearchResults>> future;
-        switch (controller.state) {
+        switch (widget.controller.state) {
           case SearchEditingControllerState.init:
-            future = searchApi.top();
+            future = widget.searchApi.top();
           case SearchEditingControllerState.autocomplete:
-            future = searchApi.autocomplete(controller.value!);
+            future = widget.searchApi.autocomplete(widget.controller.value!);
           case SearchEditingControllerState.search:
-            future = searchApi.search(controller.value!);
+            future = widget.searchApi.search(widget.controller.value!);
         }
         return FutureBuilder(
           future: future,
@@ -145,30 +153,39 @@ class PodcastSearchPageComponent extends StatelessWidget {
             var result = snapshot.requireData;
             switch (result) {
               case ApiOk():
-                var searchResults = result.value;
-                return ListView.builder(
-                  itemCount: searchResults.results.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == searchResults.results.length) {
-                      if (controller.state ==
-                          SearchEditingControllerState.autocomplete) {
-                        return TextButton(
-                          child: Text('load more'),
-                          onPressed: () {
-                            controller.onSubmit(null);
-                          },
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    }
-                    var podcast = searchResults.results[index].podcast!;
-                    return PodcastTile(podcast: podcast);
-                  },
-                );
+                break;
               case ApiError():
-                return Text('Error: ${result.error}');
+                context.read<ErrorService>().report(context, result.error);
+                return OutlinedButton(
+                  onPressed: () {
+                    setState(() {});
+                  },
+                  child: Text('retry search'),
+                );
             }
+
+            var searchResults = result.value;
+
+            return ListView.builder(
+              itemCount: searchResults.results.length + 1,
+              itemBuilder: (context, index) {
+                if (index == searchResults.results.length) {
+                  if (widget.controller.state ==
+                      SearchEditingControllerState.autocomplete) {
+                    return TextButton(
+                      child: Text('load more'),
+                      onPressed: () {
+                        widget.controller.onSubmit(null);
+                      },
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                }
+                var podcast = searchResults.results[index].podcast!;
+                return PodcastTile(podcast: podcast);
+              },
+            );
           },
         );
       },
@@ -240,35 +257,39 @@ class UserSearchPageComponent extends StatelessWidget {
                   controller.onSubmit(null);
                 },
               ),
-            Expanded(
-              child: FutureBuilder(
-                future: future,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return LoadingSpinnerComponent();
-                  }
-                  var result = snapshot.requireData;
-                  switch (result) {
-                    case ApiOkIterable():
-                      break;
-                    case ApiErrorIterable():
-                      return Text('Error: ${result.error}');
-                  }
-                  return InfiniteScrollComponent(
-                    iterableApiResult: result,
-                    scrollController: scrollController,
-                    itemBuilder: (BuildContext context, item) {
-                      return ListTile(
-                        leading: ImageComponent(item.imageUrl),
-                        title: Text(item.name),
-                        onTap: () {
-                          Navigate(context).toPublicProfile(item.id);
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
+            FutureBuilder(
+              future: future,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return LoadingSpinnerComponent();
+                }
+                var result = snapshot.requireData;
+                switch (result) {
+                  case ApiOkIterable():
+                    break;
+                  case ApiErrorIterable():
+                    context.read<ErrorService>().report(context, result.error);
+                    return OutlinedButton(
+                      onPressed: () {
+                        controller.onSubmit(null);
+                      },
+                      child: Text('retry'),
+                    );
+                }
+                return InfiniteScrollComponent(
+                  iterableApiResult: result,
+                  scrollController: scrollController,
+                  itemBuilder: (BuildContext context, item) {
+                    return ListTile(
+                      leading: ImageComponent(item.imageUrl),
+                      title: Text(item.name),
+                      onTap: () {
+                        Navigate(context).toPublicProfile(item.id);
+                      },
+                    );
+                  },
+                );
+              },
             ),
           ],
         );
