@@ -2279,9 +2279,9 @@ const SearchContactsMessage_Request$json = {
     {
       '1': 'contacts',
       '3': 2,
-      '4': 1,
+      '4': 3,
       '5': 11,
-      '6': '.resonate.UserContactsMessage',
+      '6': '.resonate.UserContactMessage',
       '10': 'contacts'
     },
     {
@@ -2329,11 +2329,11 @@ const SearchContactsMessage_Response$json = {
 
 /// Descriptor for `SearchContactsMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List searchContactsMessageDescriptor = $convert.base64Decode(
-    'ChVTZWFyY2hDb250YWN0c01lc3NhZ2UaywEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgAS'
-    'gLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxI5Cghjb250YWN0cxgC'
-    'IAEoCzIdLnJlc29uYXRlLlVzZXJDb250YWN0c01lc3NhZ2VSCGNvbnRhY3RzEjEKBmN1cnNvch'
-    'gDIAEoCzIZLnJlc29uYXRlLmFwaS5RdWVyeUN1cnNvclIGY3Vyc29yEhQKBXF1ZXJ5GAQgASgJ'
-    'UgVxdWVyeRqxAQoIUmVzcG9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLm'
-    'FwaS5SZXNwb25zZUluZm9SDHJlc3BvbnNlSW5mbxIxCgV1c2VycxgCIAMoCzIbLnJlc29uYXRl'
-    'LlB1YmxpY1VzZXJNZXNzYWdlUgV1c2VycxIxCgZjdXJzb3IYAyABKAsyGS5yZXNvbmF0ZS5hcG'
-    'kuUXVlcnlDdXJzb3JSBmN1cnNvcg==');
+    'ChVTZWFyY2hDb250YWN0c01lc3NhZ2UaygEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgAS'
+    'gLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxI4Cghjb250YWN0cxgC'
+    'IAMoCzIcLnJlc29uYXRlLlVzZXJDb250YWN0TWVzc2FnZVIIY29udGFjdHMSMQoGY3Vyc29yGA'
+    'MgASgLMhkucmVzb25hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZjdXJzb3ISFAoFcXVlcnkYBCABKAlS'
+    'BXF1ZXJ5GrEBCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYX'
+    'BpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjEKBXVzZXJzGAIgAygLMhsucmVzb25hdGUu'
+    'UHVibGljVXNlck1lc3NhZ2VSBXVzZXJzEjEKBmN1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS'
+    '5RdWVyeUN1cnNvclIGY3Vyc29y');

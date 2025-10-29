@@ -126,6 +126,16 @@ func (f *FirestoreDatastore) GetMulti(src any) (err error) {
 	return
 }
 
+func (f *FirestoreDatastore) List(
+	entity models.Model) (iter datastore.Iterator) {
+
+	ctx, _ := getContext(10)
+	query := firestore.NewQuery(models.Kind(entity))
+	return &FirestoreIterator{
+		Iterator: f.client.Run(ctx, query),
+	}
+}
+
 func (f *FirestoreDatastore) ListForIds(
 	params datastore.ListForIdsParams) (iter datastore.Iterator) {
 

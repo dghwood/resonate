@@ -419,7 +419,7 @@ message FindContactsMessage {
 message SearchContactsMessage {
     message Request {
         RequestInfo request_info = 1; 
-        UserContactsMessage contacts = 2;
+        repeated UserContactMessage contacts = 2;
         QueryCursor cursor = 3;
         string query = 4; 
     }

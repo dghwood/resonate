@@ -107,6 +107,19 @@ func (it *MemoryDatastoreIterator) Cursor() *models.QueryCursor {
 	return cursor
 }
 
+func (ds *MemoryDatastore) List(entity models.Model) (iter Iterator) {
+	database := ds.getDb(entity)
+	data := make([][]Field, 0)
+	for _, fields := range database.Data {
+		data = append(data, fields)
+	}
+	return &MemoryDatastoreIterator{
+		data: data,
+		// This should just default to 0
+		i: 0,
+	}
+}
+
 func (ds *MemoryDatastore) ListForIds(
 	params ListForIdsParams,
 ) Iterator {

@@ -186,5 +186,5 @@ message UserContactsMessage {
 message UserContactMessage {
     // This is the contact id from their phone
     string id = 1; 
-    string encrypted_phone_number = 3; 
+    string phone_number = 3; 
 }

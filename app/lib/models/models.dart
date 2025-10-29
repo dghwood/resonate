@@ -579,8 +579,8 @@ class QueryCursor extends BaseModel<api.QueryCursor> {
 class UserContact extends BaseModel<UserContactMessage> {
   UserContact({String? id, String? phoneNumber})
     : super(
-        // TODO(duncan): Encrypt the phoneNumber
-        UserContactMessage(id: id, encryptedPhoneNumber: phoneNumber),
+        // TODO(duncan): Encrypt the phoneNumber?
+        UserContactMessage(id: id, phoneNumber: phoneNumber),
       );
 
   @override
@@ -588,7 +588,7 @@ class UserContact extends BaseModel<UserContactMessage> {
 
   @override
   String get id => _message.id;
-  String get encryptedPhoneNumber => _message.encryptedPhoneNumber;
+  String get phoneNumber => _message.phoneNumber;
 
   UserContact.fromMessage(super.message);
   UserContact.copy(UserContact model)

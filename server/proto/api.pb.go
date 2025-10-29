@@ -4592,7 +4592,7 @@ func (x *FindContactsMessage_Response) GetCursor() *QueryCursor {
 type SearchContactsMessage_Request struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Contacts      *UserContactsMessage   `protobuf:"bytes,2,opt,name=contacts,proto3" json:"contacts,omitempty"`
+	Contacts      []*UserContactMessage  `protobuf:"bytes,2,rep,name=contacts,proto3" json:"contacts,omitempty"`
 	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	Query         string                 `protobuf:"bytes,4,opt,name=query,proto3" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -4636,7 +4636,7 @@ func (x *SearchContactsMessage_Request) GetRequestInfo() *RequestInfo {
 	return nil
 }
 
-func (x *SearchContactsMessage_Request) GetContacts() *UserContactsMessage {
+func (x *SearchContactsMessage_Request) GetContacts() []*UserContactMessage {
 	if x != nil {
 		return x.Contacts
 	}
@@ -4997,11 +4997,11 @@ const file_proto_api_proto_rawDesc = "" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x121\n" +
 	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05users\x121\n" +
-	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\"\x99\x03\n" +
-	"\x15SearchContactsMessage\x1a\xcb\x01\n" +
+	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\"\x98\x03\n" +
+	"\x15SearchContactsMessage\x1a\xca\x01\n" +
 	"\aRequest\x12<\n" +
-	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x129\n" +
-	"\bcontacts\x18\x02 \x01(\v2\x1d.resonate.UserContactsMessageR\bcontacts\x121\n" +
+	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x128\n" +
+	"\bcontacts\x18\x02 \x03(\v2\x1c.resonate.UserContactMessageR\bcontacts\x121\n" +
 	"\x06cursor\x18\x03 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\x12\x14\n" +
 	"\x05query\x18\x04 \x01(\tR\x05query\x1a\xb1\x01\n" +
 	"\bResponse\x12?\n" +
@@ -5121,7 +5121,7 @@ var file_proto_api_proto_goTypes = []any{
 	(*UserFeedMessage)(nil),                     // 95: resonate.UserFeedMessage
 	(*UserFollowMessage)(nil),                   // 96: resonate.UserFollowMessage
 	(*PublicUserMessage)(nil),                   // 97: resonate.PublicUserMessage
-	(*UserContactsMessage)(nil),                 // 98: resonate.UserContactsMessage
+	(*UserContactMessage)(nil),                  // 98: resonate.UserContactMessage
 }
 var file_proto_api_proto_depIdxs = []int32{
 	87,  // 0: resonate.api.ResponseInfo.error:type_name -> resonate.ErrorEnum
@@ -5282,7 +5282,7 @@ var file_proto_api_proto_depIdxs = []int32{
 	97,  // 155: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
 	11,  // 156: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
 	1,   // 157: resonate.api.SearchContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	98,  // 158: resonate.api.SearchContactsMessage.Request.contacts:type_name -> resonate.UserContactsMessage
+	98,  // 158: resonate.api.SearchContactsMessage.Request.contacts:type_name -> resonate.UserContactMessage
 	11,  // 159: resonate.api.SearchContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
 	0,   // 160: resonate.api.SearchContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
 	97,  // 161: resonate.api.SearchContactsMessage.Response.users:type_name -> resonate.PublicUserMessage

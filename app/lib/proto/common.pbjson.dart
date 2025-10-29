@@ -686,17 +686,11 @@ const UserContactMessage$json = {
   '1': 'UserContactMessage',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    {
-      '1': 'encrypted_phone_number',
-      '3': 3,
-      '4': 1,
-      '5': 9,
-      '10': 'encryptedPhoneNumber'
-    },
+    {'1': 'phone_number', '3': 3, '4': 1, '5': 9, '10': 'phoneNumber'},
   ],
 };
 
 /// Descriptor for `UserContactMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userContactMessageDescriptor = $convert.base64Decode(
-    'ChJVc2VyQ29udGFjdE1lc3NhZ2USDgoCaWQYASABKAlSAmlkEjQKFmVuY3J5cHRlZF9waG9uZV'
-    '9udW1iZXIYAyABKAlSFGVuY3J5cHRlZFBob25lTnVtYmVy');
+    'ChJVc2VyQ29udGFjdE1lc3NhZ2USDgoCaWQYASABKAlSAmlkEiEKDHBob25lX251bWJlchgDIA'
+    'EoCVILcGhvbmVOdW1iZXI=');

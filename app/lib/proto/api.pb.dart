@@ -6577,13 +6577,13 @@ class FindContactsMessage extends $pb.GeneratedMessage {
 class SearchContactsMessage_Request extends $pb.GeneratedMessage {
   factory SearchContactsMessage_Request({
     RequestInfo? requestInfo,
-    $0.UserContactsMessage? contacts,
+    $core.Iterable<$0.UserContactMessage>? contacts,
     QueryCursor? cursor,
     $core.String? query,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
-    if (contacts != null) result.contacts = contacts;
+    if (contacts != null) result.contacts.addAll(contacts);
     if (cursor != null) result.cursor = cursor;
     if (query != null) result.query = query;
     return result;
@@ -6604,8 +6604,9 @@ class SearchContactsMessage_Request extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
-    ..aOM<$0.UserContactsMessage>(2, _omitFieldNames ? '' : 'contacts',
-        subBuilder: $0.UserContactsMessage.create)
+    ..pc<$0.UserContactMessage>(
+        2, _omitFieldNames ? '' : 'contacts', $pb.PbFieldType.PM,
+        subBuilder: $0.UserContactMessage.create)
     ..aOM<QueryCursor>(3, _omitFieldNames ? '' : 'cursor',
         subBuilder: QueryCursor.create)
     ..aOS(4, _omitFieldNames ? '' : 'query')
@@ -6648,15 +6649,7 @@ class SearchContactsMessage_Request extends $pb.GeneratedMessage {
   RequestInfo ensureRequestInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $0.UserContactsMessage get contacts => $_getN(1);
-  @$pb.TagNumber(2)
-  set contacts($0.UserContactsMessage value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasContacts() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearContacts() => $_clearField(2);
-  @$pb.TagNumber(2)
-  $0.UserContactsMessage ensureContacts() => $_ensure(1);
+  $pb.PbList<$0.UserContactMessage> get contacts => $_getList(1);
 
   @$pb.TagNumber(3)
   QueryCursor get cursor => $_getN(2);

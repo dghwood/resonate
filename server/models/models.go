@@ -121,8 +121,12 @@ func (p *User) GetUserIdFieldNum() int32 {
 }
 
 func (p *User) SetIdFromPhoneNumber(phoneNumber string) {
-	p.Id = utils.HashPhoneNumber(phoneNumber)
+	// TODO(duncan): Change this.. ?
+	// p.Id = utils.HashPhoneNumber(phoneNumber)
+	p.Id = utils.GenerateUniqueID()
+	// Should I even store this?
 	p.PhoneNumber = phoneNumber
+	p.EncryptedPhoneNumber = utils.HashPhoneNumber(phoneNumber)
 }
 
 func (p *User) New() Model {
@@ -208,4 +212,17 @@ func (p *RefreshTokens) GetId() string {
 
 type QueryCursor struct {
 	proto.QueryCursor
+}
+
+type UserContact struct {
+	proto.UserContactMessage
+}
+
+type UserContacts struct {
+	proto.UserContactsMessage
+}
+
+func (u *UserContacts) SetIdFromUserId(userId string) {
+	u.Id = "contacts-" + userId
+	u.UserId = userId
 }

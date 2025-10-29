@@ -2069,12 +2069,11 @@ class UserContactsMessage extends $pb.GeneratedMessage {
 class UserContactMessage extends $pb.GeneratedMessage {
   factory UserContactMessage({
     $core.String? id,
-    $core.String? encryptedPhoneNumber,
+    $core.String? phoneNumber,
   }) {
     final result = create();
     if (id != null) result.id = id;
-    if (encryptedPhoneNumber != null)
-      result.encryptedPhoneNumber = encryptedPhoneNumber;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
     return result;
   }
 
@@ -2092,7 +2091,7 @@ class UserContactMessage extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(3, _omitFieldNames ? '' : 'encryptedPhoneNumber')
+    ..aOS(3, _omitFieldNames ? '' : 'phoneNumber')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -2127,13 +2126,13 @@ class UserContactMessage extends $pb.GeneratedMessage {
   void clearId() => $_clearField(1);
 
   @$pb.TagNumber(3)
-  $core.String get encryptedPhoneNumber => $_getSZ(1);
+  $core.String get phoneNumber => $_getSZ(1);
   @$pb.TagNumber(3)
-  set encryptedPhoneNumber($core.String value) => $_setString(1, value);
+  set phoneNumber($core.String value) => $_setString(1, value);
   @$pb.TagNumber(3)
-  $core.bool hasEncryptedPhoneNumber() => $_has(1);
+  $core.bool hasPhoneNumber() => $_has(1);
   @$pb.TagNumber(3)
-  void clearEncryptedPhoneNumber() => $_clearField(3);
+  void clearPhoneNumber() => $_clearField(3);
 }
 
 const $core.bool _omitFieldNames =

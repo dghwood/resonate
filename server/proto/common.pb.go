@@ -1514,10 +1514,10 @@ func (x *UserContactsMessage) GetMetadata() *StorageMetadataMessage {
 type UserContactMessage struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// This is the contact id from their phone
-	Id                   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	EncryptedPhoneNumber string `protobuf:"bytes,3,opt,name=encrypted_phone_number,json=encryptedPhoneNumber,proto3" json:"encrypted_phone_number,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	PhoneNumber   string `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UserContactMessage) Reset() {
@@ -1557,9 +1557,9 @@ func (x *UserContactMessage) GetId() string {
 	return ""
 }
 
-func (x *UserContactMessage) GetEncryptedPhoneNumber() string {
+func (x *UserContactMessage) GetPhoneNumber() string {
 	if x != nil {
-		return x.EncryptedPhoneNumber
+		return x.PhoneNumber
 	}
 	return ""
 }
@@ -1688,10 +1688,10 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x128\n" +
 	"\bcontacts\x18\x03 \x03(\v2\x1c.resonate.UserContactMessageR\bcontacts\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"Z\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"G\n" +
 	"\x12UserContactMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x124\n" +
-	"\x16encrypted_phone_number\x18\x03 \x01(\tR\x14encryptedPhoneNumberB#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
+	"\fphone_number\x18\x03 \x01(\tR\vphoneNumberB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_common_proto_rawDescOnce sync.Once

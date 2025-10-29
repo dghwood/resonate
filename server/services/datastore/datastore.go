@@ -37,6 +37,7 @@ type ListForIdsParams struct {
 type Datastore interface {
 	Put(entity models.Model) (err error)
 	Get(entity models.Model) (err error)
+	List(entity models.Model) (iter Iterator)
 	PutMulti(entities any) (err error)
 	GetMulti(entities any) (err error)
 	// This needs to implicitly filter for deleted I think

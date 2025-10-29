@@ -105,12 +105,12 @@ class FindUsersApi {
 class SearchContactsApiRequest
     extends ApiRequest<SearchContactsMessage_Request> {
   SearchContactsApiRequest({
-    UserContacts? contacts,
+    Iterable<UserContact>? contacts,
     QueryCursor? cursor,
     String? query,
   }) : super(
          SearchContactsMessage_Request(
-           contacts: contacts?.toMessage(),
+           contacts: contacts?.map((e) => e.toMessage()),
            query: query,
            cursor: cursor?.toMessage(),
            requestInfo: RequestInfo(),
@@ -142,7 +142,7 @@ class SearchContactsApiServer
   }) : super(
          SearchContactsApiRequest(),
          SearchContactsApiResponse(),
-         'api/search/users',
+         'api/users/search',
          client: client,
          authUser: authUser,
        );
@@ -192,7 +192,7 @@ class SearchContactsApi {
 
     try {
       var request = SearchContactsApiRequest(
-        contacts: UserContacts(contacts: contacts),
+        contacts: contacts,
         cursor: cursor,
       );
       var response = SearchContactsApiResponse();
