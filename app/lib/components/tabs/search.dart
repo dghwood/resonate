@@ -11,6 +11,7 @@ import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/podcast.dart';
 import 'package:resonate/components/common/subscribe.dart';
+import 'package:resonate/components/common/user.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -223,7 +224,6 @@ class UserSearchPageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var topFuture = searchContactsApi.top();
     var scrollController = ScrollController();
     _log.info(
       'hasContactsPermission ${searchContactsApi.hasContactsPermission}',
@@ -231,18 +231,16 @@ class UserSearchPageComponent extends StatelessWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
-        if (controller.value == null) {
-          // This doesn't happen
-          return Text('No search term');
-        }
         Future<IterableApiResult<Iterable<PublicUser>>> future;
+        var query = controller.value ?? '';
+
         switch (controller.state) {
           case SearchEditingControllerState.init:
-            future = topFuture;
+            future = searchContactsApi.top();
           case SearchEditingControllerState.autocomplete:
-            future = topFuture;
+            future = searchContactsApi.autocomplete(query);
           case SearchEditingControllerState.search:
-            future = searchContactsApi.search(controller.value!);
+            future = searchContactsApi.search(query);
         }
 
         return Column(
@@ -257,39 +255,39 @@ class UserSearchPageComponent extends StatelessWidget {
                   controller.onSubmit(null);
                 },
               ),
-            FutureBuilder(
-              future: future,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return LoadingSpinnerComponent();
-                }
-                var result = snapshot.requireData;
-                switch (result) {
-                  case ApiOkIterable():
-                    break;
-                  case ApiErrorIterable():
-                    context.read<ErrorService>().report(context, result.error);
-                    return OutlinedButton(
-                      onPressed: () {
-                        controller.onSubmit(null);
-                      },
-                      child: Text('retry'),
-                    );
-                }
-                return InfiniteScrollComponent(
-                  iterableApiResult: result,
-                  scrollController: scrollController,
-                  itemBuilder: (BuildContext context, item) {
-                    return ListTile(
-                      leading: ImageComponent(item.imageUrl),
-                      title: Text(item.name),
-                      onTap: () {
-                        Navigate(context).toPublicProfile(item.id);
-                      },
-                    );
-                  },
-                );
-              },
+            Expanded(
+              child: FutureBuilder(
+                future: future,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return LoadingSpinnerComponent();
+                  }
+                  var result = snapshot.requireData;
+                  switch (result) {
+                    case ApiOkIterable():
+                      break;
+                    case ApiErrorIterable():
+                      context.read<ErrorService>().report(
+                        context,
+                        result.error,
+                      );
+                      return OutlinedButton(
+                        onPressed: () {
+                          controller.onSubmit(null);
+                        },
+                        child: Text('retry'),
+                      );
+                  }
+                  _log.info('Found ${result.result.length} users');
+                  return InfiniteScrollComponent(
+                    iterableApiResult: result,
+                    scrollController: scrollController,
+                    itemBuilder: (BuildContext context, user) {
+                      return UserTile(user: user);
+                    },
+                  );
+                },
+              ),
             ),
           ],
         );

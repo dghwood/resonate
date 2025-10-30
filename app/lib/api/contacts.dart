@@ -219,7 +219,9 @@ class SearchContactsApi {
     }
   }
 
+  // TODO(duncan): This might end up stale..
   final List<PublicUser> _contacts = [];
+
   Future<IterableApiResult<Iterable<PublicUser>>> autocomplete(
     String query,
   ) async {
@@ -237,11 +239,14 @@ class SearchContactsApi {
 
   // Returns top users, or your contacts? or merged?
   Future<IterableApiResult<Iterable<PublicUser>>> top() async {
+    if (_contacts.isNotEmpty) return IterableApiResult.ok(_contacts);
     Iterable<UserContact> contacts = [];
 
     try {
       // This might error
       contacts = await _contactsService.getContacts();
+      // TODO(duncan): I'm assuming this errors out without permission
+      _hasContactsPermission = true;
     } on Exception catch (e) {
       _log.info(e);
     }

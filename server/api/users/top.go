@@ -1,6 +1,7 @@
 package users
 
 import (
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -47,28 +48,39 @@ func (f *Top) Execute(
 		users = append(users, entity)
 	}
 
+	log.Infof("found %d users", len(users))
+
 	// Add to datastore
 	if len(request.Contacts) > 0 {
+		log.Infof("request has contacts: %d", len(request.Contacts))
 		userContacts := &models.UserContacts{}
 		userContacts.SetIdFromUserId(loggedInUser.Id)
 		userContacts.Contacts = request.Contacts
 		err = f.Datastore.Put(userContacts)
 		if err != nil {
+			log.Error(err)
 			return
 		}
 
 		for _, contact := range request.Contacts {
 			for _, user := range users {
+				log.Info(contact.PhoneNumber)
+				log.Info(user.PhoneNumber)
+				log.Info(utils.HashPhoneNumber(contact.PhoneNumber))
+				log.Info(user.EncryptedPhoneNumber)
 				if utils.HashPhoneNumber(contact.PhoneNumber) == user.EncryptedPhoneNumber {
+					log.Info("found match")
 					response.Users = append(response.Users, user.ToPublicUser())
 				}
 			}
 			// No cursor?
 		}
+		log.Infof("returning contacts: %d", len(response.Users))
 		return
 	}
 
 	// Just return all the users
+	log.Infof("returning all users: %d", len(users))
 	for _, user := range users {
 		response.Users = append(response.Users, user.ToPublicUser())
 	}
