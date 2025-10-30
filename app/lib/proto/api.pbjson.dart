@@ -2277,22 +2277,14 @@ const SearchContactsMessage_Request$json = {
       '10': 'requestInfo'
     },
     {
-      '1': 'contacts',
-      '3': 2,
-      '4': 3,
-      '5': 11,
-      '6': '.resonate.UserContactMessage',
-      '10': 'contacts'
-    },
-    {
       '1': 'cursor',
-      '3': 3,
+      '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.api.QueryCursor',
       '10': 'cursor'
     },
-    {'1': 'query', '3': 4, '4': 1, '5': 9, '10': 'query'},
+    {'1': 'query', '3': 3, '4': 1, '5': 9, '10': 'query'},
   ],
 };
 
@@ -2329,11 +2321,74 @@ const SearchContactsMessage_Response$json = {
 
 /// Descriptor for `SearchContactsMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List searchContactsMessageDescriptor = $convert.base64Decode(
-    'ChVTZWFyY2hDb250YWN0c01lc3NhZ2UaygEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgAS'
-    'gLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxI4Cghjb250YWN0cxgC'
-    'IAMoCzIcLnJlc29uYXRlLlVzZXJDb250YWN0TWVzc2FnZVIIY29udGFjdHMSMQoGY3Vyc29yGA'
-    'MgASgLMhkucmVzb25hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZjdXJzb3ISFAoFcXVlcnkYBCABKAlS'
-    'BXF1ZXJ5GrEBCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYX'
-    'BpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjEKBXVzZXJzGAIgAygLMhsucmVzb25hdGUu'
-    'UHVibGljVXNlck1lc3NhZ2VSBXVzZXJzEjEKBmN1cnNvchgDIAEoCzIZLnJlc29uYXRlLmFwaS'
-    '5RdWVyeUN1cnNvclIGY3Vyc29y');
+    'ChVTZWFyY2hDb250YWN0c01lc3NhZ2UakAEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGAEgAS'
+    'gLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxIxCgZjdXJzb3IYAiAB'
+    'KAsyGS5yZXNvbmF0ZS5hcGkuUXVlcnlDdXJzb3JSBmN1cnNvchIUCgVxdWVyeRgDIAEoCVIFcX'
+    'VlcnkasQEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGku'
+    'UmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SMQoFdXNlcnMYAiADKAsyGy5yZXNvbmF0ZS5QdW'
+    'JsaWNVc2VyTWVzc2FnZVIFdXNlcnMSMQoGY3Vyc29yGAMgASgLMhkucmVzb25hdGUuYXBpLlF1'
+    'ZXJ5Q3Vyc29yUgZjdXJzb3I=');
+
+@$core.Deprecated('Use searchTopContactsMessageDescriptor instead')
+const SearchTopContactsMessage$json = {
+  '1': 'SearchTopContactsMessage',
+  '3': [
+    SearchTopContactsMessage_Request$json,
+    SearchTopContactsMessage_Response$json
+  ],
+};
+
+@$core.Deprecated('Use searchTopContactsMessageDescriptor instead')
+const SearchTopContactsMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'contacts',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserContactMessage',
+      '10': 'contacts'
+    },
+  ],
+};
+
+@$core.Deprecated('Use searchTopContactsMessageDescriptor instead')
+const SearchTopContactsMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'users',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'users'
+    },
+  ],
+};
+
+/// Descriptor for `SearchTopContactsMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchTopContactsMessageDescriptor = $convert.base64Decode(
+    'ChhTZWFyY2hUb3BDb250YWN0c01lc3NhZ2UagQEKB1JlcXVlc3QSPAoMcmVxdWVzdF9pbmZvGA'
+    'EgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1ZXN0SW5mbxI4Cghjb250YWN0'
+    'cxgCIAMoCzIcLnJlc29uYXRlLlVzZXJDb250YWN0TWVzc2FnZVIIY29udGFjdHMafgoIUmVzcG'
+    '9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9S'
+    'DHJlc3BvbnNlSW5mbxIxCgV1c2VycxgCIAMoCzIbLnJlc29uYXRlLlB1YmxpY1VzZXJNZXNzYW'
+    'dlUgV1c2Vycw==');

@@ -6,7 +6,6 @@ import (
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
-	"github.com/dghwood/resonate/utils"
 )
 
 type Search struct {
@@ -31,14 +30,6 @@ func (f *Search) Execute(
 	request *proto.SearchContactsMessage_Request,
 	response *proto.SearchContactsMessage_Response) (err error) {
 
-	// There are different modes here
-	//   * Contacts is populated, then return the contacts.
-	//   * Query is populated, then query (in memory)
-	//   * Query & Contacts is populated?
-	if len(request.Contacts) > 0 {
-		return f.ExecuteForContacts(loggedInUser, request, response)
-	}
-
 	it := f.Datastore.List(&models.User{})
 	// TODO(duncan): Random limit to stop this going crazy
 	for range 1000 {
@@ -57,48 +48,5 @@ func (f *Search) Execute(
 		}
 	}
 
-	return
-}
-
-func (f *Search) ExecuteForContacts(
-	loggedInUser *models.LoggedInUser,
-	request *proto.SearchContactsMessage_Request,
-	response *proto.SearchContactsMessage_Response) (err error) {
-
-	// Add to datastore
-	userContacts := &models.UserContacts{}
-	userContacts.SetIdFromUserId(loggedInUser.Id)
-	userContacts.Contacts = request.Contacts
-	err = f.Datastore.Put(userContacts)
-	if err != nil {
-		return
-	}
-
-	// Find contacts
-	// Easier to do this in memory for now
-	message := &models.User{}
-	users := make([]*models.User, 0)
-	it := f.Datastore.List(message)
-	for {
-		entity := &models.User{}
-		err := it.Next(entity)
-		if err == datastore.IteratorDone {
-			break
-		}
-		if err != nil {
-			return err
-		}
-
-		users = append(users, entity)
-	}
-
-	for _, contact := range request.Contacts {
-		for _, user := range users {
-			if utils.HashPhoneNumber(contact.PhoneNumber) == user.EncryptedPhoneNumber {
-				response.Users = append(response.Users, user.ToPublicUser())
-			}
-		}
-		// No cursor?
-	}
 	return
 }

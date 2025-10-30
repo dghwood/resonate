@@ -110,7 +110,6 @@ class SearchContactsApiRequest
     String? query,
   }) : super(
          SearchContactsMessage_Request(
-           contacts: contacts?.map((e) => e.toMessage()),
            query: query,
            cursor: cursor?.toMessage(),
            requestInfo: RequestInfo(),
@@ -148,15 +147,61 @@ class SearchContactsApiServer
        );
 }
 
+class SearchTopContactsApiRequest
+    extends ApiRequest<SearchTopContactsMessage_Request> {
+  SearchTopContactsApiRequest({Iterable<UserContact>? contacts})
+    : super(
+        SearchTopContactsMessage_Request(
+          contacts: contacts?.map((e) => e.toMessage()),
+          requestInfo: RequestInfo(),
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) =>
+      requestPb.requestInfo.mergeFromMessage(info);
+}
+
+class SearchTopContactsApiResponse
+    extends ApiResponse<SearchTopContactsMessage_Response> {
+  SearchTopContactsApiResponse() : super(SearchTopContactsMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  Iterable<PublicUser> get users =>
+      responsePb.users.map((u) => PublicUser.fromMessage(u));
+}
+
+class SearchTopContactsApiServer
+    extends
+        ServerApi<SearchTopContactsApiRequest, SearchTopContactsApiResponse> {
+  SearchTopContactsApiServer({
+    AbstractHttpService? client,
+    required AuthUser authUser,
+  }) : super(
+         SearchTopContactsApiRequest(),
+         SearchTopContactsApiResponse(),
+         'api/users/top',
+         client: client,
+         authUser: authUser,
+       );
+}
+
 class SearchContactsApi {
   SearchContactsApi({
     required AbstractHttpService client,
     required AuthUser authUser,
     required AbstractContactsService contactsSerivce,
   }) : _contactsService = contactsSerivce,
-       _server = SearchContactsApiServer(client: client, authUser: authUser);
+       _server = SearchContactsApiServer(client: client, authUser: authUser),
+       _topServer = SearchTopContactsApiServer(
+         authUser: authUser,
+         client: client,
+       );
 
   final SearchContactsApiServer _server;
+  final SearchTopContactsApiServer _topServer;
   final AbstractContactsService _contactsService;
 
   // This needs to be checked at some point..
@@ -175,35 +220,24 @@ class SearchContactsApi {
 
   final List<PublicUser> _contacts = [];
   // Returns top users, or your contacts? or merged?
-  Future<IterableApiResult<Iterable<PublicUser>>> top({
-    QueryCursor? cursor,
-  }) async {
+  Future<IterableApiResult<Iterable<PublicUser>>> top() async {
     Iterable<UserContact> contacts = [];
 
     try {
       // This might error
-      if (cursor == null) {
-        // Only do this on the first request
-        contacts = await _contactsService.getContacts();
-      }
+      contacts = await _contactsService.getContacts();
     } on Exception catch (e) {
       _log.info(e);
     }
 
     try {
-      var request = SearchContactsApiRequest(
-        contacts: contacts,
-        cursor: cursor,
-      );
-      var response = SearchContactsApiResponse();
-      await _server.execute(request, response);
+      var request = SearchTopContactsApiRequest(contacts: contacts);
+      var response = SearchTopContactsApiResponse();
+      await _topServer.execute(request, response);
       var users = response.users;
       // Delete duplicates.
       _contacts.addAll(users);
-      return IterableApiResult.ok(
-        response.users,
-        next: () => top(cursor: response.cursor),
-      );
+      return IterableApiResult.ok(response.users);
     } on Exception catch (e) {
       return IterableApiResult.error(e);
     }
@@ -220,7 +254,7 @@ class SearchContactsApi {
 
       return IterableApiResult.ok(
         response.users,
-        next: () => top(cursor: response.cursor),
+        next: () => search(query, cursor: response.cursor),
       );
     } on Exception catch (e) {
       return IterableApiResult.error(e);

@@ -100,6 +100,10 @@ func main() {
 		Datastore: datastore}, "/api/users/edit")
 	api.Attach(&users.Get{
 		Datastore: datastore}, "/api/users/get")
+	api.Attach(&users.Search{
+		Datastore: datastore}, "/api/users/search")
+	api.Attach(&users.Top{
+		Datastore: datastore}, "/api/users/top")
 
 	// Feed
 	api.Attach(&feed.Get{
