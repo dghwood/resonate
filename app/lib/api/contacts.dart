@@ -6,6 +6,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/utils/search.dart';
 
 final Logger _log = Logger('api/episode');
 
@@ -219,6 +220,21 @@ class SearchContactsApi {
   }
 
   final List<PublicUser> _contacts = [];
+  Future<IterableApiResult<Iterable<PublicUser>>> autocomplete(
+    String query,
+  ) async {
+    if (query.isEmpty) return IterableApiResult.ok(_contacts);
+    if (_contacts.isEmpty) {
+      var result = await top();
+      if (result is! ApiOk) return result;
+    }
+
+    // Implement simple search
+    return IterableApiResult.ok(
+      _contacts.where((user) => SearchableUserModel(user).search(query)),
+    );
+  }
+
   // Returns top users, or your contacts? or merged?
   Future<IterableApiResult<Iterable<PublicUser>>> top() async {
     Iterable<UserContact> contacts = [];
@@ -235,7 +251,8 @@ class SearchContactsApi {
       var response = SearchTopContactsApiResponse();
       await _topServer.execute(request, response);
       var users = response.users;
-      // Delete duplicates.
+
+      _contacts.clear();
       _contacts.addAll(users);
       return IterableApiResult.ok(response.users);
     } on Exception catch (e) {

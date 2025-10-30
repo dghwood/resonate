@@ -7,6 +7,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/http.dart';
+import 'package:resonate/utils/search.dart';
 
 final Logger _log = Logger('api/search');
 
@@ -142,7 +143,7 @@ class SearchApi {
       SearchResults.copyWithFilter(_autocompleteResults!, (result) {
         if (result.podcast == null) return false;
         var podcast = result.podcast!;
-        return podcast.title.toLowerCase().contains(query.toLowerCase());
+        return SearchablePodcastModel(podcast).search(query);
       }),
     );
   }
