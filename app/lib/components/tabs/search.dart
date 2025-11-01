@@ -6,7 +6,7 @@ import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
-import 'package:resonate/components/common/find_users.dart';
+// import 'package:resonate/components/common/find_users.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/models/podcast.dart';

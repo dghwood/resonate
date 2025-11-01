@@ -10,7 +10,6 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/components/common/models/episode.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
-import 'package:resonate/components/common/infinite_scroll2.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/refresh.dart';
 import 'package:resonate/components/common/models/subscribe.dart';
