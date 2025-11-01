@@ -225,9 +225,6 @@ class UserSearchPageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var scrollController = ScrollController();
-    _log.info(
-      'hasContactsPermission ${searchContactsApi.hasContactsPermission}',
-    );
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
@@ -245,16 +242,19 @@ class UserSearchPageComponent extends StatelessWidget {
 
         return Column(
           children: [
-            if (!searchContactsApi.hasContactsPermission)
-              ListTile(
-                title: Text('Share your contacts, find your friends'),
-                leading: Icon(Icons.person),
-                onTap: () async {
-                  await searchContactsApi.requestPermission();
-                  // This will refresh the whole widget.
-                  controller.onSubmit(null);
-                },
-              ),
+            ContactsPermissionComponent(
+              searchContactsApi: searchContactsApi,
+              onDone: (result) {
+                switch (result) {
+                  case ApiOk():
+                    if (result.value) controller.onSubmit(null);
+                    break;
+                  case ApiError():
+                    context.read<ErrorService>().report(context, result.error);
+                    break;
+                }
+              },
+            ),
             Expanded(
               child: FutureBuilder(
                 future: future,
@@ -296,11 +296,47 @@ class UserSearchPageComponent extends StatelessWidget {
   }
 }
 
-class UsersSearchComponent extends StatelessWidget {
-  const UsersSearchComponent({super.key});
+class ContactsPermissionComponent extends StatelessWidget {
+  const ContactsPermissionComponent({
+    super.key,
+    required this.searchContactsApi,
+    // required this.controller,
+    required this.onDone,
+  });
+
+  final SearchContactsApi searchContactsApi;
+  // final SearchEditingController controller;
+  final Function(ApiResult<bool>) onDone;
 
   @override
   Widget build(BuildContext context) {
-    return FindUsersComponent(findUsersApi: context.read());
+    return FutureBuilder(
+      future: searchContactsApi.hasPermission(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SizedBox();
+        }
+
+        var result = snapshot.requireData;
+        switch (result) {
+          case ApiOk():
+            if (result.value) {
+              return SizedBox();
+            }
+          case ApiError():
+            return SizedBox();
+        }
+
+        return ListTile(
+          title: Text('Share your contacts & find your friends'),
+          leading: Icon(Icons.person),
+          onTap: () async {
+            onDone(await searchContactsApi.requestPermission());
+            // This will refresh the whole widget.
+            // controller.onSubmit(null);
+          },
+        );
+      },
+    );
   }
 }

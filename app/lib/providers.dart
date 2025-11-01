@@ -123,14 +123,6 @@ final providers =
             (context) =>
                 UploadApi(authUser: context.read(), client: context.read()),
       ),
-      Provider<FindUsersApi>(
-        create:
-            (context) => FindUsersApi(
-              authUser: context.read(),
-              client: context.read(),
-              contactsSerivce: MockContacts(),
-            ),
-      ),
       Provider<SearchContactsApi>(
         create:
             (context) => SearchContactsApi(
