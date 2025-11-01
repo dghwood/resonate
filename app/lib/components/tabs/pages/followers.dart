@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resonate/components/common/follow.dart';
+import 'package:resonate/components/common/models/follow.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 

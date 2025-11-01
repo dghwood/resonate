@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
-import 'package:resonate/components/common/subscribe.dart';
+import 'package:resonate/components/common/models/subscribe.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
