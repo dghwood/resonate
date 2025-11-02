@@ -148,9 +148,22 @@ class PlayerApi extends ChangeNotifier {
     _logProgress();
   }
 
+  Future<void> forward(Duration duration) async {
+    _log.info('forward');
+    var currentDuration = _playerService.progress.progressDuration;
+    if (currentDuration == null) return;
+    await seek(currentDuration + duration);
+  }
+
   Future<void> seekProportional(double percent) async {
     var duration = _playerService.progress.duration!;
     var newDurationMs = duration.inMilliseconds * percent;
     await _playerService.seek(Duration(milliseconds: newDurationMs.toInt()));
+  }
+
+  @override
+  void dispose() {
+    _playerService.dispose();
+    super.dispose();
   }
 }

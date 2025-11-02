@@ -19,6 +19,7 @@ abstract class AbstractPlayerService {
   Stream<PlayerState> streamState();
   PlayerState get state;
   Stream<PlayerProgress> streamProgress();
+  void dispose();
 }
 
 enum PlayerState { init, playing, loading, paused, finished }
@@ -89,6 +90,13 @@ class PlayerService implements AbstractPlayerService {
 
   late final StreamController<PlayerState> _stateStreamController;
   StreamController<PlayerProgress>? _progressStreamController;
+
+  @override
+  void dispose() {
+    _player.dispose();
+    _stateStreamController.close();
+    _progressStreamController?.close();
+  }
 
   void _onStateChange() {
     var s = state;

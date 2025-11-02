@@ -74,12 +74,14 @@ class PlayerComponent extends StatelessWidget {
                   radius: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     children: [
-                      Text(
-                        episode.title,
-                        style: Theme.of(context).textTheme.titleMedium,
+                      Center(
+                        child: Text(
+                          episode.title,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
                       // Text(
                       //   episode.publishDateTime.toString(),
@@ -88,7 +90,27 @@ class PlayerComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                PlayButtonComponent(playerApi: _playerApi, size: 100),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 32,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.replay_10),
+                      iconSize: 32,
+                      onPressed: () {
+                        _playerApi.forward(Duration(seconds: -10));
+                      },
+                    ),
+                    PlayButtonComponent(playerApi: _playerApi, size: 64),
+                    IconButton(
+                      iconSize: 32,
+                      icon: Icon(Icons.forward_30),
+                      onPressed: () {
+                        _playerApi.forward(Duration(seconds: 30));
+                      },
+                    ),
+                  ],
+                ),
                 PlayerSliderComponent(playerApi: _playerApi),
               ],
             ),
@@ -179,10 +201,14 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _playerProgress.calculateProgressDuration(_value).toString(),
+                formatDurationHHMMSS(
+                  _playerProgress.calculateProgressDuration(_value),
+                ),
               ),
               Text(
-                _playerProgress.calculateRemainingDuration(_value).toString(),
+                formatDurationHHMMSS(
+                  _playerProgress.calculateRemainingDuration(_value),
+                ),
               ),
             ],
           ),

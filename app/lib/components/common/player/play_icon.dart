@@ -19,7 +19,7 @@ class PlayButtonComponent extends StatelessWidget {
       case PlayerState.playing:
         return IconButton(
           iconSize: size,
-          icon: Icon(Icons.pause_circle_outline),
+          icon: Icon(Icons.pause_rounded),
           onPressed: () {
             _playerApi.pause();
           },
