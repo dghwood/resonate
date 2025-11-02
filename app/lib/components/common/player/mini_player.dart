@@ -18,6 +18,8 @@ class BottomPlayerComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomSheet(
       // showDragHandle: true,
+      // shadowColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.surfaceBright,
       enableDrag: false,
       constraints: BoxConstraints(maxHeight: 80),
       onClosing: () {},
@@ -44,7 +46,11 @@ class BottomPlayerComponent extends StatelessWidget {
                           onTap: () {
                             PlayerComponentPage.show(context);
                           },
-                          title: Text(episode.title),
+                          title: Text(
+                            episode.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           leading: ImageComponent(episode.imageUrl, radius: 10),
                           trailing: PlayButtonComponent(
                             playerApi: _playerApi,

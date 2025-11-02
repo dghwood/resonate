@@ -4,59 +4,87 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/reordable_listview.dart';
+import 'package:resonate/components/common/utils.dart';
 
-class PlaylistComponent extends StatelessWidget {
-  const PlaylistComponent({super.key, required this.playerApi});
+class PlaylistComponent extends StatefulWidget {
+  const PlaylistComponent({
+    super.key,
+    required this.playerApi,
+    required this.controller,
+  });
 
   final PlayerApi playerApi;
+  final PageController controller;
 
   @override
-  Widget build(BuildContext context) {
-    var playlistApi = playerApi.playlistApi;
-    return FutureBuilder(
-      future: playlistApi.list(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingSpinnerComponent();
-        }
-        var episodes = snapshot.requireData.toList();
-        return ReordableListviewComponent(
-          items: episodes,
-          onReorder: (oldIndex, newIndex) async {
-            await Future.delayed(Duration(seconds: 1));
-          },
-          builder:
-              (episode) => ListTile(
-                key: Key(episode.id),
-                leading: Image.network(episode.imageUrl),
-                title: Text(episode.title),
-                trailing: Icon(Icons.play_arrow),
-              ),
-        );
-        return ListView.builder(
-          itemCount: episodes.length,
-          itemBuilder: (context, index) {
-            var episode = episodes.elementAt(index);
-            var widget = ListTile(
-              leading: Image.network(episode.imageUrl),
-              title: Text(episode.title),
-              trailing: Icon(Icons.play_arrow),
-            );
-            return widget;
-          },
-        );
-      },
-    );
-  }
+  State<PlaylistComponent> createState() => _PlaylistComponentState();
+}
 
-  static void show(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      showDragHandle: true,
-      context: context,
-      builder: (context) {
-        return PlaylistComponent(playerApi: context.read());
-      },
+class _PlaylistComponentState extends State<PlaylistComponent> {
+  @override
+  Widget build(BuildContext context) {
+    var playlistApi = widget.playerApi.playlistApi;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Text(
+            'NOW PLAYING',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
+        ListenableBuilder(
+          listenable: widget.playerApi,
+          builder: (context, _) {
+            if (widget.playerApi.episode == null) {
+              return Text('Nothing playing');
+            }
+            var episode = widget.playerApi.episode!;
+            return ListTile(
+              leading: ImageComponent(episode.imageUrl, radius: 10),
+              title: Text(episode.title),
+            );
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Text(
+            'PLAYLIST',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder(
+            future: playlistApi.list(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return LoadingSpinnerComponent();
+              }
+              var episodes = snapshot.requireData.toList();
+              return ReordableListviewComponent(
+                items: episodes,
+                onReorder: (oldIndex, newIndex) async {
+                  await playlistApi.reorder(oldIndex, newIndex);
+                },
+                builder:
+                    (episode) => ListTile(
+                      onTap: () async {
+                        // Add playing Episode (if any to playlist)
+                        playlistApi.replace(episode, widget.playerApi.episode);
+                        // Start playing it
+                        await widget.playerApi.load(episode);
+                        setState(() {});
+                      },
+                      key: Key(episode.id),
+                      leading: ImageComponent(episode.imageUrl, radius: 10),
+                      title: Text(episode.title),
+                    ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

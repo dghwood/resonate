@@ -33,6 +33,12 @@ class PlaylistApi {
     _episodes.remove(episode);
   }
 
+  Future<void> replace(Episode fromEpisode, Episode? toEpisode) async {
+    await remove(fromEpisode);
+    if (toEpisode == null) return;
+    await next(toEpisode);
+  }
+
   Future<void> clear() async {
     _episodes.clear();
   }

@@ -90,15 +90,11 @@ class PodcastHeaderDelegate extends SliverPersistentHeaderDelegate {
                                 fontSize: lerpDouble(24, 16, shrink),
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.rss_feed_rounded),
-                              onPressed: () => openBrowser(podcast.url),
-                            ),
-                            // SubscribeIconCommponent(
-                            //   authUser: context.read(),
-                            //   podcast: podcast,
-                            //   size: 16,
-                            // ),
+                            if (shrink < 0.5)
+                              IconButton(
+                                icon: Icon(Icons.rss_feed_rounded),
+                                onPressed: () => openBrowser(podcast.url),
+                              ),
                           ],
                         ),
                         // if (shrink < 0.5) Text(podcast.author),

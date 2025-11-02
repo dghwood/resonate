@@ -28,7 +28,7 @@ class PlayerComponentPage extends StatelessWidget {
       controller: controller,
       children: [
         PlayerComponent(playerApi: playerApi),
-        PlaylistComponent(playerApi: playerApi),
+        PlaylistComponent(playerApi: playerApi, controller: controller),
       ],
     );
   }
