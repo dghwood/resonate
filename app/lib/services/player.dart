@@ -49,6 +49,27 @@ class PlayerProgress {
     return bufferedDuration!.inMilliseconds / duration!.inMilliseconds;
   }
 
+  Duration get remainingDuration {
+    if (progressDuration == null || duration == null) {
+      return Duration.zero;
+    }
+    return duration! - progressDuration!;
+  }
+
+  Duration calculateProgressDuration(double percent) {
+    if (duration == null) {
+      return Duration.zero;
+    }
+    return Duration(milliseconds: (duration!.inMilliseconds * percent).round());
+  }
+
+  Duration calculateRemainingDuration(double percent) {
+    if (duration == null || progressDuration == null) {
+      return Duration.zero;
+    }
+    return duration! - calculateProgressDuration(percent);
+  }
+
   @override
   String toString() {
     return 'progress::$percentProgress';
@@ -57,6 +78,7 @@ class PlayerProgress {
 
 class PlayerService implements AbstractPlayerService {
   PlayerService() {
+    _player = justAudio.AudioPlayer();
     _stateStreamController = StreamController<PlayerState>.broadcast(
       onListen: () => state,
     );
@@ -98,17 +120,26 @@ class PlayerService implements AbstractPlayerService {
     return true;
   }
 
-  final justAudio.AudioPlayer _player = justAudio.AudioPlayer();
+  late final justAudio.AudioPlayer _player;
 
   Duration? _episodeDuration;
 
   @override
   Future<bool> load(Episode episode, {Duration? startDuration}) async {
+    _log.info('load::${episode.audioUrl}');
+
+    // There seems to be a bug, where if the player is not
+    // stopped before you call this, it will just play the
+    // same episode regardless of the audioSource.
+    if (_player.playing) {
+      await _player.stop();
+    }
     _episodeDuration = await _player.setAudioSource(
       justAudio.AudioSource.uri(Uri.parse(episode.audioUrl)),
       initialPosition: startDuration,
     );
     await _setupProgressStream();
+    // _player.play();
     return true;
   }
 
@@ -167,6 +198,13 @@ class PlayerService implements AbstractPlayerService {
   Stream<PlayerProgress> streamProgress() {
     return _progressStreamController!.stream;
   }
+
+  // @override
+  // void dispose() {
+  //   _player.dispose();
+  //   _stateStreamController.close();
+  //   _progressStreamController?.close();
+  // }
 }
 
 // class PlayerServiceMock implements AbstractPlayerService {

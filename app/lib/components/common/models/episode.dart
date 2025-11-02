@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/models/download.dart';
-import 'package:resonate/components/common/player.dart';
+import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/router/navigation.dart';
@@ -29,7 +29,7 @@ class EpisodeComponent extends StatelessWidget {
           Row(
             spacing: 8,
             children: [
-              GestureDetector(
+              InkWell(
                 onTap: () => Navigate(context).toPodcast(episode.podcastId),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -75,6 +75,7 @@ class EpisodeComponent extends StatelessWidget {
               ),
             ],
           ),
+          // Text(episode.audioUrl),
           Divider(),
         ],
       ),

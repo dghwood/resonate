@@ -8,6 +8,7 @@ import 'package:resonate/mock_http.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/providers.dart';
 import 'package:resonate/router/routes.dart';
+import 'package:resonate/test_page.dart';
 import 'package:resonate/utils/time.dart';
 
 void main() async {
@@ -80,7 +81,7 @@ class MyTestApp extends StatelessWidget {
                 seedColor: Colors.blue,
               ),
             ),
-            home: Scaffold(body: EpisodeComponent()),
+            home: Scaffold(body: TestingComponent()),
           );
         },
       ),

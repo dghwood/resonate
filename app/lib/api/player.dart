@@ -96,7 +96,7 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<bool> load(Episode episode) async {
-    _log.info('load::${episode.id}');
+    _log.info('load::${episode.id}::${episode.audioUrl}');
     // Implements equals in Episode class
     if (_currentEpisode?.id == episode.id) {
       return true;

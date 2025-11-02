@@ -16,6 +16,7 @@ import 'package:resonate/components/common/models/subscribe.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/components/tabs/pages/base.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/utils/external_link.dart';
 
 Logger _log = Logger('components/tabs/pages/podcast');
 
@@ -88,6 +89,10 @@ class PodcastHeaderDelegate extends SliverPersistentHeaderDelegate {
                               style: TextStyle(
                                 fontSize: lerpDouble(24, 16, shrink),
                               ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.rss_feed_rounded),
+                              onPressed: () => openBrowser(podcast.url),
                             ),
                             // SubscribeIconCommponent(
                             //   authUser: context.read(),
