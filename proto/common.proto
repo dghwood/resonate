@@ -188,3 +188,10 @@ message UserContactMessage {
     string id = 1; 
     string phone_number = 3; 
 }
+
+message SettingsMessage {
+    string id = 1; 
+    StorageMetadataMessage metadata = 2; 
+    
+    bool enable_playlist = 3;
+}

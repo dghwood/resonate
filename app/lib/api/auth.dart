@@ -6,6 +6,7 @@ import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
+import 'package:resonate/api/settings.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
@@ -262,7 +263,7 @@ class AuthUser extends ChangeNotifier {
       secureDatabase: secureDatabase,
       authUser: this,
     );
-
+    // _settingsApi = SettingsApi(databaseService: databaseService);
     downloadApi = DownloadApi(authUser: this, databaseService: databaseService);
     loadFromStorage();
   }

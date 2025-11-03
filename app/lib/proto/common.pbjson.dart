@@ -694,3 +694,26 @@ const UserContactMessage$json = {
 final $typed_data.Uint8List userContactMessageDescriptor = $convert.base64Decode(
     'ChJVc2VyQ29udGFjdE1lc3NhZ2USDgoCaWQYASABKAlSAmlkEiEKDHBob25lX251bWJlchgDIA'
     'EoCVILcGhvbmVOdW1iZXI=');
+
+@$core.Deprecated('Use settingsMessageDescriptor instead')
+const SettingsMessage$json = {
+  '1': 'SettingsMessage',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {
+      '1': 'metadata',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+    {'1': 'enable_playlist', '3': 3, '4': 1, '5': 8, '10': 'enablePlaylist'},
+  ],
+};
+
+/// Descriptor for `SettingsMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settingsMessageDescriptor = $convert.base64Decode(
+    'Cg9TZXR0aW5nc01lc3NhZ2USDgoCaWQYASABKAlSAmlkEjwKCG1ldGFkYXRhGAIgASgLMiAucm'
+    'Vzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGESJwoPZW5hYmxlX3BsYXls'
+    'aXN0GAMgASgIUg5lbmFibGVQbGF5bGlzdA==');

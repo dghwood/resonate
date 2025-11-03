@@ -619,3 +619,17 @@ class UserContacts extends BaseModel<UserContactsMessage> {
   Iterable<UserContact> get contacts =>
       _message.contacts.map((c) => UserContact.fromMessage(c));
 }
+
+class Settings extends BaseModel<SettingsMessage> {
+  Settings({String? id}) : super(SettingsMessage(id: id));
+
+  bool get enablePlaylist => _message.enablePlaylist;
+
+  @override
+  String get id => _message.id;
+
+  Settings.fromMessage(super.message);
+
+  @override
+  Uint8List get descriptor => settingsMessageDescriptor;
+}

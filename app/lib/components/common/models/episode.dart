@@ -68,7 +68,8 @@ class EpisodeComponent extends StatelessWidget {
                 authUser: context.read(),
                 episode: episode,
               ),
-              PlaylistAddIcon(episode: episode, playerApi: context.read()),
+              if (context.read<Settings>().enablePlaylist)
+                PlaylistAddIcon(episode: episode, playerApi: context.read()),
               DownloadIconComponent(
                 downloadApi: context.read<AuthUser>().downloadApi,
                 episode: episode,

@@ -28,7 +28,8 @@ class PlayerComponentPage extends StatelessWidget {
       controller: controller,
       children: [
         PlayerComponent(playerApi: playerApi),
-        PlaylistComponent(playerApi: playerApi, controller: controller),
+        if (context.read<Settings>().enablePlaylist)
+          PlaylistComponent(playerApi: playerApi, controller: controller),
       ],
     );
   }

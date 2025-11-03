@@ -2135,6 +2135,89 @@ class UserContactMessage extends $pb.GeneratedMessage {
   void clearPhoneNumber() => $_clearField(3);
 }
 
+class SettingsMessage extends $pb.GeneratedMessage {
+  factory SettingsMessage({
+    $core.String? id,
+    StorageMetadataMessage? metadata,
+    $core.bool? enablePlaylist,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (metadata != null) result.metadata = metadata;
+    if (enablePlaylist != null) result.enablePlaylist = enablePlaylist;
+    return result;
+  }
+
+  SettingsMessage._();
+
+  factory SettingsMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SettingsMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SettingsMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOM<StorageMetadataMessage>(2, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
+    ..aOB(3, _omitFieldNames ? '' : 'enablePlaylist')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SettingsMessage clone() => SettingsMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SettingsMessage copyWith(void Function(SettingsMessage) updates) =>
+      super.copyWith((message) => updates(message as SettingsMessage))
+          as SettingsMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SettingsMessage create() => SettingsMessage._();
+  @$core.override
+  SettingsMessage createEmptyInstance() => create();
+  static $pb.PbList<SettingsMessage> createRepeated() =>
+      $pb.PbList<SettingsMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SettingsMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SettingsMessage>(create);
+  static SettingsMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  StorageMetadataMessage get metadata => $_getN(1);
+  @$pb.TagNumber(2)
+  set metadata(StorageMetadataMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasMetadata() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMetadata() => $_clearField(2);
+  @$pb.TagNumber(2)
+  StorageMetadataMessage ensureMetadata() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get enablePlaylist => $_getBF(2);
+  @$pb.TagNumber(3)
+  set enablePlaylist($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasEnablePlaylist() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEnablePlaylist() => $_clearField(3);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

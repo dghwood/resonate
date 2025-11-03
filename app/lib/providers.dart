@@ -11,6 +11,7 @@ import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
+import 'package:resonate/api/settings.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/upload.dart';
 import 'package:resonate/api/user.dart';
@@ -48,6 +49,14 @@ final _baseProviders = [
 final providers =
     _baseProviders +
     [
+      Provider<SettingsApi>(
+        create:
+            (context) => SettingsApi(
+              // httpService: context.read(),
+              // authUser: context.read(),
+              databaseService: context.read(),
+            ),
+      ),
       Provider<PlaylistApi>(create: (context) => PlaylistApi()),
       ChangeNotifierProvider<PlayerApi>(
         create:
