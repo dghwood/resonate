@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
+import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
 import 'package:resonate/components/common/player/playlist.dart';
@@ -28,7 +29,7 @@ class PlayerComponentPage extends StatelessWidget {
       controller: controller,
       children: [
         PlayerComponent(playerApi: playerApi),
-        if (context.read<Settings>().enablePlaylist)
+        if (context.read<SettingsApi>().settings.enablePlaylist)
           PlaylistComponent(playerApi: playerApi, controller: controller),
       ],
     );

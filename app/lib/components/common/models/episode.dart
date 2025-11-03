@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
+import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/models/download.dart';
 import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/common/utils.dart';
@@ -68,7 +69,7 @@ class EpisodeComponent extends StatelessWidget {
                 authUser: context.read(),
                 episode: episode,
               ),
-              if (context.read<Settings>().enablePlaylist)
+              if (context.read<SettingsApi>().settings.enablePlaylist)
                 PlaylistAddIcon(episode: episode, playerApi: context.read()),
               DownloadIconComponent(
                 downloadApi: context.read<AuthUser>().downloadApi,
