@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/tabs/pages/base.dart';
 
-class SettingsPage extends PageComponent {
-  const SettingsPage({super.key}) : super(title: 'Settings');
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
-  Widget buildChild(BuildContext context) {
-    return Text('settings');
+  Widget build(BuildContext context) {
+    var settings = context.read<SettingsApi>().settings;
+    return Scaffold(appBar: AppBar(title: Text('Settings')), body: Column());
   }
 }

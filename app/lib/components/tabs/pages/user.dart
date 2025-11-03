@@ -76,6 +76,14 @@ class _PublicUserProfileAppBarState extends State<PublicUserProfileAppBar> {
           ],
         ),
       ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigate(context).toSettings();
+          },
+        ),
+      ],
     );
   }
 }
