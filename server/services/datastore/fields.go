@@ -1,6 +1,8 @@
 package datastore
 
 import (
+	"encoding/json"
+
 	"github.com/dghwood/resonate/log"
 
 	// "log"
@@ -43,7 +45,11 @@ func GetFields(message models.Model) (fields []Field) {
 						}
 						b[i] = bytes
 					}
-					field.Value = b
+					bytes, err := json.Marshal(b)
+					if err != nil {
+						return true
+					}
+					field.Value = bytes
 				} else {
 					bytes, err := proto.Marshal(value.Message().Interface())
 					if err != nil {
@@ -76,12 +82,28 @@ func RetrieveFields(fields []Field, model models.Model) (err error) {
 				// Seems like there is Mutable vs. Get
 				// TODO(duncan): refactor this file for Mutable?
 				list := model.ProtoReflect().Mutable(descriptor).List()
-				for _, bytes := range field.Value.([][]byte) {
+				value := field.Value.([]byte)
+				var b [][]byte
+				err = json.Unmarshal(value, &b)
+				if err != nil {
+					return
+				}
+				for _, bytes := range b {
 					nested := list.AppendMutable().Message()
 					proto.Unmarshal(
 						bytes,
 						nested.Interface())
 				}
+				// for _, hexBytes := range field.Value.([]byte) {
+				// 	nested := list.AppendMutable().Message()
+				// 	bytes, err := hex.DecodeString(hexBytes)
+				// 	if err != nil {
+				// 		return err
+				// 	}
+				// 	proto.Unmarshal(
+				// 		bytes,
+				// 		nested.Interface())
+				// }
 				continue
 			}
 			// Need to init the message first

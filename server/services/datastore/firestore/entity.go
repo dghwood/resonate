@@ -10,10 +10,10 @@ import (
 )
 
 func getFieldName(fieldNum int32) string {
-	return fmt.Sprintf("%d", fieldNum)
+	return fmt.Sprintf("f%d", fieldNum)
 }
 func retrieveFieldName(fieldName string) (num int32, err error) {
-	numInt, err := strconv.Atoi(fieldName)
+	numInt, err := strconv.Atoi(fieldName[1:])
 	if err != nil {
 		return
 	}

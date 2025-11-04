@@ -69,7 +69,9 @@ String? _signInRedirect(BuildContext context, GoRouterState state) {
       // var route = state.fullPath == Routes.signIn ? routeState.path : null;
       routeState.setState(state, authUser.status);
       // Note: This doesn't persist the previous screen you were on.
-      return state.fullPath == Routes.loading ? Routes.home : route;
+      return state.fullPath == Routes.signIn || state.fullPath == Routes.loading
+          ? Routes.home
+          : route;
     case AuthUserStatus.signedOut:
       routeState.setState(state, authUser.status);
       return Routes.signIn;

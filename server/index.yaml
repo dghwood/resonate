@@ -1,0 +1,7 @@
+indexes:
+
+- kind: 'resonate.EpisodeMessage'
+  properties:
+  - name: '2'
+  - name: '8'
+    direction: desc

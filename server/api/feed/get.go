@@ -73,7 +73,12 @@ func (f *Get) Execute(
 func getEpisodesForPodcastIds(
 	podcastIds []string,
 	ds datastore.Datastore) ([]*models.Episode, error) {
+	episodes := make([]*models.Episode, 0)
+	if len(podcastIds) == 0 {
+		return episodes, nil
+	}
 	model := models.Episode{}
+
 	it := ds.ListForIds(
 		datastore.ListForIdsParams{
 			Ids:          podcastIds,
@@ -81,7 +86,6 @@ func getEpisodesForPodcastIds(
 			SortFieldNum: model.GetPublishTimestampFieldNum(),
 			Entity:       &model,
 		})
-	episodes := make([]*models.Episode, 0)
 	i := 0
 	for {
 		if i > 20 {
