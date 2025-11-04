@@ -79,28 +79,6 @@ class _SigninComponent2State extends State<SigninComponent2> {
             loginInfo: widget.loginInfo,
             command: user.loginCommand(),
           ),
-          // Consumer<AuthUser>(
-          //   builder: (context, user, child) {
-          //     if (!user.isSignedIn) return Text('NOT SIGNED IN');
-          //     AbstractDatabaseService db = context.read();
-          //     return FutureBuilder(
-          //       future: db.init().then((_) => true),
-          //       builder: (context, snapshot) {
-          //         // _log.info(snapshot);
-          //         if (snapshot.hasData) {
-          //           // This is because I can't auto redirect this widget.
-          //           return TextButton(
-          //             onPressed: () => Navigate(context).toHome(),
-          //             child: Text('ENTER'),
-          //           );
-          //         }
-          //         return Scaffold(
-          //           body: Center(child: CircularProgressIndicator()),
-          //         );
-          //       },
-          //     );
-          //   },
-          // ),
         ],
       ),
     );
@@ -218,10 +196,12 @@ class SignInValidateFlowComponent extends StatelessWidget {
   final LoginInfo loginInfo;
 
   Widget init(BuildContext context, {Exception? error}) {
+    _log.info('error ::$error');
     return SignInValidateComponent(
       loginInfo: loginInfo,
       pageController: pageController,
-      execute: command.execute,
+      // execute: command.execute,
+      command: command,
     );
   }
 
@@ -249,14 +229,16 @@ class SignInValidateComponent extends StatelessWidget {
     super.key,
     required this.loginInfo,
     required this.pageController,
-    required this.execute,
+    // required this.execute,
+    required this.command,
     // required this.authUser,
   });
 
   // final AuthUser authUser;
   final PageController pageController;
+  final ApiResultNotifier2<bool, String, String> command;
   final LoginInfo loginInfo;
-  final Future<void> Function(String phoneNumber, String password) execute;
+  // final Future<void> Function(String phoneNumber, String password) execute;
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +254,7 @@ class SignInValidateComponent extends StatelessWidget {
           length: 5,
           onFilled: (value) {
             _log.info('$value::${loginInfo.phoneNumber}');
-            execute(loginInfo.phoneNumber, value);
+            command.execute(loginInfo.phoneNumber, value);
           },
           spaceBetween: 16,
           matchingPattern: RegExp(r'^\d+$'),

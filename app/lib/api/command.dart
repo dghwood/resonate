@@ -5,7 +5,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
+
+final Logger _log = Logger('api/command');
 
 typedef CommandAction0<T> = Future<ApiResult<T>> Function();
 typedef CommandAction1<T, A> = Future<ApiResult<T>> Function(A);
@@ -41,6 +44,7 @@ abstract class ApiResultNotifier<T> extends ChangeNotifier {
       _result = await action();
     } finally {
       _status = ApiResultStatus.done;
+      _log.info('_execute done::$_result');
       notifyListeners();
     }
   }

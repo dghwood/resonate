@@ -68,6 +68,7 @@ func (f *FirestoreDatastore) Put(entity models.Model) (err error) {
 	ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
+	log.Infof("Putting key: %s", key)
 	_, err = f.client.Put(ctx, key, &model)
 	return
 }
@@ -76,9 +77,9 @@ func (f *FirestoreDatastore) Get(entity models.Model) (err error) {
 	ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
-	// Need to
+	log.Infof("Getting key: %s", key)
 	err = f.client.Get(ctx, key, &model)
-	if errors.Is(err, datastore.ErrorEntityNotFound) {
+	if errors.Is(err, firestore.ErrNoSuchEntity) {
 		return datastore.ErrorEntityNotFound
 	}
 	return

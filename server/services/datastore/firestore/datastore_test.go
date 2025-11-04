@@ -20,14 +20,14 @@ func TestPropertyLoadSaver(t *testing.T) {
 	var _ firestore.PropertyLoadSaver = (*DatabaseModel)(nil)
 }
 
-var projectID = "resonate-nyc"
-var databaseId = "resonatedb-test"
+var projectID = "level-prism-477102-p5"
+var databaseId = "rxyz-db-test"
 
 // gcloud emulators firestore start --database-mode=datastore-mode --verbosity=debug --host-port=localhost:8081
 var host = "localhost:8081"
 
 func TestPut(t *testing.T) {
-	t.Setenv("DATASTORE_EMULATOR_HOST", host)
+	// t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast := models.Podcast{}
 	podcast.Id = "123"
@@ -43,7 +43,7 @@ func TestPut(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	t.Setenv("DATASTORE_EMULATOR_HOST", host)
+	// t.Setenv("DATASTORE_EMULATOR_HOST", host)
 	ds := NewFirestoreDatastore(projectID, databaseId)
 	podcast := models.Podcast{}
 	podcast.Id = "123"

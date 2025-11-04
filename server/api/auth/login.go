@@ -56,6 +56,7 @@ func (f Login) Execute(
 
 	err = f.Datastore.Get(&loginAttempt)
 	if err != nil {
+		log.Infof("Login attempt error %s", err)
 		return
 	}
 
@@ -83,6 +84,7 @@ func (f Login) Execute(
 	// Get the user if they already exist
 	userErr := f.Datastore.Get(&user)
 	if userErr != nil && userErr != datastore.ErrorEntityNotFound {
+		log.Infof("Error getting user: %s", userErr)
 		return userErr
 	}
 	userExists := userErr == nil

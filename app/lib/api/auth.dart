@@ -355,7 +355,8 @@ class AuthUser extends ChangeNotifier {
 
   Future<ApiResult<bool>> login(String phoneNumber, String password) async {
     _log.info('login');
-    _status = AuthUserStatus.loading;
+    // Don't let this notify listeners.
+    __status = AuthUserStatus.loading;
     var result = await _loginApi.login(phoneNumber, password);
     switch (result) {
       case ApiOk():
@@ -370,7 +371,7 @@ class AuthUser extends ChangeNotifier {
         await _setupPostLogin();
         return ApiResult.ok(true);
       case ApiError():
-        _log.info('loggedInError');
+        _log.info('loggedInError::${result.error}');
         // Don't let this notify listeners
         // Otherwise it just redirects
         // TODO(duncan): Auto-redirect doesn't seem

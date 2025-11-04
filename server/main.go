@@ -5,7 +5,8 @@ import (
 	"os"
 
 	"github.com/dghwood/resonate/api"
-	cacheService "github.com/dghwood/resonate/services/cachestore"
+	cacheService "github.com/dghwood/resonate/services/cachestore/cloudstorage"
+	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
 	imagestoreService "github.com/dghwood/resonate/services/imagestore"
 	searchService "github.com/dghwood/resonate/services/search"
@@ -34,7 +35,7 @@ func main() {
 		"USER_ID_SALT",
 		"TADDY_USER_ID",
 		"TADDY_API_KEY",
-		"GOOGLE_APPLICATION_CREDENTIALS",
+		// "GOOGLE_APPLICATION_CREDENTIALS",
 	}
 
 	for _, env_var := range env_variables {
@@ -45,11 +46,15 @@ func main() {
 		}
 	}
 
-	cachestore := cacheService.NewMemoryCachestore()
+	var projectID = "level-prism-477102-p5"
+	var databaseId = "rxyz-db-test"
+
+	cachestore := cacheService.NewStorageCachestore()
 	fetch := fetchService.NewCached(cachestore)
 	imagestore := imagestoreService.NewMemoryImageStore()
 	// datastore := datastoreService.NewMemoryDatastore()
-	datastore := NewMockDatastore(fetch, imagestore)
+	// datastore := NewMockDatastore(fetch, imagestore)
+	datastore := datastoreService.NewFirestoreDatastore(projectID, databaseId)
 	// searchApi := searchService.NewMockSearch()
 	searchApi := searchService.NewTaddySearch(fetch)
 

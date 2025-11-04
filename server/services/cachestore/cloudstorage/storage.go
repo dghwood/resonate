@@ -29,7 +29,7 @@ func NewStorageCachestore() *StorageCachestore {
 	}
 	return &StorageCachestore{
 		client: client,
-		bucket: "resonate-cache",
+		bucket: "rxyz-cache",
 	}
 }
 

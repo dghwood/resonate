@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
+
+final Logger _log = Logger('components/common/command');
 
 class ApiResultNotifierComponent<T> extends StatelessWidget {
   const ApiResultNotifierComponent({
@@ -26,6 +29,7 @@ class ApiResultNotifierComponent<T> extends StatelessWidget {
     return ListenableBuilder(
       listenable: _command,
       builder: (context, _) {
+        _log.info('command status:: ${_command.status}');
         switch (_command.status) {
           case ApiResultStatus.init:
             return init(context);
