@@ -1,7 +1,8 @@
 indexes:
-
+# Update indexes
+# gcloud datastore indexes create index.yaml --database rxyz-db-test
 - kind: 'resonate.EpisodeMessage'
   properties:
-  - name: '2'
-  - name: '8'
+  - name: 'f2'
+  - name: 'f8'
     direction: desc

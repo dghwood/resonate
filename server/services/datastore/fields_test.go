@@ -5,6 +5,7 @@ import (
 
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
 func TestMessageName(t *testing.T) {
@@ -113,4 +114,26 @@ func TestPodcast(t *testing.T) {
 		t.Errorf("Title = %s; want Test Podcast", retrievedPodcast.Title)
 	}
 
+}
+
+func TestIndex(t *testing.T) {
+	message := models.Podcast{}
+	message.Description = "123"
+	message.Title = "title"
+	message.Author = "author"
+	expectedMap := map[string]bool{
+		"description": false,
+		"title":       true,
+		"author":      true,
+	}
+	message.ProtoReflect().Range(
+		func(
+			fd protoreflect.FieldDescriptor,
+			value protoreflect.Value) bool {
+			expectedValue, ok := expectedMap[string(fd.Name())]
+			if ok && expectedValue != getIndex(fd) {
+				t.Errorf("%s expected indexed: %t got %t", fd.Name(), expectedValue, getIndex(fd))
+			}
+			return true
+		})
 }

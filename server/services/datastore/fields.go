@@ -8,8 +8,10 @@ import (
 	// "log"
 
 	"github.com/dghwood/resonate/models"
+	pb "github.com/dghwood/resonate/proto"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/types/descriptorpb"
 )
 
 // datastore.Property
@@ -20,6 +22,21 @@ type Field struct {
 	NoIndex bool
 }
 
+func getIndex(fd protoreflect.FieldDescriptor) bool {
+	options, ok := fd.Options().(*descriptorpb.FieldOptions)
+	if !ok {
+		return false
+	}
+	val := proto.GetExtension(options, pb.E_Index)
+	if val != nil {
+		indexed, ok := val.(bool)
+		if ok {
+			return indexed
+		}
+	}
+	return false
+}
+
 func GetFields(message models.Model) (fields []Field) {
 	fields = make([]Field, 0)
 	message.ProtoReflect().Range(
@@ -28,8 +45,9 @@ func GetFields(message models.Model) (fields []Field) {
 			value protoreflect.Value) bool {
 
 			field := Field{
-				Name:   string(fd.Name()),
-				Number: int32(fd.Number()),
+				Name:    string(fd.Name()),
+				Number:  int32(fd.Number()),
+				NoIndex: !getIndex(fd),
 			}
 
 			switch fd.Kind() {

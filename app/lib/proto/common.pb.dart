@@ -2218,6 +2218,17 @@ class SettingsMessage extends $pb.GeneratedMessage {
   void clearEnablePlaylist() => $_clearField(3);
 }
 
+class Common {
+  static final index = $pb.Extension<$core.bool>(
+      _omitMessageNames ? '' : 'google.protobuf.FieldOptions',
+      _omitFieldNames ? '' : 'index',
+      50000,
+      $pb.PbFieldType.OB);
+  static void registerAllExtensions($pb.ExtensionRegistry registry) {
+    registry.add(index);
+  }
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

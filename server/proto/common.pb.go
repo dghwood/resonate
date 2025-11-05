@@ -23,6 +23,7 @@ package proto
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	descriptorpb "google.golang.org/protobuf/types/descriptorpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -1624,34 +1625,53 @@ func (x *SettingsMessage) GetEnablePlaylist() bool {
 	return false
 }
 
+var file_proto_common_proto_extTypes = []protoimpl.ExtensionInfo{
+	{
+		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
+		ExtensionType: (*bool)(nil),
+		Field:         50000,
+		Name:          "resonate.index",
+		Tag:           "varint,50000,opt,name=index",
+		Filename:      "proto/common.proto",
+	},
+}
+
+// Extension fields to descriptorpb.FieldOptions.
+var (
+	// Whether to index the field in the DB
+	//
+	// optional bool index = 50000;
+	E_Index = &file_proto_common_proto_extTypes[0]
+)
+
 var File_proto_common_proto protoreflect.FileDescriptor
 
 const file_proto_common_proto_rawDesc = "" +
 	"\n" +
-	"\x12proto/common.proto\x12\bresonate\"\x91\x01\n" +
+	"\x12proto/common.proto\x12\bresonate\x1a google/protobuf/descriptor.proto\"\x91\x01\n" +
 	"\x16StorageMetadataMessage\x12\x1d\n" +
 	"\n" +
 	"is_deleted\x18\x01 \x01(\bR\tisDeleted\x12+\n" +
 	"\x11updated_timestamp\x18\x02 \x01(\x03R\x10updatedTimestamp\x12+\n" +
-	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\x93\x02\n" +
+	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\x9f\x02\n" +
 	"\x0ePodcastMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
+	"\x05title\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x05title\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x10\n" +
 	"\x03url\x18\x04 \x01(\tR\x03url\x12\x1b\n" +
-	"\timage_url\x18\x05 \x01(\tR\bimageUrl\x12\x16\n" +
-	"\x06author\x18\x06 \x01(\tR\x06author\x124\n" +
+	"\timage_url\x18\x05 \x01(\tR\bimageUrl\x12\x1c\n" +
+	"\x06author\x18\x06 \x01(\tB\x04\x80\xb5\x18\x01R\x06author\x124\n" +
 	"\bepisodes\x18\a \x03(\v2\x18.resonate.EpisodeMessageR\bepisodes\x12<\n" +
-	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x8a\x03\n" +
+	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x96\x03\n" +
 	"\x0eEpisodeMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\n" +
-	"podcast_id\x18\x02 \x01(\tR\tpodcastId\x12\x14\n" +
+	"podcast_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\tpodcastId\x12\x14\n" +
 	"\x05title\x18\x03 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x1b\n" +
 	"\taudio_url\x18\x05 \x01(\tR\baudioUrl\x12\x1b\n" +
-	"\timage_url\x18\x06 \x01(\tR\bimageUrl\x12+\n" +
-	"\x11publish_timestamp\x18\b \x01(\x03R\x10publishTimestamp\x12)\n" +
+	"\timage_url\x18\x06 \x01(\tR\bimageUrl\x121\n" +
+	"\x11publish_timestamp\x18\b \x01(\x03B\x04\x80\xb5\x18\x01R\x10publishTimestamp\x12)\n" +
 	"\x10duration_seconds\x18\t \x01(\x03R\x0fdurationSeconds\x12%\n" +
 	"\x0eepisode_number\x18\n" +
 	" \x01(\x03R\repisodeNumber\x12\x1a\n" +
@@ -1659,10 +1679,10 @@ const file_proto_common_proto_rawDesc = "" +
 	"\bmetadata\x18\f \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"V\n" +
 	"\fTokenMessage\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x120\n" +
-	"\x14expiry_utc_timestamp\x18\x02 \x01(\x03R\x12expiryUtcTimestamp\"\xf0\x01\n" +
+	"\x14expiry_utc_timestamp\x18\x02 \x01(\x03R\x12expiryUtcTimestamp\"\xf6\x01\n" +
 	"\fLoginAttempt\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
-	"\fphone_number\x18\x02 \x01(\tR\vphoneNumber\x12\x1a\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\fphone_number\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\vphoneNumber\x12\x1a\n" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\x12<\n" +
 	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x120\n" +
 	"\x14expiry_utc_timestamp\x18\x05 \x01(\x03R\x12expiryUtcTimestamp\x12!\n" +
@@ -1670,10 +1690,10 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x12UserStorageMessage\x12)\n" +
 	"\x04user\x18\x01 \x01(\v2\x15.resonate.UserMessageR\x04user\x129\n" +
 	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\x12;\n" +
-	"\rrefresh_token\x18\x03 \x01(\v2\x16.resonate.TokenMessageR\frefreshToken\"\xad\x01\n" +
+	"\rrefresh_token\x18\x03 \x01(\v2\x16.resonate.TokenMessageR\frefreshToken\"\xb3\x01\n" +
 	"\x14RefreshTokensMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12.\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +
 	"\x06tokens\x18\x03 \x03(\v2\x16.resonate.TokenMessageR\x06tokens\x12<\n" +
 	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xdb\x03\n" +
 	"\vUserMessage\x12\x0e\n" +
@@ -1692,29 +1712,29 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x11PublicUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\x8c\x02\n" +
+	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\x98\x02\n" +
 	"\x11UserFollowMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12(\n" +
-	"\x10followed_user_id\x18\x03 \x01(\tR\x0efollowedUserId\x125\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +
+	"\x10followed_user_id\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\x0efollowedUserId\x125\n" +
 	"\x17follow_utc_timestamp_ms\x18\x04 \x01(\x03R\x14followUtcTimestampMs\x12<\n" +
 	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12/\n" +
-	"\x04user\x18\x06 \x01(\v2\x1b.resonate.PublicUserMessageR\x04user\"\xd3\x01\n" +
+	"\x04user\x18\x06 \x01(\v2\x1b.resonate.PublicUserMessageR\x04user\"\xdf\x01\n" +
 	"\x17UserSubscriptionMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12#\n" +
 	"\n" +
-	"podcast_id\x18\x03 \x01(\tR\tpodcastId\x12<\n" +
+	"podcast_id\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\tpodcastId\x12<\n" +
 	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x122\n" +
-	"\apodcast\x18\x05 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\xb0\x02\n" +
+	"\apodcast\x18\x05 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\"\xc8\x02\n" +
 	"\x11UserListenMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12#\n" +
 	"\n" +
-	"episode_id\x18\x03 \x01(\tR\tepisodeId\x12)\n" +
-	"\x10listen_timestamp\x18\x04 \x01(\x03R\x0flistenTimestamp\x12\x18\n" +
-	"\aseconds\x18\x05 \x01(\x03R\aseconds\x12\x1c\n" +
-	"\tcompleted\x18\x06 \x01(\bR\tcompleted\x122\n" +
+	"episode_id\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\tepisodeId\x12/\n" +
+	"\x10listen_timestamp\x18\x04 \x01(\x03B\x04\x80\xb5\x18\x01R\x0flistenTimestamp\x12\x18\n" +
+	"\aseconds\x18\x05 \x01(\x03R\aseconds\x12\"\n" +
+	"\tcompleted\x18\x06 \x01(\bB\x04\x80\xb5\x18\x01R\tcompleted\x122\n" +
 	"\aepisode\x18\a \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\x12<\n" +
 	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x90\x01\n" +
 	"\x1aUserFeedItemEpisodeMessage\x122\n" +
@@ -1727,35 +1747,36 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x12user_subscriptions\x18\x04 \x03(\v2\x1b.resonate.PublicUserMessageR\x11userSubscriptions\"\xb8\x01\n" +
 	"\x13UserFeedItemMessage\x12G\n" +
 	"\fepisode_item\x18\x01 \x01(\v2$.resonate.UserFeedItemEpisodeMessageR\vepisodeItem\x12X\n" +
-	"\x11recommended_items\x18\x02 \x03(\v2+.resonate.UserFeedItemRecommendationMessageR\x10recommendedItems\"_\n" +
-	"\x0fUserFeedMessage\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x123\n" +
+	"\x11recommended_items\x18\x02 \x03(\v2+.resonate.UserFeedItemRecommendationMessageR\x10recommendedItems\"e\n" +
+	"\x0fUserFeedMessage\x12\x1d\n" +
+	"\auser_id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x123\n" +
 	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05items\"\xa8\x01\n" +
 	"\x13SearchResultMessage\x122\n" +
 	"\apodcast\x18\x01 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\x12)\n" +
 	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\x122\n" +
 	"\aepisode\x18\x03 \x01(\v2\x18.resonate.EpisodeMessageR\aepisode\"O\n" +
 	"\x14SearchResultsMessage\x127\n" +
-	"\aresults\x18\x01 \x03(\v2\x1d.resonate.SearchResultMessageR\aresults\"\xc4\x01\n" +
+	"\aresults\x18\x01 \x03(\v2\x1d.resonate.SearchResultMessageR\aresults\"\xca\x01\n" +
 	"\x13UserDownloadMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\n" +
-	"episode_id\x18\x02 \x01(\tR\tepisodeId\x12\x1b\n" +
+	"episode_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\tepisodeId\x12\x1b\n" +
 	"\tfile_path\x18\x03 \x01(\tR\bfilePath\x12#\n" +
 	"\ris_downloaded\x18\x04 \x01(\bR\fisDownloaded\x12<\n" +
-	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xb6\x01\n" +
+	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xbc\x01\n" +
 	"\x13UserContactsMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x128\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x128\n" +
 	"\bcontacts\x18\x03 \x03(\v2\x1c.resonate.UserContactMessageR\bcontacts\x12<\n" +
 	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"G\n" +
 	"\x12UserContactMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
-	"\fphone_number\x18\x03 \x01(\tR\vphoneNumber\"\x88\x01\n" +
-	"\x0fSettingsMessage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12<\n" +
+	"\fphone_number\x18\x03 \x01(\tR\vphoneNumber\"\x8e\x01\n" +
+	"\x0fSettingsMessage\x12\x14\n" +
+	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
 	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12'\n" +
-	"\x0fenable_playlist\x18\x03 \x01(\bR\x0eenablePlaylistB#Z!github.com/dghwood/resonate/protob\x06proto3"
+	"\x0fenable_playlist\x18\x03 \x01(\bR\x0eenablePlaylist:5\n" +
+	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var (
 	file_proto_common_proto_rawDescOnce sync.Once
@@ -1793,6 +1814,7 @@ var file_proto_common_proto_goTypes = []any{
 	(*UserContactsMessage)(nil),               // 19: resonate.UserContactsMessage
 	(*UserContactMessage)(nil),                // 20: resonate.UserContactMessage
 	(*SettingsMessage)(nil),                   // 21: resonate.SettingsMessage
+	(*descriptorpb.FieldOptions)(nil),         // 22: google.protobuf.FieldOptions
 }
 var file_proto_common_proto_depIdxs = []int32{
 	2,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
@@ -1831,10 +1853,11 @@ var file_proto_common_proto_depIdxs = []int32{
 	20, // 33: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
 	0,  // 34: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	0,  // 35: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	36, // [36:36] is the sub-list for method output_type
-	36, // [36:36] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
+	22, // 36: resonate.index:extendee -> google.protobuf.FieldOptions
+	37, // [37:37] is the sub-list for method output_type
+	37, // [37:37] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	36, // [36:37] is the sub-list for extension extendee
 	0,  // [0:36] is the sub-list for field type_name
 }
 
@@ -1850,12 +1873,13 @@ func file_proto_common_proto_init() {
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   22,
-			NumExtensions: 0,
+			NumExtensions: 1,
 			NumServices:   0,
 		},
 		GoTypes:           file_proto_common_proto_goTypes,
 		DependencyIndexes: file_proto_common_proto_depIdxs,
 		MessageInfos:      file_proto_common_proto_msgTypes,
+		ExtensionInfos:    file_proto_common_proto_extTypes,
 	}.Build()
 	File_proto_common_proto = out.File
 	file_proto_common_proto_goTypes = nil

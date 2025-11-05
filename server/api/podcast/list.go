@@ -108,9 +108,11 @@ func (f *List) Execute(
 		response.Episodes = append(response.Episodes, &episode.EpisodeMessage)
 	}
 
+	log.Info("putting podcast")
 	if err := f.Datastore.Put(&podcast); err != nil {
 		log.Error(err)
 	}
+	log.Info("putting episodes")
 	if err := f.Datastore.PutMulti(episodes); err != nil {
 		log.Error(err)
 	}

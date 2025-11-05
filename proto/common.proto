@@ -16,7 +16,14 @@ syntax = "proto3";
 
 package resonate; 
 
+import "google/protobuf/descriptor.proto";
+
 option go_package = "github.com/dghwood/resonate/proto"; 
+ 
+extend google.protobuf.FieldOptions {
+    // Whether to index the field in the DB
+    bool index = 50000;
+}
 
 message StorageMetadataMessage {
     bool is_deleted = 1;
@@ -28,11 +35,11 @@ message StorageMetadataMessage {
 
 message PodcastMessage {
     string id = 1;
-    string title = 2;
+    string title = 2 [(index) = true];
     string description = 3;
     string url = 4;
     string image_url = 5;
-    string author = 6;
+    string author = 6 [(index) = true];
     // this is optional 
     repeated EpisodeMessage episodes = 7;
     StorageMetadataMessage metadata = 8; 
@@ -40,12 +47,12 @@ message PodcastMessage {
 
 message EpisodeMessage {
     string id = 1;
-    string podcast_id = 2;
+    string podcast_id = 2 [(index) = true];;
     string title = 3;
     string description = 4;
     string audio_url = 5;
     string image_url = 6;
-    int64 publish_timestamp = 8;
+    int64 publish_timestamp = 8 [(index) = true];
     int64 duration_seconds = 9;
     int64 episode_number = 10;
     bool explicit = 11;
@@ -60,7 +67,7 @@ message TokenMessage {
 
 message LoginAttempt {
     string id = 1; 
-    string phone_number = 2; 
+    string phone_number = 2 [(index) = true]; 
     string password = 3;
     StorageMetadataMessage metadata = 4;
     int64 expiry_utc_timestamp = 5;
@@ -75,7 +82,7 @@ message UserStorageMessage {
 
 message RefreshTokensMessage {
     string id = 1; 
-    string user_id = 2;
+    string user_id = 2 [(index) = true];
     repeated TokenMessage tokens = 3; 
     StorageMetadataMessage metadata = 4;
 }
@@ -107,8 +114,8 @@ message PublicUserMessage {
 
 message UserFollowMessage {
     string id = 1;
-    string user_id = 2; 
-    string followed_user_id = 3;
+    string user_id = 2 [(index) = true];
+    string followed_user_id = 3 [(index) = true];
     int64 follow_utc_timestamp_ms = 4;
     StorageMetadataMessage metadata = 5; 
     PublicUserMessage user = 6; // optional user 
@@ -116,19 +123,19 @@ message UserFollowMessage {
 
 message UserSubscriptionMessage {
     string id = 1;
-    string user_id = 2;
-    string podcast_id = 3;
+    string user_id = 2 [(index) = true];
+    string podcast_id = 3 [(index) = true];
     StorageMetadataMessage metadata = 4; 
     PodcastMessage podcast = 5; // this is optional
 }
 
 message UserListenMessage {
     string id = 1; 
-    string user_id = 2;
-    string episode_id = 3;
-    int64 listen_timestamp = 4;
+    string user_id = 2 [(index) = true];
+    string episode_id = 3 [(index) = true];
+    int64 listen_timestamp = 4 [(index) = true];
     int64 seconds = 5;
-    bool completed = 6;
+    bool completed = 6 [(index) = true];
     EpisodeMessage episode = 7; // this is optional, used for feed items
 
     StorageMetadataMessage metadata = 8;
@@ -152,7 +159,7 @@ message UserFeedItemMessage {
 }
 
 message UserFeedMessage {
-    string user_id = 1; 
+    string user_id = 1 [(index) = true]; 
     repeated UserFeedItemMessage items = 2;
 }
 
@@ -170,7 +177,7 @@ message SearchResultsMessage {
 
 message UserDownloadMessage {
     string id = 1; 
-    string episode_id = 2; 
+    string episode_id = 2 [(index) = true]; 
     string file_path = 3; 
     bool is_downloaded = 4;
 
@@ -179,7 +186,7 @@ message UserDownloadMessage {
 
 message UserContactsMessage {
     string id = 1; 
-    string user_id = 2; 
+    string user_id = 2 [(index) = true]; 
     repeated UserContactMessage contacts = 3; 
     StorageMetadataMessage metadata = 4; 
 }
@@ -190,7 +197,7 @@ message UserContactMessage {
 }
 
 message SettingsMessage {
-    string id = 1; 
+    string id = 1 [(index) = true]; 
     StorageMetadataMessage metadata = 2; 
     
     bool enable_playlist = 3;

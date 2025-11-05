@@ -4,8 +4,9 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"regexp"
+	"math"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/dghwood/resonate/models"
@@ -29,27 +30,43 @@ func parsePubDateTimeSeconds(pubDate string) int64 {
 
 // Supports two types of durations
 // HH:MM:SS format
+// HH:MM format
 // SS format
 func parseDurationSeconds(duration string) int64 {
-	i, err := strconv.Atoi(duration)
-	if err == nil {
-		return int64(i)
+	// // SS format
+	// i, err := strconv.Atoi(duration)
+	// if err == nil {
+	// 	return int64(i)
+	// }
+	// HH:MM:SS, HH:MM format
+	durationSeconds := 0
+	timeParts := strings.Split(duration, ":")
+	j := 0
+	for i := len(timeParts) - 1; i >= 0; i-- {
+		timePart := timeParts[i]
+		timePathInt, err := strconv.Atoi(timePart)
+		if err != nil {
+			return 0
+		}
+		durationSeconds += timePathInt * int(math.Pow(60, float64(j)))
+		j += 1
 	}
-	// hh:mm:ss
-	re := regexp.MustCompile(`^(\d{2}):(\d{2}):(\d{2})$`)
-	match := re.FindStringSubmatch(duration)
-	if len(match) == 4 {
-		hours, mins, seconds := match[1], match[2], match[3]
-		durationSeconds := 0
-		h, _ := strconv.Atoi(hours)
-		durationSeconds += h * 60 * 60
-		m, _ := strconv.Atoi(mins)
-		durationSeconds += m * 60
-		s, _ := strconv.Atoi(seconds)
-		durationSeconds += s
-		return int64(durationSeconds)
-	}
-	return 0
+	return int64(durationSeconds)
+	// // hh:mm:ss
+	// re := regexp.MustCompile(`^(\d{2}):(\d{2}):(\d{2})$`)
+	// match := re.FindStringSubmatch(duration)
+	// if len(match) == 4 {
+	// 	hours, mins, seconds := match[1], match[2], match[3]
+	// 	durationSeconds := 0
+	// 	h, _ := strconv.Atoi(hours)
+	// 	durationSeconds += h * 60 * 60
+	// 	m, _ := strconv.Atoi(mins)
+	// 	durationSeconds += m * 60
+	// 	s, _ := strconv.Atoi(seconds)
+	// 	durationSeconds += s
+	// 	return int64(durationSeconds)
+	// }
+	// return 0
 }
 
 func parseRSS(body []byte) (rssFeed RSSFeed, err error) {

@@ -55,13 +55,16 @@ func TestParsePubDateTimeSeconds(t *testing.T) {
 }
 
 func TestParseDurationSeconds(t *testing.T) {
-	values := []string{
-		"01:10:05",
-		"123",
+	values := map[string]int64{
+		"01:10:05": 1*60*60 + 10*60 + 5,
+		// https://publicfeeds.net/f/5770/in-the-dark
+		"54:26": 54*60 + 26,
+		"123":   123,
 	}
-	for _, value := range values {
-		if parseDurationSeconds(value) == 0 {
-			t.Errorf("value is 0 for %s", value)
+
+	for value, expected := range values {
+		if parseDurationSeconds(value) != expected {
+			t.Errorf("expected %d, got %d for %s", expected, parseDurationSeconds(value), value)
 		}
 	}
 }

@@ -4,4 +4,4 @@ gcloud run deploy rxyz \
 --env-vars-file=server.env \
 --min-instances=0 \
 --max-instances=1 \
---allow-unauthenticated
+--no-invoker-iam-check

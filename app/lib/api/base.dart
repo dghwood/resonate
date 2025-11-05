@@ -74,6 +74,8 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final String _path;
   // TODO(duncan): This needs to be configurable
   final String _baseUrl = 'http://localhost:8080';
+  // final String _baseUrl =
+  // 'https://rxyz-814908101471.northamerica-northeast1.run.app';
 
   @override
   Future<void> execute(Req request, Res response) async {

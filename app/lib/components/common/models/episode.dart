@@ -45,6 +45,7 @@ class EpisodeComponent extends StatelessWidget {
                     Text(
                       episode.title,
                       maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
