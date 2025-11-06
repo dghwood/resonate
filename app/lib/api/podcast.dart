@@ -16,13 +16,20 @@ import 'package:resonate/storage/podcast.dart';
 Logger _log = Logger('api/podcast');
 
 class GetPodcastApiRequest extends ApiRequest<GetPodcastMessage_Request> {
-  GetPodcastApiRequest()
-    : super(GetPodcastMessage_Request(requestInfo: RequestInfo()));
+  GetPodcastApiRequest({String? podcastId})
+    : super(
+        GetPodcastMessage_Request(
+          podcastId: podcastId,
+          requestInfo: RequestInfo(),
+        ),
+      );
 
   @override
   set requestInfo(RequestInfo info) {
     requestPb.requestInfo.mergeFromMessage(info);
   }
+
+  String get podcastId => requestPb.podcastId;
 }
 
 class GetPodcastApiResponse extends ApiResponse<GetPodcastMessage_Response> {
@@ -34,6 +41,8 @@ class GetPodcastApiResponse extends ApiResponse<GetPodcastMessage_Response> {
   void fromPodcastBuffer(Uint8List buffer) {
     responsePb.mergeFromBuffer(buffer);
   }
+
+  Podcast get podcast => Podcast.fromMessage(responsePb.podcast);
 }
 
 class GetPodcastApiServer
@@ -183,45 +192,6 @@ class PodcastApi {
     }
   }
 
-  Stream<ApiResult<Iterable<Episode>>> list(
-    String podcastId, {
-    QueryCursor? cursor,
-  }) async* {
-    _log.info('list');
-    var request = ListPodcastEpisodesApiRequest();
-    request.requestPb.podcastId = podcastId;
-    if (cursor != null) {
-      request.requestPb.cursor = cursor.toMessage();
-    }
-    var response = ListPodcastEpisodesApiResponse();
-    var didReturnEpisodes = false;
-
-    try {
-      var episodes = await _episodeDatabase.listFromPodcastId(podcastId);
-      yield ApiResult.ok(episodes);
-      didReturnEpisodes = episodes.isNotEmpty;
-    } on DatabaseNotFoundException catch (e) {
-      // Do nothing - we will fetch from the server.
-    } on Exception catch (e) {
-      yield ApiResult.error(e);
-    }
-
-    // TODO(duncan): I think you need to merge these two results..
-    try {
-      await _listServer.execute(request, response);
-      var episodes = response.responsePb.episodes.map(
-        (e) => Episode.fromMessage(e),
-      );
-      // Update the cache
-      await _episodeDatabase.putAll(episodes);
-      yield ApiResult.ok(episodes);
-    } on Exception catch (e) {
-      if (!didReturnEpisodes) {
-        yield ApiResult.error(e);
-      }
-    }
-  }
-
   Future<ApiResult<Iterable<Podcast>>> getMany(
     Iterable<String> podcastIds,
   ) async {
@@ -236,39 +206,94 @@ class PodcastApi {
     }
   }
 
-  Stream<ApiResult<Podcast>> get(String podcastId, {onlyLocal = false}) async* {
-    _log.info('get::$podcastId');
-    var request = GetPodcastApiRequest();
+  Future<ApiResult<Podcast>> getServer(String podcastId) async {
+    var request = GetPodcastApiRequest(podcastId: podcastId);
     var response = GetPodcastApiResponse();
-    var podcast = Podcast(id: podcastId);
-    request.requestPb.podcastId = podcastId;
-    var didReturnPodcast = false;
-    try {
-      await _database.get(podcast);
-      // await _episodeDatabase.populatePodcastEpisodes(podcast);
-
-      yield ApiResult.ok(podcast);
-      didReturnPodcast = true;
-      if (onlyLocal) return;
-    } on Exception catch (e) {
-      // Do I return this?
-      if (onlyLocal) {
-        yield ApiResult.error(e);
-        return;
-      }
-    }
-    // TODO(duncan): Check if the database is stale and only request then.
     try {
       await _server.execute(request, response);
-      podcast.fromMessage(response.responsePb.podcast);
-
+      var podcast = Podcast.fromMessage(response.responsePb.podcast);
       await _database.put(podcast);
-
-      yield ApiResult.ok(podcast);
+      return ApiResult.ok(podcast);
     } on Exception catch (e) {
-      if (!didReturnPodcast) {
-        yield ApiResult.error(e);
-      }
+      return ApiResult.error(e);
     }
   }
+
+  Future<ApiResult<Podcast>> getLocal(String podcastId) async {
+    try {
+      var podcast = Podcast(id: podcastId);
+      await _database.get(podcast);
+      return ApiResult.ok(podcast);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+  }
+
+  Stream<ApiResult<Podcast>> get(
+    String podcastId, {
+    ApiSource source = ApiSource.both,
+  }) async* {
+    switch (source) {
+      case ApiSource.local:
+        yield await getLocal(podcastId);
+        return;
+      case ApiSource.server:
+        yield await getServer(podcastId);
+        return;
+      case ApiSource.both:
+        break;
+    }
+    // both
+    var localResult = await getLocal(podcastId);
+    var didReturn = false;
+    if (localResult is ApiOk) {
+      didReturn = true;
+      yield localResult;
+    } else {
+      _log.info('get::local::error::$localResult');
+    }
+
+    var serverResult = await getServer(podcastId);
+    if (serverResult is ApiOk || !didReturn) {
+      yield serverResult;
+    } else {
+      _log.info('get::server::error::$serverResult');
+    }
+  }
+
+  // Stream<ApiResult<Podcast>> get(String podcastId, {onlyLocal = false}) async* {
+  //   _log.info('get::$podcastId');
+  //   var request = GetPodcastApiRequest();
+  //   var response = GetPodcastApiResponse();
+  //   var podcast = Podcast(id: podcastId);
+  //   request.requestPb.podcastId = podcastId;
+  //   var didReturnPodcast = false;
+  //   try {
+  //     await _database.get(podcast);
+  //     // await _episodeDatabase.populatePodcastEpisodes(podcast);
+
+  //     yield ApiResult.ok(podcast);
+  //     didReturnPodcast = true;
+  //     if (onlyLocal) return;
+  //   } on Exception catch (e) {
+  //     // Do I return this?
+  //     if (onlyLocal) {
+  //       yield ApiResult.error(e);
+  //       return;
+  //     }
+  //   }
+  //   // TODO(duncan): Check if the database is stale and only request then.
+  //   try {
+  //     await _server.execute(request, response);
+  //     podcast.fromMessage(response.responsePb.podcast);
+
+  //     await _database.put(podcast);
+
+  //     yield ApiResult.ok(podcast);
+  //   } on Exception catch (e) {
+  //     if (!didReturnPodcast) {
+  //       yield ApiResult.error(e);
+  //     }
+  //   }
+  // }
 }

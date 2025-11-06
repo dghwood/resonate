@@ -100,21 +100,10 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   }
 }
 
-class ApiClient<Req extends ApiRequest, Res extends ApiResponse>
+class LocalApi<Req extends ApiRequest, Res extends ApiResponse>
     extends Api<Req, Res> {
-  ApiClient(
-    super.request,
-    super.response, {
-    Api<Req, Res>? serverApi,
-    Api<Req, Res>? localApi,
-  }) : _serverApi = serverApi,
-       _localApi = localApi;
-
-  final Api<Req, Res>? _serverApi;
-  final Api<Req, Res>? _localApi;
+  LocalApi(super.request, super.response);
 
   @override
-  Future<void> execute(Req request, Res response) async {
-    await _serverApi?.execute(request, response);
-  }
+  Future<void> execute(Req request, Res response) async {}
 }

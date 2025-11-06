@@ -1,5 +1,7 @@
 import 'dart:async';
 
+enum ApiSource { local, server, both }
+
 sealed class ApiResult<T> {
   const ApiResult();
 
