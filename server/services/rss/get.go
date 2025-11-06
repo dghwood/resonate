@@ -3,6 +3,7 @@ package rss
 import (
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/fetch"
+	"github.com/dghwood/resonate/utils"
 )
 
 func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {
@@ -20,10 +21,18 @@ func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes
 	}
 	// TODO(duncan): Do I need to set both?
 	podcast.SetIdFromUrl(feedUrl)
+	podcast.LastFetchTimestamp = utils.Now()
 	err = parsePodcast(rssFeed, &podcast)
 	if err != nil {
 		return
 	}
 	episodes, err = parseEpisodes(&podcast, rssFeed)
+	if err != nil {
+		return
+	}
+	if len(episodes) > 0 {
+		// This should be ordered by latest right?
+		podcast.LatestEpisodeTimestamp = episodes[0].PublishTimestamp
+	}
 	return
 }

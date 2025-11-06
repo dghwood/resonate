@@ -68,6 +68,22 @@ const PodcastMessage$json = {
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
     },
+    {
+      '1': 'latest_episode_timestamp',
+      '3': 9,
+      '4': 1,
+      '5': 3,
+      '8': {},
+      '10': 'latestEpisodeTimestamp'
+    },
+    {
+      '1': 'last_fetch_timestamp',
+      '3': 10,
+      '4': 1,
+      '5': 3,
+      '8': {},
+      '10': 'lastFetchTimestamp'
+    },
   ],
 };
 
@@ -78,7 +94,9 @@ final $typed_data.Uint8List podcastMessageDescriptor = $convert.base64Decode(
     'bBIbCglpbWFnZV91cmwYBSABKAlSCGltYWdlVXJsEhwKBmF1dGhvchgGIAEoCUIEgLUYAVIGYX'
     'V0aG9yEjQKCGVwaXNvZGVzGAcgAygLMhgucmVzb25hdGUuRXBpc29kZU1lc3NhZ2VSCGVwaXNv'
     'ZGVzEjwKCG1ldGFkYXRhGAggASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZV'
-    'IIbWV0YWRhdGE=');
+    'IIbWV0YWRhdGESPgoYbGF0ZXN0X2VwaXNvZGVfdGltZXN0YW1wGAkgASgDQgSAtRgBUhZsYXRl'
+    'c3RFcGlzb2RlVGltZXN0YW1wEjYKFGxhc3RfZmV0Y2hfdGltZXN0YW1wGAogASgDQgSAtRgBUh'
+    'JsYXN0RmV0Y2hUaW1lc3RhbXA=');
 
 @$core.Deprecated('Use episodeMessageDescriptor instead')
 const EpisodeMessage$json = {

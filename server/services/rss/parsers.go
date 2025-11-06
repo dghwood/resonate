@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/utils"
 )
 
 var pubDateFormats = []string{
@@ -22,7 +23,7 @@ func parsePubDateTimeSeconds(pubDate string) int64 {
 	for _, format := range pubDateFormats {
 		pubDateParsed, err := time.Parse(format, pubDate)
 		if err == nil {
-			return pubDateParsed.Unix()
+			return utils.ToTimestamp(pubDateParsed)
 		}
 	}
 	return 0
@@ -52,21 +53,6 @@ func parseDurationSeconds(duration string) int64 {
 		j += 1
 	}
 	return int64(durationSeconds)
-	// // hh:mm:ss
-	// re := regexp.MustCompile(`^(\d{2}):(\d{2}):(\d{2})$`)
-	// match := re.FindStringSubmatch(duration)
-	// if len(match) == 4 {
-	// 	hours, mins, seconds := match[1], match[2], match[3]
-	// 	durationSeconds := 0
-	// 	h, _ := strconv.Atoi(hours)
-	// 	durationSeconds += h * 60 * 60
-	// 	m, _ := strconv.Atoi(mins)
-	// 	durationSeconds += m * 60
-	// 	s, _ := strconv.Atoi(seconds)
-	// 	durationSeconds += s
-	// 	return int64(durationSeconds)
-	// }
-	// return 0
 }
 
 func parseRSS(body []byte) (rssFeed RSSFeed, err error) {

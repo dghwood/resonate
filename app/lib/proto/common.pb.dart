@@ -111,6 +111,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
     $core.String? author,
     $core.Iterable<EpisodeMessage>? episodes,
     StorageMetadataMessage? metadata,
+    $fixnum.Int64? latestEpisodeTimestamp,
+    $fixnum.Int64? lastFetchTimestamp,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -121,6 +123,10 @@ class PodcastMessage extends $pb.GeneratedMessage {
     if (author != null) result.author = author;
     if (episodes != null) result.episodes.addAll(episodes);
     if (metadata != null) result.metadata = metadata;
+    if (latestEpisodeTimestamp != null)
+      result.latestEpisodeTimestamp = latestEpisodeTimestamp;
+    if (lastFetchTimestamp != null)
+      result.lastFetchTimestamp = lastFetchTimestamp;
     return result;
   }
 
@@ -148,6 +154,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
         subBuilder: EpisodeMessage.create)
     ..aOM<StorageMetadataMessage>(8, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aInt64(9, _omitFieldNames ? '' : 'latestEpisodeTimestamp')
+    ..aInt64(10, _omitFieldNames ? '' : 'lastFetchTimestamp')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -239,6 +247,26 @@ class PodcastMessage extends $pb.GeneratedMessage {
   void clearMetadata() => $_clearField(8);
   @$pb.TagNumber(8)
   StorageMetadataMessage ensureMetadata() => $_ensure(7);
+
+  /// Used for most recent episode
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get latestEpisodeTimestamp => $_getI64(8);
+  @$pb.TagNumber(9)
+  set latestEpisodeTimestamp($fixnum.Int64 value) => $_setInt64(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasLatestEpisodeTimestamp() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearLatestEpisodeTimestamp() => $_clearField(9);
+
+  /// Used for last URL fetch
+  @$pb.TagNumber(10)
+  $fixnum.Int64 get lastFetchTimestamp => $_getI64(9);
+  @$pb.TagNumber(10)
+  set lastFetchTimestamp($fixnum.Int64 value) => $_setInt64(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasLastFetchTimestamp() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearLastFetchTimestamp() => $_clearField(10);
 }
 
 class EpisodeMessage extends $pb.GeneratedMessage {

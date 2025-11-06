@@ -43,6 +43,10 @@ message PodcastMessage {
     // this is optional 
     repeated EpisodeMessage episodes = 7;
     StorageMetadataMessage metadata = 8; 
+    // Used for most recent episode 
+    int64 latest_episode_timestamp = 9 [(index) = true];
+    // Used for last URL fetch
+    int64 last_fetch_timestamp = 10 [(index) = true];
 }
 
 message EpisodeMessage {

@@ -107,10 +107,14 @@ type PodcastMessage struct {
 	ImageUrl    string                 `protobuf:"bytes,5,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
 	Author      string                 `protobuf:"bytes,6,opt,name=author,proto3" json:"author,omitempty"`
 	// this is optional
-	Episodes      []*EpisodeMessage       `protobuf:"bytes,7,rep,name=episodes,proto3" json:"episodes,omitempty"`
-	Metadata      *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Episodes []*EpisodeMessage       `protobuf:"bytes,7,rep,name=episodes,proto3" json:"episodes,omitempty"`
+	Metadata *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// Used for most recent episode
+	LatestEpisodeTimestamp int64 `protobuf:"varint,9,opt,name=latest_episode_timestamp,json=latestEpisodeTimestamp,proto3" json:"latest_episode_timestamp,omitempty"`
+	// Used for last URL fetch
+	LastFetchTimestamp int64 `protobuf:"varint,10,opt,name=last_fetch_timestamp,json=lastFetchTimestamp,proto3" json:"last_fetch_timestamp,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *PodcastMessage) Reset() {
@@ -197,6 +201,20 @@ func (x *PodcastMessage) GetMetadata() *StorageMetadataMessage {
 		return x.Metadata
 	}
 	return nil
+}
+
+func (x *PodcastMessage) GetLatestEpisodeTimestamp() int64 {
+	if x != nil {
+		return x.LatestEpisodeTimestamp
+	}
+	return 0
+}
+
+func (x *PodcastMessage) GetLastFetchTimestamp() int64 {
+	if x != nil {
+		return x.LastFetchTimestamp
+	}
+	return 0
 }
 
 type EpisodeMessage struct {
@@ -1653,7 +1671,7 @@ const file_proto_common_proto_rawDesc = "" +
 	"\n" +
 	"is_deleted\x18\x01 \x01(\bR\tisDeleted\x12+\n" +
 	"\x11updated_timestamp\x18\x02 \x01(\x03R\x10updatedTimestamp\x12+\n" +
-	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\x9f\x02\n" +
+	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\x97\x03\n" +
 	"\x0ePodcastMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\x05title\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x05title\x12 \n" +
@@ -1662,7 +1680,10 @@ const file_proto_common_proto_rawDesc = "" +
 	"\timage_url\x18\x05 \x01(\tR\bimageUrl\x12\x1c\n" +
 	"\x06author\x18\x06 \x01(\tB\x04\x80\xb5\x18\x01R\x06author\x124\n" +
 	"\bepisodes\x18\a \x03(\v2\x18.resonate.EpisodeMessageR\bepisodes\x12<\n" +
-	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\x96\x03\n" +
+	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12>\n" +
+	"\x18latest_episode_timestamp\x18\t \x01(\x03B\x04\x80\xb5\x18\x01R\x16latestEpisodeTimestamp\x126\n" +
+	"\x14last_fetch_timestamp\x18\n" +
+	" \x01(\x03B\x04\x80\xb5\x18\x01R\x12lastFetchTimestamp\"\x96\x03\n" +
 	"\x0eEpisodeMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\n" +

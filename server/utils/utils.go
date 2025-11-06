@@ -10,7 +10,30 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"time"
 )
+
+/*
+	Timestamp Functions
+
+I need to centralize the definition of timestamp across
+the code base.
+
+TODO(duncan): Figure out what to standardize on.
+*/
+func ToTimestamp(timestamp time.Time) int64 {
+	return timestamp.UTC().Unix()
+}
+func FromTimestamp(timestamp int64) time.Time {
+	return time.Unix(timestamp, 0).UTC()
+}
+func Now() int64 {
+	// TODO(duncan): Should this be seconds / milliseconds?
+	return ToTimestamp(time.Now())
+}
+func TimestampDelta(before int64, after int64) time.Duration {
+	return FromTimestamp(after).Sub(FromTimestamp(before))
+}
 
 // isValidEmail checks if the provided email has a valid format
 func IsValidEmail(email string) bool {
