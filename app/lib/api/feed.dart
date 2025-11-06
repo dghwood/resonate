@@ -34,7 +34,13 @@ class GetFeedApiResponse extends ApiResponse<GetFeedMessage_Response> {
 class GetFeedApiServer
     extends ServerApi<GetFeedApiRequest, GetFeedApiResponse> {
   GetFeedApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super('api/feed/get', client: client, authUser: authUser);
+    : super(
+        GetFeedApiRequest(),
+        GetFeedApiResponse(),
+        'api/feed/get',
+        client: client,
+        authUser: authUser,
+      );
 }
 
 class GetFeedApi {

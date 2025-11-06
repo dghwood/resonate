@@ -35,7 +35,13 @@ class GetEpisodeApiResponse extends ApiResponse<GetEpisodeMessage_Response> {
 class GetEpisodeApiServer
     extends ServerApi<GetEpisodeApiRequest, GetEpisodeApiResponse> {
   GetEpisodeApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super('api/episode/get', client: client, authUser: authUser);
+    : super(
+        GetEpisodeApiRequest(),
+        GetEpisodeApiResponse(),
+        'api/episode/get',
+        client: client,
+        authUser: authUser,
+      );
 }
 
 class GetEpisodeApi {

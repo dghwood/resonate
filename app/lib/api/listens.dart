@@ -33,7 +33,13 @@ class AddListenApiResponse extends ApiResponse<AddListenMessage_Response> {
 class AddListenApiServer
     extends ServerApi<AddListenApiRequest, AddListenApiResponse> {
   AddListenApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super('api/listens/add', client: client, authUser: authUser);
+    : super(
+        AddListenApiRequest(),
+        AddListenApiResponse(),
+        'api/listens/add',
+        client: client,
+        authUser: authUser,
+      );
 }
 
 class ListListenApiRequest extends ApiRequest<ListListenMessage_Request> {
@@ -68,7 +74,13 @@ class ListListenApiResponse extends ApiResponse<ListListenMessage_Response> {
 class ListListenApiServer
     extends ServerApi<ListListenApiRequest, ListListenApiResponse> {
   ListListenApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super('api/listens/list', client: client, authUser: authUser);
+    : super(
+        ListListenApiRequest(),
+        ListListenApiResponse(),
+        'api/listens/list',
+        client: client,
+        authUser: authUser,
+      );
 }
 
 class ListenApi {

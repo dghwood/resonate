@@ -38,7 +38,13 @@ class AddSubscriptionApiServer
   AddSubscriptionApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super('api/subscribe/add', authUser: authUser, client: client);
+  }) : super(
+         AddSubscriptionApiRequest(),
+         AddSubscriptionApiResponse(),
+         'api/subscribe/add',
+         authUser: authUser,
+         client: client,
+       );
 }
 
 class RemoveSubscriptionApiRequest
@@ -66,7 +72,13 @@ class RemoveSubscriptionApiServer
   RemoveSubscriptionApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super('api/subscribe/remove', authUser: authUser, client: client);
+  }) : super(
+         RemoveSubscriptionApiRequest(),
+         RemoveSubscriptionApiResponse(),
+         'api/subscribe/remove',
+         authUser: authUser,
+         client: client,
+       );
 }
 
 class ListSubscriptionApiRequest
@@ -106,7 +118,13 @@ class ListSubscriptionApiServer
   ListSubscriptionApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super('api/subscribe/list', authUser: authUser, client: client);
+  }) : super(
+         ListSubscriptionApiRequest(),
+         ListSubscriptionApiResponse(),
+         'api/subscribe/list',
+         authUser: authUser,
+         client: client,
+       );
 }
 
 class SubscriptionApi extends ChangeNotifier {
