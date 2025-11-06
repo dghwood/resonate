@@ -54,9 +54,9 @@ func (d *DatabaseModel) Save() (props []firestore.Property, err error) {
 
 func fieldToProperty(field datastore.Field) firestore.Property {
 	return firestore.Property{
-		Name:  getFieldName(field.Number),
-		Value: field.Value,
-		// NoIndex: true,
+		Name:    getFieldName(field.Number),
+		Value:   field.Value,
+		NoIndex: field.NoIndex,
 	}
 }
 func propertyToField(property firestore.Property) (field datastore.Field, err error) {
@@ -65,8 +65,9 @@ func propertyToField(property firestore.Property) (field datastore.Field, err er
 		return
 	}
 	field = datastore.Field{
-		Number: num,
-		Value:  property.Value,
+		Number:  num,
+		Value:   property.Value,
+		NoIndex: property.NoIndex,
 	}
 	return
 }

@@ -84,13 +84,17 @@ class PodcastHeaderDelegate extends SliverPersistentHeaderDelegate {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              podcast.title,
-                              style: TextStyle(
-                                fontSize: lerpDouble(24, 16, shrink),
+                            Expanded(
+                              child: Text(
+                                podcast.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: lerpDouble(24, 16, shrink),
+                                ),
                               ),
                             ),
-                            if (shrink < 0.5)
+                            if (shrink < 0.1)
                               IconButton(
                                 icon: Icon(Icons.rss_feed_rounded),
                                 onPressed: () => openBrowser(podcast.url),

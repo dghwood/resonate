@@ -121,17 +121,27 @@ func (f *List) Execute(
 		}
 		// Need to figure out the cursor options for this?
 		response.Episodes = append(response.Episodes, &episode.EpisodeMessage)
-	}
+		cursor := models.NewOffsetCursor(20)
+		response.Cursor = &cursor.QueryCursor
 
+	}
+	go f.asyncSyncToDatabase(&podcast, episodes)
+	return
+}
+
+func (f *List) asyncSyncToDatabase(
+	podcast *models.Podcast,
+	episodes []*models.Episode,
+) {
+	// TODO(duncan): This takes too long
 	if err := f.Datastore.PutMulti(episodes); err != nil {
 		log.Errorf("putting episodes error : %s", err)
-		return nil
+		return
 	}
 	// Put the episode after the podcast since you want to update
 	// the fetch date, latest episode timestamp
 	log.Info("putting podcast")
-	if err := f.Datastore.Put(&podcast); err != nil {
+	if err := f.Datastore.Put(podcast); err != nil {
 		log.Errorf("putting podcast error : %s", err)
 	}
-	return
 }

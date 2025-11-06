@@ -214,6 +214,12 @@ type QueryCursor struct {
 	proto.QueryCursor
 }
 
+func NewOffsetCursor(offset int32) *QueryCursor {
+	cursor := &QueryCursor{}
+	cursor.Offset = offset
+	return cursor
+}
+
 type UserContact struct {
 	proto.UserContactMessage
 }

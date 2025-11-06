@@ -137,3 +137,25 @@ func TestIndex(t *testing.T) {
 			return true
 		})
 }
+
+func TestIndexEpisode(t *testing.T) {
+	message := models.Episode{}
+	message.Description = "description"
+	message.Title = "title"
+	message.PodcastId = "podcast_id"
+	expectedMap := map[string]bool{
+		"description": false,
+		"title":       false,
+		"podcast_id":  true,
+	}
+	message.ProtoReflect().Range(
+		func(
+			fd protoreflect.FieldDescriptor,
+			value protoreflect.Value) bool {
+			expectedValue, ok := expectedMap[string(fd.Name())]
+			if ok && expectedValue != getIndex(fd) {
+				t.Errorf("%s expected indexed: %t got %t", fd.Name(), expectedValue, getIndex(fd))
+			}
+			return true
+		})
+}

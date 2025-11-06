@@ -42,6 +42,14 @@ type FirestoreDatastore struct {
 	projectId  string
 	databaseId string
 	client     *firestore.Client
+	timeout    int
+}
+
+func (f *FirestoreDatastore) GetTimeout() int {
+	if f.timeout > 0 {
+		return f.timeout
+	}
+	return 10 // Default to 10 seconds
 }
 
 func NewFirestoreDatastore(
@@ -91,8 +99,43 @@ func (f *FirestoreDatastore) PutMulti(src any) (err error) {
 		return datastore.ErrorParameterNotCorrect
 	}
 	ctx, _ := getContext(10)
+	// TODO(duncan): What is the right number here
+	//.              Also you could just increase the timeout
+	const batchSize = 100
+
+	for i := 0; i < entities.Len(); i += batchSize {
+		end := i + batchSize
+		if end > entities.Len() {
+			end = entities.Len()
+		}
+
+		batchKeys := make([]*firestore.Key, end-i)
+		batchDbModels := make([]DatabaseModel, end-i)
+
+		for j := i; j < end; j++ {
+			entity := entities.Index(j).Interface().(models.Model)
+			model := DatabaseModel{Model: entity}
+			batchDbModels[j-i] = model
+			key := model.Key()
+			batchKeys[j-i] = key
+		}
+		_, err = f.client.PutMulti(ctx, batchKeys, batchDbModels)
+		if err != nil {
+			return err // Return on first error, or accumulate errors
+		}
+	}
+	return
+}
+func (f *FirestoreDatastore) _PutMulti(src any) (err error) {
+	entities := reflect.ValueOf(src)
+	if entities.Kind() != reflect.Slice {
+		return datastore.ErrorParameterNotCorrect
+	}
+	ctx, _ := getContext(10)
 	keys := make([]*firestore.Key, entities.Len())
 	dbModels := make([]DatabaseModel, entities.Len())
+
+	// Turn this into a batch operation
 
 	for i := 0; i < entities.Len(); i++ {
 		entity := entities.Index(i).Interface().(models.Model)
@@ -171,7 +214,11 @@ func (f *FirestoreDatastore) ListForIds(
 		}
 		query = query.Start(cursor)
 	}
-	log.Print(query)
+	// In the podcast list api I use offset as a way of managing between
+	// returning from the URL vs. DB.
+	if params.Cursor != nil && params.Cursor.Offset > 0 {
+		query = query.Offset(int(params.Cursor.Offset))
+	}
 	return &FirestoreIterator{
 		Iterator: f.client.Run(ctx, query),
 	}
