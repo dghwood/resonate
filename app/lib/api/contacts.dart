@@ -48,13 +48,7 @@ class SearchContactsApiServer
   SearchContactsApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super(
-         SearchContactsApiRequest(),
-         SearchContactsApiResponse(),
-         'api/users/search',
-         client: client,
-         authUser: authUser,
-       );
+  }) : super('api/users/search', client: client, authUser: authUser);
 }
 
 class SearchTopContactsApiRequest
@@ -89,13 +83,7 @@ class SearchTopContactsApiServer
   SearchTopContactsApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super(
-         SearchTopContactsApiRequest(),
-         SearchTopContactsApiResponse(),
-         'api/users/top',
-         client: client,
-         authUser: authUser,
-       );
+  }) : super('api/users/top', client: client, authUser: authUser);
 }
 
 class SearchContactsApi {

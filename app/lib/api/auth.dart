@@ -41,12 +41,7 @@ class LoginRequestApiResponse
 class LoginRequestApiServer
     extends ServerApi<LoginRequestApiRequest, LoginRequestApiResponse> {
   LoginRequestApiServer({AbstractHttpService? client})
-    : super(
-        LoginRequestApiRequest(),
-        LoginRequestApiResponse(),
-        'api/login/request',
-        client: client,
-      );
+    : super('api/login/request', client: client);
 }
 
 class LoginUserApiRequest extends ApiRequest<LoginUserMessage_Request> {
@@ -68,12 +63,7 @@ class LoginUserApiResponse extends ApiResponse<LoginUserMessage_Response> {
 class LoginUserApiServer
     extends ServerApi<LoginUserApiRequest, LoginUserApiResponse> {
   LoginUserApiServer({AbstractHttpService? client})
-    : super(
-        LoginUserApiRequest(),
-        LoginUserApiResponse(),
-        'api/login',
-        client: client,
-      );
+    : super('api/login', client: client);
 }
 
 class LoginApi {
@@ -164,13 +154,7 @@ class EditUserApiServer
   EditUserApiServer({
     required AbstractHttpService client,
     required AuthUser authUser,
-  }) : super(
-         EditUserApiRequest(),
-         EditUserApiResponse(),
-         'api/users/edit',
-         client: client,
-         authUser: authUser,
-       );
+  }) : super('api/users/edit', client: client, authUser: authUser);
 }
 
 class EditUserApi {

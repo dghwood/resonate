@@ -164,13 +164,7 @@ class AddFollowApiResponse extends ApiResponse<AddFollowMessage_Response> {
 class AddFollowApiServer
     extends ServerApi<AddFollowApiRequest, AddFollowApiResponse> {
   AddFollowApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        AddFollowApiRequest(),
-        AddFollowApiResponse(),
-        'api/follow/add',
-        authUser: authUser,
-        client: client,
-      );
+    : super('api/follow/add', authUser: authUser, client: client);
 }
 
 class RemoveFollowApiRequest extends ApiRequest<RemoveFollowMessage_Request> {
@@ -203,13 +197,7 @@ class RemoveFollowApiServer
   RemoveFollowApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super(
-         RemoveFollowApiRequest(),
-         RemoveFollowApiResponse(),
-         'api/follow/remove',
-         authUser: authUser,
-         client: client,
-       );
+  }) : super('api/follow/remove', authUser: authUser, client: client);
 }
 
 class ListFollowApiRequest extends ApiRequest<ListFollowMessage_Request> {
@@ -252,11 +240,5 @@ class ListFollowApiResponse extends ApiResponse<ListFollowMessage_Response> {
 class ListFollowApiServer
     extends ServerApi<ListFollowApiRequest, ListFollowApiResponse> {
   ListFollowApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        ListFollowApiRequest(),
-        ListFollowApiResponse(),
-        'api/follow/list',
-        authUser: authUser,
-        client: client,
-      );
+    : super('api/follow/list', authUser: authUser, client: client);
 }

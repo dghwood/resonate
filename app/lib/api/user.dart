@@ -60,11 +60,5 @@ class GetPublicUserApiServer
   GetPublicUserApiServer({
     AbstractHttpService? client,
     required AuthUser authUser,
-  }) : super(
-         GetPublicUserApiRequest(),
-         GetPublicUserApiResponse(),
-         'api/users/get',
-         authUser: authUser,
-         client: client,
-       );
+  }) : super('api/users/get', authUser: authUser, client: client);
 }

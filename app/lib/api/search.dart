@@ -29,13 +29,7 @@ class SearchApiResponse extends ApiResponse<SearchMessage_Response> {
 
 class SearchApiServer extends ServerApi<SearchApiRequest, SearchApiResponse> {
   SearchApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        SearchApiRequest(),
-        SearchApiResponse(),
-        'api/search/query',
-        authUser: authUser,
-        client: client,
-      );
+    : super('api/search/query', authUser: authUser, client: client);
 }
 
 class SearchTopApiRequest extends ApiRequest<SearchTopMessage_Request> {
@@ -58,13 +52,7 @@ class SearchTopApiResponse extends ApiResponse<SearchTopMessage_Response> {
 class SearchTopApiServer
     extends ServerApi<SearchTopApiRequest, SearchTopApiResponse> {
   SearchTopApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        SearchTopApiRequest(),
-        SearchTopApiResponse(),
-        'api/search/top',
-        authUser: authUser,
-        client: client,
-      );
+    : super('api/search/top', authUser: authUser, client: client);
 }
 
 class TypeaheadApi {

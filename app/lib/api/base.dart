@@ -45,10 +45,7 @@ class ApiResponse<Res extends GeneratedMessage> {
 }
 
 class Api<Req extends ApiRequest, Res extends ApiResponse> {
-  Api(this.baseRequest, this.baseResponse);
-
-  final Req baseRequest;
-  final Res baseResponse;
+  Api();
 
   Future<void> execute(Req request, Res response) {
     throw UnimplementedError('execute() must be implemented by subclasses');
@@ -58,8 +55,6 @@ class Api<Req extends ApiRequest, Res extends ApiResponse> {
 class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     extends Api<Req, Res> {
   ServerApi(
-    super.request,
-    super.response,
     path, {
     // Setting this means
     AuthUser? authUser,
@@ -102,7 +97,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
 
 class LocalApi<Req extends ApiRequest, Res extends ApiResponse>
     extends Api<Req, Res> {
-  LocalApi(super.request, super.response);
+  LocalApi();
 
   @override
   Future<void> execute(Req request, Res response) async {}

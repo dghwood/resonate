@@ -32,13 +32,7 @@ class UploadApiResponse extends ApiResponse<UploadImageMessage_Response> {
 
 class UploadApiServer extends ServerApi<UploadApiRequest, UploadApiResponse> {
   UploadApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        UploadApiRequest(),
-        UploadApiResponse(),
-        'api/upload/image',
-        authUser: authUser,
-        client: client,
-      );
+    : super('api/upload/image', authUser: authUser, client: client);
 }
 
 class UploadApi {
