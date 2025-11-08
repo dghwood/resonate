@@ -10,6 +10,7 @@ import (
 	fetchService "github.com/dghwood/resonate/services/fetch"
 	imagestoreService "github.com/dghwood/resonate/services/imagestore"
 	searchService "github.com/dghwood/resonate/services/search"
+	"github.com/dghwood/resonate/services/secrets"
 
 	"github.com/dghwood/resonate/api/auth"
 	"github.com/dghwood/resonate/api/feed"
@@ -31,7 +32,7 @@ func main() {
 		port = "8080"
 	}
 	// Loads the Env Variables from the Secrets Manager
-	AccessSecrets()
+	secrets.AccessSecrets()
 
 	env_variables := []string{
 		"USER_ID_SALT",
