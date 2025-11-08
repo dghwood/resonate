@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/dghwood/resonate/log"
+	"github.com/dghwood/resonate/utils"
 
 	// "log"
 
@@ -22,6 +23,11 @@ type Field struct {
 	NoIndex bool
 }
 
+type DatastoreItem struct {
+	Fields []Field
+	Meta   *pb.StorageMetadataMessage
+}
+
 func getIndex(fd protoreflect.FieldDescriptor) bool {
 	options, ok := fd.Options().(*descriptorpb.FieldOptions)
 	if !ok {
@@ -37,12 +43,18 @@ func getIndex(fd protoreflect.FieldDescriptor) bool {
 	return false
 }
 
-func GetFields(message models.Model) (fields []Field) {
-	fields = make([]Field, 0)
+func GetFields(message models.Model) (item DatastoreItem) {
+	fields := make([]Field, 0)
+
 	message.ProtoReflect().Range(
 		func(
 			fd protoreflect.FieldDescriptor,
 			value protoreflect.Value) bool {
+
+			if fd.Name() == "meta" {
+				// Skip for meta
+				return true
+			}
 
 			field := Field{
 				Name:    string(fd.Name()),
@@ -84,12 +96,31 @@ func GetFields(message models.Model) (fields []Field) {
 
 			return true
 		})
+	item.Fields = fields
+
+	// Populate Meta
+	meta := message.GetMetadata()
+	if meta == nil {
+		// meta is not set..
+		meta = &pb.StorageMetadataMessage{}
+		meta.CreatedTimestamp = utils.Now()
+	}
+	meta.UpdatedTimestamp = utils.Now()
+	item.Meta = meta
 	return
 }
 
-func RetrieveFields(fields []Field, model models.Model) (err error) {
-	for _, field := range fields {
+func RetrieveFields(item DatastoreItem, model models.Model) (err error) {
+	if item.Meta != nil {
+		model.SetMetadata(item.Meta)
+	}
+	for _, field := range item.Fields {
+		if field.Name == "meta" {
+			// Handle metadata
+			continue
+		}
 		num := field.Number
+		log.Infof("retrieving field %d :: %s", num, field.Name)
 		descriptor := model.ProtoReflect().
 			Descriptor().Fields().
 			ByNumber(protoreflect.FieldNumber(num))
@@ -112,16 +143,6 @@ func RetrieveFields(fields []Field, model models.Model) (err error) {
 						bytes,
 						nested.Interface())
 				}
-				// for _, hexBytes := range field.Value.([]byte) {
-				// 	nested := list.AppendMutable().Message()
-				// 	bytes, err := hex.DecodeString(hexBytes)
-				// 	if err != nil {
-				// 		return err
-				// 	}
-				// 	proto.Unmarshal(
-				// 		bytes,
-				// 		nested.Interface())
-				// }
 				continue
 			}
 			// Need to init the message first

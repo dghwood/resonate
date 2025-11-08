@@ -9,12 +9,12 @@ import (
 )
 
 type memoryDatabase struct {
-	Data map[string][]Field
+	Data map[string]DatastoreItem
 }
 
 func NewMemoryDatabase() memoryDatabase {
 	return memoryDatabase{
-		Data: make(map[string][]Field),
+		Data: make(map[string]DatastoreItem),
 	}
 }
 
@@ -89,7 +89,7 @@ func (ds *MemoryDatastore) Close() {
 }
 
 type MemoryDatastoreIterator struct {
-	data [][]Field
+	data []DatastoreItem
 	i    int
 }
 
@@ -109,7 +109,7 @@ func (it *MemoryDatastoreIterator) Cursor() *models.QueryCursor {
 
 func (ds *MemoryDatastore) List(entity models.Model) (iter Iterator) {
 	database := ds.getDb(entity)
-	data := make([][]Field, 0)
+	data := make([]DatastoreItem, 0)
 	for _, fields := range database.Data {
 		data = append(data, fields)
 	}
@@ -132,14 +132,15 @@ func (ds *MemoryDatastore) ListForIds(
 	log.Infof("ListForIds: %s %d %d", ids, idFieldNum, sortFieldNum)
 	database := ds.getDb(entity)
 	log.Infof("database with %d entries", len(database.Data))
-	data := make([][]Field, 0)
-	for _, fields := range database.Data {
-		for _, field := range fields {
+
+	data := make([]DatastoreItem, 0)
+	for _, item := range database.Data {
+		for _, field := range item.Fields {
 			if field.Number == idFieldNum {
 				var value = field.Value.(string)
 				for _, userId := range ids {
 					if value == userId {
-						data = append(data, fields)
+						data = append(data, item)
 						break
 					}
 				}
@@ -151,9 +152,9 @@ func (ds *MemoryDatastore) ListForIds(
 	// I'm sure this will throw an error if the wrong type
 	if sortFieldNum >= 0 {
 		sort.Slice(data, func(i, j int) bool {
-			for _, field := range data[i] {
+			for _, field := range data[i].Fields {
 				if field.Number == sortFieldNum {
-					for _, field2 := range data[j] {
+					for _, field2 := range data[j].Fields {
 						if field2.Number == sortFieldNum {
 							return field.Value.(int64) > field2.Value.(int64)
 						}

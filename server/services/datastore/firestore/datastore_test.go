@@ -56,6 +56,19 @@ func TestGet(t *testing.T) {
 	if podcast.Title != "Test Podcast" {
 		t.Errorf("Title = %s; want Test Podcast", podcast.Title)
 	}
+
+	if podcast.GetMetadata() == nil {
+		t.Errorf("Metadata = nil; want not nil")
+	}
+	if podcast.Metadata.CreatedTimestamp == 0 {
+		t.Errorf("CreatedTimestamp = %d; want not 0", podcast.Metadata.CreatedTimestamp)
+	}
+	if podcast.Metadata.UpdatedTimestamp == 0 {
+		t.Errorf("UpdatedTimestamp = %d; want not 0", podcast.Metadata.UpdatedTimestamp)
+	}
+	if podcast.Metadata.IsDeleted {
+		t.Errorf("IsDeleted = %t; want false", podcast.Metadata.IsDeleted)
+	}
 }
 
 func TestPutMulti(t *testing.T) {

@@ -18,7 +18,7 @@
 // 	protoc        v6.32.0
 // source: proto/common.proto
 
-//go:build !protoopaque
+//go:build protoopaque
 
 package proto
 
@@ -38,14 +38,12 @@ const (
 )
 
 type StorageMetadataMessage struct {
-	state     protoimpl.MessageState `protogen:"hybrid.v1"`
-	IsDeleted bool                   `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	// In milliseconds since epoch, UTC time
-	UpdatedTimestamp int64 `protobuf:"varint,2,opt,name=updated_timestamp,json=updatedTimestamp,proto3" json:"updated_timestamp,omitempty"`
-	// In milliseconds since epoch, UTC time
-	CreatedTimestamp int64 `protobuf:"varint,3,opt,name=created_timestamp,json=createdTimestamp,proto3" json:"created_timestamp,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_IsDeleted        bool                   `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3"`
+	xxx_hidden_UpdatedTimestamp int64                  `protobuf:"varint,2,opt,name=updated_timestamp,json=updatedTimestamp,proto3"`
+	xxx_hidden_CreatedTimestamp int64                  `protobuf:"varint,3,opt,name=created_timestamp,json=createdTimestamp,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *StorageMetadataMessage) Reset() {
@@ -75,35 +73,35 @@ func (x *StorageMetadataMessage) ProtoReflect() protoreflect.Message {
 
 func (x *StorageMetadataMessage) GetIsDeleted() bool {
 	if x != nil {
-		return x.IsDeleted
+		return x.xxx_hidden_IsDeleted
 	}
 	return false
 }
 
 func (x *StorageMetadataMessage) GetUpdatedTimestamp() int64 {
 	if x != nil {
-		return x.UpdatedTimestamp
+		return x.xxx_hidden_UpdatedTimestamp
 	}
 	return 0
 }
 
 func (x *StorageMetadataMessage) GetCreatedTimestamp() int64 {
 	if x != nil {
-		return x.CreatedTimestamp
+		return x.xxx_hidden_CreatedTimestamp
 	}
 	return 0
 }
 
 func (x *StorageMetadataMessage) SetIsDeleted(v bool) {
-	x.IsDeleted = v
+	x.xxx_hidden_IsDeleted = v
 }
 
 func (x *StorageMetadataMessage) SetUpdatedTimestamp(v int64) {
-	x.UpdatedTimestamp = v
+	x.xxx_hidden_UpdatedTimestamp = v
 }
 
 func (x *StorageMetadataMessage) SetCreatedTimestamp(v int64) {
-	x.CreatedTimestamp = v
+	x.xxx_hidden_CreatedTimestamp = v
 }
 
 type StorageMetadataMessage_builder struct {
@@ -120,29 +118,26 @@ func (b0 StorageMetadataMessage_builder) Build() *StorageMetadataMessage {
 	m0 := &StorageMetadataMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.IsDeleted = b.IsDeleted
-	x.UpdatedTimestamp = b.UpdatedTimestamp
-	x.CreatedTimestamp = b.CreatedTimestamp
+	x.xxx_hidden_IsDeleted = b.IsDeleted
+	x.xxx_hidden_UpdatedTimestamp = b.UpdatedTimestamp
+	x.xxx_hidden_CreatedTimestamp = b.CreatedTimestamp
 	return m0
 }
 
 type PodcastMessage struct {
-	state       protoimpl.MessageState `protogen:"hybrid.v1"`
-	Id          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title       string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Url         string                 `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
-	ImageUrl    string                 `protobuf:"bytes,5,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
-	Author      string                 `protobuf:"bytes,6,opt,name=author,proto3" json:"author,omitempty"`
-	// this is optional
-	Episodes []*EpisodeMessage       `protobuf:"bytes,7,rep,name=episodes,proto3" json:"episodes,omitempty"`
-	Metadata *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	// Used for most recent episode
-	LatestEpisodeTimestamp int64 `protobuf:"varint,9,opt,name=latest_episode_timestamp,json=latestEpisodeTimestamp,proto3" json:"latest_episode_timestamp,omitempty"`
-	// Used for last URL fetch
-	LastFetchTimestamp int64 `protobuf:"varint,10,opt,name=last_fetch_timestamp,json=lastFetchTimestamp,proto3" json:"last_fetch_timestamp,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state                             protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id                     string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Title                  string                  `protobuf:"bytes,2,opt,name=title,proto3"`
+	xxx_hidden_Description            string                  `protobuf:"bytes,3,opt,name=description,proto3"`
+	xxx_hidden_Url                    string                  `protobuf:"bytes,4,opt,name=url,proto3"`
+	xxx_hidden_ImageUrl               string                  `protobuf:"bytes,5,opt,name=image_url,json=imageUrl,proto3"`
+	xxx_hidden_Author                 string                  `protobuf:"bytes,6,opt,name=author,proto3"`
+	xxx_hidden_Episodes               *[]*EpisodeMessage      `protobuf:"bytes,7,rep,name=episodes,proto3"`
+	xxx_hidden_Metadata               *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3"`
+	xxx_hidden_LatestEpisodeTimestamp int64                   `protobuf:"varint,9,opt,name=latest_episode_timestamp,json=latestEpisodeTimestamp,proto3"`
+	xxx_hidden_LastFetchTimestamp     int64                   `protobuf:"varint,10,opt,name=last_fetch_timestamp,json=lastFetchTimestamp,proto3"`
+	unknownFields                     protoimpl.UnknownFields
+	sizeCache                         protoimpl.SizeCache
 }
 
 func (x *PodcastMessage) Reset() {
@@ -172,123 +167,125 @@ func (x *PodcastMessage) ProtoReflect() protoreflect.Message {
 
 func (x *PodcastMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetTitle() string {
 	if x != nil {
-		return x.Title
+		return x.xxx_hidden_Title
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetDescription() string {
 	if x != nil {
-		return x.Description
+		return x.xxx_hidden_Description
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetUrl() string {
 	if x != nil {
-		return x.Url
+		return x.xxx_hidden_Url
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetImageUrl() string {
 	if x != nil {
-		return x.ImageUrl
+		return x.xxx_hidden_ImageUrl
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetAuthor() string {
 	if x != nil {
-		return x.Author
+		return x.xxx_hidden_Author
 	}
 	return ""
 }
 
 func (x *PodcastMessage) GetEpisodes() []*EpisodeMessage {
 	if x != nil {
-		return x.Episodes
+		if x.xxx_hidden_Episodes != nil {
+			return *x.xxx_hidden_Episodes
+		}
 	}
 	return nil
 }
 
 func (x *PodcastMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *PodcastMessage) GetLatestEpisodeTimestamp() int64 {
 	if x != nil {
-		return x.LatestEpisodeTimestamp
+		return x.xxx_hidden_LatestEpisodeTimestamp
 	}
 	return 0
 }
 
 func (x *PodcastMessage) GetLastFetchTimestamp() int64 {
 	if x != nil {
-		return x.LastFetchTimestamp
+		return x.xxx_hidden_LastFetchTimestamp
 	}
 	return 0
 }
 
 func (x *PodcastMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *PodcastMessage) SetTitle(v string) {
-	x.Title = v
+	x.xxx_hidden_Title = v
 }
 
 func (x *PodcastMessage) SetDescription(v string) {
-	x.Description = v
+	x.xxx_hidden_Description = v
 }
 
 func (x *PodcastMessage) SetUrl(v string) {
-	x.Url = v
+	x.xxx_hidden_Url = v
 }
 
 func (x *PodcastMessage) SetImageUrl(v string) {
-	x.ImageUrl = v
+	x.xxx_hidden_ImageUrl = v
 }
 
 func (x *PodcastMessage) SetAuthor(v string) {
-	x.Author = v
+	x.xxx_hidden_Author = v
 }
 
 func (x *PodcastMessage) SetEpisodes(v []*EpisodeMessage) {
-	x.Episodes = v
+	x.xxx_hidden_Episodes = &v
 }
 
 func (x *PodcastMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *PodcastMessage) SetLatestEpisodeTimestamp(v int64) {
-	x.LatestEpisodeTimestamp = v
+	x.xxx_hidden_LatestEpisodeTimestamp = v
 }
 
 func (x *PodcastMessage) SetLastFetchTimestamp(v int64) {
-	x.LastFetchTimestamp = v
+	x.xxx_hidden_LastFetchTimestamp = v
 }
 
 func (x *PodcastMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *PodcastMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type PodcastMessage_builder struct {
@@ -313,34 +310,34 @@ func (b0 PodcastMessage_builder) Build() *PodcastMessage {
 	m0 := &PodcastMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.Title = b.Title
-	x.Description = b.Description
-	x.Url = b.Url
-	x.ImageUrl = b.ImageUrl
-	x.Author = b.Author
-	x.Episodes = b.Episodes
-	x.Metadata = b.Metadata
-	x.LatestEpisodeTimestamp = b.LatestEpisodeTimestamp
-	x.LastFetchTimestamp = b.LastFetchTimestamp
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_Title = b.Title
+	x.xxx_hidden_Description = b.Description
+	x.xxx_hidden_Url = b.Url
+	x.xxx_hidden_ImageUrl = b.ImageUrl
+	x.xxx_hidden_Author = b.Author
+	x.xxx_hidden_Episodes = &b.Episodes
+	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_LatestEpisodeTimestamp = b.LatestEpisodeTimestamp
+	x.xxx_hidden_LastFetchTimestamp = b.LastFetchTimestamp
 	return m0
 }
 
 type EpisodeMessage struct {
-	state            protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id               string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	PodcastId        string                  `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
-	Title            string                  `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
-	Description      string                  `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	AudioUrl         string                  `protobuf:"bytes,5,opt,name=audio_url,json=audioUrl,proto3" json:"audio_url,omitempty"`
-	ImageUrl         string                  `protobuf:"bytes,6,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
-	PublishTimestamp int64                   `protobuf:"varint,8,opt,name=publish_timestamp,json=publishTimestamp,proto3" json:"publish_timestamp,omitempty"`
-	DurationSeconds  int64                   `protobuf:"varint,9,opt,name=duration_seconds,json=durationSeconds,proto3" json:"duration_seconds,omitempty"`
-	EpisodeNumber    int64                   `protobuf:"varint,10,opt,name=episode_number,json=episodeNumber,proto3" json:"episode_number,omitempty"`
-	Explicit         bool                    `protobuf:"varint,11,opt,name=explicit,proto3" json:"explicit,omitempty"`
-	Metadata         *StorageMetadataMessage `protobuf:"bytes,12,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                       protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id               string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_PodcastId        string                  `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3"`
+	xxx_hidden_Title            string                  `protobuf:"bytes,3,opt,name=title,proto3"`
+	xxx_hidden_Description      string                  `protobuf:"bytes,4,opt,name=description,proto3"`
+	xxx_hidden_AudioUrl         string                  `protobuf:"bytes,5,opt,name=audio_url,json=audioUrl,proto3"`
+	xxx_hidden_ImageUrl         string                  `protobuf:"bytes,6,opt,name=image_url,json=imageUrl,proto3"`
+	xxx_hidden_PublishTimestamp int64                   `protobuf:"varint,8,opt,name=publish_timestamp,json=publishTimestamp,proto3"`
+	xxx_hidden_DurationSeconds  int64                   `protobuf:"varint,9,opt,name=duration_seconds,json=durationSeconds,proto3"`
+	xxx_hidden_EpisodeNumber    int64                   `protobuf:"varint,10,opt,name=episode_number,json=episodeNumber,proto3"`
+	xxx_hidden_Explicit         bool                    `protobuf:"varint,11,opt,name=explicit,proto3"`
+	xxx_hidden_Metadata         *StorageMetadataMessage `protobuf:"bytes,12,opt,name=metadata,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *EpisodeMessage) Reset() {
@@ -370,134 +367,134 @@ func (x *EpisodeMessage) ProtoReflect() protoreflect.Message {
 
 func (x *EpisodeMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetPodcastId() string {
 	if x != nil {
-		return x.PodcastId
+		return x.xxx_hidden_PodcastId
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetTitle() string {
 	if x != nil {
-		return x.Title
+		return x.xxx_hidden_Title
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetDescription() string {
 	if x != nil {
-		return x.Description
+		return x.xxx_hidden_Description
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetAudioUrl() string {
 	if x != nil {
-		return x.AudioUrl
+		return x.xxx_hidden_AudioUrl
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetImageUrl() string {
 	if x != nil {
-		return x.ImageUrl
+		return x.xxx_hidden_ImageUrl
 	}
 	return ""
 }
 
 func (x *EpisodeMessage) GetPublishTimestamp() int64 {
 	if x != nil {
-		return x.PublishTimestamp
+		return x.xxx_hidden_PublishTimestamp
 	}
 	return 0
 }
 
 func (x *EpisodeMessage) GetDurationSeconds() int64 {
 	if x != nil {
-		return x.DurationSeconds
+		return x.xxx_hidden_DurationSeconds
 	}
 	return 0
 }
 
 func (x *EpisodeMessage) GetEpisodeNumber() int64 {
 	if x != nil {
-		return x.EpisodeNumber
+		return x.xxx_hidden_EpisodeNumber
 	}
 	return 0
 }
 
 func (x *EpisodeMessage) GetExplicit() bool {
 	if x != nil {
-		return x.Explicit
+		return x.xxx_hidden_Explicit
 	}
 	return false
 }
 
 func (x *EpisodeMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *EpisodeMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *EpisodeMessage) SetPodcastId(v string) {
-	x.PodcastId = v
+	x.xxx_hidden_PodcastId = v
 }
 
 func (x *EpisodeMessage) SetTitle(v string) {
-	x.Title = v
+	x.xxx_hidden_Title = v
 }
 
 func (x *EpisodeMessage) SetDescription(v string) {
-	x.Description = v
+	x.xxx_hidden_Description = v
 }
 
 func (x *EpisodeMessage) SetAudioUrl(v string) {
-	x.AudioUrl = v
+	x.xxx_hidden_AudioUrl = v
 }
 
 func (x *EpisodeMessage) SetImageUrl(v string) {
-	x.ImageUrl = v
+	x.xxx_hidden_ImageUrl = v
 }
 
 func (x *EpisodeMessage) SetPublishTimestamp(v int64) {
-	x.PublishTimestamp = v
+	x.xxx_hidden_PublishTimestamp = v
 }
 
 func (x *EpisodeMessage) SetDurationSeconds(v int64) {
-	x.DurationSeconds = v
+	x.xxx_hidden_DurationSeconds = v
 }
 
 func (x *EpisodeMessage) SetEpisodeNumber(v int64) {
-	x.EpisodeNumber = v
+	x.xxx_hidden_EpisodeNumber = v
 }
 
 func (x *EpisodeMessage) SetExplicit(v bool) {
-	x.Explicit = v
+	x.xxx_hidden_Explicit = v
 }
 
 func (x *EpisodeMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *EpisodeMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *EpisodeMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type EpisodeMessage_builder struct {
@@ -520,27 +517,26 @@ func (b0 EpisodeMessage_builder) Build() *EpisodeMessage {
 	m0 := &EpisodeMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.PodcastId = b.PodcastId
-	x.Title = b.Title
-	x.Description = b.Description
-	x.AudioUrl = b.AudioUrl
-	x.ImageUrl = b.ImageUrl
-	x.PublishTimestamp = b.PublishTimestamp
-	x.DurationSeconds = b.DurationSeconds
-	x.EpisodeNumber = b.EpisodeNumber
-	x.Explicit = b.Explicit
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_PodcastId = b.PodcastId
+	x.xxx_hidden_Title = b.Title
+	x.xxx_hidden_Description = b.Description
+	x.xxx_hidden_AudioUrl = b.AudioUrl
+	x.xxx_hidden_ImageUrl = b.ImageUrl
+	x.xxx_hidden_PublishTimestamp = b.PublishTimestamp
+	x.xxx_hidden_DurationSeconds = b.DurationSeconds
+	x.xxx_hidden_EpisodeNumber = b.EpisodeNumber
+	x.xxx_hidden_Explicit = b.Explicit
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 type TokenMessage struct {
-	state protoimpl.MessageState `protogen:"hybrid.v1"`
-	Token string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	// timestamp in seconds, UTC time
-	ExpiryUtcTimestamp int64 `protobuf:"varint,2,opt,name=expiry_utc_timestamp,json=expiryUtcTimestamp,proto3" json:"expiry_utc_timestamp,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Token              string                 `protobuf:"bytes,1,opt,name=token,proto3"`
+	xxx_hidden_ExpiryUtcTimestamp int64                  `protobuf:"varint,2,opt,name=expiry_utc_timestamp,json=expiryUtcTimestamp,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *TokenMessage) Reset() {
@@ -570,24 +566,24 @@ func (x *TokenMessage) ProtoReflect() protoreflect.Message {
 
 func (x *TokenMessage) GetToken() string {
 	if x != nil {
-		return x.Token
+		return x.xxx_hidden_Token
 	}
 	return ""
 }
 
 func (x *TokenMessage) GetExpiryUtcTimestamp() int64 {
 	if x != nil {
-		return x.ExpiryUtcTimestamp
+		return x.xxx_hidden_ExpiryUtcTimestamp
 	}
 	return 0
 }
 
 func (x *TokenMessage) SetToken(v string) {
-	x.Token = v
+	x.xxx_hidden_Token = v
 }
 
 func (x *TokenMessage) SetExpiryUtcTimestamp(v int64) {
-	x.ExpiryUtcTimestamp = v
+	x.xxx_hidden_ExpiryUtcTimestamp = v
 }
 
 type TokenMessage_builder struct {
@@ -602,21 +598,21 @@ func (b0 TokenMessage_builder) Build() *TokenMessage {
 	m0 := &TokenMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Token = b.Token
-	x.ExpiryUtcTimestamp = b.ExpiryUtcTimestamp
+	x.xxx_hidden_Token = b.Token
+	x.xxx_hidden_ExpiryUtcTimestamp = b.ExpiryUtcTimestamp
 	return m0
 }
 
 type LoginAttempt struct {
-	state              protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id                 string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	PhoneNumber        string                  `protobuf:"bytes,2,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Password           string                  `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
-	Metadata           *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	ExpiryUtcTimestamp int64                   `protobuf:"varint,5,opt,name=expiry_utc_timestamp,json=expiryUtcTimestamp,proto3" json:"expiry_utc_timestamp,omitempty"`
-	NumAttempts        int64                   `protobuf:"varint,6,opt,name=num_attempts,json=numAttempts,proto3" json:"num_attempts,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state                         protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id                 string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_PhoneNumber        string                  `protobuf:"bytes,2,opt,name=phone_number,json=phoneNumber,proto3"`
+	xxx_hidden_Password           string                  `protobuf:"bytes,3,opt,name=password,proto3"`
+	xxx_hidden_Metadata           *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3"`
+	xxx_hidden_ExpiryUtcTimestamp int64                   `protobuf:"varint,5,opt,name=expiry_utc_timestamp,json=expiryUtcTimestamp,proto3"`
+	xxx_hidden_NumAttempts        int64                   `protobuf:"varint,6,opt,name=num_attempts,json=numAttempts,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *LoginAttempt) Reset() {
@@ -646,79 +642,79 @@ func (x *LoginAttempt) ProtoReflect() protoreflect.Message {
 
 func (x *LoginAttempt) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *LoginAttempt) GetPhoneNumber() string {
 	if x != nil {
-		return x.PhoneNumber
+		return x.xxx_hidden_PhoneNumber
 	}
 	return ""
 }
 
 func (x *LoginAttempt) GetPassword() string {
 	if x != nil {
-		return x.Password
+		return x.xxx_hidden_Password
 	}
 	return ""
 }
 
 func (x *LoginAttempt) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *LoginAttempt) GetExpiryUtcTimestamp() int64 {
 	if x != nil {
-		return x.ExpiryUtcTimestamp
+		return x.xxx_hidden_ExpiryUtcTimestamp
 	}
 	return 0
 }
 
 func (x *LoginAttempt) GetNumAttempts() int64 {
 	if x != nil {
-		return x.NumAttempts
+		return x.xxx_hidden_NumAttempts
 	}
 	return 0
 }
 
 func (x *LoginAttempt) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *LoginAttempt) SetPhoneNumber(v string) {
-	x.PhoneNumber = v
+	x.xxx_hidden_PhoneNumber = v
 }
 
 func (x *LoginAttempt) SetPassword(v string) {
-	x.Password = v
+	x.xxx_hidden_Password = v
 }
 
 func (x *LoginAttempt) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *LoginAttempt) SetExpiryUtcTimestamp(v int64) {
-	x.ExpiryUtcTimestamp = v
+	x.xxx_hidden_ExpiryUtcTimestamp = v
 }
 
 func (x *LoginAttempt) SetNumAttempts(v int64) {
-	x.NumAttempts = v
+	x.xxx_hidden_NumAttempts = v
 }
 
 func (x *LoginAttempt) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *LoginAttempt) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type LoginAttempt_builder struct {
@@ -736,22 +732,22 @@ func (b0 LoginAttempt_builder) Build() *LoginAttempt {
 	m0 := &LoginAttempt{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.PhoneNumber = b.PhoneNumber
-	x.Password = b.Password
-	x.Metadata = b.Metadata
-	x.ExpiryUtcTimestamp = b.ExpiryUtcTimestamp
-	x.NumAttempts = b.NumAttempts
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_PhoneNumber = b.PhoneNumber
+	x.xxx_hidden_Password = b.Password
+	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_ExpiryUtcTimestamp = b.ExpiryUtcTimestamp
+	x.xxx_hidden_NumAttempts = b.NumAttempts
 	return m0
 }
 
 type UserStorageMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	User          *UserMessage           `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	AccessToken   *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	RefreshToken  *TokenMessage          `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,1,opt,name=user,proto3"`
+	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
+	xxx_hidden_RefreshToken *TokenMessage          `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *UserStorageMessage) Reset() {
@@ -781,68 +777,68 @@ func (x *UserStorageMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserStorageMessage) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *UserStorageMessage) GetAccessToken() *TokenMessage {
 	if x != nil {
-		return x.AccessToken
+		return x.xxx_hidden_AccessToken
 	}
 	return nil
 }
 
 func (x *UserStorageMessage) GetRefreshToken() *TokenMessage {
 	if x != nil {
-		return x.RefreshToken
+		return x.xxx_hidden_RefreshToken
 	}
 	return nil
 }
 
 func (x *UserStorageMessage) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *UserStorageMessage) SetAccessToken(v *TokenMessage) {
-	x.AccessToken = v
+	x.xxx_hidden_AccessToken = v
 }
 
 func (x *UserStorageMessage) SetRefreshToken(v *TokenMessage) {
-	x.RefreshToken = v
+	x.xxx_hidden_RefreshToken = v
 }
 
 func (x *UserStorageMessage) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *UserStorageMessage) HasAccessToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.AccessToken != nil
+	return x.xxx_hidden_AccessToken != nil
 }
 
 func (x *UserStorageMessage) HasRefreshToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.RefreshToken != nil
+	return x.xxx_hidden_RefreshToken != nil
 }
 
 func (x *UserStorageMessage) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 func (x *UserStorageMessage) ClearAccessToken() {
-	x.AccessToken = nil
+	x.xxx_hidden_AccessToken = nil
 }
 
 func (x *UserStorageMessage) ClearRefreshToken() {
-	x.RefreshToken = nil
+	x.xxx_hidden_RefreshToken = nil
 }
 
 type UserStorageMessage_builder struct {
@@ -857,20 +853,20 @@ func (b0 UserStorageMessage_builder) Build() *UserStorageMessage {
 	m0 := &UserStorageMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.User = b.User
-	x.AccessToken = b.AccessToken
-	x.RefreshToken = b.RefreshToken
+	x.xxx_hidden_User = b.User
+	x.xxx_hidden_AccessToken = b.AccessToken
+	x.xxx_hidden_RefreshToken = b.RefreshToken
 	return m0
 }
 
 type RefreshTokensMessage struct {
-	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id            string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Tokens        []*TokenMessage         `protobuf:"bytes,3,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	Metadata      *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id       string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_UserId   string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_Tokens   *[]*TokenMessage        `protobuf:"bytes,3,rep,name=tokens,proto3"`
+	xxx_hidden_Metadata *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RefreshTokensMessage) Reset() {
@@ -900,57 +896,59 @@ func (x *RefreshTokensMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RefreshTokensMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *RefreshTokensMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *RefreshTokensMessage) GetTokens() []*TokenMessage {
 	if x != nil {
-		return x.Tokens
+		if x.xxx_hidden_Tokens != nil {
+			return *x.xxx_hidden_Tokens
+		}
 	}
 	return nil
 }
 
 func (x *RefreshTokensMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *RefreshTokensMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *RefreshTokensMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *RefreshTokensMessage) SetTokens(v []*TokenMessage) {
-	x.Tokens = v
+	x.xxx_hidden_Tokens = &v
 }
 
 func (x *RefreshTokensMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *RefreshTokensMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *RefreshTokensMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type RefreshTokensMessage_builder struct {
@@ -966,31 +964,28 @@ func (b0 RefreshTokensMessage_builder) Build() *RefreshTokensMessage {
 	m0 := &RefreshTokensMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.UserId = b.UserId
-	x.Tokens = b.Tokens
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_Tokens = &b.Tokens
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 type UserMessage struct {
-	state protoimpl.MessageState `protogen:"hybrid.v1"`
-	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Email string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	// What about country code, etc.
-	// TODO(duncan): Maybe I should just not store this?
-	PhoneNumber          string `protobuf:"bytes,10,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	EncryptedPhoneNumber string `protobuf:"bytes,11,opt,name=encrypted_phone_number,json=encryptedPhoneNumber,proto3" json:"encrypted_phone_number,omitempty"`
-	// Should this be a data url?
-	ImageUrl      string                     `protobuf:"bytes,4,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
-	Subscriptions []*UserSubscriptionMessage `protobuf:"bytes,5,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
-	Listens       []*UserListenMessage       `protobuf:"bytes,6,rep,name=listens,proto3" json:"listens,omitempty"`
-	Following     []*UserFollowMessage       `protobuf:"bytes,7,rep,name=following,proto3" json:"following,omitempty"`
-	NumFollowers  int64                      `protobuf:"varint,8,opt,name=num_followers,json=numFollowers,proto3" json:"num_followers,omitempty"`
-	Metadata      *StorageMetadataMessage    `protobuf:"bytes,9,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                           protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Id                   string                      `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Name                 string                      `protobuf:"bytes,2,opt,name=name,proto3"`
+	xxx_hidden_Email                string                      `protobuf:"bytes,3,opt,name=email,proto3"`
+	xxx_hidden_PhoneNumber          string                      `protobuf:"bytes,10,opt,name=phone_number,json=phoneNumber,proto3"`
+	xxx_hidden_EncryptedPhoneNumber string                      `protobuf:"bytes,11,opt,name=encrypted_phone_number,json=encryptedPhoneNumber,proto3"`
+	xxx_hidden_ImageUrl             string                      `protobuf:"bytes,4,opt,name=image_url,json=imageUrl,proto3"`
+	xxx_hidden_Subscriptions        *[]*UserSubscriptionMessage `protobuf:"bytes,5,rep,name=subscriptions,proto3"`
+	xxx_hidden_Listens              *[]*UserListenMessage       `protobuf:"bytes,6,rep,name=listens,proto3"`
+	xxx_hidden_Following            *[]*UserFollowMessage       `protobuf:"bytes,7,rep,name=following,proto3"`
+	xxx_hidden_NumFollowers         int64                       `protobuf:"varint,8,opt,name=num_followers,json=numFollowers,proto3"`
+	xxx_hidden_Metadata             *StorageMetadataMessage     `protobuf:"bytes,9,opt,name=metadata,proto3"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
 }
 
 func (x *UserMessage) Reset() {
@@ -1020,134 +1015,140 @@ func (x *UserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserMessage) GetName() string {
 	if x != nil {
-		return x.Name
+		return x.xxx_hidden_Name
 	}
 	return ""
 }
 
 func (x *UserMessage) GetEmail() string {
 	if x != nil {
-		return x.Email
+		return x.xxx_hidden_Email
 	}
 	return ""
 }
 
 func (x *UserMessage) GetPhoneNumber() string {
 	if x != nil {
-		return x.PhoneNumber
+		return x.xxx_hidden_PhoneNumber
 	}
 	return ""
 }
 
 func (x *UserMessage) GetEncryptedPhoneNumber() string {
 	if x != nil {
-		return x.EncryptedPhoneNumber
+		return x.xxx_hidden_EncryptedPhoneNumber
 	}
 	return ""
 }
 
 func (x *UserMessage) GetImageUrl() string {
 	if x != nil {
-		return x.ImageUrl
+		return x.xxx_hidden_ImageUrl
 	}
 	return ""
 }
 
 func (x *UserMessage) GetSubscriptions() []*UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscriptions
+		if x.xxx_hidden_Subscriptions != nil {
+			return *x.xxx_hidden_Subscriptions
+		}
 	}
 	return nil
 }
 
 func (x *UserMessage) GetListens() []*UserListenMessage {
 	if x != nil {
-		return x.Listens
+		if x.xxx_hidden_Listens != nil {
+			return *x.xxx_hidden_Listens
+		}
 	}
 	return nil
 }
 
 func (x *UserMessage) GetFollowing() []*UserFollowMessage {
 	if x != nil {
-		return x.Following
+		if x.xxx_hidden_Following != nil {
+			return *x.xxx_hidden_Following
+		}
 	}
 	return nil
 }
 
 func (x *UserMessage) GetNumFollowers() int64 {
 	if x != nil {
-		return x.NumFollowers
+		return x.xxx_hidden_NumFollowers
 	}
 	return 0
 }
 
 func (x *UserMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserMessage) SetName(v string) {
-	x.Name = v
+	x.xxx_hidden_Name = v
 }
 
 func (x *UserMessage) SetEmail(v string) {
-	x.Email = v
+	x.xxx_hidden_Email = v
 }
 
 func (x *UserMessage) SetPhoneNumber(v string) {
-	x.PhoneNumber = v
+	x.xxx_hidden_PhoneNumber = v
 }
 
 func (x *UserMessage) SetEncryptedPhoneNumber(v string) {
-	x.EncryptedPhoneNumber = v
+	x.xxx_hidden_EncryptedPhoneNumber = v
 }
 
 func (x *UserMessage) SetImageUrl(v string) {
-	x.ImageUrl = v
+	x.xxx_hidden_ImageUrl = v
 }
 
 func (x *UserMessage) SetSubscriptions(v []*UserSubscriptionMessage) {
-	x.Subscriptions = v
+	x.xxx_hidden_Subscriptions = &v
 }
 
 func (x *UserMessage) SetListens(v []*UserListenMessage) {
-	x.Listens = v
+	x.xxx_hidden_Listens = &v
 }
 
 func (x *UserMessage) SetFollowing(v []*UserFollowMessage) {
-	x.Following = v
+	x.xxx_hidden_Following = &v
 }
 
 func (x *UserMessage) SetNumFollowers(v int64) {
-	x.NumFollowers = v
+	x.xxx_hidden_NumFollowers = v
 }
 
 func (x *UserMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type UserMessage_builder struct {
@@ -1173,29 +1174,29 @@ func (b0 UserMessage_builder) Build() *UserMessage {
 	m0 := &UserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.Name = b.Name
-	x.Email = b.Email
-	x.PhoneNumber = b.PhoneNumber
-	x.EncryptedPhoneNumber = b.EncryptedPhoneNumber
-	x.ImageUrl = b.ImageUrl
-	x.Subscriptions = b.Subscriptions
-	x.Listens = b.Listens
-	x.Following = b.Following
-	x.NumFollowers = b.NumFollowers
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_Name = b.Name
+	x.xxx_hidden_Email = b.Email
+	x.xxx_hidden_PhoneNumber = b.PhoneNumber
+	x.xxx_hidden_EncryptedPhoneNumber = b.EncryptedPhoneNumber
+	x.xxx_hidden_ImageUrl = b.ImageUrl
+	x.xxx_hidden_Subscriptions = &b.Subscriptions
+	x.xxx_hidden_Listens = &b.Listens
+	x.xxx_hidden_Following = &b.Following
+	x.xxx_hidden_NumFollowers = b.NumFollowers
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 // Stripped down UserMessage for more public consumption
 // eg. listens
 type PublicUserMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	ImageUrl      string                 `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id       string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Name     string                 `protobuf:"bytes,2,opt,name=name,proto3"`
+	xxx_hidden_ImageUrl string                 `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *PublicUserMessage) Reset() {
@@ -1225,35 +1226,35 @@ func (x *PublicUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *PublicUserMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *PublicUserMessage) GetName() string {
 	if x != nil {
-		return x.Name
+		return x.xxx_hidden_Name
 	}
 	return ""
 }
 
 func (x *PublicUserMessage) GetImageUrl() string {
 	if x != nil {
-		return x.ImageUrl
+		return x.xxx_hidden_ImageUrl
 	}
 	return ""
 }
 
 func (x *PublicUserMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *PublicUserMessage) SetName(v string) {
-	x.Name = v
+	x.xxx_hidden_Name = v
 }
 
 func (x *PublicUserMessage) SetImageUrl(v string) {
-	x.ImageUrl = v
+	x.xxx_hidden_ImageUrl = v
 }
 
 type PublicUserMessage_builder struct {
@@ -1268,22 +1269,22 @@ func (b0 PublicUserMessage_builder) Build() *PublicUserMessage {
 	m0 := &PublicUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.Name = b.Name
-	x.ImageUrl = b.ImageUrl
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_Name = b.Name
+	x.xxx_hidden_ImageUrl = b.ImageUrl
 	return m0
 }
 
 type UserFollowMessage struct {
-	state                protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id                   string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId               string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	FollowedUserId       string                  `protobuf:"bytes,3,opt,name=followed_user_id,json=followedUserId,proto3" json:"followed_user_id,omitempty"`
-	FollowUtcTimestampMs int64                   `protobuf:"varint,4,opt,name=follow_utc_timestamp_ms,json=followUtcTimestampMs,proto3" json:"follow_utc_timestamp_ms,omitempty"`
-	Metadata             *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	User                 *PublicUserMessage      `protobuf:"bytes,6,opt,name=user,proto3" json:"user,omitempty"` // optional user
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	state                           protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id                   string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_UserId               string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_FollowedUserId       string                  `protobuf:"bytes,3,opt,name=followed_user_id,json=followedUserId,proto3"`
+	xxx_hidden_FollowUtcTimestampMs int64                   `protobuf:"varint,4,opt,name=follow_utc_timestamp_ms,json=followUtcTimestampMs,proto3"`
+	xxx_hidden_Metadata             *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3"`
+	xxx_hidden_User                 *PublicUserMessage      `protobuf:"bytes,6,opt,name=user,proto3"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
 }
 
 func (x *UserFollowMessage) Reset() {
@@ -1313,90 +1314,90 @@ func (x *UserFollowMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserFollowMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserFollowMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *UserFollowMessage) GetFollowedUserId() string {
 	if x != nil {
-		return x.FollowedUserId
+		return x.xxx_hidden_FollowedUserId
 	}
 	return ""
 }
 
 func (x *UserFollowMessage) GetFollowUtcTimestampMs() int64 {
 	if x != nil {
-		return x.FollowUtcTimestampMs
+		return x.xxx_hidden_FollowUtcTimestampMs
 	}
 	return 0
 }
 
 func (x *UserFollowMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserFollowMessage) GetUser() *PublicUserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *UserFollowMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserFollowMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *UserFollowMessage) SetFollowedUserId(v string) {
-	x.FollowedUserId = v
+	x.xxx_hidden_FollowedUserId = v
 }
 
 func (x *UserFollowMessage) SetFollowUtcTimestampMs(v int64) {
-	x.FollowUtcTimestampMs = v
+	x.xxx_hidden_FollowUtcTimestampMs = v
 }
 
 func (x *UserFollowMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserFollowMessage) SetUser(v *PublicUserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *UserFollowMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserFollowMessage) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *UserFollowMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 func (x *UserFollowMessage) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type UserFollowMessage_builder struct {
@@ -1414,24 +1415,24 @@ func (b0 UserFollowMessage_builder) Build() *UserFollowMessage {
 	m0 := &UserFollowMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.UserId = b.UserId
-	x.FollowedUserId = b.FollowedUserId
-	x.FollowUtcTimestampMs = b.FollowUtcTimestampMs
-	x.Metadata = b.Metadata
-	x.User = b.User
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_FollowedUserId = b.FollowedUserId
+	x.xxx_hidden_FollowUtcTimestampMs = b.FollowUtcTimestampMs
+	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type UserSubscriptionMessage struct {
-	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id            string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	PodcastId     string                  `protobuf:"bytes,3,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
-	Metadata      *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	Podcast       *PodcastMessage         `protobuf:"bytes,5,opt,name=podcast,proto3" json:"podcast,omitempty"` // this is optional
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id        string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_UserId    string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_PodcastId string                  `protobuf:"bytes,3,opt,name=podcast_id,json=podcastId,proto3"`
+	xxx_hidden_Metadata  *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3"`
+	xxx_hidden_Podcast   *PodcastMessage         `protobuf:"bytes,5,opt,name=podcast,proto3"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *UserSubscriptionMessage) Reset() {
@@ -1461,79 +1462,79 @@ func (x *UserSubscriptionMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserSubscriptionMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserSubscriptionMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *UserSubscriptionMessage) GetPodcastId() string {
 	if x != nil {
-		return x.PodcastId
+		return x.xxx_hidden_PodcastId
 	}
 	return ""
 }
 
 func (x *UserSubscriptionMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserSubscriptionMessage) GetPodcast() *PodcastMessage {
 	if x != nil {
-		return x.Podcast
+		return x.xxx_hidden_Podcast
 	}
 	return nil
 }
 
 func (x *UserSubscriptionMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserSubscriptionMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *UserSubscriptionMessage) SetPodcastId(v string) {
-	x.PodcastId = v
+	x.xxx_hidden_PodcastId = v
 }
 
 func (x *UserSubscriptionMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserSubscriptionMessage) SetPodcast(v *PodcastMessage) {
-	x.Podcast = v
+	x.xxx_hidden_Podcast = v
 }
 
 func (x *UserSubscriptionMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserSubscriptionMessage) HasPodcast() bool {
 	if x == nil {
 		return false
 	}
-	return x.Podcast != nil
+	return x.xxx_hidden_Podcast != nil
 }
 
 func (x *UserSubscriptionMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 func (x *UserSubscriptionMessage) ClearPodcast() {
-	x.Podcast = nil
+	x.xxx_hidden_Podcast = nil
 }
 
 type UserSubscriptionMessage_builder struct {
@@ -1550,26 +1551,26 @@ func (b0 UserSubscriptionMessage_builder) Build() *UserSubscriptionMessage {
 	m0 := &UserSubscriptionMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.UserId = b.UserId
-	x.PodcastId = b.PodcastId
-	x.Metadata = b.Metadata
-	x.Podcast = b.Podcast
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_PodcastId = b.PodcastId
+	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_Podcast = b.Podcast
 	return m0
 }
 
 type UserListenMessage struct {
-	state           protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id              string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId          string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	EpisodeId       string                  `protobuf:"bytes,3,opt,name=episode_id,json=episodeId,proto3" json:"episode_id,omitempty"`
-	ListenTimestamp int64                   `protobuf:"varint,4,opt,name=listen_timestamp,json=listenTimestamp,proto3" json:"listen_timestamp,omitempty"`
-	Seconds         int64                   `protobuf:"varint,5,opt,name=seconds,proto3" json:"seconds,omitempty"`
-	Completed       bool                    `protobuf:"varint,6,opt,name=completed,proto3" json:"completed,omitempty"`
-	Episode         *EpisodeMessage         `protobuf:"bytes,7,opt,name=episode,proto3" json:"episode,omitempty"` // this is optional, used for feed items
-	Metadata        *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                      protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id              string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_UserId          string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_EpisodeId       string                  `protobuf:"bytes,3,opt,name=episode_id,json=episodeId,proto3"`
+	xxx_hidden_ListenTimestamp int64                   `protobuf:"varint,4,opt,name=listen_timestamp,json=listenTimestamp,proto3"`
+	xxx_hidden_Seconds         int64                   `protobuf:"varint,5,opt,name=seconds,proto3"`
+	xxx_hidden_Completed       bool                    `protobuf:"varint,6,opt,name=completed,proto3"`
+	xxx_hidden_Episode         *EpisodeMessage         `protobuf:"bytes,7,opt,name=episode,proto3"`
+	xxx_hidden_Metadata        *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *UserListenMessage) Reset() {
@@ -1599,112 +1600,112 @@ func (x *UserListenMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserListenMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserListenMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *UserListenMessage) GetEpisodeId() string {
 	if x != nil {
-		return x.EpisodeId
+		return x.xxx_hidden_EpisodeId
 	}
 	return ""
 }
 
 func (x *UserListenMessage) GetListenTimestamp() int64 {
 	if x != nil {
-		return x.ListenTimestamp
+		return x.xxx_hidden_ListenTimestamp
 	}
 	return 0
 }
 
 func (x *UserListenMessage) GetSeconds() int64 {
 	if x != nil {
-		return x.Seconds
+		return x.xxx_hidden_Seconds
 	}
 	return 0
 }
 
 func (x *UserListenMessage) GetCompleted() bool {
 	if x != nil {
-		return x.Completed
+		return x.xxx_hidden_Completed
 	}
 	return false
 }
 
 func (x *UserListenMessage) GetEpisode() *EpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.xxx_hidden_Episode
 	}
 	return nil
 }
 
 func (x *UserListenMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserListenMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserListenMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *UserListenMessage) SetEpisodeId(v string) {
-	x.EpisodeId = v
+	x.xxx_hidden_EpisodeId = v
 }
 
 func (x *UserListenMessage) SetListenTimestamp(v int64) {
-	x.ListenTimestamp = v
+	x.xxx_hidden_ListenTimestamp = v
 }
 
 func (x *UserListenMessage) SetSeconds(v int64) {
-	x.Seconds = v
+	x.xxx_hidden_Seconds = v
 }
 
 func (x *UserListenMessage) SetCompleted(v bool) {
-	x.Completed = v
+	x.xxx_hidden_Completed = v
 }
 
 func (x *UserListenMessage) SetEpisode(v *EpisodeMessage) {
-	x.Episode = v
+	x.xxx_hidden_Episode = v
 }
 
 func (x *UserListenMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserListenMessage) HasEpisode() bool {
 	if x == nil {
 		return false
 	}
-	return x.Episode != nil
+	return x.xxx_hidden_Episode != nil
 }
 
 func (x *UserListenMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserListenMessage) ClearEpisode() {
-	x.Episode = nil
+	x.xxx_hidden_Episode = nil
 }
 
 func (x *UserListenMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type UserListenMessage_builder struct {
@@ -1724,24 +1725,23 @@ func (b0 UserListenMessage_builder) Build() *UserListenMessage {
 	m0 := &UserListenMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.UserId = b.UserId
-	x.EpisodeId = b.EpisodeId
-	x.ListenTimestamp = b.ListenTimestamp
-	x.Seconds = b.Seconds
-	x.Completed = b.Completed
-	x.Episode = b.Episode
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_EpisodeId = b.EpisodeId
+	x.xxx_hidden_ListenTimestamp = b.ListenTimestamp
+	x.xxx_hidden_Seconds = b.Seconds
+	x.xxx_hidden_Completed = b.Completed
+	x.xxx_hidden_Episode = b.Episode
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 type UserFeedItemEpisodeMessage struct {
-	state   protoimpl.MessageState `protogen:"hybrid.v1"`
-	Episode *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3" json:"episode,omitempty"`
-	// These are social items relating to followed users
-	UserListens   []*PublicUserMessage `protobuf:"bytes,2,rep,name=user_listens,json=userListens,proto3" json:"user_listens,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Episode     *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3"`
+	xxx_hidden_UserListens *[]*PublicUserMessage  `protobuf:"bytes,2,rep,name=user_listens,json=userListens,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UserFeedItemEpisodeMessage) Reset() {
@@ -1771,35 +1771,37 @@ func (x *UserFeedItemEpisodeMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserFeedItemEpisodeMessage) GetEpisode() *EpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.xxx_hidden_Episode
 	}
 	return nil
 }
 
 func (x *UserFeedItemEpisodeMessage) GetUserListens() []*PublicUserMessage {
 	if x != nil {
-		return x.UserListens
+		if x.xxx_hidden_UserListens != nil {
+			return *x.xxx_hidden_UserListens
+		}
 	}
 	return nil
 }
 
 func (x *UserFeedItemEpisodeMessage) SetEpisode(v *EpisodeMessage) {
-	x.Episode = v
+	x.xxx_hidden_Episode = v
 }
 
 func (x *UserFeedItemEpisodeMessage) SetUserListens(v []*PublicUserMessage) {
-	x.UserListens = v
+	x.xxx_hidden_UserListens = &v
 }
 
 func (x *UserFeedItemEpisodeMessage) HasEpisode() bool {
 	if x == nil {
 		return false
 	}
-	return x.Episode != nil
+	return x.xxx_hidden_Episode != nil
 }
 
 func (x *UserFeedItemEpisodeMessage) ClearEpisode() {
-	x.Episode = nil
+	x.xxx_hidden_Episode = nil
 }
 
 type UserFeedItemEpisodeMessage_builder struct {
@@ -1814,19 +1816,19 @@ func (b0 UserFeedItemEpisodeMessage_builder) Build() *UserFeedItemEpisodeMessage
 	m0 := &UserFeedItemEpisodeMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Episode = b.Episode
-	x.UserListens = b.UserListens
+	x.xxx_hidden_Episode = b.Episode
+	x.xxx_hidden_UserListens = &b.UserListens
 	return m0
 }
 
 type UserFeedItemRecommendationMessage struct {
-	state             protoimpl.MessageState `protogen:"hybrid.v1"`
-	Episode           *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3" json:"episode,omitempty"`
-	Podcast           *PodcastMessage        `protobuf:"bytes,2,opt,name=podcast,proto3" json:"podcast,omitempty"`
-	UserListens       []*PublicUserMessage   `protobuf:"bytes,3,rep,name=user_listens,json=userListens,proto3" json:"user_listens,omitempty"`
-	UserSubscriptions []*PublicUserMessage   `protobuf:"bytes,4,rep,name=user_subscriptions,json=userSubscriptions,proto3" json:"user_subscriptions,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state                        protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Episode           *EpisodeMessage        `protobuf:"bytes,1,opt,name=episode,proto3"`
+	xxx_hidden_Podcast           *PodcastMessage        `protobuf:"bytes,2,opt,name=podcast,proto3"`
+	xxx_hidden_UserListens       *[]*PublicUserMessage  `protobuf:"bytes,3,rep,name=user_listens,json=userListens,proto3"`
+	xxx_hidden_UserSubscriptions *[]*PublicUserMessage  `protobuf:"bytes,4,rep,name=user_subscriptions,json=userSubscriptions,proto3"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *UserFeedItemRecommendationMessage) Reset() {
@@ -1856,68 +1858,72 @@ func (x *UserFeedItemRecommendationMessage) ProtoReflect() protoreflect.Message 
 
 func (x *UserFeedItemRecommendationMessage) GetEpisode() *EpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.xxx_hidden_Episode
 	}
 	return nil
 }
 
 func (x *UserFeedItemRecommendationMessage) GetPodcast() *PodcastMessage {
 	if x != nil {
-		return x.Podcast
+		return x.xxx_hidden_Podcast
 	}
 	return nil
 }
 
 func (x *UserFeedItemRecommendationMessage) GetUserListens() []*PublicUserMessage {
 	if x != nil {
-		return x.UserListens
+		if x.xxx_hidden_UserListens != nil {
+			return *x.xxx_hidden_UserListens
+		}
 	}
 	return nil
 }
 
 func (x *UserFeedItemRecommendationMessage) GetUserSubscriptions() []*PublicUserMessage {
 	if x != nil {
-		return x.UserSubscriptions
+		if x.xxx_hidden_UserSubscriptions != nil {
+			return *x.xxx_hidden_UserSubscriptions
+		}
 	}
 	return nil
 }
 
 func (x *UserFeedItemRecommendationMessage) SetEpisode(v *EpisodeMessage) {
-	x.Episode = v
+	x.xxx_hidden_Episode = v
 }
 
 func (x *UserFeedItemRecommendationMessage) SetPodcast(v *PodcastMessage) {
-	x.Podcast = v
+	x.xxx_hidden_Podcast = v
 }
 
 func (x *UserFeedItemRecommendationMessage) SetUserListens(v []*PublicUserMessage) {
-	x.UserListens = v
+	x.xxx_hidden_UserListens = &v
 }
 
 func (x *UserFeedItemRecommendationMessage) SetUserSubscriptions(v []*PublicUserMessage) {
-	x.UserSubscriptions = v
+	x.xxx_hidden_UserSubscriptions = &v
 }
 
 func (x *UserFeedItemRecommendationMessage) HasEpisode() bool {
 	if x == nil {
 		return false
 	}
-	return x.Episode != nil
+	return x.xxx_hidden_Episode != nil
 }
 
 func (x *UserFeedItemRecommendationMessage) HasPodcast() bool {
 	if x == nil {
 		return false
 	}
-	return x.Podcast != nil
+	return x.xxx_hidden_Podcast != nil
 }
 
 func (x *UserFeedItemRecommendationMessage) ClearEpisode() {
-	x.Episode = nil
+	x.xxx_hidden_Episode = nil
 }
 
 func (x *UserFeedItemRecommendationMessage) ClearPodcast() {
-	x.Podcast = nil
+	x.xxx_hidden_Podcast = nil
 }
 
 type UserFeedItemRecommendationMessage_builder struct {
@@ -1933,19 +1939,19 @@ func (b0 UserFeedItemRecommendationMessage_builder) Build() *UserFeedItemRecomme
 	m0 := &UserFeedItemRecommendationMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Episode = b.Episode
-	x.Podcast = b.Podcast
-	x.UserListens = b.UserListens
-	x.UserSubscriptions = b.UserSubscriptions
+	x.xxx_hidden_Episode = b.Episode
+	x.xxx_hidden_Podcast = b.Podcast
+	x.xxx_hidden_UserListens = &b.UserListens
+	x.xxx_hidden_UserSubscriptions = &b.UserSubscriptions
 	return m0
 }
 
 type UserFeedItemMessage struct {
-	state            protoimpl.MessageState               `protogen:"hybrid.v1"`
-	EpisodeItem      *UserFeedItemEpisodeMessage          `protobuf:"bytes,1,opt,name=episode_item,json=episodeItem,proto3" json:"episode_item,omitempty"`
-	RecommendedItems []*UserFeedItemRecommendationMessage `protobuf:"bytes,2,rep,name=recommended_items,json=recommendedItems,proto3" json:"recommended_items,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                       protoimpl.MessageState                `protogen:"opaque.v1"`
+	xxx_hidden_EpisodeItem      *UserFeedItemEpisodeMessage           `protobuf:"bytes,1,opt,name=episode_item,json=episodeItem,proto3"`
+	xxx_hidden_RecommendedItems *[]*UserFeedItemRecommendationMessage `protobuf:"bytes,2,rep,name=recommended_items,json=recommendedItems,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *UserFeedItemMessage) Reset() {
@@ -1975,35 +1981,37 @@ func (x *UserFeedItemMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserFeedItemMessage) GetEpisodeItem() *UserFeedItemEpisodeMessage {
 	if x != nil {
-		return x.EpisodeItem
+		return x.xxx_hidden_EpisodeItem
 	}
 	return nil
 }
 
 func (x *UserFeedItemMessage) GetRecommendedItems() []*UserFeedItemRecommendationMessage {
 	if x != nil {
-		return x.RecommendedItems
+		if x.xxx_hidden_RecommendedItems != nil {
+			return *x.xxx_hidden_RecommendedItems
+		}
 	}
 	return nil
 }
 
 func (x *UserFeedItemMessage) SetEpisodeItem(v *UserFeedItemEpisodeMessage) {
-	x.EpisodeItem = v
+	x.xxx_hidden_EpisodeItem = v
 }
 
 func (x *UserFeedItemMessage) SetRecommendedItems(v []*UserFeedItemRecommendationMessage) {
-	x.RecommendedItems = v
+	x.xxx_hidden_RecommendedItems = &v
 }
 
 func (x *UserFeedItemMessage) HasEpisodeItem() bool {
 	if x == nil {
 		return false
 	}
-	return x.EpisodeItem != nil
+	return x.xxx_hidden_EpisodeItem != nil
 }
 
 func (x *UserFeedItemMessage) ClearEpisodeItem() {
-	x.EpisodeItem = nil
+	x.xxx_hidden_EpisodeItem = nil
 }
 
 type UserFeedItemMessage_builder struct {
@@ -2017,17 +2025,17 @@ func (b0 UserFeedItemMessage_builder) Build() *UserFeedItemMessage {
 	m0 := &UserFeedItemMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.EpisodeItem = b.EpisodeItem
-	x.RecommendedItems = b.RecommendedItems
+	x.xxx_hidden_EpisodeItem = b.EpisodeItem
+	x.xxx_hidden_RecommendedItems = &b.RecommendedItems
 	return m0
 }
 
 type UserFeedMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Items         []*UserFeedItemMessage `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_UserId string                  `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_Items  *[]*UserFeedItemMessage `protobuf:"bytes,2,rep,name=items,proto3"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *UserFeedMessage) Reset() {
@@ -2057,24 +2065,26 @@ func (x *UserFeedMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserFeedMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *UserFeedMessage) GetItems() []*UserFeedItemMessage {
 	if x != nil {
-		return x.Items
+		if x.xxx_hidden_Items != nil {
+			return *x.xxx_hidden_Items
+		}
 	}
 	return nil
 }
 
 func (x *UserFeedMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *UserFeedMessage) SetItems(v []*UserFeedItemMessage) {
-	x.Items = v
+	x.xxx_hidden_Items = &v
 }
 
 type UserFeedMessage_builder struct {
@@ -2088,20 +2098,19 @@ func (b0 UserFeedMessage_builder) Build() *UserFeedMessage {
 	m0 := &UserFeedMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.UserId = b.UserId
-	x.Items = b.Items
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_Items = &b.Items
 	return m0
 }
 
 // Search Results
 type SearchResultMessage struct {
-	state protoimpl.MessageState `protogen:"hybrid.v1"`
-	// Only one of these should be filled out
-	Podcast       *PodcastMessage `protobuf:"bytes,1,opt,name=podcast,proto3" json:"podcast,omitempty"`
-	User          *UserMessage    `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	Episode       *EpisodeMessage `protobuf:"bytes,3,opt,name=episode,proto3" json:"episode,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Podcast *PodcastMessage        `protobuf:"bytes,1,opt,name=podcast,proto3"`
+	xxx_hidden_User    *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	xxx_hidden_Episode *EpisodeMessage        `protobuf:"bytes,3,opt,name=episode,proto3"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *SearchResultMessage) Reset() {
@@ -2131,68 +2140,68 @@ func (x *SearchResultMessage) ProtoReflect() protoreflect.Message {
 
 func (x *SearchResultMessage) GetPodcast() *PodcastMessage {
 	if x != nil {
-		return x.Podcast
+		return x.xxx_hidden_Podcast
 	}
 	return nil
 }
 
 func (x *SearchResultMessage) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *SearchResultMessage) GetEpisode() *EpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.xxx_hidden_Episode
 	}
 	return nil
 }
 
 func (x *SearchResultMessage) SetPodcast(v *PodcastMessage) {
-	x.Podcast = v
+	x.xxx_hidden_Podcast = v
 }
 
 func (x *SearchResultMessage) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *SearchResultMessage) SetEpisode(v *EpisodeMessage) {
-	x.Episode = v
+	x.xxx_hidden_Episode = v
 }
 
 func (x *SearchResultMessage) HasPodcast() bool {
 	if x == nil {
 		return false
 	}
-	return x.Podcast != nil
+	return x.xxx_hidden_Podcast != nil
 }
 
 func (x *SearchResultMessage) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *SearchResultMessage) HasEpisode() bool {
 	if x == nil {
 		return false
 	}
-	return x.Episode != nil
+	return x.xxx_hidden_Episode != nil
 }
 
 func (x *SearchResultMessage) ClearPodcast() {
-	x.Podcast = nil
+	x.xxx_hidden_Podcast = nil
 }
 
 func (x *SearchResultMessage) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 func (x *SearchResultMessage) ClearEpisode() {
-	x.Episode = nil
+	x.xxx_hidden_Episode = nil
 }
 
 type SearchResultMessage_builder struct {
@@ -2208,17 +2217,17 @@ func (b0 SearchResultMessage_builder) Build() *SearchResultMessage {
 	m0 := &SearchResultMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Podcast = b.Podcast
-	x.User = b.User
-	x.Episode = b.Episode
+	x.xxx_hidden_Podcast = b.Podcast
+	x.xxx_hidden_User = b.User
+	x.xxx_hidden_Episode = b.Episode
 	return m0
 }
 
 type SearchResultsMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	Results       []*SearchResultMessage `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"` // int64 num_results = 2;
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Results *[]*SearchResultMessage `protobuf:"bytes,1,rep,name=results,proto3"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *SearchResultsMessage) Reset() {
@@ -2248,13 +2257,15 @@ func (x *SearchResultsMessage) ProtoReflect() protoreflect.Message {
 
 func (x *SearchResultsMessage) GetResults() []*SearchResultMessage {
 	if x != nil {
-		return x.Results
+		if x.xxx_hidden_Results != nil {
+			return *x.xxx_hidden_Results
+		}
 	}
 	return nil
 }
 
 func (x *SearchResultsMessage) SetResults(v []*SearchResultMessage) {
-	x.Results = v
+	x.xxx_hidden_Results = &v
 }
 
 type SearchResultsMessage_builder struct {
@@ -2267,19 +2278,19 @@ func (b0 SearchResultsMessage_builder) Build() *SearchResultsMessage {
 	m0 := &SearchResultsMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Results = b.Results
+	x.xxx_hidden_Results = &b.Results
 	return m0
 }
 
 type UserDownloadMessage struct {
-	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id            string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	EpisodeId     string                  `protobuf:"bytes,2,opt,name=episode_id,json=episodeId,proto3" json:"episode_id,omitempty"`
-	FilePath      string                  `protobuf:"bytes,3,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`
-	IsDownloaded  bool                    `protobuf:"varint,4,opt,name=is_downloaded,json=isDownloaded,proto3" json:"is_downloaded,omitempty"`
-	Metadata      *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id           string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_EpisodeId    string                  `protobuf:"bytes,2,opt,name=episode_id,json=episodeId,proto3"`
+	xxx_hidden_FilePath     string                  `protobuf:"bytes,3,opt,name=file_path,json=filePath,proto3"`
+	xxx_hidden_IsDownloaded bool                    `protobuf:"varint,4,opt,name=is_downloaded,json=isDownloaded,proto3"`
+	xxx_hidden_Metadata     *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *UserDownloadMessage) Reset() {
@@ -2309,68 +2320,68 @@ func (x *UserDownloadMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserDownloadMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserDownloadMessage) GetEpisodeId() string {
 	if x != nil {
-		return x.EpisodeId
+		return x.xxx_hidden_EpisodeId
 	}
 	return ""
 }
 
 func (x *UserDownloadMessage) GetFilePath() string {
 	if x != nil {
-		return x.FilePath
+		return x.xxx_hidden_FilePath
 	}
 	return ""
 }
 
 func (x *UserDownloadMessage) GetIsDownloaded() bool {
 	if x != nil {
-		return x.IsDownloaded
+		return x.xxx_hidden_IsDownloaded
 	}
 	return false
 }
 
 func (x *UserDownloadMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserDownloadMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserDownloadMessage) SetEpisodeId(v string) {
-	x.EpisodeId = v
+	x.xxx_hidden_EpisodeId = v
 }
 
 func (x *UserDownloadMessage) SetFilePath(v string) {
-	x.FilePath = v
+	x.xxx_hidden_FilePath = v
 }
 
 func (x *UserDownloadMessage) SetIsDownloaded(v bool) {
-	x.IsDownloaded = v
+	x.xxx_hidden_IsDownloaded = v
 }
 
 func (x *UserDownloadMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserDownloadMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserDownloadMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type UserDownloadMessage_builder struct {
@@ -2387,22 +2398,22 @@ func (b0 UserDownloadMessage_builder) Build() *UserDownloadMessage {
 	m0 := &UserDownloadMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.EpisodeId = b.EpisodeId
-	x.FilePath = b.FilePath
-	x.IsDownloaded = b.IsDownloaded
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_EpisodeId = b.EpisodeId
+	x.xxx_hidden_FilePath = b.FilePath
+	x.xxx_hidden_IsDownloaded = b.IsDownloaded
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 type UserContactsMessage struct {
-	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id            string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Contacts      []*UserContactMessage   `protobuf:"bytes,3,rep,name=contacts,proto3" json:"contacts,omitempty"`
-	Metadata      *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id       string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_UserId   string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_Contacts *[]*UserContactMessage  `protobuf:"bytes,3,rep,name=contacts,proto3"`
+	xxx_hidden_Metadata *StorageMetadataMessage `protobuf:"bytes,4,opt,name=metadata,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *UserContactsMessage) Reset() {
@@ -2432,57 +2443,59 @@ func (x *UserContactsMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserContactsMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserContactsMessage) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *UserContactsMessage) GetContacts() []*UserContactMessage {
 	if x != nil {
-		return x.Contacts
+		if x.xxx_hidden_Contacts != nil {
+			return *x.xxx_hidden_Contacts
+		}
 	}
 	return nil
 }
 
 func (x *UserContactsMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *UserContactsMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserContactsMessage) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *UserContactsMessage) SetContacts(v []*UserContactMessage) {
-	x.Contacts = v
+	x.xxx_hidden_Contacts = &v
 }
 
 func (x *UserContactsMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *UserContactsMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *UserContactsMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type UserContactsMessage_builder struct {
@@ -2498,20 +2511,19 @@ func (b0 UserContactsMessage_builder) Build() *UserContactsMessage {
 	m0 := &UserContactsMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.UserId = b.UserId
-	x.Contacts = b.Contacts
-	x.Metadata = b.Metadata
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_Contacts = &b.Contacts
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
 type UserContactMessage struct {
-	state protoimpl.MessageState `protogen:"hybrid.v1"`
-	// This is the contact id from their phone
-	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	PhoneNumber   string `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id          string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_PhoneNumber string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UserContactMessage) Reset() {
@@ -2541,24 +2553,24 @@ func (x *UserContactMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UserContactMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *UserContactMessage) GetPhoneNumber() string {
 	if x != nil {
-		return x.PhoneNumber
+		return x.xxx_hidden_PhoneNumber
 	}
 	return ""
 }
 
 func (x *UserContactMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *UserContactMessage) SetPhoneNumber(v string) {
-	x.PhoneNumber = v
+	x.xxx_hidden_PhoneNumber = v
 }
 
 type UserContactMessage_builder struct {
@@ -2573,18 +2585,18 @@ func (b0 UserContactMessage_builder) Build() *UserContactMessage {
 	m0 := &UserContactMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.PhoneNumber = b.PhoneNumber
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_PhoneNumber = b.PhoneNumber
 	return m0
 }
 
 type SettingsMessage struct {
-	state          protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Id             string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Metadata       *StorageMetadataMessage `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	EnablePlaylist bool                    `protobuf:"varint,3,opt,name=enable_playlist,json=enablePlaylist,proto3" json:"enable_playlist,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state                     protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Id             string                  `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Metadata       *StorageMetadataMessage `protobuf:"bytes,2,opt,name=metadata,proto3"`
+	xxx_hidden_EnablePlaylist bool                    `protobuf:"varint,3,opt,name=enable_playlist,json=enablePlaylist,proto3"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *SettingsMessage) Reset() {
@@ -2614,46 +2626,46 @@ func (x *SettingsMessage) ProtoReflect() protoreflect.Message {
 
 func (x *SettingsMessage) GetId() string {
 	if x != nil {
-		return x.Id
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
 func (x *SettingsMessage) GetMetadata() *StorageMetadataMessage {
 	if x != nil {
-		return x.Metadata
+		return x.xxx_hidden_Metadata
 	}
 	return nil
 }
 
 func (x *SettingsMessage) GetEnablePlaylist() bool {
 	if x != nil {
-		return x.EnablePlaylist
+		return x.xxx_hidden_EnablePlaylist
 	}
 	return false
 }
 
 func (x *SettingsMessage) SetId(v string) {
-	x.Id = v
+	x.xxx_hidden_Id = v
 }
 
 func (x *SettingsMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.Metadata = v
+	x.xxx_hidden_Metadata = v
 }
 
 func (x *SettingsMessage) SetEnablePlaylist(v bool) {
-	x.EnablePlaylist = v
+	x.xxx_hidden_EnablePlaylist = v
 }
 
 func (x *SettingsMessage) HasMetadata() bool {
 	if x == nil {
 		return false
 	}
-	return x.Metadata != nil
+	return x.xxx_hidden_Metadata != nil
 }
 
 func (x *SettingsMessage) ClearMetadata() {
-	x.Metadata = nil
+	x.xxx_hidden_Metadata = nil
 }
 
 type SettingsMessage_builder struct {
@@ -2668,9 +2680,9 @@ func (b0 SettingsMessage_builder) Build() *SettingsMessage {
 	m0 := &SettingsMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Id = b.Id
-	x.Metadata = b.Metadata
-	x.EnablePlaylist = b.EnablePlaylist
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_EnablePlaylist = b.EnablePlaylist
 	return m0
 }
 

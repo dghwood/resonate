@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: proto/errors.proto
 
-//go:build !protoopaque
+//go:build protoopaque
 
 package proto
 

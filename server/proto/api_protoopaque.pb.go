@@ -4,7 +4,7 @@
 // 	protoc        v6.32.0
 // source: proto/api.proto
 
-//go:build !protoopaque
+//go:build protoopaque
 
 package proto
 
@@ -23,12 +23,12 @@ const (
 )
 
 type ResponseInfo struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	ErrorMessage  string                 `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-	Error         ErrorEnum              `protobuf:"varint,3,opt,name=error,proto3,enum=resonate.ErrorEnum" json:"error,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Success      bool                   `protobuf:"varint,1,opt,name=success,proto3"`
+	xxx_hidden_ErrorMessage string                 `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3"`
+	xxx_hidden_Error        ErrorEnum              `protobuf:"varint,3,opt,name=error,proto3,enum=resonate.ErrorEnum"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ResponseInfo) Reset() {
@@ -58,35 +58,35 @@ func (x *ResponseInfo) ProtoReflect() protoreflect.Message {
 
 func (x *ResponseInfo) GetSuccess() bool {
 	if x != nil {
-		return x.Success
+		return x.xxx_hidden_Success
 	}
 	return false
 }
 
 func (x *ResponseInfo) GetErrorMessage() string {
 	if x != nil {
-		return x.ErrorMessage
+		return x.xxx_hidden_ErrorMessage
 	}
 	return ""
 }
 
 func (x *ResponseInfo) GetError() ErrorEnum {
 	if x != nil {
-		return x.Error
+		return x.xxx_hidden_Error
 	}
 	return ErrorEnum_ERROR_UNKNOWN
 }
 
 func (x *ResponseInfo) SetSuccess(v bool) {
-	x.Success = v
+	x.xxx_hidden_Success = v
 }
 
 func (x *ResponseInfo) SetErrorMessage(v string) {
-	x.ErrorMessage = v
+	x.xxx_hidden_ErrorMessage = v
 }
 
 func (x *ResponseInfo) SetError(v ErrorEnum) {
-	x.Error = v
+	x.xxx_hidden_Error = v
 }
 
 type ResponseInfo_builder struct {
@@ -101,18 +101,18 @@ func (b0 ResponseInfo_builder) Build() *ResponseInfo {
 	m0 := &ResponseInfo{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Success = b.Success
-	x.ErrorMessage = b.ErrorMessage
-	x.Error = b.Error
+	x.xxx_hidden_Success = b.Success
+	x.xxx_hidden_ErrorMessage = b.ErrorMessage
+	x.xxx_hidden_Error = b.Error
 	return m0
 }
 
 type RequestInfo struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	AccessToken   *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_UserId      string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_AccessToken *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *RequestInfo) Reset() {
@@ -142,35 +142,35 @@ func (x *RequestInfo) ProtoReflect() protoreflect.Message {
 
 func (x *RequestInfo) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *RequestInfo) GetAccessToken() *TokenMessage {
 	if x != nil {
-		return x.AccessToken
+		return x.xxx_hidden_AccessToken
 	}
 	return nil
 }
 
 func (x *RequestInfo) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *RequestInfo) SetAccessToken(v *TokenMessage) {
-	x.AccessToken = v
+	x.xxx_hidden_AccessToken = v
 }
 
 func (x *RequestInfo) HasAccessToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.AccessToken != nil
+	return x.xxx_hidden_AccessToken != nil
 }
 
 func (x *RequestInfo) ClearAccessToken() {
-	x.AccessToken = nil
+	x.xxx_hidden_AccessToken = nil
 }
 
 type RequestInfo_builder struct {
@@ -184,18 +184,18 @@ func (b0 RequestInfo_builder) Build() *RequestInfo {
 	m0 := &RequestInfo{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.UserId = b.UserId
-	x.AccessToken = b.AccessToken
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_AccessToken = b.AccessToken
 	return m0
 }
 
 // Used to refresh access tokens
 type RefreshAuthMessage struct {
-	state         protoimpl.MessageState       `protogen:"hybrid.v1"`
-	Request       *RefreshAuthMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *RefreshAuthMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState       `protogen:"opaque.v1"`
+	xxx_hidden_Request  *RefreshAuthMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *RefreshAuthMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RefreshAuthMessage) Reset() {
@@ -225,46 +225,46 @@ func (x *RefreshAuthMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RefreshAuthMessage) GetRequest() *RefreshAuthMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage) GetResponse() *RefreshAuthMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage) SetRequest(v *RefreshAuthMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *RefreshAuthMessage) SetResponse(v *RefreshAuthMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *RefreshAuthMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *RefreshAuthMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *RefreshAuthMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *RefreshAuthMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type RefreshAuthMessage_builder struct {
@@ -278,18 +278,18 @@ func (b0 RefreshAuthMessage_builder) Build() *RefreshAuthMessage {
 	m0 := &RefreshAuthMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 // Used to request login password
 type LoginRequestMessage struct {
-	state         protoimpl.MessageState        `protogen:"hybrid.v1"`
-	Request       *LoginRequestMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *LoginRequestMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState        `protogen:"opaque.v1"`
+	xxx_hidden_Request  *LoginRequestMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *LoginRequestMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *LoginRequestMessage) Reset() {
@@ -319,46 +319,46 @@ func (x *LoginRequestMessage) ProtoReflect() protoreflect.Message {
 
 func (x *LoginRequestMessage) GetRequest() *LoginRequestMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *LoginRequestMessage) GetResponse() *LoginRequestMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *LoginRequestMessage) SetRequest(v *LoginRequestMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *LoginRequestMessage) SetResponse(v *LoginRequestMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *LoginRequestMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *LoginRequestMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *LoginRequestMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *LoginRequestMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type LoginRequestMessage_builder struct {
@@ -372,17 +372,17 @@ func (b0 LoginRequestMessage_builder) Build() *LoginRequestMessage {
 	m0 := &LoginRequestMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type LoginUserMessage struct {
-	state         protoimpl.MessageState     `protogen:"hybrid.v1"`
-	Request       *LoginUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *LoginUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState     `protogen:"opaque.v1"`
+	xxx_hidden_Request  *LoginUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *LoginUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *LoginUserMessage) Reset() {
@@ -412,46 +412,46 @@ func (x *LoginUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *LoginUserMessage) GetRequest() *LoginUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *LoginUserMessage) GetResponse() *LoginUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *LoginUserMessage) SetRequest(v *LoginUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *LoginUserMessage) SetResponse(v *LoginUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *LoginUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *LoginUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *LoginUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *LoginUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type LoginUserMessage_builder struct {
@@ -465,17 +465,17 @@ func (b0 LoginUserMessage_builder) Build() *LoginUserMessage {
 	m0 := &LoginUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type CreateUserMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *CreateUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *CreateUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *CreateUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *CreateUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *CreateUserMessage) Reset() {
@@ -505,46 +505,46 @@ func (x *CreateUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *CreateUserMessage) GetRequest() *CreateUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *CreateUserMessage) GetResponse() *CreateUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *CreateUserMessage) SetRequest(v *CreateUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *CreateUserMessage) SetResponse(v *CreateUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *CreateUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *CreateUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *CreateUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *CreateUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type CreateUserMessage_builder struct {
@@ -558,17 +558,17 @@ func (b0 CreateUserMessage_builder) Build() *CreateUserMessage {
 	m0 := &CreateUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type GetUserMessage struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	Request       *GetUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *GetUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_Request  *GetUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *GetUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *GetUserMessage) Reset() {
@@ -598,46 +598,46 @@ func (x *GetUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *GetUserMessage) GetRequest() *GetUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *GetUserMessage) GetResponse() *GetUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *GetUserMessage) SetRequest(v *GetUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *GetUserMessage) SetResponse(v *GetUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *GetUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *GetUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *GetUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *GetUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type GetUserMessage_builder struct {
@@ -651,17 +651,17 @@ func (b0 GetUserMessage_builder) Build() *GetUserMessage {
 	m0 := &GetUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type UpdateUserMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *UpdateUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *UpdateUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *UpdateUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *UpdateUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *UpdateUserMessage) Reset() {
@@ -691,46 +691,46 @@ func (x *UpdateUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UpdateUserMessage) GetRequest() *UpdateUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage) GetResponse() *UpdateUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage) SetRequest(v *UpdateUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *UpdateUserMessage) SetResponse(v *UpdateUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *UpdateUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *UpdateUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *UpdateUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *UpdateUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type UpdateUserMessage_builder struct {
@@ -744,17 +744,17 @@ func (b0 UpdateUserMessage_builder) Build() *UpdateUserMessage {
 	m0 := &UpdateUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type SearchMessage struct {
-	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
-	Request       *SearchMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *SearchMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_Request  *SearchMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *SearchMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *SearchMessage) Reset() {
@@ -784,46 +784,46 @@ func (x *SearchMessage) ProtoReflect() protoreflect.Message {
 
 func (x *SearchMessage) GetRequest() *SearchMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *SearchMessage) GetResponse() *SearchMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *SearchMessage) SetRequest(v *SearchMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *SearchMessage) SetResponse(v *SearchMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *SearchMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *SearchMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *SearchMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *SearchMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type SearchMessage_builder struct {
@@ -837,18 +837,18 @@ func (b0 SearchMessage_builder) Build() *SearchMessage {
 	m0 := &SearchMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 // This is primarily used for typeahead suggestions
 type SearchTopMessage struct {
-	state         protoimpl.MessageState     `protogen:"hybrid.v1"`
-	Request       *SearchTopMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *SearchTopMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState     `protogen:"opaque.v1"`
+	xxx_hidden_Request  *SearchTopMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *SearchTopMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *SearchTopMessage) Reset() {
@@ -878,46 +878,46 @@ func (x *SearchTopMessage) ProtoReflect() protoreflect.Message {
 
 func (x *SearchTopMessage) GetRequest() *SearchTopMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *SearchTopMessage) GetResponse() *SearchTopMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *SearchTopMessage) SetRequest(v *SearchTopMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *SearchTopMessage) SetResponse(v *SearchTopMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *SearchTopMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *SearchTopMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *SearchTopMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *SearchTopMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type SearchTopMessage_builder struct {
@@ -931,17 +931,17 @@ func (b0 SearchTopMessage_builder) Build() *SearchTopMessage {
 	m0 := &SearchTopMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type GetPodcastMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *GetPodcastMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *GetPodcastMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *GetPodcastMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *GetPodcastMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *GetPodcastMessage) Reset() {
@@ -971,46 +971,46 @@ func (x *GetPodcastMessage) ProtoReflect() protoreflect.Message {
 
 func (x *GetPodcastMessage) GetRequest() *GetPodcastMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *GetPodcastMessage) GetResponse() *GetPodcastMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *GetPodcastMessage) SetRequest(v *GetPodcastMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *GetPodcastMessage) SetResponse(v *GetPodcastMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *GetPodcastMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *GetPodcastMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *GetPodcastMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *GetPodcastMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type GetPodcastMessage_builder struct {
@@ -1024,20 +1024,18 @@ func (b0 GetPodcastMessage_builder) Build() *GetPodcastMessage {
 	m0 := &GetPodcastMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 // Used for getting the next page
 type QueryCursor struct {
-	state protoimpl.MessageState `protogen:"hybrid.v1"`
-	// For datastore queries
-	Cursor string `protobuf:"bytes,1,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	// For limit / offset queries eg. SQL/Memory
-	Offset        int32 `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Cursor string                 `protobuf:"bytes,1,opt,name=cursor,proto3"`
+	xxx_hidden_Offset int32                  `protobuf:"varint,2,opt,name=offset,proto3"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *QueryCursor) Reset() {
@@ -1067,24 +1065,24 @@ func (x *QueryCursor) ProtoReflect() protoreflect.Message {
 
 func (x *QueryCursor) GetCursor() string {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return ""
 }
 
 func (x *QueryCursor) GetOffset() int32 {
 	if x != nil {
-		return x.Offset
+		return x.xxx_hidden_Offset
 	}
 	return 0
 }
 
 func (x *QueryCursor) SetCursor(v string) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *QueryCursor) SetOffset(v int32) {
-	x.Offset = v
+	x.xxx_hidden_Offset = v
 }
 
 type QueryCursor_builder struct {
@@ -1100,18 +1098,18 @@ func (b0 QueryCursor_builder) Build() *QueryCursor {
 	m0 := &QueryCursor{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Cursor = b.Cursor
-	x.Offset = b.Offset
+	x.xxx_hidden_Cursor = b.Cursor
+	x.xxx_hidden_Offset = b.Offset
 	return m0
 }
 
 // Used to list the podcast episodes
 type ListPodcastEpisodesMessage struct {
-	state         protoimpl.MessageState               `protogen:"hybrid.v1"`
-	Request       *ListPodcastEpisodesMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *ListPodcastEpisodesMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState               `protogen:"opaque.v1"`
+	xxx_hidden_Request  *ListPodcastEpisodesMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *ListPodcastEpisodesMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListPodcastEpisodesMessage) Reset() {
@@ -1141,46 +1139,46 @@ func (x *ListPodcastEpisodesMessage) ProtoReflect() protoreflect.Message {
 
 func (x *ListPodcastEpisodesMessage) GetRequest() *ListPodcastEpisodesMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage) GetResponse() *ListPodcastEpisodesMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage) SetRequest(v *ListPodcastEpisodesMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *ListPodcastEpisodesMessage) SetResponse(v *ListPodcastEpisodesMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *ListPodcastEpisodesMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *ListPodcastEpisodesMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *ListPodcastEpisodesMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *ListPodcastEpisodesMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type ListPodcastEpisodesMessage_builder struct {
@@ -1194,17 +1192,17 @@ func (b0 ListPodcastEpisodesMessage_builder) Build() *ListPodcastEpisodesMessage
 	m0 := &ListPodcastEpisodesMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type GetEpisodeMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *GetEpisodeMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *GetEpisodeMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *GetEpisodeMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *GetEpisodeMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *GetEpisodeMessage) Reset() {
@@ -1234,46 +1232,46 @@ func (x *GetEpisodeMessage) ProtoReflect() protoreflect.Message {
 
 func (x *GetEpisodeMessage) GetRequest() *GetEpisodeMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *GetEpisodeMessage) GetResponse() *GetEpisodeMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *GetEpisodeMessage) SetRequest(v *GetEpisodeMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *GetEpisodeMessage) SetResponse(v *GetEpisodeMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *GetEpisodeMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *GetEpisodeMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *GetEpisodeMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *GetEpisodeMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type GetEpisodeMessage_builder struct {
@@ -1287,17 +1285,17 @@ func (b0 GetEpisodeMessage_builder) Build() *GetEpisodeMessage {
 	m0 := &GetEpisodeMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type AddSubscriptionMessage struct {
-	state         protoimpl.MessageState           `protogen:"hybrid.v1"`
-	Request       *AddSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *AddSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState           `protogen:"opaque.v1"`
+	xxx_hidden_Request  *AddSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *AddSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *AddSubscriptionMessage) Reset() {
@@ -1327,46 +1325,46 @@ func (x *AddSubscriptionMessage) ProtoReflect() protoreflect.Message {
 
 func (x *AddSubscriptionMessage) GetRequest() *AddSubscriptionMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage) GetResponse() *AddSubscriptionMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage) SetRequest(v *AddSubscriptionMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *AddSubscriptionMessage) SetResponse(v *AddSubscriptionMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *AddSubscriptionMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *AddSubscriptionMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *AddSubscriptionMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *AddSubscriptionMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type AddSubscriptionMessage_builder struct {
@@ -1380,18 +1378,18 @@ func (b0 AddSubscriptionMessage_builder) Build() *AddSubscriptionMessage {
 	m0 := &AddSubscriptionMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 // Do I need this? Basically the same as Add
 type RemoveSubscriptionMessage struct {
-	state         protoimpl.MessageState              `protogen:"hybrid.v1"`
-	Request       *RemoveSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *RemoveSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState              `protogen:"opaque.v1"`
+	xxx_hidden_Request  *RemoveSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *RemoveSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RemoveSubscriptionMessage) Reset() {
@@ -1421,46 +1419,46 @@ func (x *RemoveSubscriptionMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveSubscriptionMessage) GetRequest() *RemoveSubscriptionMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage) GetResponse() *RemoveSubscriptionMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage) SetRequest(v *RemoveSubscriptionMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *RemoveSubscriptionMessage) SetResponse(v *RemoveSubscriptionMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *RemoveSubscriptionMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *RemoveSubscriptionMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *RemoveSubscriptionMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *RemoveSubscriptionMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type RemoveSubscriptionMessage_builder struct {
@@ -1474,17 +1472,17 @@ func (b0 RemoveSubscriptionMessage_builder) Build() *RemoveSubscriptionMessage {
 	m0 := &RemoveSubscriptionMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type ListSubscriptionMessage struct {
-	state         protoimpl.MessageState            `protogen:"hybrid.v1"`
-	Request       *ListSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *ListSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState            `protogen:"opaque.v1"`
+	xxx_hidden_Request  *ListSubscriptionMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *ListSubscriptionMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListSubscriptionMessage) Reset() {
@@ -1514,46 +1512,46 @@ func (x *ListSubscriptionMessage) ProtoReflect() protoreflect.Message {
 
 func (x *ListSubscriptionMessage) GetRequest() *ListSubscriptionMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage) GetResponse() *ListSubscriptionMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage) SetRequest(v *ListSubscriptionMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *ListSubscriptionMessage) SetResponse(v *ListSubscriptionMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *ListSubscriptionMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *ListSubscriptionMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *ListSubscriptionMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *ListSubscriptionMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type ListSubscriptionMessage_builder struct {
@@ -1567,17 +1565,17 @@ func (b0 ListSubscriptionMessage_builder) Build() *ListSubscriptionMessage {
 	m0 := &ListSubscriptionMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type AddListenMessage struct {
-	state         protoimpl.MessageState     `protogen:"hybrid.v1"`
-	Request       *AddListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *AddListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState     `protogen:"opaque.v1"`
+	xxx_hidden_Request  *AddListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *AddListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *AddListenMessage) Reset() {
@@ -1607,46 +1605,46 @@ func (x *AddListenMessage) ProtoReflect() protoreflect.Message {
 
 func (x *AddListenMessage) GetRequest() *AddListenMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *AddListenMessage) GetResponse() *AddListenMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *AddListenMessage) SetRequest(v *AddListenMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *AddListenMessage) SetResponse(v *AddListenMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *AddListenMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *AddListenMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *AddListenMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *AddListenMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type AddListenMessage_builder struct {
@@ -1660,17 +1658,17 @@ func (b0 AddListenMessage_builder) Build() *AddListenMessage {
 	m0 := &AddListenMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type RemoveListenMessage struct {
-	state         protoimpl.MessageState        `protogen:"hybrid.v1"`
-	Request       *RemoveListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *RemoveListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState        `protogen:"opaque.v1"`
+	xxx_hidden_Request  *RemoveListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *RemoveListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RemoveListenMessage) Reset() {
@@ -1700,46 +1698,46 @@ func (x *RemoveListenMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveListenMessage) GetRequest() *RemoveListenMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage) GetResponse() *RemoveListenMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage) SetRequest(v *RemoveListenMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *RemoveListenMessage) SetResponse(v *RemoveListenMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *RemoveListenMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *RemoveListenMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *RemoveListenMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *RemoveListenMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type RemoveListenMessage_builder struct {
@@ -1753,17 +1751,17 @@ func (b0 RemoveListenMessage_builder) Build() *RemoveListenMessage {
 	m0 := &RemoveListenMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type ListListenMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *ListListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *ListListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *ListListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *ListListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListListenMessage) Reset() {
@@ -1793,46 +1791,46 @@ func (x *ListListenMessage) ProtoReflect() protoreflect.Message {
 
 func (x *ListListenMessage) GetRequest() *ListListenMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *ListListenMessage) GetResponse() *ListListenMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *ListListenMessage) SetRequest(v *ListListenMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *ListListenMessage) SetResponse(v *ListListenMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *ListListenMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *ListListenMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *ListListenMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *ListListenMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type ListListenMessage_builder struct {
@@ -1846,17 +1844,17 @@ func (b0 ListListenMessage_builder) Build() *ListListenMessage {
 	m0 := &ListListenMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type GetFeedMessage struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	Request       *GetFeedMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Reponse       *GetFeedMessage_Response `protobuf:"bytes,2,opt,name=reponse,proto3" json:"reponse,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_Request *GetFeedMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Reponse *GetFeedMessage_Response `protobuf:"bytes,2,opt,name=reponse,proto3"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GetFeedMessage) Reset() {
@@ -1886,46 +1884,46 @@ func (x *GetFeedMessage) ProtoReflect() protoreflect.Message {
 
 func (x *GetFeedMessage) GetRequest() *GetFeedMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *GetFeedMessage) GetReponse() *GetFeedMessage_Response {
 	if x != nil {
-		return x.Reponse
+		return x.xxx_hidden_Reponse
 	}
 	return nil
 }
 
 func (x *GetFeedMessage) SetRequest(v *GetFeedMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *GetFeedMessage) SetReponse(v *GetFeedMessage_Response) {
-	x.Reponse = v
+	x.xxx_hidden_Reponse = v
 }
 
 func (x *GetFeedMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *GetFeedMessage) HasReponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Reponse != nil
+	return x.xxx_hidden_Reponse != nil
 }
 
 func (x *GetFeedMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *GetFeedMessage) ClearReponse() {
-	x.Reponse = nil
+	x.xxx_hidden_Reponse = nil
 }
 
 type GetFeedMessage_builder struct {
@@ -1939,17 +1937,17 @@ func (b0 GetFeedMessage_builder) Build() *GetFeedMessage {
 	m0 := &GetFeedMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Reponse = b.Reponse
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Reponse = b.Reponse
 	return m0
 }
 
 type AddFollowMessage struct {
-	state         protoimpl.MessageState     `protogen:"hybrid.v1"`
-	Request       *AddFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *AddFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState     `protogen:"opaque.v1"`
+	xxx_hidden_Request  *AddFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *AddFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *AddFollowMessage) Reset() {
@@ -1979,46 +1977,46 @@ func (x *AddFollowMessage) ProtoReflect() protoreflect.Message {
 
 func (x *AddFollowMessage) GetRequest() *AddFollowMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *AddFollowMessage) GetResponse() *AddFollowMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *AddFollowMessage) SetRequest(v *AddFollowMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *AddFollowMessage) SetResponse(v *AddFollowMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *AddFollowMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *AddFollowMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *AddFollowMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *AddFollowMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type AddFollowMessage_builder struct {
@@ -2032,17 +2030,17 @@ func (b0 AddFollowMessage_builder) Build() *AddFollowMessage {
 	m0 := &AddFollowMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type RemoveFollowMessage struct {
-	state         protoimpl.MessageState        `protogen:"hybrid.v1"`
-	Request       *RemoveFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *RemoveFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState        `protogen:"opaque.v1"`
+	xxx_hidden_Request  *RemoveFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *RemoveFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RemoveFollowMessage) Reset() {
@@ -2072,46 +2070,46 @@ func (x *RemoveFollowMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveFollowMessage) GetRequest() *RemoveFollowMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage) GetResponse() *RemoveFollowMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage) SetRequest(v *RemoveFollowMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *RemoveFollowMessage) SetResponse(v *RemoveFollowMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *RemoveFollowMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *RemoveFollowMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *RemoveFollowMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *RemoveFollowMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type RemoveFollowMessage_builder struct {
@@ -2125,17 +2123,17 @@ func (b0 RemoveFollowMessage_builder) Build() *RemoveFollowMessage {
 	m0 := &RemoveFollowMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type ListFollowMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *ListFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *ListFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *ListFollowMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *ListFollowMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListFollowMessage) Reset() {
@@ -2165,46 +2163,46 @@ func (x *ListFollowMessage) ProtoReflect() protoreflect.Message {
 
 func (x *ListFollowMessage) GetRequest() *ListFollowMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *ListFollowMessage) GetResponse() *ListFollowMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *ListFollowMessage) SetRequest(v *ListFollowMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *ListFollowMessage) SetResponse(v *ListFollowMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *ListFollowMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *ListFollowMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *ListFollowMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *ListFollowMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type ListFollowMessage_builder struct {
@@ -2218,17 +2216,17 @@ func (b0 ListFollowMessage_builder) Build() *ListFollowMessage {
 	m0 := &ListFollowMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type GetPublicUserMessage struct {
-	state         protoimpl.MessageState         `protogen:"hybrid.v1"`
-	Request       *GetPublicUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *GetPublicUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState         `protogen:"opaque.v1"`
+	xxx_hidden_Request  *GetPublicUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *GetPublicUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *GetPublicUserMessage) Reset() {
@@ -2258,46 +2256,46 @@ func (x *GetPublicUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *GetPublicUserMessage) GetRequest() *GetPublicUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *GetPublicUserMessage) GetResponse() *GetPublicUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *GetPublicUserMessage) SetRequest(v *GetPublicUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *GetPublicUserMessage) SetResponse(v *GetPublicUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *GetPublicUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *GetPublicUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *GetPublicUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *GetPublicUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type GetPublicUserMessage_builder struct {
@@ -2311,17 +2309,17 @@ func (b0 GetPublicUserMessage_builder) Build() *GetPublicUserMessage {
 	m0 := &GetPublicUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type EditUserMessage struct {
-	state         protoimpl.MessageState    `protogen:"hybrid.v1"`
-	Request       *EditUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *EditUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState    `protogen:"opaque.v1"`
+	xxx_hidden_Request  *EditUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *EditUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *EditUserMessage) Reset() {
@@ -2351,46 +2349,46 @@ func (x *EditUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *EditUserMessage) GetRequest() *EditUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *EditUserMessage) GetResponse() *EditUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *EditUserMessage) SetRequest(v *EditUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *EditUserMessage) SetResponse(v *EditUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *EditUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *EditUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *EditUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *EditUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type EditUserMessage_builder struct {
@@ -2404,17 +2402,17 @@ func (b0 EditUserMessage_builder) Build() *EditUserMessage {
 	m0 := &EditUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type RemoveUserMessage struct {
-	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
-	Request       *RemoveUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *RemoveUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Request  *RemoveUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *RemoveUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *RemoveUserMessage) Reset() {
@@ -2444,46 +2442,46 @@ func (x *RemoveUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveUserMessage) GetRequest() *RemoveUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *RemoveUserMessage) GetResponse() *RemoveUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *RemoveUserMessage) SetRequest(v *RemoveUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *RemoveUserMessage) SetResponse(v *RemoveUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *RemoveUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *RemoveUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *RemoveUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *RemoveUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type RemoveUserMessage_builder struct {
@@ -2497,17 +2495,17 @@ func (b0 RemoveUserMessage_builder) Build() *RemoveUserMessage {
 	m0 := &RemoveUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type ListUserMessage struct {
-	state         protoimpl.MessageState    `protogen:"hybrid.v1"`
-	Request       *ListUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *ListUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState    `protogen:"opaque.v1"`
+	xxx_hidden_Request  *ListUserMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *ListUserMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListUserMessage) Reset() {
@@ -2537,46 +2535,46 @@ func (x *ListUserMessage) ProtoReflect() protoreflect.Message {
 
 func (x *ListUserMessage) GetRequest() *ListUserMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *ListUserMessage) GetResponse() *ListUserMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *ListUserMessage) SetRequest(v *ListUserMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *ListUserMessage) SetResponse(v *ListUserMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *ListUserMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *ListUserMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *ListUserMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *ListUserMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type ListUserMessage_builder struct {
@@ -2590,17 +2588,17 @@ func (b0 ListUserMessage_builder) Build() *ListUserMessage {
 	m0 := &ListUserMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type UploadImageMessage struct {
-	state         protoimpl.MessageState       `protogen:"hybrid.v1"`
-	Request       *UploadImageMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *UploadImageMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState       `protogen:"opaque.v1"`
+	xxx_hidden_Request  *UploadImageMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *UploadImageMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *UploadImageMessage) Reset() {
@@ -2630,46 +2628,46 @@ func (x *UploadImageMessage) ProtoReflect() protoreflect.Message {
 
 func (x *UploadImageMessage) GetRequest() *UploadImageMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *UploadImageMessage) GetResponse() *UploadImageMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *UploadImageMessage) SetRequest(v *UploadImageMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *UploadImageMessage) SetResponse(v *UploadImageMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *UploadImageMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *UploadImageMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *UploadImageMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *UploadImageMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type UploadImageMessage_builder struct {
@@ -2683,17 +2681,17 @@ func (b0 UploadImageMessage_builder) Build() *UploadImageMessage {
 	m0 := &UploadImageMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type FindContactsMessage struct {
-	state         protoimpl.MessageState        `protogen:"hybrid.v1"`
-	Request       *FindContactsMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
-	Response      *FindContactsMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState        `protogen:"opaque.v1"`
+	xxx_hidden_Request  *FindContactsMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3"`
+	xxx_hidden_Response *FindContactsMessage_Response `protobuf:"bytes,2,opt,name=response,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *FindContactsMessage) Reset() {
@@ -2723,46 +2721,46 @@ func (x *FindContactsMessage) ProtoReflect() protoreflect.Message {
 
 func (x *FindContactsMessage) GetRequest() *FindContactsMessage_Request {
 	if x != nil {
-		return x.Request
+		return x.xxx_hidden_Request
 	}
 	return nil
 }
 
 func (x *FindContactsMessage) GetResponse() *FindContactsMessage_Response {
 	if x != nil {
-		return x.Response
+		return x.xxx_hidden_Response
 	}
 	return nil
 }
 
 func (x *FindContactsMessage) SetRequest(v *FindContactsMessage_Request) {
-	x.Request = v
+	x.xxx_hidden_Request = v
 }
 
 func (x *FindContactsMessage) SetResponse(v *FindContactsMessage_Response) {
-	x.Response = v
+	x.xxx_hidden_Response = v
 }
 
 func (x *FindContactsMessage) HasRequest() bool {
 	if x == nil {
 		return false
 	}
-	return x.Request != nil
+	return x.xxx_hidden_Request != nil
 }
 
 func (x *FindContactsMessage) HasResponse() bool {
 	if x == nil {
 		return false
 	}
-	return x.Response != nil
+	return x.xxx_hidden_Response != nil
 }
 
 func (x *FindContactsMessage) ClearRequest() {
-	x.Request = nil
+	x.xxx_hidden_Request = nil
 }
 
 func (x *FindContactsMessage) ClearResponse() {
-	x.Response = nil
+	x.xxx_hidden_Response = nil
 }
 
 type FindContactsMessage_builder struct {
@@ -2776,13 +2774,13 @@ func (b0 FindContactsMessage_builder) Build() *FindContactsMessage {
 	m0 := &FindContactsMessage{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.Request = b.Request
-	x.Response = b.Response
+	x.xxx_hidden_Request = b.Request
+	x.xxx_hidden_Response = b.Response
 	return m0
 }
 
 type SearchContactsMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2825,7 +2823,7 @@ func (b0 SearchContactsMessage_builder) Build() *SearchContactsMessage {
 }
 
 type SearchTopContactsMessage struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2868,11 +2866,11 @@ func (b0 SearchTopContactsMessage_builder) Build() *SearchTopContactsMessage {
 }
 
 type RefreshAuthMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	RefreshToken  *TokenMessage          `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_RefreshToken *TokenMessage          `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RefreshAuthMessage_Request) Reset() {
@@ -2902,46 +2900,46 @@ func (x *RefreshAuthMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *RefreshAuthMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage_Request) GetRefreshToken() *TokenMessage {
 	if x != nil {
-		return x.RefreshToken
+		return x.xxx_hidden_RefreshToken
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *RefreshAuthMessage_Request) SetRefreshToken(v *TokenMessage) {
-	x.RefreshToken = v
+	x.xxx_hidden_RefreshToken = v
 }
 
 func (x *RefreshAuthMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *RefreshAuthMessage_Request) HasRefreshToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.RefreshToken != nil
+	return x.xxx_hidden_RefreshToken != nil
 }
 
 func (x *RefreshAuthMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *RefreshAuthMessage_Request) ClearRefreshToken() {
-	x.RefreshToken = nil
+	x.xxx_hidden_RefreshToken = nil
 }
 
 type RefreshAuthMessage_Request_builder struct {
@@ -2955,17 +2953,17 @@ func (b0 RefreshAuthMessage_Request_builder) Build() *RefreshAuthMessage_Request
 	m0 := &RefreshAuthMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.RefreshToken = b.RefreshToken
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_RefreshToken = b.RefreshToken
 	return m0
 }
 
 type RefreshAuthMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	AccessToken   *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RefreshAuthMessage_Response) Reset() {
@@ -2995,46 +2993,46 @@ func (x *RefreshAuthMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *RefreshAuthMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage_Response) GetAccessToken() *TokenMessage {
 	if x != nil {
-		return x.AccessToken
+		return x.xxx_hidden_AccessToken
 	}
 	return nil
 }
 
 func (x *RefreshAuthMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *RefreshAuthMessage_Response) SetAccessToken(v *TokenMessage) {
-	x.AccessToken = v
+	x.xxx_hidden_AccessToken = v
 }
 
 func (x *RefreshAuthMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *RefreshAuthMessage_Response) HasAccessToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.AccessToken != nil
+	return x.xxx_hidden_AccessToken != nil
 }
 
 func (x *RefreshAuthMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *RefreshAuthMessage_Response) ClearAccessToken() {
-	x.AccessToken = nil
+	x.xxx_hidden_AccessToken = nil
 }
 
 type RefreshAuthMessage_Response_builder struct {
@@ -3048,18 +3046,18 @@ func (b0 RefreshAuthMessage_Response_builder) Build() *RefreshAuthMessage_Respon
 	m0 := &RefreshAuthMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.AccessToken = b.AccessToken
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_AccessToken = b.AccessToken
 	return m0
 }
 
 type LoginRequestMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Email       string                 `protobuf:"bytes,2,opt,name=email,proto3"`
+	xxx_hidden_PhoneNumber string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *LoginRequestMessage_Request) Reset() {
@@ -3089,46 +3087,46 @@ func (x *LoginRequestMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *LoginRequestMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *LoginRequestMessage_Request) GetEmail() string {
 	if x != nil {
-		return x.Email
+		return x.xxx_hidden_Email
 	}
 	return ""
 }
 
 func (x *LoginRequestMessage_Request) GetPhoneNumber() string {
 	if x != nil {
-		return x.PhoneNumber
+		return x.xxx_hidden_PhoneNumber
 	}
 	return ""
 }
 
 func (x *LoginRequestMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *LoginRequestMessage_Request) SetEmail(v string) {
-	x.Email = v
+	x.xxx_hidden_Email = v
 }
 
 func (x *LoginRequestMessage_Request) SetPhoneNumber(v string) {
-	x.PhoneNumber = v
+	x.xxx_hidden_PhoneNumber = v
 }
 
 func (x *LoginRequestMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *LoginRequestMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type LoginRequestMessage_Request_builder struct {
@@ -3143,17 +3141,17 @@ func (b0 LoginRequestMessage_Request_builder) Build() *LoginRequestMessage_Reque
 	m0 := &LoginRequestMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Email = b.Email
-	x.PhoneNumber = b.PhoneNumber
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Email = b.Email
+	x.xxx_hidden_PhoneNumber = b.PhoneNumber
 	return m0
 }
 
 type LoginRequestMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *LoginRequestMessage_Response) Reset() {
@@ -3183,24 +3181,24 @@ func (x *LoginRequestMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *LoginRequestMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *LoginRequestMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *LoginRequestMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *LoginRequestMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 type LoginRequestMessage_Response_builder struct {
@@ -3213,18 +3211,18 @@ func (b0 LoginRequestMessage_Response_builder) Build() *LoginRequestMessage_Resp
 	m0 := &LoginRequestMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
 	return m0
 }
 
 type LoginUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Email       string                 `protobuf:"bytes,2,opt,name=email,proto3"`
+	xxx_hidden_Password    string                 `protobuf:"bytes,3,opt,name=password,proto3"`
+	xxx_hidden_PhoneNumber string                 `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *LoginUserMessage_Request) Reset() {
@@ -3254,57 +3252,57 @@ func (x *LoginUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *LoginUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *LoginUserMessage_Request) GetEmail() string {
 	if x != nil {
-		return x.Email
+		return x.xxx_hidden_Email
 	}
 	return ""
 }
 
 func (x *LoginUserMessage_Request) GetPassword() string {
 	if x != nil {
-		return x.Password
+		return x.xxx_hidden_Password
 	}
 	return ""
 }
 
 func (x *LoginUserMessage_Request) GetPhoneNumber() string {
 	if x != nil {
-		return x.PhoneNumber
+		return x.xxx_hidden_PhoneNumber
 	}
 	return ""
 }
 
 func (x *LoginUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *LoginUserMessage_Request) SetEmail(v string) {
-	x.Email = v
+	x.xxx_hidden_Email = v
 }
 
 func (x *LoginUserMessage_Request) SetPassword(v string) {
-	x.Password = v
+	x.xxx_hidden_Password = v
 }
 
 func (x *LoginUserMessage_Request) SetPhoneNumber(v string) {
-	x.PhoneNumber = v
+	x.xxx_hidden_PhoneNumber = v
 }
 
 func (x *LoginUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *LoginUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type LoginUserMessage_Request_builder struct {
@@ -3320,21 +3318,21 @@ func (b0 LoginUserMessage_Request_builder) Build() *LoginUserMessage_Request {
 	m0 := &LoginUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Email = b.Email
-	x.Password = b.Password
-	x.PhoneNumber = b.PhoneNumber
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Email = b.Email
+	x.xxx_hidden_Password = b.Password
+	x.xxx_hidden_PhoneNumber = b.PhoneNumber
 	return m0
 }
 
 type LoginUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	AccessToken   *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	RefreshToken  *TokenMessage          `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
+	xxx_hidden_RefreshToken *TokenMessage          `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,4,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *LoginUserMessage_Response) Reset() {
@@ -3364,90 +3362,90 @@ func (x *LoginUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *LoginUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *LoginUserMessage_Response) GetAccessToken() *TokenMessage {
 	if x != nil {
-		return x.AccessToken
+		return x.xxx_hidden_AccessToken
 	}
 	return nil
 }
 
 func (x *LoginUserMessage_Response) GetRefreshToken() *TokenMessage {
 	if x != nil {
-		return x.RefreshToken
+		return x.xxx_hidden_RefreshToken
 	}
 	return nil
 }
 
 func (x *LoginUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *LoginUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *LoginUserMessage_Response) SetAccessToken(v *TokenMessage) {
-	x.AccessToken = v
+	x.xxx_hidden_AccessToken = v
 }
 
 func (x *LoginUserMessage_Response) SetRefreshToken(v *TokenMessage) {
-	x.RefreshToken = v
+	x.xxx_hidden_RefreshToken = v
 }
 
 func (x *LoginUserMessage_Response) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *LoginUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *LoginUserMessage_Response) HasAccessToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.AccessToken != nil
+	return x.xxx_hidden_AccessToken != nil
 }
 
 func (x *LoginUserMessage_Response) HasRefreshToken() bool {
 	if x == nil {
 		return false
 	}
-	return x.RefreshToken != nil
+	return x.xxx_hidden_RefreshToken != nil
 }
 
 func (x *LoginUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *LoginUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *LoginUserMessage_Response) ClearAccessToken() {
-	x.AccessToken = nil
+	x.xxx_hidden_AccessToken = nil
 }
 
 func (x *LoginUserMessage_Response) ClearRefreshToken() {
-	x.RefreshToken = nil
+	x.xxx_hidden_RefreshToken = nil
 }
 
 func (x *LoginUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type LoginUserMessage_Response_builder struct {
@@ -3463,19 +3461,19 @@ func (b0 LoginUserMessage_Response_builder) Build() *LoginUserMessage_Response {
 	m0 := &LoginUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.AccessToken = b.AccessToken
-	x.RefreshToken = b.RefreshToken
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_AccessToken = b.AccessToken
+	x.xxx_hidden_RefreshToken = b.RefreshToken
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type CreateUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_User        *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *CreateUserMessage_Request) Reset() {
@@ -3505,46 +3503,46 @@ func (x *CreateUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *CreateUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *CreateUserMessage_Request) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *CreateUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *CreateUserMessage_Request) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *CreateUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *CreateUserMessage_Request) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *CreateUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *CreateUserMessage_Request) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type CreateUserMessage_Request_builder struct {
@@ -3558,17 +3556,17 @@ func (b0 CreateUserMessage_Request_builder) Build() *CreateUserMessage_Request {
 	m0 := &CreateUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.User = b.User
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type CreateUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *CreateUserMessage_Response) Reset() {
@@ -3598,46 +3596,46 @@ func (x *CreateUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *CreateUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *CreateUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *CreateUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *CreateUserMessage_Response) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *CreateUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *CreateUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *CreateUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *CreateUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type CreateUserMessage_Response_builder struct {
@@ -3651,17 +3649,17 @@ func (b0 CreateUserMessage_Response_builder) Build() *CreateUserMessage_Response
 	m0 := &CreateUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type GetUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetUserMessage_Request) Reset() {
@@ -3691,35 +3689,35 @@ func (x *GetUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *GetUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *GetUserMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *GetUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *GetUserMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *GetUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *GetUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type GetUserMessage_Request_builder struct {
@@ -3733,17 +3731,17 @@ func (b0 GetUserMessage_Request_builder) Build() *GetUserMessage_Request {
 	m0 := &GetUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
 	return m0
 }
 
 type GetUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetUserMessage_Response) Reset() {
@@ -3773,46 +3771,46 @@ func (x *GetUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *GetUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *GetUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *GetUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *GetUserMessage_Response) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *GetUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *GetUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *GetUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *GetUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type GetUserMessage_Response_builder struct {
@@ -3826,17 +3824,17 @@ func (b0 GetUserMessage_Response_builder) Build() *GetUserMessage_Response {
 	m0 := &GetUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type UpdateUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_User        *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UpdateUserMessage_Request) Reset() {
@@ -3866,46 +3864,46 @@ func (x *UpdateUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *UpdateUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage_Request) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *UpdateUserMessage_Request) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *UpdateUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *UpdateUserMessage_Request) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *UpdateUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *UpdateUserMessage_Request) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type UpdateUserMessage_Request_builder struct {
@@ -3919,17 +3917,17 @@ func (b0 UpdateUserMessage_Request_builder) Build() *UpdateUserMessage_Request {
 	m0 := &UpdateUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.User = b.User
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type UpdateUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *UpdateUserMessage_Response) Reset() {
@@ -3959,46 +3957,46 @@ func (x *UpdateUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *UpdateUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *UpdateUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *UpdateUserMessage_Response) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *UpdateUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *UpdateUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *UpdateUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *UpdateUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type UpdateUserMessage_Response_builder struct {
@@ -4012,17 +4010,17 @@ func (b0 UpdateUserMessage_Response_builder) Build() *UpdateUserMessage_Response
 	m0 := &UpdateUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type SearchMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Query         string                 `protobuf:"bytes,2,opt,name=query,proto3" json:"query,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Query       string                 `protobuf:"bytes,2,opt,name=query,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *SearchMessage_Request) Reset() {
@@ -4052,35 +4050,35 @@ func (x *SearchMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *SearchMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *SearchMessage_Request) GetQuery() string {
 	if x != nil {
-		return x.Query
+		return x.xxx_hidden_Query
 	}
 	return ""
 }
 
 func (x *SearchMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *SearchMessage_Request) SetQuery(v string) {
-	x.Query = v
+	x.xxx_hidden_Query = v
 }
 
 func (x *SearchMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *SearchMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type SearchMessage_Request_builder struct {
@@ -4094,17 +4092,17 @@ func (b0 SearchMessage_Request_builder) Build() *SearchMessage_Request {
 	m0 := &SearchMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Query = b.Query
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Query = b.Query
 	return m0
 }
 
 type SearchMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	SearchResults *SearchResultsMessage  `protobuf:"bytes,2,opt,name=search_results,json=searchResults,proto3" json:"search_results,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_SearchResults *SearchResultsMessage  `protobuf:"bytes,2,opt,name=search_results,json=searchResults,proto3"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *SearchMessage_Response) Reset() {
@@ -4134,46 +4132,46 @@ func (x *SearchMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *SearchMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *SearchMessage_Response) GetSearchResults() *SearchResultsMessage {
 	if x != nil {
-		return x.SearchResults
+		return x.xxx_hidden_SearchResults
 	}
 	return nil
 }
 
 func (x *SearchMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *SearchMessage_Response) SetSearchResults(v *SearchResultsMessage) {
-	x.SearchResults = v
+	x.xxx_hidden_SearchResults = v
 }
 
 func (x *SearchMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *SearchMessage_Response) HasSearchResults() bool {
 	if x == nil {
 		return false
 	}
-	return x.SearchResults != nil
+	return x.xxx_hidden_SearchResults != nil
 }
 
 func (x *SearchMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *SearchMessage_Response) ClearSearchResults() {
-	x.SearchResults = nil
+	x.xxx_hidden_SearchResults = nil
 }
 
 type SearchMessage_Response_builder struct {
@@ -4187,16 +4185,16 @@ func (b0 SearchMessage_Response_builder) Build() *SearchMessage_Response {
 	m0 := &SearchMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.SearchResults = b.SearchResults
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_SearchResults = b.SearchResults
 	return m0
 }
 
 type SearchTopMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *SearchTopMessage_Request) Reset() {
@@ -4226,24 +4224,24 @@ func (x *SearchTopMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *SearchTopMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *SearchTopMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *SearchTopMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *SearchTopMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type SearchTopMessage_Request_builder struct {
@@ -4256,16 +4254,16 @@ func (b0 SearchTopMessage_Request_builder) Build() *SearchTopMessage_Request {
 	m0 := &SearchTopMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
+	x.xxx_hidden_RequestInfo = b.RequestInfo
 	return m0
 }
 
 type SearchTopMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	SearchResults *SearchResultsMessage  `protobuf:"bytes,2,opt,name=search_results,json=searchResults,proto3" json:"search_results,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_SearchResults *SearchResultsMessage  `protobuf:"bytes,2,opt,name=search_results,json=searchResults,proto3"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *SearchTopMessage_Response) Reset() {
@@ -4295,46 +4293,46 @@ func (x *SearchTopMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *SearchTopMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *SearchTopMessage_Response) GetSearchResults() *SearchResultsMessage {
 	if x != nil {
-		return x.SearchResults
+		return x.xxx_hidden_SearchResults
 	}
 	return nil
 }
 
 func (x *SearchTopMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *SearchTopMessage_Response) SetSearchResults(v *SearchResultsMessage) {
-	x.SearchResults = v
+	x.xxx_hidden_SearchResults = v
 }
 
 func (x *SearchTopMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *SearchTopMessage_Response) HasSearchResults() bool {
 	if x == nil {
 		return false
 	}
-	return x.SearchResults != nil
+	return x.xxx_hidden_SearchResults != nil
 }
 
 func (x *SearchTopMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *SearchTopMessage_Response) ClearSearchResults() {
-	x.SearchResults = nil
+	x.xxx_hidden_SearchResults = nil
 }
 
 type SearchTopMessage_Response_builder struct {
@@ -4348,17 +4346,17 @@ func (b0 SearchTopMessage_Response_builder) Build() *SearchTopMessage_Response {
 	m0 := &SearchTopMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.SearchResults = b.SearchResults
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_SearchResults = b.SearchResults
 	return m0
 }
 
 type GetPodcastMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	PodcastId     string                 `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_PodcastId   string                 `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetPodcastMessage_Request) Reset() {
@@ -4388,35 +4386,35 @@ func (x *GetPodcastMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *GetPodcastMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *GetPodcastMessage_Request) GetPodcastId() string {
 	if x != nil {
-		return x.PodcastId
+		return x.xxx_hidden_PodcastId
 	}
 	return ""
 }
 
 func (x *GetPodcastMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *GetPodcastMessage_Request) SetPodcastId(v string) {
-	x.PodcastId = v
+	x.xxx_hidden_PodcastId = v
 }
 
 func (x *GetPodcastMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *GetPodcastMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type GetPodcastMessage_Request_builder struct {
@@ -4430,17 +4428,17 @@ func (b0 GetPodcastMessage_Request_builder) Build() *GetPodcastMessage_Request {
 	m0 := &GetPodcastMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.PodcastId = b.PodcastId
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_PodcastId = b.PodcastId
 	return m0
 }
 
 type GetPodcastMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Podcast       *PodcastMessage        `protobuf:"bytes,2,opt,name=podcast,proto3" json:"podcast,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Podcast      *PodcastMessage        `protobuf:"bytes,2,opt,name=podcast,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetPodcastMessage_Response) Reset() {
@@ -4470,46 +4468,46 @@ func (x *GetPodcastMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *GetPodcastMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *GetPodcastMessage_Response) GetPodcast() *PodcastMessage {
 	if x != nil {
-		return x.Podcast
+		return x.xxx_hidden_Podcast
 	}
 	return nil
 }
 
 func (x *GetPodcastMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *GetPodcastMessage_Response) SetPodcast(v *PodcastMessage) {
-	x.Podcast = v
+	x.xxx_hidden_Podcast = v
 }
 
 func (x *GetPodcastMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *GetPodcastMessage_Response) HasPodcast() bool {
 	if x == nil {
 		return false
 	}
-	return x.Podcast != nil
+	return x.xxx_hidden_Podcast != nil
 }
 
 func (x *GetPodcastMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *GetPodcastMessage_Response) ClearPodcast() {
-	x.Podcast = nil
+	x.xxx_hidden_Podcast = nil
 }
 
 type GetPodcastMessage_Response_builder struct {
@@ -4523,18 +4521,18 @@ func (b0 GetPodcastMessage_Response_builder) Build() *GetPodcastMessage_Response
 	m0 := &GetPodcastMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Podcast = b.Podcast
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Podcast = b.Podcast
 	return m0
 }
 
 type ListPodcastEpisodesMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	PodcastId     string                 `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3" json:"podcast_id,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_PodcastId   string                 `protobuf:"bytes,2,opt,name=podcast_id,json=podcastId,proto3"`
+	xxx_hidden_Cursor      *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *ListPodcastEpisodesMessage_Request) Reset() {
@@ -4564,57 +4562,57 @@ func (x *ListPodcastEpisodesMessage_Request) ProtoReflect() protoreflect.Message
 
 func (x *ListPodcastEpisodesMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Request) GetPodcastId() string {
 	if x != nil {
-		return x.PodcastId
+		return x.xxx_hidden_PodcastId
 	}
 	return ""
 }
 
 func (x *ListPodcastEpisodesMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *ListPodcastEpisodesMessage_Request) SetPodcastId(v string) {
-	x.PodcastId = v
+	x.xxx_hidden_PodcastId = v
 }
 
 func (x *ListPodcastEpisodesMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListPodcastEpisodesMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *ListPodcastEpisodesMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListPodcastEpisodesMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *ListPodcastEpisodesMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListPodcastEpisodesMessage_Request_builder struct {
@@ -4629,21 +4627,20 @@ func (b0 ListPodcastEpisodesMessage_Request_builder) Build() *ListPodcastEpisode
 	m0 := &ListPodcastEpisodesMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.PodcastId = b.PodcastId
-	x.Cursor = b.Cursor
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_PodcastId = b.PodcastId
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type ListPodcastEpisodesMessage_Response struct {
-	state        protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Episodes     []*EpisodeMessage      `protobuf:"bytes,2,rep,name=episodes,proto3" json:"episodes,omitempty"`
-	// TODO(duncan): Am I using this?
-	Podcast       *PodcastMessage `protobuf:"bytes,3,opt,name=podcast,proto3" json:"podcast,omitempty"`
-	Cursor        *QueryCursor    `protobuf:"bytes,4,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Episodes     *[]*EpisodeMessage     `protobuf:"bytes,2,rep,name=episodes,proto3"`
+	xxx_hidden_Podcast      *PodcastMessage        `protobuf:"bytes,3,opt,name=podcast,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,4,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ListPodcastEpisodesMessage_Response) Reset() {
@@ -4673,79 +4670,81 @@ func (x *ListPodcastEpisodesMessage_Response) ProtoReflect() protoreflect.Messag
 
 func (x *ListPodcastEpisodesMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) GetEpisodes() []*EpisodeMessage {
 	if x != nil {
-		return x.Episodes
+		if x.xxx_hidden_Episodes != nil {
+			return *x.xxx_hidden_Episodes
+		}
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) GetPodcast() *PodcastMessage {
 	if x != nil {
-		return x.Podcast
+		return x.xxx_hidden_Podcast
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *ListPodcastEpisodesMessage_Response) SetEpisodes(v []*EpisodeMessage) {
-	x.Episodes = v
+	x.xxx_hidden_Episodes = &v
 }
 
 func (x *ListPodcastEpisodesMessage_Response) SetPodcast(v *PodcastMessage) {
-	x.Podcast = v
+	x.xxx_hidden_Podcast = v
 }
 
 func (x *ListPodcastEpisodesMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListPodcastEpisodesMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) HasPodcast() bool {
 	if x == nil {
 		return false
 	}
-	return x.Podcast != nil
+	return x.xxx_hidden_Podcast != nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) ClearPodcast() {
-	x.Podcast = nil
+	x.xxx_hidden_Podcast = nil
 }
 
 func (x *ListPodcastEpisodesMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListPodcastEpisodesMessage_Response_builder struct {
@@ -4762,19 +4761,19 @@ func (b0 ListPodcastEpisodesMessage_Response_builder) Build() *ListPodcastEpisod
 	m0 := &ListPodcastEpisodesMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Episodes = b.Episodes
-	x.Podcast = b.Podcast
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Episodes = &b.Episodes
+	x.xxx_hidden_Podcast = b.Podcast
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type GetEpisodeMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	EpisodeId     string                 `protobuf:"bytes,2,opt,name=episode_id,json=episodeId,proto3" json:"episode_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_EpisodeId   string                 `protobuf:"bytes,2,opt,name=episode_id,json=episodeId,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetEpisodeMessage_Request) Reset() {
@@ -4804,35 +4803,35 @@ func (x *GetEpisodeMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *GetEpisodeMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *GetEpisodeMessage_Request) GetEpisodeId() string {
 	if x != nil {
-		return x.EpisodeId
+		return x.xxx_hidden_EpisodeId
 	}
 	return ""
 }
 
 func (x *GetEpisodeMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *GetEpisodeMessage_Request) SetEpisodeId(v string) {
-	x.EpisodeId = v
+	x.xxx_hidden_EpisodeId = v
 }
 
 func (x *GetEpisodeMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *GetEpisodeMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type GetEpisodeMessage_Request_builder struct {
@@ -4846,17 +4845,17 @@ func (b0 GetEpisodeMessage_Request_builder) Build() *GetEpisodeMessage_Request {
 	m0 := &GetEpisodeMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.EpisodeId = b.EpisodeId
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_EpisodeId = b.EpisodeId
 	return m0
 }
 
 type GetEpisodeMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Episode       *EpisodeMessage        `protobuf:"bytes,2,opt,name=episode,proto3" json:"episode,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Episode      *EpisodeMessage        `protobuf:"bytes,2,opt,name=episode,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetEpisodeMessage_Response) Reset() {
@@ -4886,46 +4885,46 @@ func (x *GetEpisodeMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *GetEpisodeMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *GetEpisodeMessage_Response) GetEpisode() *EpisodeMessage {
 	if x != nil {
-		return x.Episode
+		return x.xxx_hidden_Episode
 	}
 	return nil
 }
 
 func (x *GetEpisodeMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *GetEpisodeMessage_Response) SetEpisode(v *EpisodeMessage) {
-	x.Episode = v
+	x.xxx_hidden_Episode = v
 }
 
 func (x *GetEpisodeMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *GetEpisodeMessage_Response) HasEpisode() bool {
 	if x == nil {
 		return false
 	}
-	return x.Episode != nil
+	return x.xxx_hidden_Episode != nil
 }
 
 func (x *GetEpisodeMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *GetEpisodeMessage_Response) ClearEpisode() {
-	x.Episode = nil
+	x.xxx_hidden_Episode = nil
 }
 
 type GetEpisodeMessage_Response_builder struct {
@@ -4939,17 +4938,17 @@ func (b0 GetEpisodeMessage_Response_builder) Build() *GetEpisodeMessage_Response
 	m0 := &GetEpisodeMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Episode = b.Episode
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Episode = b.Episode
 	return m0
 }
 
 type AddSubscriptionMessage_Request struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo             `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Subscription  *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo  *RequestInfo             `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Subscription *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *AddSubscriptionMessage_Request) Reset() {
@@ -4979,46 +4978,46 @@ func (x *AddSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *AddSubscriptionMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage_Request) GetSubscription() *UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscription
+		return x.xxx_hidden_Subscription
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *AddSubscriptionMessage_Request) SetSubscription(v *UserSubscriptionMessage) {
-	x.Subscription = v
+	x.xxx_hidden_Subscription = v
 }
 
 func (x *AddSubscriptionMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *AddSubscriptionMessage_Request) HasSubscription() bool {
 	if x == nil {
 		return false
 	}
-	return x.Subscription != nil
+	return x.xxx_hidden_Subscription != nil
 }
 
 func (x *AddSubscriptionMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *AddSubscriptionMessage_Request) ClearSubscription() {
-	x.Subscription = nil
+	x.xxx_hidden_Subscription = nil
 }
 
 type AddSubscriptionMessage_Request_builder struct {
@@ -5032,17 +5031,17 @@ func (b0 AddSubscriptionMessage_Request_builder) Build() *AddSubscriptionMessage
 	m0 := &AddSubscriptionMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Subscription = b.Subscription
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Subscription = b.Subscription
 	return m0
 }
 
 type AddSubscriptionMessage_Response struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo            `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Subscription  *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo            `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Subscription *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *AddSubscriptionMessage_Response) Reset() {
@@ -5072,46 +5071,46 @@ func (x *AddSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *AddSubscriptionMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage_Response) GetSubscription() *UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscription
+		return x.xxx_hidden_Subscription
 	}
 	return nil
 }
 
 func (x *AddSubscriptionMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *AddSubscriptionMessage_Response) SetSubscription(v *UserSubscriptionMessage) {
-	x.Subscription = v
+	x.xxx_hidden_Subscription = v
 }
 
 func (x *AddSubscriptionMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *AddSubscriptionMessage_Response) HasSubscription() bool {
 	if x == nil {
 		return false
 	}
-	return x.Subscription != nil
+	return x.xxx_hidden_Subscription != nil
 }
 
 func (x *AddSubscriptionMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *AddSubscriptionMessage_Response) ClearSubscription() {
-	x.Subscription = nil
+	x.xxx_hidden_Subscription = nil
 }
 
 type AddSubscriptionMessage_Response_builder struct {
@@ -5125,17 +5124,17 @@ func (b0 AddSubscriptionMessage_Response_builder) Build() *AddSubscriptionMessag
 	m0 := &AddSubscriptionMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Subscription = b.Subscription
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Subscription = b.Subscription
 	return m0
 }
 
 type RemoveSubscriptionMessage_Request struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo             `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Subscription  *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo  *RequestInfo             `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Subscription *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RemoveSubscriptionMessage_Request) Reset() {
@@ -5165,46 +5164,46 @@ func (x *RemoveSubscriptionMessage_Request) ProtoReflect() protoreflect.Message 
 
 func (x *RemoveSubscriptionMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage_Request) GetSubscription() *UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscription
+		return x.xxx_hidden_Subscription
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *RemoveSubscriptionMessage_Request) SetSubscription(v *UserSubscriptionMessage) {
-	x.Subscription = v
+	x.xxx_hidden_Subscription = v
 }
 
 func (x *RemoveSubscriptionMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *RemoveSubscriptionMessage_Request) HasSubscription() bool {
 	if x == nil {
 		return false
 	}
-	return x.Subscription != nil
+	return x.xxx_hidden_Subscription != nil
 }
 
 func (x *RemoveSubscriptionMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *RemoveSubscriptionMessage_Request) ClearSubscription() {
-	x.Subscription = nil
+	x.xxx_hidden_Subscription = nil
 }
 
 type RemoveSubscriptionMessage_Request_builder struct {
@@ -5218,17 +5217,17 @@ func (b0 RemoveSubscriptionMessage_Request_builder) Build() *RemoveSubscriptionM
 	m0 := &RemoveSubscriptionMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Subscription = b.Subscription
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Subscription = b.Subscription
 	return m0
 }
 
 type RemoveSubscriptionMessage_Response struct {
-	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo            `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Subscription  *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo            `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Subscription *UserSubscriptionMessage `protobuf:"bytes,2,opt,name=subscription,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RemoveSubscriptionMessage_Response) Reset() {
@@ -5258,46 +5257,46 @@ func (x *RemoveSubscriptionMessage_Response) ProtoReflect() protoreflect.Message
 
 func (x *RemoveSubscriptionMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage_Response) GetSubscription() *UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscription
+		return x.xxx_hidden_Subscription
 	}
 	return nil
 }
 
 func (x *RemoveSubscriptionMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *RemoveSubscriptionMessage_Response) SetSubscription(v *UserSubscriptionMessage) {
-	x.Subscription = v
+	x.xxx_hidden_Subscription = v
 }
 
 func (x *RemoveSubscriptionMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *RemoveSubscriptionMessage_Response) HasSubscription() bool {
 	if x == nil {
 		return false
 	}
-	return x.Subscription != nil
+	return x.xxx_hidden_Subscription != nil
 }
 
 func (x *RemoveSubscriptionMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *RemoveSubscriptionMessage_Response) ClearSubscription() {
-	x.Subscription = nil
+	x.xxx_hidden_Subscription = nil
 }
 
 type RemoveSubscriptionMessage_Response_builder struct {
@@ -5311,19 +5310,19 @@ func (b0 RemoveSubscriptionMessage_Response_builder) Build() *RemoveSubscription
 	m0 := &RemoveSubscriptionMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Subscription = b.Subscription
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Subscription = b.Subscription
 	return m0
 }
 
 type ListSubscriptionMessage_Request struct {
-	state           protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo     *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId          string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	IncludePodcasts bool                   `protobuf:"varint,3,opt,name=include_podcasts,json=includePodcasts,proto3" json:"include_podcasts,omitempty"`
-	Cursor          *QueryCursor           `protobuf:"bytes,4,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                      protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo     *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId          string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_IncludePodcasts bool                   `protobuf:"varint,3,opt,name=include_podcasts,json=includePodcasts,proto3"`
+	xxx_hidden_Cursor          *QueryCursor           `protobuf:"bytes,4,opt,name=cursor,proto3"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *ListSubscriptionMessage_Request) Reset() {
@@ -5353,68 +5352,68 @@ func (x *ListSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *ListSubscriptionMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *ListSubscriptionMessage_Request) GetIncludePodcasts() bool {
 	if x != nil {
-		return x.IncludePodcasts
+		return x.xxx_hidden_IncludePodcasts
 	}
 	return false
 }
 
 func (x *ListSubscriptionMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *ListSubscriptionMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *ListSubscriptionMessage_Request) SetIncludePodcasts(v bool) {
-	x.IncludePodcasts = v
+	x.xxx_hidden_IncludePodcasts = v
 }
 
 func (x *ListSubscriptionMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListSubscriptionMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *ListSubscriptionMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListSubscriptionMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *ListSubscriptionMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListSubscriptionMessage_Request_builder struct {
@@ -5430,20 +5429,20 @@ func (b0 ListSubscriptionMessage_Request_builder) Build() *ListSubscriptionMessa
 	m0 := &ListSubscriptionMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
-	x.IncludePodcasts = b.IncludePodcasts
-	x.Cursor = b.Cursor
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_IncludePodcasts = b.IncludePodcasts
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type ListSubscriptionMessage_Response struct {
-	state         protoimpl.MessageState     `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo              `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Subscriptions []*UserSubscriptionMessage `protobuf:"bytes,2,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
-	Cursor        *QueryCursor               `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                    protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo  *ResponseInfo               `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Subscriptions *[]*UserSubscriptionMessage `protobuf:"bytes,2,rep,name=subscriptions,proto3"`
+	xxx_hidden_Cursor        *QueryCursor                `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *ListSubscriptionMessage_Response) Reset() {
@@ -5473,57 +5472,59 @@ func (x *ListSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *ListSubscriptionMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage_Response) GetSubscriptions() []*UserSubscriptionMessage {
 	if x != nil {
-		return x.Subscriptions
+		if x.xxx_hidden_Subscriptions != nil {
+			return *x.xxx_hidden_Subscriptions
+		}
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListSubscriptionMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *ListSubscriptionMessage_Response) SetSubscriptions(v []*UserSubscriptionMessage) {
-	x.Subscriptions = v
+	x.xxx_hidden_Subscriptions = &v
 }
 
 func (x *ListSubscriptionMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListSubscriptionMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *ListSubscriptionMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListSubscriptionMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *ListSubscriptionMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListSubscriptionMessage_Response_builder struct {
@@ -5538,18 +5539,18 @@ func (b0 ListSubscriptionMessage_Response_builder) Build() *ListSubscriptionMess
 	m0 := &ListSubscriptionMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Subscriptions = b.Subscriptions
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Subscriptions = &b.Subscriptions
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type AddListenMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Listen      *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *AddListenMessage_Request) Reset() {
@@ -5579,46 +5580,46 @@ func (x *AddListenMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *AddListenMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *AddListenMessage_Request) GetListen() *UserListenMessage {
 	if x != nil {
-		return x.Listen
+		return x.xxx_hidden_Listen
 	}
 	return nil
 }
 
 func (x *AddListenMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *AddListenMessage_Request) SetListen(v *UserListenMessage) {
-	x.Listen = v
+	x.xxx_hidden_Listen = v
 }
 
 func (x *AddListenMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *AddListenMessage_Request) HasListen() bool {
 	if x == nil {
 		return false
 	}
-	return x.Listen != nil
+	return x.xxx_hidden_Listen != nil
 }
 
 func (x *AddListenMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *AddListenMessage_Request) ClearListen() {
-	x.Listen = nil
+	x.xxx_hidden_Listen = nil
 }
 
 type AddListenMessage_Request_builder struct {
@@ -5632,17 +5633,17 @@ func (b0 AddListenMessage_Request_builder) Build() *AddListenMessage_Request {
 	m0 := &AddListenMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Listen = b.Listen
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Listen = b.Listen
 	return m0
 }
 
 type AddListenMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Listen       *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *AddListenMessage_Response) Reset() {
@@ -5672,46 +5673,46 @@ func (x *AddListenMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *AddListenMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *AddListenMessage_Response) GetListen() *UserListenMessage {
 	if x != nil {
-		return x.Listen
+		return x.xxx_hidden_Listen
 	}
 	return nil
 }
 
 func (x *AddListenMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *AddListenMessage_Response) SetListen(v *UserListenMessage) {
-	x.Listen = v
+	x.xxx_hidden_Listen = v
 }
 
 func (x *AddListenMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *AddListenMessage_Response) HasListen() bool {
 	if x == nil {
 		return false
 	}
-	return x.Listen != nil
+	return x.xxx_hidden_Listen != nil
 }
 
 func (x *AddListenMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *AddListenMessage_Response) ClearListen() {
-	x.Listen = nil
+	x.xxx_hidden_Listen = nil
 }
 
 type AddListenMessage_Response_builder struct {
@@ -5725,17 +5726,17 @@ func (b0 AddListenMessage_Response_builder) Build() *AddListenMessage_Response {
 	m0 := &AddListenMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Listen = b.Listen
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Listen = b.Listen
 	return m0
 }
 
 type RemoveListenMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Listen      *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *RemoveListenMessage_Request) Reset() {
@@ -5765,46 +5766,46 @@ func (x *RemoveListenMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveListenMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage_Request) GetListen() *UserListenMessage {
 	if x != nil {
-		return x.Listen
+		return x.xxx_hidden_Listen
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *RemoveListenMessage_Request) SetListen(v *UserListenMessage) {
-	x.Listen = v
+	x.xxx_hidden_Listen = v
 }
 
 func (x *RemoveListenMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *RemoveListenMessage_Request) HasListen() bool {
 	if x == nil {
 		return false
 	}
-	return x.Listen != nil
+	return x.xxx_hidden_Listen != nil
 }
 
 func (x *RemoveListenMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *RemoveListenMessage_Request) ClearListen() {
-	x.Listen = nil
+	x.xxx_hidden_Listen = nil
 }
 
 type RemoveListenMessage_Request_builder struct {
@@ -5818,17 +5819,17 @@ func (b0 RemoveListenMessage_Request_builder) Build() *RemoveListenMessage_Reque
 	m0 := &RemoveListenMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Listen = b.Listen
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Listen = b.Listen
 	return m0
 }
 
 type RemoveListenMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Listen        *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3" json:"listen,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Listen       *UserListenMessage     `protobuf:"bytes,2,opt,name=listen,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RemoveListenMessage_Response) Reset() {
@@ -5858,46 +5859,46 @@ func (x *RemoveListenMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveListenMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage_Response) GetListen() *UserListenMessage {
 	if x != nil {
-		return x.Listen
+		return x.xxx_hidden_Listen
 	}
 	return nil
 }
 
 func (x *RemoveListenMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *RemoveListenMessage_Response) SetListen(v *UserListenMessage) {
-	x.Listen = v
+	x.xxx_hidden_Listen = v
 }
 
 func (x *RemoveListenMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *RemoveListenMessage_Response) HasListen() bool {
 	if x == nil {
 		return false
 	}
-	return x.Listen != nil
+	return x.xxx_hidden_Listen != nil
 }
 
 func (x *RemoveListenMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *RemoveListenMessage_Response) ClearListen() {
-	x.Listen = nil
+	x.xxx_hidden_Listen = nil
 }
 
 type RemoveListenMessage_Response_builder struct {
@@ -5911,20 +5912,19 @@ func (b0 RemoveListenMessage_Response_builder) Build() *RemoveListenMessage_Resp
 	m0 := &RemoveListenMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Listen = b.Listen
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Listen = b.Listen
 	return m0
 }
 
 type ListListenMessage_Request struct {
-	state       protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// Return the episodes in the UserListenMessage
-	IncludeEpisodes bool         `protobuf:"varint,3,opt,name=include_episodes,json=includeEpisodes,proto3" json:"include_episodes,omitempty"`
-	Cursor          *QueryCursor `protobuf:"bytes,4,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                      protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo     *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId          string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_IncludeEpisodes bool                   `protobuf:"varint,3,opt,name=include_episodes,json=includeEpisodes,proto3"`
+	xxx_hidden_Cursor          *QueryCursor           `protobuf:"bytes,4,opt,name=cursor,proto3"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *ListListenMessage_Request) Reset() {
@@ -5954,68 +5954,68 @@ func (x *ListListenMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *ListListenMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *ListListenMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *ListListenMessage_Request) GetIncludeEpisodes() bool {
 	if x != nil {
-		return x.IncludeEpisodes
+		return x.xxx_hidden_IncludeEpisodes
 	}
 	return false
 }
 
 func (x *ListListenMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListListenMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *ListListenMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *ListListenMessage_Request) SetIncludeEpisodes(v bool) {
-	x.IncludeEpisodes = v
+	x.xxx_hidden_IncludeEpisodes = v
 }
 
 func (x *ListListenMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListListenMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *ListListenMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListListenMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *ListListenMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListListenMessage_Request_builder struct {
@@ -6032,20 +6032,20 @@ func (b0 ListListenMessage_Request_builder) Build() *ListListenMessage_Request {
 	m0 := &ListListenMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
-	x.IncludeEpisodes = b.IncludeEpisodes
-	x.Cursor = b.Cursor
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_IncludeEpisodes = b.IncludeEpisodes
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type ListListenMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Listens       []*UserListenMessage   `protobuf:"bytes,2,rep,name=listens,proto3" json:"listens,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,5,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Listens      *[]*UserListenMessage  `protobuf:"bytes,2,rep,name=listens,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,5,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ListListenMessage_Response) Reset() {
@@ -6075,57 +6075,59 @@ func (x *ListListenMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *ListListenMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *ListListenMessage_Response) GetListens() []*UserListenMessage {
 	if x != nil {
-		return x.Listens
+		if x.xxx_hidden_Listens != nil {
+			return *x.xxx_hidden_Listens
+		}
 	}
 	return nil
 }
 
 func (x *ListListenMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListListenMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *ListListenMessage_Response) SetListens(v []*UserListenMessage) {
-	x.Listens = v
+	x.xxx_hidden_Listens = &v
 }
 
 func (x *ListListenMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListListenMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *ListListenMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListListenMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *ListListenMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListListenMessage_Response_builder struct {
@@ -6140,20 +6142,19 @@ func (b0 ListListenMessage_Response_builder) Build() *ListListenMessage_Response
 	m0 := &ListListenMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Listens = b.Listens
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Listens = &b.Listens
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type GetFeedMessage_Request struct {
-	state       protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// Used for requesting the n+1 page of feed items
-	BeforeTimestampMs int64 `protobuf:"varint,3,opt,name=before_timestamp_ms,json=beforeTimestampMs,proto3" json:"before_timestamp_ms,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state                        protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo       *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId            string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_BeforeTimestampMs int64                  `protobuf:"varint,3,opt,name=before_timestamp_ms,json=beforeTimestampMs,proto3"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *GetFeedMessage_Request) Reset() {
@@ -6183,46 +6184,46 @@ func (x *GetFeedMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *GetFeedMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *GetFeedMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *GetFeedMessage_Request) GetBeforeTimestampMs() int64 {
 	if x != nil {
-		return x.BeforeTimestampMs
+		return x.xxx_hidden_BeforeTimestampMs
 	}
 	return 0
 }
 
 func (x *GetFeedMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *GetFeedMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *GetFeedMessage_Request) SetBeforeTimestampMs(v int64) {
-	x.BeforeTimestampMs = v
+	x.xxx_hidden_BeforeTimestampMs = v
 }
 
 func (x *GetFeedMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *GetFeedMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type GetFeedMessage_Request_builder struct {
@@ -6238,18 +6239,18 @@ func (b0 GetFeedMessage_Request_builder) Build() *GetFeedMessage_Request {
 	m0 := &GetFeedMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
-	x.BeforeTimestampMs = b.BeforeTimestampMs
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_BeforeTimestampMs = b.BeforeTimestampMs
 	return m0
 }
 
 type GetFeedMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Feed          *UserFeedMessage       `protobuf:"bytes,2,opt,name=feed,proto3" json:"feed,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Feed         *UserFeedMessage       `protobuf:"bytes,2,opt,name=feed,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetFeedMessage_Response) Reset() {
@@ -6279,46 +6280,46 @@ func (x *GetFeedMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *GetFeedMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *GetFeedMessage_Response) GetFeed() *UserFeedMessage {
 	if x != nil {
-		return x.Feed
+		return x.xxx_hidden_Feed
 	}
 	return nil
 }
 
 func (x *GetFeedMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *GetFeedMessage_Response) SetFeed(v *UserFeedMessage) {
-	x.Feed = v
+	x.xxx_hidden_Feed = v
 }
 
 func (x *GetFeedMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *GetFeedMessage_Response) HasFeed() bool {
 	if x == nil {
 		return false
 	}
-	return x.Feed != nil
+	return x.xxx_hidden_Feed != nil
 }
 
 func (x *GetFeedMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *GetFeedMessage_Response) ClearFeed() {
-	x.Feed = nil
+	x.xxx_hidden_Feed = nil
 }
 
 type GetFeedMessage_Response_builder struct {
@@ -6332,17 +6333,17 @@ func (b0 GetFeedMessage_Response_builder) Build() *GetFeedMessage_Response {
 	m0 := &GetFeedMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Feed = b.Feed
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Feed = b.Feed
 	return m0
 }
 
 type AddFollowMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Follow        *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3" json:"follow,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Follow      *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *AddFollowMessage_Request) Reset() {
@@ -6372,46 +6373,46 @@ func (x *AddFollowMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *AddFollowMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *AddFollowMessage_Request) GetFollow() *UserFollowMessage {
 	if x != nil {
-		return x.Follow
+		return x.xxx_hidden_Follow
 	}
 	return nil
 }
 
 func (x *AddFollowMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *AddFollowMessage_Request) SetFollow(v *UserFollowMessage) {
-	x.Follow = v
+	x.xxx_hidden_Follow = v
 }
 
 func (x *AddFollowMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *AddFollowMessage_Request) HasFollow() bool {
 	if x == nil {
 		return false
 	}
-	return x.Follow != nil
+	return x.xxx_hidden_Follow != nil
 }
 
 func (x *AddFollowMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *AddFollowMessage_Request) ClearFollow() {
-	x.Follow = nil
+	x.xxx_hidden_Follow = nil
 }
 
 type AddFollowMessage_Request_builder struct {
@@ -6425,17 +6426,17 @@ func (b0 AddFollowMessage_Request_builder) Build() *AddFollowMessage_Request {
 	m0 := &AddFollowMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Follow = b.Follow
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Follow = b.Follow
 	return m0
 }
 
 type AddFollowMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Follow        *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3" json:"follow,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Follow       *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *AddFollowMessage_Response) Reset() {
@@ -6465,46 +6466,46 @@ func (x *AddFollowMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *AddFollowMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *AddFollowMessage_Response) GetFollow() *UserFollowMessage {
 	if x != nil {
-		return x.Follow
+		return x.xxx_hidden_Follow
 	}
 	return nil
 }
 
 func (x *AddFollowMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *AddFollowMessage_Response) SetFollow(v *UserFollowMessage) {
-	x.Follow = v
+	x.xxx_hidden_Follow = v
 }
 
 func (x *AddFollowMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *AddFollowMessage_Response) HasFollow() bool {
 	if x == nil {
 		return false
 	}
-	return x.Follow != nil
+	return x.xxx_hidden_Follow != nil
 }
 
 func (x *AddFollowMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *AddFollowMessage_Response) ClearFollow() {
-	x.Follow = nil
+	x.xxx_hidden_Follow = nil
 }
 
 type AddFollowMessage_Response_builder struct {
@@ -6518,17 +6519,17 @@ func (b0 AddFollowMessage_Response_builder) Build() *AddFollowMessage_Response {
 	m0 := &AddFollowMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Follow = b.Follow
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Follow = b.Follow
 	return m0
 }
 
 type RemoveFollowMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Follow        *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3" json:"follow,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Follow      *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *RemoveFollowMessage_Request) Reset() {
@@ -6558,46 +6559,46 @@ func (x *RemoveFollowMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveFollowMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage_Request) GetFollow() *UserFollowMessage {
 	if x != nil {
-		return x.Follow
+		return x.xxx_hidden_Follow
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *RemoveFollowMessage_Request) SetFollow(v *UserFollowMessage) {
-	x.Follow = v
+	x.xxx_hidden_Follow = v
 }
 
 func (x *RemoveFollowMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *RemoveFollowMessage_Request) HasFollow() bool {
 	if x == nil {
 		return false
 	}
-	return x.Follow != nil
+	return x.xxx_hidden_Follow != nil
 }
 
 func (x *RemoveFollowMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *RemoveFollowMessage_Request) ClearFollow() {
-	x.Follow = nil
+	x.xxx_hidden_Follow = nil
 }
 
 type RemoveFollowMessage_Request_builder struct {
@@ -6611,17 +6612,17 @@ func (b0 RemoveFollowMessage_Request_builder) Build() *RemoveFollowMessage_Reque
 	m0 := &RemoveFollowMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Follow = b.Follow
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Follow = b.Follow
 	return m0
 }
 
 type RemoveFollowMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Follow        *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3" json:"follow,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Follow       *UserFollowMessage     `protobuf:"bytes,2,opt,name=follow,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RemoveFollowMessage_Response) Reset() {
@@ -6651,46 +6652,46 @@ func (x *RemoveFollowMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveFollowMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage_Response) GetFollow() *UserFollowMessage {
 	if x != nil {
-		return x.Follow
+		return x.xxx_hidden_Follow
 	}
 	return nil
 }
 
 func (x *RemoveFollowMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *RemoveFollowMessage_Response) SetFollow(v *UserFollowMessage) {
-	x.Follow = v
+	x.xxx_hidden_Follow = v
 }
 
 func (x *RemoveFollowMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *RemoveFollowMessage_Response) HasFollow() bool {
 	if x == nil {
 		return false
 	}
-	return x.Follow != nil
+	return x.xxx_hidden_Follow != nil
 }
 
 func (x *RemoveFollowMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *RemoveFollowMessage_Response) ClearFollow() {
-	x.Follow = nil
+	x.xxx_hidden_Follow = nil
 }
 
 type RemoveFollowMessage_Response_builder struct {
@@ -6704,21 +6705,20 @@ func (b0 RemoveFollowMessage_Response_builder) Build() *RemoveFollowMessage_Resp
 	m0 := &RemoveFollowMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Follow = b.Follow
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Follow = b.Follow
 	return m0
 }
 
 type ListFollowMessage_Request struct {
-	state        protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId       string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	IncludeUsers bool                   `protobuf:"varint,4,opt,name=include_users,json=includeUsers,proto3" json:"include_users,omitempty"`
-	// Whether or not to return following or followed users
-	IsFollowed    bool `protobuf:"varint,5,opt,name=is_followed,json=isFollowed,proto3" json:"is_followed,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId       string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	xxx_hidden_IncludeUsers bool                   `protobuf:"varint,4,opt,name=include_users,json=includeUsers,proto3"`
+	xxx_hidden_IsFollowed   bool                   `protobuf:"varint,5,opt,name=is_followed,json=isFollowed,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ListFollowMessage_Request) Reset() {
@@ -6748,79 +6748,79 @@ func (x *ListFollowMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *ListFollowMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *ListFollowMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *ListFollowMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListFollowMessage_Request) GetIncludeUsers() bool {
 	if x != nil {
-		return x.IncludeUsers
+		return x.xxx_hidden_IncludeUsers
 	}
 	return false
 }
 
 func (x *ListFollowMessage_Request) GetIsFollowed() bool {
 	if x != nil {
-		return x.IsFollowed
+		return x.xxx_hidden_IsFollowed
 	}
 	return false
 }
 
 func (x *ListFollowMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *ListFollowMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *ListFollowMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListFollowMessage_Request) SetIncludeUsers(v bool) {
-	x.IncludeUsers = v
+	x.xxx_hidden_IncludeUsers = v
 }
 
 func (x *ListFollowMessage_Request) SetIsFollowed(v bool) {
-	x.IsFollowed = v
+	x.xxx_hidden_IsFollowed = v
 }
 
 func (x *ListFollowMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *ListFollowMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListFollowMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *ListFollowMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListFollowMessage_Request_builder struct {
@@ -6838,21 +6838,21 @@ func (b0 ListFollowMessage_Request_builder) Build() *ListFollowMessage_Request {
 	m0 := &ListFollowMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
-	x.Cursor = b.Cursor
-	x.IncludeUsers = b.IncludeUsers
-	x.IsFollowed = b.IsFollowed
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_Cursor = b.Cursor
+	x.xxx_hidden_IncludeUsers = b.IncludeUsers
+	x.xxx_hidden_IsFollowed = b.IsFollowed
 	return m0
 }
 
 type ListFollowMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Follows       []*UserFollowMessage   `protobuf:"bytes,2,rep,name=follows,proto3" json:"follows,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Follows      *[]*UserFollowMessage  `protobuf:"bytes,2,rep,name=follows,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ListFollowMessage_Response) Reset() {
@@ -6882,57 +6882,59 @@ func (x *ListFollowMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *ListFollowMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *ListFollowMessage_Response) GetFollows() []*UserFollowMessage {
 	if x != nil {
-		return x.Follows
+		if x.xxx_hidden_Follows != nil {
+			return *x.xxx_hidden_Follows
+		}
 	}
 	return nil
 }
 
 func (x *ListFollowMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *ListFollowMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *ListFollowMessage_Response) SetFollows(v []*UserFollowMessage) {
-	x.Follows = v
+	x.xxx_hidden_Follows = &v
 }
 
 func (x *ListFollowMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *ListFollowMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *ListFollowMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *ListFollowMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *ListFollowMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type ListFollowMessage_Response_builder struct {
@@ -6947,18 +6949,18 @@ func (b0 ListFollowMessage_Response_builder) Build() *ListFollowMessage_Response
 	m0 := &ListFollowMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Follows = b.Follows
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Follows = &b.Follows
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type GetPublicUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetPublicUserMessage_Request) Reset() {
@@ -6988,35 +6990,35 @@ func (x *GetPublicUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *GetPublicUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *GetPublicUserMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *GetPublicUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *GetPublicUserMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *GetPublicUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *GetPublicUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type GetPublicUserMessage_Request_builder struct {
@@ -7030,17 +7032,17 @@ func (b0 GetPublicUserMessage_Request_builder) Build() *GetPublicUserMessage_Req
 	m0 := &GetPublicUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
 	return m0
 }
 
 type GetPublicUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	User          *PublicUserMessage     `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_User         *PublicUserMessage     `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetPublicUserMessage_Response) Reset() {
@@ -7070,46 +7072,46 @@ func (x *GetPublicUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *GetPublicUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *GetPublicUserMessage_Response) GetUser() *PublicUserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *GetPublicUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *GetPublicUserMessage_Response) SetUser(v *PublicUserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *GetPublicUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *GetPublicUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *GetPublicUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *GetPublicUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type GetPublicUserMessage_Response_builder struct {
@@ -7123,17 +7125,17 @@ func (b0 GetPublicUserMessage_Response_builder) Build() *GetPublicUserMessage_Re
 	m0 := &GetPublicUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type EditUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_User        *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *EditUserMessage_Request) Reset() {
@@ -7163,46 +7165,46 @@ func (x *EditUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *EditUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *EditUserMessage_Request) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *EditUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *EditUserMessage_Request) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *EditUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *EditUserMessage_Request) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *EditUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *EditUserMessage_Request) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type EditUserMessage_Request_builder struct {
@@ -7216,17 +7218,17 @@ func (b0 EditUserMessage_Request_builder) Build() *EditUserMessage_Request {
 	m0 := &EditUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.User = b.User
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type EditUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	User          *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *EditUserMessage_Response) Reset() {
@@ -7256,46 +7258,46 @@ func (x *EditUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *EditUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *EditUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
-		return x.User
+		return x.xxx_hidden_User
 	}
 	return nil
 }
 
 func (x *EditUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *EditUserMessage_Response) SetUser(v *UserMessage) {
-	x.User = v
+	x.xxx_hidden_User = v
 }
 
 func (x *EditUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *EditUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
 	}
-	return x.User != nil
+	return x.xxx_hidden_User != nil
 }
 
 func (x *EditUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *EditUserMessage_Response) ClearUser() {
-	x.User = nil
+	x.xxx_hidden_User = nil
 }
 
 type EditUserMessage_Response_builder struct {
@@ -7309,17 +7311,17 @@ func (b0 EditUserMessage_Response_builder) Build() *EditUserMessage_Response {
 	m0 := &EditUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.User = b.User
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_User = b.User
 	return m0
 }
 
 type RemoveUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *RemoveUserMessage_Request) Reset() {
@@ -7349,35 +7351,35 @@ func (x *RemoveUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *RemoveUserMessage_Request) GetUserId() string {
 	if x != nil {
-		return x.UserId
+		return x.xxx_hidden_UserId
 	}
 	return ""
 }
 
 func (x *RemoveUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *RemoveUserMessage_Request) SetUserId(v string) {
-	x.UserId = v
+	x.xxx_hidden_UserId = v
 }
 
 func (x *RemoveUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *RemoveUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type RemoveUserMessage_Request_builder struct {
@@ -7391,16 +7393,16 @@ func (b0 RemoveUserMessage_Request_builder) Build() *RemoveUserMessage_Request {
 	m0 := &RemoveUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserId = b.UserId
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserId = b.UserId
 	return m0
 }
 
 type RemoveUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *RemoveUserMessage_Response) Reset() {
@@ -7430,24 +7432,24 @@ func (x *RemoveUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *RemoveUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *RemoveUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *RemoveUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *RemoveUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 type RemoveUserMessage_Response_builder struct {
@@ -7460,16 +7462,16 @@ func (b0 RemoveUserMessage_Response_builder) Build() *RemoveUserMessage_Response
 	m0 := &RemoveUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
 	return m0
 }
 
 type ListUserMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	UserIds       []string               `protobuf:"bytes,2,rep,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_UserIds     []string               `protobuf:"bytes,2,rep,name=user_ids,json=userIds,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *ListUserMessage_Request) Reset() {
@@ -7499,35 +7501,35 @@ func (x *ListUserMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *ListUserMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *ListUserMessage_Request) GetUserIds() []string {
 	if x != nil {
-		return x.UserIds
+		return x.xxx_hidden_UserIds
 	}
 	return nil
 }
 
 func (x *ListUserMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *ListUserMessage_Request) SetUserIds(v []string) {
-	x.UserIds = v
+	x.xxx_hidden_UserIds = v
 }
 
 func (x *ListUserMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *ListUserMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type ListUserMessage_Request_builder struct {
@@ -7541,17 +7543,17 @@ func (b0 ListUserMessage_Request_builder) Build() *ListUserMessage_Request {
 	m0 := &ListUserMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.UserIds = b.UserIds
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_UserIds = b.UserIds
 	return m0
 }
 
 type ListUserMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Users         []*PublicUserMessage   `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Users        *[]*PublicUserMessage  `protobuf:"bytes,2,rep,name=users,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ListUserMessage_Response) Reset() {
@@ -7581,35 +7583,37 @@ func (x *ListUserMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *ListUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *ListUserMessage_Response) GetUsers() []*PublicUserMessage {
 	if x != nil {
-		return x.Users
+		if x.xxx_hidden_Users != nil {
+			return *x.xxx_hidden_Users
+		}
 	}
 	return nil
 }
 
 func (x *ListUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *ListUserMessage_Response) SetUsers(v []*PublicUserMessage) {
-	x.Users = v
+	x.xxx_hidden_Users = &v
 }
 
 func (x *ListUserMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *ListUserMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 type ListUserMessage_Response_builder struct {
@@ -7623,17 +7627,17 @@ func (b0 ListUserMessage_Response_builder) Build() *ListUserMessage_Response {
 	m0 := &ListUserMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Users = b.Users
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Users = &b.Users
 	return m0
 }
 
 type UploadImageMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	ImageBytes    []byte                 `protobuf:"bytes,2,opt,name=image_bytes,json=imageBytes,proto3" json:"image_bytes,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_ImageBytes  []byte                 `protobuf:"bytes,2,opt,name=image_bytes,json=imageBytes,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UploadImageMessage_Request) Reset() {
@@ -7663,38 +7667,38 @@ func (x *UploadImageMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *UploadImageMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *UploadImageMessage_Request) GetImageBytes() []byte {
 	if x != nil {
-		return x.ImageBytes
+		return x.xxx_hidden_ImageBytes
 	}
 	return nil
 }
 
 func (x *UploadImageMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *UploadImageMessage_Request) SetImageBytes(v []byte) {
 	if v == nil {
 		v = []byte{}
 	}
-	x.ImageBytes = v
+	x.xxx_hidden_ImageBytes = v
 }
 
 func (x *UploadImageMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *UploadImageMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type UploadImageMessage_Request_builder struct {
@@ -7708,17 +7712,17 @@ func (b0 UploadImageMessage_Request_builder) Build() *UploadImageMessage_Request
 	m0 := &UploadImageMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.ImageBytes = b.ImageBytes
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_ImageBytes = b.ImageBytes
 	return m0
 }
 
 type UploadImageMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	ImageUrl      string                 `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_ImageUrl     string                 `protobuf:"bytes,2,opt,name=image_url,json=imageUrl,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *UploadImageMessage_Response) Reset() {
@@ -7748,35 +7752,35 @@ func (x *UploadImageMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *UploadImageMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *UploadImageMessage_Response) GetImageUrl() string {
 	if x != nil {
-		return x.ImageUrl
+		return x.xxx_hidden_ImageUrl
 	}
 	return ""
 }
 
 func (x *UploadImageMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *UploadImageMessage_Response) SetImageUrl(v string) {
-	x.ImageUrl = v
+	x.xxx_hidden_ImageUrl = v
 }
 
 func (x *UploadImageMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *UploadImageMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 type UploadImageMessage_Response_builder struct {
@@ -7790,18 +7794,18 @@ func (b0 UploadImageMessage_Response_builder) Build() *UploadImageMessage_Respon
 	m0 := &UploadImageMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.ImageUrl = b.ImageUrl
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_ImageUrl = b.ImageUrl
 	return m0
 }
 
 type FindContactsMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	PhoneNumbers  []string               `protobuf:"bytes,2,rep,name=phone_numbers,json=phoneNumbers,proto3" json:"phone_numbers,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_PhoneNumbers []string               `protobuf:"bytes,2,rep,name=phone_numbers,json=phoneNumbers,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *FindContactsMessage_Request) Reset() {
@@ -7831,57 +7835,57 @@ func (x *FindContactsMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *FindContactsMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Request) GetPhoneNumbers() []string {
 	if x != nil {
-		return x.PhoneNumbers
+		return x.xxx_hidden_PhoneNumbers
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *FindContactsMessage_Request) SetPhoneNumbers(v []string) {
-	x.PhoneNumbers = v
+	x.xxx_hidden_PhoneNumbers = v
 }
 
 func (x *FindContactsMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *FindContactsMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *FindContactsMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *FindContactsMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *FindContactsMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type FindContactsMessage_Request_builder struct {
@@ -7896,19 +7900,19 @@ func (b0 FindContactsMessage_Request_builder) Build() *FindContactsMessage_Reque
 	m0 := &FindContactsMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.PhoneNumbers = b.PhoneNumbers
-	x.Cursor = b.Cursor
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_PhoneNumbers = b.PhoneNumbers
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type FindContactsMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Users         []*PublicUserMessage   `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Users        *[]*PublicUserMessage  `protobuf:"bytes,2,rep,name=users,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *FindContactsMessage_Response) Reset() {
@@ -7938,57 +7942,59 @@ func (x *FindContactsMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *FindContactsMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Response) GetUsers() []*PublicUserMessage {
 	if x != nil {
-		return x.Users
+		if x.xxx_hidden_Users != nil {
+			return *x.xxx_hidden_Users
+		}
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *FindContactsMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *FindContactsMessage_Response) SetUsers(v []*PublicUserMessage) {
-	x.Users = v
+	x.xxx_hidden_Users = &v
 }
 
 func (x *FindContactsMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *FindContactsMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *FindContactsMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *FindContactsMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *FindContactsMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type FindContactsMessage_Response_builder struct {
@@ -8003,19 +8009,19 @@ func (b0 FindContactsMessage_Response_builder) Build() *FindContactsMessage_Resp
 	m0 := &FindContactsMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Users = b.Users
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Users = &b.Users
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type SearchContactsMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,2,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	Query         string                 `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Cursor      *QueryCursor           `protobuf:"bytes,2,opt,name=cursor,proto3"`
+	xxx_hidden_Query       string                 `protobuf:"bytes,3,opt,name=query,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *SearchContactsMessage_Request) Reset() {
@@ -8045,57 +8051,57 @@ func (x *SearchContactsMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *SearchContactsMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *SearchContactsMessage_Request) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *SearchContactsMessage_Request) GetQuery() string {
 	if x != nil {
-		return x.Query
+		return x.xxx_hidden_Query
 	}
 	return ""
 }
 
 func (x *SearchContactsMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *SearchContactsMessage_Request) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *SearchContactsMessage_Request) SetQuery(v string) {
-	x.Query = v
+	x.xxx_hidden_Query = v
 }
 
 func (x *SearchContactsMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *SearchContactsMessage_Request) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *SearchContactsMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 func (x *SearchContactsMessage_Request) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type SearchContactsMessage_Request_builder struct {
@@ -8110,19 +8116,19 @@ func (b0 SearchContactsMessage_Request_builder) Build() *SearchContactsMessage_R
 	m0 := &SearchContactsMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Cursor = b.Cursor
-	x.Query = b.Query
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Cursor = b.Cursor
+	x.xxx_hidden_Query = b.Query
 	return m0
 }
 
 type SearchContactsMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Users         []*PublicUserMessage   `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
-	Cursor        *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3" json:"cursor,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Users        *[]*PublicUserMessage  `protobuf:"bytes,2,rep,name=users,proto3"`
+	xxx_hidden_Cursor       *QueryCursor           `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *SearchContactsMessage_Response) Reset() {
@@ -8152,57 +8158,59 @@ func (x *SearchContactsMessage_Response) ProtoReflect() protoreflect.Message {
 
 func (x *SearchContactsMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *SearchContactsMessage_Response) GetUsers() []*PublicUserMessage {
 	if x != nil {
-		return x.Users
+		if x.xxx_hidden_Users != nil {
+			return *x.xxx_hidden_Users
+		}
 	}
 	return nil
 }
 
 func (x *SearchContactsMessage_Response) GetCursor() *QueryCursor {
 	if x != nil {
-		return x.Cursor
+		return x.xxx_hidden_Cursor
 	}
 	return nil
 }
 
 func (x *SearchContactsMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *SearchContactsMessage_Response) SetUsers(v []*PublicUserMessage) {
-	x.Users = v
+	x.xxx_hidden_Users = &v
 }
 
 func (x *SearchContactsMessage_Response) SetCursor(v *QueryCursor) {
-	x.Cursor = v
+	x.xxx_hidden_Cursor = v
 }
 
 func (x *SearchContactsMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *SearchContactsMessage_Response) HasCursor() bool {
 	if x == nil {
 		return false
 	}
-	return x.Cursor != nil
+	return x.xxx_hidden_Cursor != nil
 }
 
 func (x *SearchContactsMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 func (x *SearchContactsMessage_Response) ClearCursor() {
-	x.Cursor = nil
+	x.xxx_hidden_Cursor = nil
 }
 
 type SearchContactsMessage_Response_builder struct {
@@ -8217,18 +8225,18 @@ func (b0 SearchContactsMessage_Response_builder) Build() *SearchContactsMessage_
 	m0 := &SearchContactsMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Users = b.Users
-	x.Cursor = b.Cursor
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Users = &b.Users
+	x.xxx_hidden_Cursor = b.Cursor
 	return m0
 }
 
 type SearchTopContactsMessage_Request struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
-	Contacts      []*UserContactMessage  `protobuf:"bytes,2,rep,name=contacts,proto3" json:"contacts,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	xxx_hidden_Contacts    *[]*UserContactMessage `protobuf:"bytes,2,rep,name=contacts,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *SearchTopContactsMessage_Request) Reset() {
@@ -8258,35 +8266,37 @@ func (x *SearchTopContactsMessage_Request) ProtoReflect() protoreflect.Message {
 
 func (x *SearchTopContactsMessage_Request) GetRequestInfo() *RequestInfo {
 	if x != nil {
-		return x.RequestInfo
+		return x.xxx_hidden_RequestInfo
 	}
 	return nil
 }
 
 func (x *SearchTopContactsMessage_Request) GetContacts() []*UserContactMessage {
 	if x != nil {
-		return x.Contacts
+		if x.xxx_hidden_Contacts != nil {
+			return *x.xxx_hidden_Contacts
+		}
 	}
 	return nil
 }
 
 func (x *SearchTopContactsMessage_Request) SetRequestInfo(v *RequestInfo) {
-	x.RequestInfo = v
+	x.xxx_hidden_RequestInfo = v
 }
 
 func (x *SearchTopContactsMessage_Request) SetContacts(v []*UserContactMessage) {
-	x.Contacts = v
+	x.xxx_hidden_Contacts = &v
 }
 
 func (x *SearchTopContactsMessage_Request) HasRequestInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.RequestInfo != nil
+	return x.xxx_hidden_RequestInfo != nil
 }
 
 func (x *SearchTopContactsMessage_Request) ClearRequestInfo() {
-	x.RequestInfo = nil
+	x.xxx_hidden_RequestInfo = nil
 }
 
 type SearchTopContactsMessage_Request_builder struct {
@@ -8300,17 +8310,17 @@ func (b0 SearchTopContactsMessage_Request_builder) Build() *SearchTopContactsMes
 	m0 := &SearchTopContactsMessage_Request{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.RequestInfo = b.RequestInfo
-	x.Contacts = b.Contacts
+	x.xxx_hidden_RequestInfo = b.RequestInfo
+	x.xxx_hidden_Contacts = &b.Contacts
 	return m0
 }
 
 type SearchTopContactsMessage_Response struct {
-	state         protoimpl.MessageState `protogen:"hybrid.v1"`
-	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
-	Users         []*PublicUserMessage   `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
+	xxx_hidden_Users        *[]*PublicUserMessage  `protobuf:"bytes,2,rep,name=users,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *SearchTopContactsMessage_Response) Reset() {
@@ -8340,35 +8350,37 @@ func (x *SearchTopContactsMessage_Response) ProtoReflect() protoreflect.Message 
 
 func (x *SearchTopContactsMessage_Response) GetResponseInfo() *ResponseInfo {
 	if x != nil {
-		return x.ResponseInfo
+		return x.xxx_hidden_ResponseInfo
 	}
 	return nil
 }
 
 func (x *SearchTopContactsMessage_Response) GetUsers() []*PublicUserMessage {
 	if x != nil {
-		return x.Users
+		if x.xxx_hidden_Users != nil {
+			return *x.xxx_hidden_Users
+		}
 	}
 	return nil
 }
 
 func (x *SearchTopContactsMessage_Response) SetResponseInfo(v *ResponseInfo) {
-	x.ResponseInfo = v
+	x.xxx_hidden_ResponseInfo = v
 }
 
 func (x *SearchTopContactsMessage_Response) SetUsers(v []*PublicUserMessage) {
-	x.Users = v
+	x.xxx_hidden_Users = &v
 }
 
 func (x *SearchTopContactsMessage_Response) HasResponseInfo() bool {
 	if x == nil {
 		return false
 	}
-	return x.ResponseInfo != nil
+	return x.xxx_hidden_ResponseInfo != nil
 }
 
 func (x *SearchTopContactsMessage_Response) ClearResponseInfo() {
-	x.ResponseInfo = nil
+	x.xxx_hidden_ResponseInfo = nil
 }
 
 type SearchTopContactsMessage_Response_builder struct {
@@ -8382,8 +8394,8 @@ func (b0 SearchTopContactsMessage_Response_builder) Build() *SearchTopContactsMe
 	m0 := &SearchTopContactsMessage_Response{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.ResponseInfo = b.ResponseInfo
-	x.Users = b.Users
+	x.xxx_hidden_ResponseInfo = b.ResponseInfo
+	x.xxx_hidden_Users = &b.Users
 	return m0
 }
 

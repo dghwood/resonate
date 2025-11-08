@@ -20,10 +20,10 @@ func TestFieldName(t *testing.T) {
 	model := models.Subscription{}
 	model.UserId = "123"
 
-	fields := GetFields(&model)
+	item := GetFields(&model)
 
-	if fields[0].Name != "user_id" {
-		t.Errorf("FieldName() = %s; want user_id", fields[0].Name)
+	if item.Fields[0].Name != "user_id" {
+		t.Errorf("FieldName() = %s; want user_id", item.Fields[0].Name)
 	}
 }
 
@@ -71,18 +71,11 @@ func TestRepeatedFields(t *testing.T) {
 			ExpiryUtcTimestamp: 2,
 		},
 	}
-	fields := GetFields(&repeatedProto)
-	for _, field := range fields {
-		if field.Name == "tokens" {
-			v := field.Value.([][]byte)
-			if len(v) != 2 {
-				t.Errorf("len(v) = %d; want 2", len(v))
-			}
-		}
-	}
+	item := GetFields(&repeatedProto)
 
 	retrievedProto := models.RefreshTokens{}
-	err := RetrieveFields(fields, &retrievedProto)
+
+	err := RetrieveFields(item, &retrievedProto)
 	if err != nil {
 		t.Errorf("RetrieveFields() error = %v", err)
 	}
@@ -92,6 +85,12 @@ func TestRepeatedFields(t *testing.T) {
 	}
 	if len(retrievedProto.Tokens) != 2 {
 		t.Errorf("len(Tokens) = %d; want 2", len(retrievedProto.Tokens))
+	}
+	if retrievedProto.Tokens[0].Token != "token1" {
+		t.Errorf("Tokens[0].Token = %s; want token1", retrievedProto.Tokens[0].Token)
+	}
+	if retrievedProto.Tokens[0].ExpiryUtcTimestamp != 1 {
+		t.Errorf("Tokens[0].ExpiryUtcTimestamp = %d; want 1", retrievedProto.Tokens[0].ExpiryUtcTimestamp)
 	}
 
 }
