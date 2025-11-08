@@ -38,6 +38,14 @@ func (f *Add) Execute(
 	subscription := models.Subscription{}
 	models.Merge(&subscription.UserSubscriptionMessage, request.Subscription)
 	log.Info(&subscription)
+	// Check the podcast exists
+	podcast := models.Podcast{}
+	podcast.Id = subscription.PodcastId
+	err = f.Datastore.Get(&podcast)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&subscription)
 	if err != nil {
@@ -45,5 +53,12 @@ func (f *Add) Execute(
 		return
 	}
 	response.Subscription = &subscription.UserSubscriptionMessage
+
+	podcast.NumSubscriptions += 1
+	err = f.Datastore.Put(&podcast)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	return
 }

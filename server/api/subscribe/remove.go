@@ -33,11 +33,29 @@ func (f *Remove) Execute(
 	// Do I even need this path, if it's all soft deletes?
 	models.Merge(&subscription.UserSubscriptionMessage, request.Subscription)
 
+	// Check the podcast exists
+	podcast := models.Podcast{}
+	podcast.Id = subscription.PodcastId
+	err = f.Datastore.Get(&podcast)
+	if err != nil {
+		return
+	}
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&subscription)
 	if err != nil {
 		return
 	}
 	response.Subscription = &subscription.UserSubscriptionMessage
+
+	podcast.NumSubscriptions -= 1
+	// Move this to models
+	if podcast.NumSubscriptions < 0 {
+		// Don't let it go to zero
+		podcast.NumSubscriptions = 0
+	}
+	err = f.Datastore.Put(&podcast)
+	if err != nil {
+		return
+	}
 	return
 }

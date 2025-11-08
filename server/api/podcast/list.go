@@ -89,7 +89,7 @@ func (f *List) Execute(
 	id := request.PodcastId
 	log.Info("fetching podcast for : ", id)
 
-	podcast := models.Podcast{}
+	podcast := &models.Podcast{}
 	podcast.Id = id
 	url, err := podcast.GetUrlFromId()
 	if err != nil {
@@ -98,17 +98,19 @@ func (f *List) Execute(
 	}
 
 	// Try the database,
-	if f.Datastore.Get(&podcast) == nil &&
+	if f.Datastore.Get(podcast) == nil &&
 		podcast.LatestEpisodeTimestamp > 0 &&
 		// Move this to models?
 		// This returns from the DB if the podcast has been fetched in the last 12 hours
 		utils.TimestampDelta(
 			podcast.LastFetchTimestamp,
 			utils.Now()).Hours() < 12 {
-		return f.executeFromDatabase(&podcast, loggedInUser, request, response)
+		return f.executeFromDatabase(podcast, loggedInUser, request, response)
 	}
 
-	podcast, episodes, err := rss.Get(url, f.FetchClient)
+	updatedPodcast, episodes, err := rss.Get(url, f.FetchClient)
+	// Don't let the updated podcast override other fields
+	models.Merge(podcast, &updatedPodcast)
 	if err != nil {
 		log.Error(err)
 		return
@@ -125,7 +127,7 @@ func (f *List) Execute(
 		response.Cursor = &cursor.QueryCursor
 
 	}
-	go f.asyncSyncToDatabase(&podcast, episodes)
+	go f.asyncSyncToDatabase(podcast, episodes)
 	return
 }
 

@@ -136,6 +136,8 @@ type PodcastMessage struct {
 	xxx_hidden_Metadata               *StorageMetadataMessage `protobuf:"bytes,8,opt,name=metadata,proto3"`
 	xxx_hidden_LatestEpisodeTimestamp int64                   `protobuf:"varint,9,opt,name=latest_episode_timestamp,json=latestEpisodeTimestamp,proto3"`
 	xxx_hidden_LastFetchTimestamp     int64                   `protobuf:"varint,10,opt,name=last_fetch_timestamp,json=lastFetchTimestamp,proto3"`
+	xxx_hidden_NumSubscriptions       int64                   `protobuf:"varint,11,opt,name=num_subscriptions,json=numSubscriptions,proto3"`
+	xxx_hidden_NumListens             int64                   `protobuf:"varint,12,opt,name=num_listens,json=numListens,proto3"`
 	unknownFields                     protoimpl.UnknownFields
 	sizeCache                         protoimpl.SizeCache
 }
@@ -237,6 +239,20 @@ func (x *PodcastMessage) GetLastFetchTimestamp() int64 {
 	return 0
 }
 
+func (x *PodcastMessage) GetNumSubscriptions() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumSubscriptions
+	}
+	return 0
+}
+
+func (x *PodcastMessage) GetNumListens() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumListens
+	}
+	return 0
+}
+
 func (x *PodcastMessage) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -277,6 +293,14 @@ func (x *PodcastMessage) SetLastFetchTimestamp(v int64) {
 	x.xxx_hidden_LastFetchTimestamp = v
 }
 
+func (x *PodcastMessage) SetNumSubscriptions(v int64) {
+	x.xxx_hidden_NumSubscriptions = v
+}
+
+func (x *PodcastMessage) SetNumListens(v int64) {
+	x.xxx_hidden_NumListens = v
+}
+
 func (x *PodcastMessage) HasMetadata() bool {
 	if x == nil {
 		return false
@@ -304,6 +328,8 @@ type PodcastMessage_builder struct {
 	LatestEpisodeTimestamp int64
 	// Used for last URL fetch
 	LastFetchTimestamp int64
+	NumSubscriptions   int64
+	NumListens         int64
 }
 
 func (b0 PodcastMessage_builder) Build() *PodcastMessage {
@@ -320,6 +346,8 @@ func (b0 PodcastMessage_builder) Build() *PodcastMessage {
 	x.xxx_hidden_Metadata = b.Metadata
 	x.xxx_hidden_LatestEpisodeTimestamp = b.LatestEpisodeTimestamp
 	x.xxx_hidden_LastFetchTimestamp = b.LastFetchTimestamp
+	x.xxx_hidden_NumSubscriptions = b.NumSubscriptions
+	x.xxx_hidden_NumListens = b.NumListens
 	return m0
 }
 
@@ -336,6 +364,7 @@ type EpisodeMessage struct {
 	xxx_hidden_EpisodeNumber    int64                   `protobuf:"varint,10,opt,name=episode_number,json=episodeNumber,proto3"`
 	xxx_hidden_Explicit         bool                    `protobuf:"varint,11,opt,name=explicit,proto3"`
 	xxx_hidden_Metadata         *StorageMetadataMessage `protobuf:"bytes,12,opt,name=metadata,proto3"`
+	xxx_hidden_NumListens       int64                   `protobuf:"varint,13,opt,name=num_listens,json=numListens,proto3"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -442,6 +471,13 @@ func (x *EpisodeMessage) GetMetadata() *StorageMetadataMessage {
 	return nil
 }
 
+func (x *EpisodeMessage) GetNumListens() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumListens
+	}
+	return 0
+}
+
 func (x *EpisodeMessage) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -486,6 +522,10 @@ func (x *EpisodeMessage) SetMetadata(v *StorageMetadataMessage) {
 	x.xxx_hidden_Metadata = v
 }
 
+func (x *EpisodeMessage) SetNumListens(v int64) {
+	x.xxx_hidden_NumListens = v
+}
+
 func (x *EpisodeMessage) HasMetadata() bool {
 	if x == nil {
 		return false
@@ -511,6 +551,7 @@ type EpisodeMessage_builder struct {
 	EpisodeNumber    int64
 	Explicit         bool
 	Metadata         *StorageMetadataMessage
+	NumListens       int64
 }
 
 func (b0 EpisodeMessage_builder) Build() *EpisodeMessage {
@@ -528,6 +569,7 @@ func (b0 EpisodeMessage_builder) Build() *EpisodeMessage {
 	x.xxx_hidden_EpisodeNumber = b.EpisodeNumber
 	x.xxx_hidden_Explicit = b.Explicit
 	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_NumListens = b.NumListens
 	return m0
 }
 
@@ -971,6 +1013,7 @@ func (b0 RefreshTokensMessage_builder) Build() *RefreshTokensMessage {
 	return m0
 }
 
+// Next Tag: 14
 type UserMessage struct {
 	state                           protoimpl.MessageState      `protogen:"opaque.v1"`
 	xxx_hidden_Id                   string                      `protobuf:"bytes,1,opt,name=id,proto3"`
@@ -982,8 +1025,10 @@ type UserMessage struct {
 	xxx_hidden_Subscriptions        *[]*UserSubscriptionMessage `protobuf:"bytes,5,rep,name=subscriptions,proto3"`
 	xxx_hidden_Listens              *[]*UserListenMessage       `protobuf:"bytes,6,rep,name=listens,proto3"`
 	xxx_hidden_Following            *[]*UserFollowMessage       `protobuf:"bytes,7,rep,name=following,proto3"`
-	xxx_hidden_NumFollowers         int64                       `protobuf:"varint,8,opt,name=num_followers,json=numFollowers,proto3"`
 	xxx_hidden_Metadata             *StorageMetadataMessage     `protobuf:"bytes,9,opt,name=metadata,proto3"`
+	xxx_hidden_NumFollowers         int64                       `protobuf:"varint,8,opt,name=num_followers,json=numFollowers,proto3"`
+	xxx_hidden_NumFollowing         int64                       `protobuf:"varint,12,opt,name=num_following,json=numFollowing,proto3"`
+	xxx_hidden_NumListens           int64                       `protobuf:"varint,13,opt,name=num_listens,json=numListens,proto3"`
 	unknownFields                   protoimpl.UnknownFields
 	sizeCache                       protoimpl.SizeCache
 }
@@ -1082,6 +1127,13 @@ func (x *UserMessage) GetFollowing() []*UserFollowMessage {
 	return nil
 }
 
+func (x *UserMessage) GetMetadata() *StorageMetadataMessage {
+	if x != nil {
+		return x.xxx_hidden_Metadata
+	}
+	return nil
+}
+
 func (x *UserMessage) GetNumFollowers() int64 {
 	if x != nil {
 		return x.xxx_hidden_NumFollowers
@@ -1089,11 +1141,18 @@ func (x *UserMessage) GetNumFollowers() int64 {
 	return 0
 }
 
-func (x *UserMessage) GetMetadata() *StorageMetadataMessage {
+func (x *UserMessage) GetNumFollowing() int64 {
 	if x != nil {
-		return x.xxx_hidden_Metadata
+		return x.xxx_hidden_NumFollowing
 	}
-	return nil
+	return 0
+}
+
+func (x *UserMessage) GetNumListens() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumListens
+	}
+	return 0
 }
 
 func (x *UserMessage) SetId(v string) {
@@ -1132,12 +1191,20 @@ func (x *UserMessage) SetFollowing(v []*UserFollowMessage) {
 	x.xxx_hidden_Following = &v
 }
 
+func (x *UserMessage) SetMetadata(v *StorageMetadataMessage) {
+	x.xxx_hidden_Metadata = v
+}
+
 func (x *UserMessage) SetNumFollowers(v int64) {
 	x.xxx_hidden_NumFollowers = v
 }
 
-func (x *UserMessage) SetMetadata(v *StorageMetadataMessage) {
-	x.xxx_hidden_Metadata = v
+func (x *UserMessage) SetNumFollowing(v int64) {
+	x.xxx_hidden_NumFollowing = v
+}
+
+func (x *UserMessage) SetNumListens(v int64) {
+	x.xxx_hidden_NumListens = v
 }
 
 func (x *UserMessage) HasMetadata() bool {
@@ -1166,8 +1233,11 @@ type UserMessage_builder struct {
 	Subscriptions []*UserSubscriptionMessage
 	Listens       []*UserListenMessage
 	Following     []*UserFollowMessage
-	NumFollowers  int64
 	Metadata      *StorageMetadataMessage
+	// TODO(duncan): Do I want to move this to a seperate entity?
+	NumFollowers int64
+	NumFollowing int64
+	NumListens   int64
 }
 
 func (b0 UserMessage_builder) Build() *UserMessage {
@@ -1183,20 +1253,25 @@ func (b0 UserMessage_builder) Build() *UserMessage {
 	x.xxx_hidden_Subscriptions = &b.Subscriptions
 	x.xxx_hidden_Listens = &b.Listens
 	x.xxx_hidden_Following = &b.Following
-	x.xxx_hidden_NumFollowers = b.NumFollowers
 	x.xxx_hidden_Metadata = b.Metadata
+	x.xxx_hidden_NumFollowers = b.NumFollowers
+	x.xxx_hidden_NumFollowing = b.NumFollowing
+	x.xxx_hidden_NumListens = b.NumListens
 	return m0
 }
 
 // Stripped down UserMessage for more public consumption
 // eg. listens
 type PublicUserMessage struct {
-	state               protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Id       string                 `protobuf:"bytes,1,opt,name=id,proto3"`
-	xxx_hidden_Name     string                 `protobuf:"bytes,2,opt,name=name,proto3"`
-	xxx_hidden_ImageUrl string                 `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id           string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Name         string                 `protobuf:"bytes,2,opt,name=name,proto3"`
+	xxx_hidden_ImageUrl     string                 `protobuf:"bytes,3,opt,name=image_url,json=imageUrl,proto3"`
+	xxx_hidden_NumFollowers int64                  `protobuf:"varint,4,opt,name=num_followers,json=numFollowers,proto3"`
+	xxx_hidden_NumFollowing int64                  `protobuf:"varint,5,opt,name=num_following,json=numFollowing,proto3"`
+	xxx_hidden_NumListens   int64                  `protobuf:"varint,6,opt,name=num_listens,json=numListens,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *PublicUserMessage) Reset() {
@@ -1245,6 +1320,27 @@ func (x *PublicUserMessage) GetImageUrl() string {
 	return ""
 }
 
+func (x *PublicUserMessage) GetNumFollowers() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumFollowers
+	}
+	return 0
+}
+
+func (x *PublicUserMessage) GetNumFollowing() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumFollowing
+	}
+	return 0
+}
+
+func (x *PublicUserMessage) GetNumListens() int64 {
+	if x != nil {
+		return x.xxx_hidden_NumListens
+	}
+	return 0
+}
+
 func (x *PublicUserMessage) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -1257,12 +1353,27 @@ func (x *PublicUserMessage) SetImageUrl(v string) {
 	x.xxx_hidden_ImageUrl = v
 }
 
+func (x *PublicUserMessage) SetNumFollowers(v int64) {
+	x.xxx_hidden_NumFollowers = v
+}
+
+func (x *PublicUserMessage) SetNumFollowing(v int64) {
+	x.xxx_hidden_NumFollowing = v
+}
+
+func (x *PublicUserMessage) SetNumListens(v int64) {
+	x.xxx_hidden_NumListens = v
+}
+
 type PublicUserMessage_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Id       string
-	Name     string
-	ImageUrl string
+	Id           string
+	Name         string
+	ImageUrl     string
+	NumFollowers int64
+	NumFollowing int64
+	NumListens   int64
 }
 
 func (b0 PublicUserMessage_builder) Build() *PublicUserMessage {
@@ -1272,6 +1383,9 @@ func (b0 PublicUserMessage_builder) Build() *PublicUserMessage {
 	x.xxx_hidden_Id = b.Id
 	x.xxx_hidden_Name = b.Name
 	x.xxx_hidden_ImageUrl = b.ImageUrl
+	x.xxx_hidden_NumFollowers = b.NumFollowers
+	x.xxx_hidden_NumFollowing = b.NumFollowing
+	x.xxx_hidden_NumListens = b.NumListens
 	return m0
 }
 
@@ -2739,7 +2853,7 @@ const file_proto_common_proto_rawDesc = "" +
 	"\n" +
 	"is_deleted\x18\x01 \x01(\bR\tisDeleted\x12+\n" +
 	"\x11updated_timestamp\x18\x02 \x01(\x03R\x10updatedTimestamp\x12+\n" +
-	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\x97\x03\n" +
+	"\x11created_timestamp\x18\x03 \x01(\x03R\x10createdTimestamp\"\xf1\x03\n" +
 	"\x0ePodcastMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\x05title\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x05title\x12 \n" +
@@ -2751,7 +2865,10 @@ const file_proto_common_proto_rawDesc = "" +
 	"\bmetadata\x18\b \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12>\n" +
 	"\x18latest_episode_timestamp\x18\t \x01(\x03B\x04\x80\xb5\x18\x01R\x16latestEpisodeTimestamp\x126\n" +
 	"\x14last_fetch_timestamp\x18\n" +
-	" \x01(\x03B\x04\x80\xb5\x18\x01R\x12lastFetchTimestamp\"\x96\x03\n" +
+	" \x01(\x03B\x04\x80\xb5\x18\x01R\x12lastFetchTimestamp\x121\n" +
+	"\x11num_subscriptions\x18\v \x01(\x03B\x04\x80\xb5\x18\x01R\x10numSubscriptions\x12%\n" +
+	"\vnum_listens\x18\f \x01(\x03B\x04\x80\xb5\x18\x01R\n" +
+	"numListens\"\xbd\x03\n" +
 	"\x0eEpisodeMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\n" +
@@ -2765,7 +2882,9 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x0eepisode_number\x18\n" +
 	" \x01(\x03R\repisodeNumber\x12\x1a\n" +
 	"\bexplicit\x18\v \x01(\bR\bexplicit\x12<\n" +
-	"\bmetadata\x18\f \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"V\n" +
+	"\bmetadata\x18\f \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12%\n" +
+	"\vnum_listens\x18\r \x01(\x03B\x04\x80\xb5\x18\x01R\n" +
+	"numListens\"V\n" +
 	"\fTokenMessage\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x120\n" +
 	"\x14expiry_utc_timestamp\x18\x02 \x01(\x03R\x12expiryUtcTimestamp\"\xf6\x01\n" +
@@ -2784,7 +2903,7 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +
 	"\x06tokens\x18\x03 \x03(\v2\x16.resonate.TokenMessageR\x06tokens\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xdb\x03\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xa1\x04\n" +
 	"\vUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
@@ -2795,13 +2914,20 @@ const file_proto_common_proto_rawDesc = "" +
 	"\timage_url\x18\x04 \x01(\tR\bimageUrl\x12G\n" +
 	"\rsubscriptions\x18\x05 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\x125\n" +
 	"\alistens\x18\x06 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x129\n" +
-	"\tfollowing\x18\a \x03(\v2\x1b.resonate.UserFollowMessageR\tfollowing\x12#\n" +
-	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\x12<\n" +
-	"\bmetadata\x18\t \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"T\n" +
+	"\tfollowing\x18\a \x03(\v2\x1b.resonate.UserFollowMessageR\tfollowing\x12<\n" +
+	"\bmetadata\x18\t \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12#\n" +
+	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\x12#\n" +
+	"\rnum_following\x18\f \x01(\x03R\fnumFollowing\x12\x1f\n" +
+	"\vnum_listens\x18\r \x01(\x03R\n" +
+	"numListens\"\xbf\x01\n" +
 	"\x11PublicUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\timage_url\x18\x03 \x01(\tR\bimageUrl\"\x98\x02\n" +
+	"\timage_url\x18\x03 \x01(\tR\bimageUrl\x12#\n" +
+	"\rnum_followers\x18\x04 \x01(\x03R\fnumFollowers\x12#\n" +
+	"\rnum_following\x18\x05 \x01(\x03R\fnumFollowing\x12\x1f\n" +
+	"\vnum_listens\x18\x06 \x01(\x03R\n" +
+	"numListens\"\x98\x02\n" +
 	"\x11UserFollowMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +

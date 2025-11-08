@@ -84,6 +84,15 @@ const PodcastMessage$json = {
       '8': {},
       '10': 'lastFetchTimestamp'
     },
+    {
+      '1': 'num_subscriptions',
+      '3': 11,
+      '4': 1,
+      '5': 3,
+      '8': {},
+      '10': 'numSubscriptions'
+    },
+    {'1': 'num_listens', '3': 12, '4': 1, '5': 3, '8': {}, '10': 'numListens'},
   ],
 };
 
@@ -96,7 +105,8 @@ final $typed_data.Uint8List podcastMessageDescriptor = $convert.base64Decode(
     'ZGVzEjwKCG1ldGFkYXRhGAggASgLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZV'
     'IIbWV0YWRhdGESPgoYbGF0ZXN0X2VwaXNvZGVfdGltZXN0YW1wGAkgASgDQgSAtRgBUhZsYXRl'
     'c3RFcGlzb2RlVGltZXN0YW1wEjYKFGxhc3RfZmV0Y2hfdGltZXN0YW1wGAogASgDQgSAtRgBUh'
-    'JsYXN0RmV0Y2hUaW1lc3RhbXA=');
+    'JsYXN0RmV0Y2hUaW1lc3RhbXASMQoRbnVtX3N1YnNjcmlwdGlvbnMYCyABKANCBIC1GAFSEG51'
+    'bVN1YnNjcmlwdGlvbnMSJQoLbnVtX2xpc3RlbnMYDCABKANCBIC1GAFSCm51bUxpc3RlbnM=');
 
 @$core.Deprecated('Use episodeMessageDescriptor instead')
 const EpisodeMessage$json = {
@@ -127,6 +137,7 @@ const EpisodeMessage$json = {
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
     },
+    {'1': 'num_listens', '3': 13, '4': 1, '5': 3, '8': {}, '10': 'numListens'},
   ],
 };
 
@@ -139,7 +150,8 @@ final $typed_data.Uint8List episodeMessageDescriptor = $convert.base64Decode(
     'aXNoVGltZXN0YW1wEikKEGR1cmF0aW9uX3NlY29uZHMYCSABKANSD2R1cmF0aW9uU2Vjb25kcx'
     'IlCg5lcGlzb2RlX251bWJlchgKIAEoA1INZXBpc29kZU51bWJlchIaCghleHBsaWNpdBgLIAEo'
     'CFIIZXhwbGljaXQSPAoIbWV0YWRhdGEYDCABKAsyIC5yZXNvbmF0ZS5TdG9yYWdlTWV0YWRhdG'
-    'FNZXNzYWdlUghtZXRhZGF0YQ==');
+    'FNZXNzYWdlUghtZXRhZGF0YRIlCgtudW1fbGlzdGVucxgNIAEoA0IEgLUYAVIKbnVtTGlzdGVu'
+    'cw==');
 
 @$core.Deprecated('Use tokenMessageDescriptor instead')
 const TokenMessage$json = {
@@ -305,7 +317,6 @@ const UserMessage$json = {
       '6': '.resonate.UserFollowMessage',
       '10': 'following'
     },
-    {'1': 'num_followers', '3': 8, '4': 1, '5': 3, '10': 'numFollowers'},
     {
       '1': 'metadata',
       '3': 9,
@@ -314,6 +325,9 @@ const UserMessage$json = {
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
     },
+    {'1': 'num_followers', '3': 8, '4': 1, '5': 3, '10': 'numFollowers'},
+    {'1': 'num_following', '3': 12, '4': 1, '5': 3, '10': 'numFollowing'},
+    {'1': 'num_listens', '3': 13, '4': 1, '5': 3, '10': 'numListens'},
   ],
 };
 
@@ -325,9 +339,10 @@ final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode(
     'FnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5yZXNvbmF0'
     'ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW5zGAYgAy'
     'gLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93aW5nGAcg'
-    'AygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxIjCg1udW1fZm9sbG'
-    '93ZXJzGAggASgDUgxudW1Gb2xsb3dlcnMSPAoIbWV0YWRhdGEYCSABKAsyIC5yZXNvbmF0ZS5T'
-    'dG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
+    'AygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxI8CghtZXRhZGF0YR'
+    'gJIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRhEiMKDW51'
+    'bV9mb2xsb3dlcnMYCCABKANSDG51bUZvbGxvd2VycxIjCg1udW1fZm9sbG93aW5nGAwgASgDUg'
+    'xudW1Gb2xsb3dpbmcSHwoLbnVtX2xpc3RlbnMYDSABKANSCm51bUxpc3RlbnM=');
 
 @$core.Deprecated('Use publicUserMessageDescriptor instead')
 const PublicUserMessage$json = {
@@ -336,13 +351,18 @@ const PublicUserMessage$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'image_url', '3': 3, '4': 1, '5': 9, '10': 'imageUrl'},
+    {'1': 'num_followers', '3': 4, '4': 1, '5': 3, '10': 'numFollowers'},
+    {'1': 'num_following', '3': 5, '4': 1, '5': 3, '10': 'numFollowing'},
+    {'1': 'num_listens', '3': 6, '4': 1, '5': 3, '10': 'numListens'},
   ],
 };
 
 /// Descriptor for `PublicUserMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List publicUserMessageDescriptor = $convert.base64Decode(
     'ChFQdWJsaWNVc2VyTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZR'
-    'IbCglpbWFnZV91cmwYAyABKAlSCGltYWdlVXJs');
+    'IbCglpbWFnZV91cmwYAyABKAlSCGltYWdlVXJsEiMKDW51bV9mb2xsb3dlcnMYBCABKANSDG51'
+    'bUZvbGxvd2VycxIjCg1udW1fZm9sbG93aW5nGAUgASgDUgxudW1Gb2xsb3dpbmcSHwoLbnVtX2'
+    'xpc3RlbnMYBiABKANSCm51bUxpc3RlbnM=');
 
 @$core.Deprecated('Use userFollowMessageDescriptor instead')
 const UserFollowMessage$json = {

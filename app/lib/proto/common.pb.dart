@@ -113,6 +113,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
     StorageMetadataMessage? metadata,
     $fixnum.Int64? latestEpisodeTimestamp,
     $fixnum.Int64? lastFetchTimestamp,
+    $fixnum.Int64? numSubscriptions,
+    $fixnum.Int64? numListens,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -127,6 +129,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
       result.latestEpisodeTimestamp = latestEpisodeTimestamp;
     if (lastFetchTimestamp != null)
       result.lastFetchTimestamp = lastFetchTimestamp;
+    if (numSubscriptions != null) result.numSubscriptions = numSubscriptions;
+    if (numListens != null) result.numListens = numListens;
     return result;
   }
 
@@ -156,6 +160,8 @@ class PodcastMessage extends $pb.GeneratedMessage {
         subBuilder: StorageMetadataMessage.create)
     ..aInt64(9, _omitFieldNames ? '' : 'latestEpisodeTimestamp')
     ..aInt64(10, _omitFieldNames ? '' : 'lastFetchTimestamp')
+    ..aInt64(11, _omitFieldNames ? '' : 'numSubscriptions')
+    ..aInt64(12, _omitFieldNames ? '' : 'numListens')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -267,6 +273,24 @@ class PodcastMessage extends $pb.GeneratedMessage {
   $core.bool hasLastFetchTimestamp() => $_has(9);
   @$pb.TagNumber(10)
   void clearLastFetchTimestamp() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $fixnum.Int64 get numSubscriptions => $_getI64(10);
+  @$pb.TagNumber(11)
+  set numSubscriptions($fixnum.Int64 value) => $_setInt64(10, value);
+  @$pb.TagNumber(11)
+  $core.bool hasNumSubscriptions() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearNumSubscriptions() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $fixnum.Int64 get numListens => $_getI64(11);
+  @$pb.TagNumber(12)
+  set numListens($fixnum.Int64 value) => $_setInt64(11, value);
+  @$pb.TagNumber(12)
+  $core.bool hasNumListens() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearNumListens() => $_clearField(12);
 }
 
 class EpisodeMessage extends $pb.GeneratedMessage {
@@ -282,6 +306,7 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     $fixnum.Int64? episodeNumber,
     $core.bool? explicit,
     StorageMetadataMessage? metadata,
+    $fixnum.Int64? numListens,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -295,6 +320,7 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     if (episodeNumber != null) result.episodeNumber = episodeNumber;
     if (explicit != null) result.explicit = explicit;
     if (metadata != null) result.metadata = metadata;
+    if (numListens != null) result.numListens = numListens;
     return result;
   }
 
@@ -323,6 +349,7 @@ class EpisodeMessage extends $pb.GeneratedMessage {
     ..aOB(11, _omitFieldNames ? '' : 'explicit')
     ..aOM<StorageMetadataMessage>(12, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aInt64(13, _omitFieldNames ? '' : 'numListens')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -446,6 +473,15 @@ class EpisodeMessage extends $pb.GeneratedMessage {
   void clearMetadata() => $_clearField(12);
   @$pb.TagNumber(12)
   StorageMetadataMessage ensureMetadata() => $_ensure(10);
+
+  @$pb.TagNumber(13)
+  $fixnum.Int64 get numListens => $_getI64(11);
+  @$pb.TagNumber(13)
+  set numListens($fixnum.Int64 value) => $_setInt64(11, value);
+  @$pb.TagNumber(13)
+  $core.bool hasNumListens() => $_has(11);
+  @$pb.TagNumber(13)
+  void clearNumListens() => $_clearField(13);
 }
 
 class TokenMessage extends $pb.GeneratedMessage {
@@ -818,6 +854,7 @@ class RefreshTokensMessage extends $pb.GeneratedMessage {
   StorageMetadataMessage ensureMetadata() => $_ensure(3);
 }
 
+/// Next Tag: 14
 class UserMessage extends $pb.GeneratedMessage {
   factory UserMessage({
     $core.String? id,
@@ -831,6 +868,8 @@ class UserMessage extends $pb.GeneratedMessage {
     StorageMetadataMessage? metadata,
     $core.String? phoneNumber,
     $core.String? encryptedPhoneNumber,
+    $fixnum.Int64? numFollowing,
+    $fixnum.Int64? numListens,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -845,6 +884,8 @@ class UserMessage extends $pb.GeneratedMessage {
     if (phoneNumber != null) result.phoneNumber = phoneNumber;
     if (encryptedPhoneNumber != null)
       result.encryptedPhoneNumber = encryptedPhoneNumber;
+    if (numFollowing != null) result.numFollowing = numFollowing;
+    if (numListens != null) result.numListens = numListens;
     return result;
   }
 
@@ -879,6 +920,8 @@ class UserMessage extends $pb.GeneratedMessage {
         subBuilder: StorageMetadataMessage.create)
     ..aOS(10, _omitFieldNames ? '' : 'phoneNumber')
     ..aOS(11, _omitFieldNames ? '' : 'encryptedPhoneNumber')
+    ..aInt64(12, _omitFieldNames ? '' : 'numFollowing')
+    ..aInt64(13, _omitFieldNames ? '' : 'numListens')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -947,6 +990,7 @@ class UserMessage extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $pb.PbList<UserFollowMessage> get following => $_getList(6);
 
+  /// TODO(duncan): Do I want to move this to a seperate entity?
   @$pb.TagNumber(8)
   $fixnum.Int64 get numFollowers => $_getI64(7);
   @$pb.TagNumber(8)
@@ -986,6 +1030,24 @@ class UserMessage extends $pb.GeneratedMessage {
   $core.bool hasEncryptedPhoneNumber() => $_has(10);
   @$pb.TagNumber(11)
   void clearEncryptedPhoneNumber() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $fixnum.Int64 get numFollowing => $_getI64(11);
+  @$pb.TagNumber(12)
+  set numFollowing($fixnum.Int64 value) => $_setInt64(11, value);
+  @$pb.TagNumber(12)
+  $core.bool hasNumFollowing() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearNumFollowing() => $_clearField(12);
+
+  @$pb.TagNumber(13)
+  $fixnum.Int64 get numListens => $_getI64(12);
+  @$pb.TagNumber(13)
+  set numListens($fixnum.Int64 value) => $_setInt64(12, value);
+  @$pb.TagNumber(13)
+  $core.bool hasNumListens() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearNumListens() => $_clearField(13);
 }
 
 /// Stripped down UserMessage for more public consumption
@@ -995,11 +1057,17 @@ class PublicUserMessage extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? name,
     $core.String? imageUrl,
+    $fixnum.Int64? numFollowers,
+    $fixnum.Int64? numFollowing,
+    $fixnum.Int64? numListens,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (name != null) result.name = name;
     if (imageUrl != null) result.imageUrl = imageUrl;
+    if (numFollowers != null) result.numFollowers = numFollowers;
+    if (numFollowing != null) result.numFollowing = numFollowing;
+    if (numListens != null) result.numListens = numListens;
     return result;
   }
 
@@ -1019,6 +1087,9 @@ class PublicUserMessage extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOS(3, _omitFieldNames ? '' : 'imageUrl')
+    ..aInt64(4, _omitFieldNames ? '' : 'numFollowers')
+    ..aInt64(5, _omitFieldNames ? '' : 'numFollowing')
+    ..aInt64(6, _omitFieldNames ? '' : 'numListens')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1068,6 +1139,33 @@ class PublicUserMessage extends $pb.GeneratedMessage {
   $core.bool hasImageUrl() => $_has(2);
   @$pb.TagNumber(3)
   void clearImageUrl() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get numFollowers => $_getI64(3);
+  @$pb.TagNumber(4)
+  set numFollowers($fixnum.Int64 value) => $_setInt64(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasNumFollowers() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNumFollowers() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get numFollowing => $_getI64(4);
+  @$pb.TagNumber(5)
+  set numFollowing($fixnum.Int64 value) => $_setInt64(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasNumFollowing() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearNumFollowing() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get numListens => $_getI64(5);
+  @$pb.TagNumber(6)
+  set numListens($fixnum.Int64 value) => $_setInt64(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasNumListens() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearNumListens() => $_clearField(6);
 }
 
 class UserFollowMessage extends $pb.GeneratedMessage {
