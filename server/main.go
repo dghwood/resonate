@@ -30,12 +30,13 @@ func main() {
 	if len(port) == 0 {
 		port = "8080"
 	}
+	// Loads the Env Variables from the Secrets Manager
+	AccessSecrets()
 
 	env_variables := []string{
 		"USER_ID_SALT",
 		"TADDY_USER_ID",
 		"TADDY_API_KEY",
-		// "GOOGLE_APPLICATION_CREDENTIALS",
 	}
 
 	for _, env_var := range env_variables {

@@ -110,16 +110,16 @@ final providers =
               episodeApi: context.read(),
             ),
       ),
-      Provider<GetFeedApi>(
-        // Needed this so that the DB is setup
-        lazy: false,
-        create:
-            (context) => GetFeedApi(
-              httpService: context.read(),
-              databaseService: context.read(),
-              authUser: context.read(),
-            ),
-      ),
+      // Provider<GetFeedApi>(
+      //   // Needed this so that the DB is setup
+      //   lazy: false,
+      //   create:
+      //       (context) => GetFeedApi(
+      //         httpService: context.read(),
+      //         databaseService: context.read(),
+      //         authUser: context.read(),
+      //       ),
+      // ),
       Provider<DownloadsApi>(
         create:
             (context) => DownloadsApi(

@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authUser = context.read<AuthUser>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: NestedScrollView(
@@ -28,7 +29,7 @@ class HomePage extends StatelessWidget {
               child: SubscriptionGridComponent(
                 height: 120,
                 subscriptionsApi: context.read(),
-                user: PublicUser.fromUser(context.read<AuthUser>().user!),
+                user: PublicUser.fromUser(authUser.user!),
                 scrollController: ScrollController(),
               ),
             ),
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
           children: [
             SizedBox(height: 8),
             Text("FEED", style: Theme.of(context).textTheme.labelMedium),
-            Expanded(child: FeedComponent(feedApi: context.read())),
+            Expanded(child: FeedComponent(feedApi: authUser.feedApi)),
           ],
         ),
       ),
@@ -50,52 +51,60 @@ class HomePage extends StatelessWidget {
 }
 
 class FeedComponent
-    extends RefreshIndicatorComponent<Stream<ApiResult<UserFeed>>> {
-  FeedComponent({super.key, required GetFeedApi feedApi})
-    : super(value: () => feedApi.get());
+        // extends RefreshIndicatorComponent<Stream<ApiResult<UserFeed>>> {
+        extends
+        StatelessWidget {
+  const FeedComponent({super.key, required this.feedApi});
+  // : super(value: () => feedApi.get());
 
-  // final GetFeedApi _feedApi;
+  final GetFeedApi feedApi;
 
   @override
-  Widget build(BuildContext context, Stream<ApiResult<UserFeed>> value) {
+  Widget build(BuildContext context) {
     _log.info("FeedComponent::build");
-    return StreamBuilder(
-      stream: value,
-      builder: (context, snapshot) {
-        _log.info("FeedComponent::stream::${snapshot.connectionState}");
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return SkeletonLoadingComponent(
-            enabled: true,
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return EpisodeComponent(
-                  episode: Episode.fromMessage(mockEpisodeMessage()),
-                );
-              },
-            ),
-          );
-        }
-        var result = snapshot.requireData;
-        switch (result) {
-          case ApiOk():
-            break;
-          case ApiError():
-            return Text('error::${result.error}');
-        }
-        var items = result.value.items;
-        if (items.isEmpty) {
-          return Icon(Icons.spoke);
-        }
-        return ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            var item = items.elementAt(index);
-            if (item.episodeItem == null) {
-              return Text('Recommendations not implemented');
+    return ListenableBuilder(
+      listenable: feedApi,
+      builder: (context, _) {
+        _log.info("FeedComponent::listenable");
+        return StreamBuilder(
+          stream: feedApi.get(),
+          builder: (context, snapshot) {
+            _log.info("FeedComponent::stream::${snapshot.connectionState}");
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SkeletonLoadingComponent(
+                enabled: true,
+                child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return EpisodeComponent(
+                      episode: Episode.fromMessage(mockEpisodeMessage()),
+                    );
+                  },
+                ),
+              );
             }
-            var episodeItem = item.episodeItem!;
-            return EpisodeComponent(episode: episodeItem.episode);
+            var result = snapshot.requireData;
+            switch (result) {
+              case ApiOk():
+                break;
+              case ApiError():
+                return Text('error::${result.error}');
+            }
+            var items = result.value.items;
+            if (items.isEmpty) {
+              return Icon(Icons.spoke);
+            }
+            return ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                var item = items.elementAt(index);
+                if (item.episodeItem == null) {
+                  return Text('Recommendations not implemented');
+                }
+                var episodeItem = item.episodeItem!;
+                return EpisodeComponent(episode: episodeItem.episode);
+              },
+            );
           },
         );
       },

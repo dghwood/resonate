@@ -4,6 +4,7 @@ import 'package:resonate/api/base.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
+import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/settings.dart';
@@ -263,6 +264,12 @@ class AuthUser extends ChangeNotifier {
       secureDatabase: secureDatabase,
       authUser: this,
     );
+    feedApi = GetFeedApi(
+      httpService: httpService,
+      databaseService: databaseService,
+      authUser: this,
+      subscriptionApi: subscriptionApi,
+    );
     // _settingsApi = SettingsApi(databaseService: databaseService);
     downloadApi = DownloadApi(authUser: this, databaseService: databaseService);
     loadFromStorage();
@@ -272,6 +279,7 @@ class AuthUser extends ChangeNotifier {
   late final ListenApi listenApi;
   late final DownloadApi downloadApi;
   late final EditUserApi _editUserApi;
+  late final GetFeedApi feedApi;
 
   final User _user = User();
   final Token _accessToken = Token();

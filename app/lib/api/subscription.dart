@@ -145,7 +145,6 @@ class SubscriptionApi extends ChangeNotifier {
        _subscriptionDatabase = SubscriptionDatabase(databaseService);
 
   final AuthUser _authUser;
-
   final AddSubscriptionApiServer _subscribeServer;
   final RemoveSubscriptionApiServer _unsubscribeServer;
   final SubscriptionDatabase _subscriptionDatabase;
@@ -236,6 +235,7 @@ class SubscriptionApi extends ChangeNotifier {
 
     // Update the local cache.
     _subscriptions[podcastId] = subscription;
+    notifyListeners();
     return ApiResult.ok(subscription);
   }
 
@@ -270,6 +270,7 @@ class SubscriptionApi extends ChangeNotifier {
 
     // Update the local cache
     _subscriptions.remove(podcastId);
+    notifyListeners();
     return ApiResult.ok(true);
   }
 }
