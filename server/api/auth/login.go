@@ -3,14 +3,14 @@ package auth
 import (
 	"time"
 
-	"github.com/dghwood/resonate/server/errors"
-	"github.com/dghwood/resonate/server/log"
-	"github.com/dghwood/resonate/server/models"
-	"github.com/dghwood/resonate/server/proto"
-	"github.com/dghwood/resonate/server/services/datastore"
-	"github.com/dghwood/resonate/server/utils"
+	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/utils"
 
-	token "github.com/dghwood/resonate/server/auth"
+	token "github.com/dghwood/resonate/auth"
 )
 
 type Login struct {

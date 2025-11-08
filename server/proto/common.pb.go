@@ -2854,7 +2854,7 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
 	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12'\n" +
 	"\x0fenable_playlist\x18\x03 \x01(\bR\x0eenablePlaylist:5\n" +
-	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB*Z(github.com/dghwood/resonate/server/protob\x06proto3"
+	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_proto_common_proto_goTypes = []any{

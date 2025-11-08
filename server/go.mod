@@ -1,4 +1,4 @@
-module github.com/dghwood/resonate/server
+module github.com/dghwood/resonate
 
 go 1.25.1
 

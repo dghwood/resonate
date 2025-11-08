@@ -2,7 +2,7 @@ package taddy
 
 import (
 	"testing"
-	// "github.com/dghwood/resonate/server/models"
+	// "github.com/dghwood/resonate/models"
 )
 
 func TestConstructQuery(t *testing.T) {

@@ -90,7 +90,7 @@ const file_proto_errors_proto_rawDesc = "" +
 	"\x19ERROR_INVALID_CREDENTIALS\x10\x03\x12\x1b\n" +
 	"\x17ERROR_TOO_MANY_ATTEMPTS\x10\x04\x12\x16\n" +
 	"\x12ERROR_TIME_EXPIRED\x10\x05\x12\x1e\n" +
-	"\x1aERROR_UPLOAD_SIZE_EXCEEDED\x10\x06B*Z(github.com/dghwood/resonate/server/protob\x06proto3"
+	"\x1aERROR_UPLOAD_SIZE_EXCEEDED\x10\x06B#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var file_proto_errors_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_errors_proto_goTypes = []any{

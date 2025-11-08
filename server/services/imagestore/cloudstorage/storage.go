@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/storage"
-	"github.com/dghwood/resonate/server/services/cachestore"
+	"github.com/dghwood/resonate/services/cachestore"
 )
 
 type StorageImagestore struct {

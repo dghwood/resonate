@@ -4,10 +4,10 @@ import (
 	"testing"
 	"time"
 
-	// "github.com/dghwood/resonate/server/errors"
+	// "github.com/dghwood/resonate/errors"
 
-	"github.com/dghwood/resonate/server/errors"
-	pb "github.com/dghwood/resonate/server/proto"
+	"github.com/dghwood/resonate/errors"
+	pb "github.com/dghwood/resonate/proto"
 )
 
 func TestGetAccessToken(t *testing.T) {

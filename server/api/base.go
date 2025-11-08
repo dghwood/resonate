@@ -5,11 +5,11 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/dghwood/resonate/server/auth"
-	"github.com/dghwood/resonate/server/errors"
-	"github.com/dghwood/resonate/server/log"
-	"github.com/dghwood/resonate/server/models"
-	"github.com/dghwood/resonate/server/proto"
+	"github.com/dghwood/resonate/auth"
+	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
 )
 

@@ -8683,7 +8683,7 @@ const file_proto_api_proto_rawDesc = "" +
 	"\bcontacts\x18\x02 \x03(\v2\x1c.resonate.UserContactMessageR\bcontacts\x1a~\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x121\n" +
-	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05usersB*Z(github.com/dghwood/resonate/server/protob\x06proto3"
+	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05usersB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var file_proto_api_proto_msgTypes = make([]protoimpl.MessageInfo, 90)
 var file_proto_api_proto_goTypes = []any{

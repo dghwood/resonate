@@ -18,7 +18,7 @@ package resonate;
 
 import "google/protobuf/descriptor.proto";
 
-option go_package = "github.com/dghwood/resonate/server/proto"; 
+option go_package = "github.com/dghwood/resonate/proto"; 
  
 extend google.protobuf.FieldOptions {
     // Whether to index the field in the DB

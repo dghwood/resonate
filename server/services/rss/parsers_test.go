@@ -3,7 +3,7 @@ package rss
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/models"
 )
 
 func TestParseEpisode(t *testing.T) {

@@ -1,6 +1,6 @@
 package search
 
-import "github.com/dghwood/resonate/server/models"
+import "github.com/dghwood/resonate/models"
 
 /*
 Do I need to use this, or is it easier to

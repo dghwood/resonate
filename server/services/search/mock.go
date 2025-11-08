@@ -3,7 +3,7 @@ package search
 import (
 	"fmt"
 
-	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/models"
 )
 
 type MockSearch struct {

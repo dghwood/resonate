@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/dghwood/resonate/server/models"
-	"github.com/dghwood/resonate/server/proto"
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/proto"
 	pb "google.golang.org/protobuf/proto"
 )
 

@@ -11,7 +11,7 @@ import (
 
 	"errors"
 
-	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/models"
 	// "google.golang.org/protobuf/proto"
 )
 

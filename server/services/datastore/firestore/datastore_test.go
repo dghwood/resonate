@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	firestore "cloud.google.com/go/datastore"
-	"github.com/dghwood/resonate/server/models"
-	"github.com/dghwood/resonate/server/services/datastore"
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/services/datastore"
 )
 
 func TestFirestoreIsDatastore(t *testing.T) {

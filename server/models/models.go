@@ -10,8 +10,8 @@ import (
 
 	"fmt"
 
-	"github.com/dghwood/resonate/server/proto"
-	"github.com/dghwood/resonate/server/utils"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/utils"
 	pb "google.golang.org/protobuf/proto"
 )
 

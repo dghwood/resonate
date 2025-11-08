@@ -3,9 +3,9 @@ package users
 import (
 	"strings"
 
-	"github.com/dghwood/resonate/server/models"
-	"github.com/dghwood/resonate/server/proto"
-	"github.com/dghwood/resonate/server/services/datastore"
+	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/services/datastore"
 )
 
 type Search struct {

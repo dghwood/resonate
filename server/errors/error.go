@@ -3,7 +3,7 @@ package errors
 import (
 	e "errors"
 
-	"github.com/dghwood/resonate/server/proto"
+	"github.com/dghwood/resonate/proto"
 )
 
 // Wrapping this to avoid naming conflicts everywhere

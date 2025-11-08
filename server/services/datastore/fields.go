@@ -3,13 +3,13 @@ package datastore
 import (
 	"encoding/json"
 
-	"github.com/dghwood/resonate/server/log"
-	"github.com/dghwood/resonate/server/utils"
+	"github.com/dghwood/resonate/log"
+	"github.com/dghwood/resonate/utils"
 
 	// "log"
 
-	"github.com/dghwood/resonate/server/models"
-	pb "github.com/dghwood/resonate/server/proto"
+	"github.com/dghwood/resonate/models"
+	pb "github.com/dghwood/resonate/proto"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/descriptorpb"

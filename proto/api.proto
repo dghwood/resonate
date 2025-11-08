@@ -5,7 +5,7 @@ package resonate.api;
 import "proto/common.proto";
 import "proto/errors.proto";
 
-option go_package = "github.com/dghwood/resonate/server/proto";
+option go_package = "github.com/dghwood/resonate/proto";
 
 message ResponseInfo {
     bool success = 1; 

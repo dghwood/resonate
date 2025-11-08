@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dghwood/resonate/server/services/fetch"
+	"github.com/dghwood/resonate/services/fetch"
 )
 
 func TestSearch(t *testing.T) {
