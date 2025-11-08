@@ -120,7 +120,6 @@ func RetrieveFields(item DatastoreItem, model models.Model) (err error) {
 			continue
 		}
 		num := field.Number
-		log.Infof("retrieving field %d :: %s", num, field.Name)
 		descriptor := model.ProtoReflect().
 			Descriptor().Fields().
 			ByNumber(protoreflect.FieldNumber(num))

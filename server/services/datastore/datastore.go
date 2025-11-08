@@ -17,6 +17,7 @@ import (
 
 var (
 	ErrorEntityNotFound      = errors.New("Datastore entity not found")
+	ErrorEntityDeleted       = errors.New("Datastore entity deleted")
 	ErrorParameterNotCorrect = errors.New("parameters are not correct")
 	IteratorDone             = errors.New("iterator done")
 )
@@ -27,11 +28,12 @@ type Iterator interface {
 }
 
 type ListForIdsParams struct {
-	Ids          []string
-	IdFieldNum   int32
-	SortFieldNum int32
-	Entity       models.Model
-	Cursor       *models.QueryCursor
+	Ids            []string
+	IdFieldNum     int32
+	SortFieldNum   int32
+	Entity         models.Model
+	Cursor         *models.QueryCursor
+	IncludeDeleted bool
 }
 
 type Datastore interface {

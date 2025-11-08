@@ -90,6 +90,9 @@ func (f *FirestoreDatastore) Get(entity models.Model) (err error) {
 	if errors.Is(err, firestore.ErrNoSuchEntity) {
 		return datastore.ErrorEntityNotFound
 	}
+	if entity.GetMetadata() != nil && entity.GetMetadata().IsDeleted {
+		return datastore.ErrorEntityDeleted
+	}
 	return
 }
 
@@ -164,12 +167,14 @@ func (f *FirestoreDatastore) GetMulti(src any) (err error) {
 		dbModels[i] = model
 		key := model.Key()
 		keys[i] = key
+		// TODO(duncan): Handled deleted entities
 	}
 	err = f.client.GetMulti(ctx, keys, dbModels)
 	// TODO(duncan): This can be a multierror and one can succeed whilst others fail
 	return
 }
 
+// TODO(duncan): Handle deleted?
 func (f *FirestoreDatastore) List(
 	entity models.Model) (iter datastore.Iterator) {
 
@@ -187,6 +192,7 @@ func (f *FirestoreDatastore) ListForIds(
 	idFieldNum := params.IdFieldNum
 	sortFieldNum := params.SortFieldNum
 	entity := params.Entity
+	includeDeleted := params.IncludeDeleted
 	// cursor := params.Cursor
 
 	// Convert to interface
@@ -202,7 +208,14 @@ func (f *FirestoreDatastore) ListForIds(
 		"in",
 		anyIds,
 	)
-	if sortFieldNum >= 0 {
+	if !includeDeleted {
+		query = query.FilterField(
+			"meta.is_deleted",
+			"=",
+			false,
+		)
+	}
+	if sortFieldNum > 0 {
 		// Descending order (with -)
 		query = query.Order(fmt.Sprintf("-%s", getFieldName(sortFieldNum)))
 	}

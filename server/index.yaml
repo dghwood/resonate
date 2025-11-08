@@ -5,4 +5,11 @@ indexes:
   properties:
   - name: 'f2'
   - name: 'f8'
+  - name: meta.is_deleted
+    direction: desc
+
+- kind: resonate.EpisodeMessage
+  properties:
+  - name: meta.is_deleted
+  - name: f8
     direction: desc
