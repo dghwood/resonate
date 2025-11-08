@@ -84,6 +84,8 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
       if (error != null) {
         context.read<ErrorService>().report(context, error);
       }
+      var imageUrl = newImageUrl ?? widget.authUser.user?.imageUrl;
+
       return Form(
         key: formKey,
         child: Padding(
@@ -92,10 +94,10 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
             spacing: 16,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.authUser.user?.imageUrl != ''
-                  ? GestureDetector(
+              imageUrl != null && imageUrl != ''
+                  ? InkWell(
                     child: ImageComponent(
-                      newImageUrl ?? widget.authUser.user!.imageUrl,
+                      imageUrl,
                       height: 250,
                       width: 250,
                       radius: 250,
