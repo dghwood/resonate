@@ -16,6 +16,17 @@ class DatabaseNotFoundException implements Exception {
   }
 }
 
+class DatabaseDeletedException implements Exception {
+  final String message;
+
+  DatabaseDeletedException(this.message);
+
+  @override
+  String toString() {
+    return 'DatabaseDeletedException: $message';
+  }
+}
+
 class SystemStorageError implements Exception {
   SystemStorageError(this.message);
   final String message;

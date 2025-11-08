@@ -4,6 +4,7 @@ import 'package:idb_sqflite/idb_sqflite.dart' as idb;
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/errors/errors.dart';
+import 'package:resonate/errors/errors.dart' as errors;
 import 'package:resonate/models/models.dart';
 // import 'package:sqflite/sqflite.dart';
 
@@ -316,7 +317,7 @@ abstract class AbstractProtoModelDatabase<
 */
 abstract class ProtoModelDatabase<
   K extends GeneratedMessage,
-  T extends BaseModel<K>
+  T extends StorageModel<K>
 >
     implements AbstractProtoModelDatabase<K, T> {
   ProtoModelDatabase(this.databaseService);
@@ -358,6 +359,10 @@ abstract class ProtoModelDatabase<
   Future<void> get(T model) async {
     final value = await databaseService.getValue(storeName, model.id);
     model.fromStore(value);
+    // Note: We do this after filling the model object
+    if (model.metadata.isDeleted) {
+      throw errors.DatabaseDeletedException("item found and deleted");
+    }
   }
 
   @override
@@ -373,48 +378,65 @@ abstract class ProtoModelDatabase<
     }
   }
 
-  @override
-  Future<Iterable<T>> list() async {
-    final values = await databaseService.getAllValues(storeName);
-    print('list::${values.length}');
-    return values.map((value) => newInstance()..fromStore(value));
+  //
+  Iterable<T> _toModels(
+    Iterable<DatabaseStoreType> values, {
+    bool includeDeleted = false,
+  }) {
+    final models = values.map((value) => newInstance()..fromStore(value));
+    if (includeDeleted) {
+      return models;
+    }
+    return models.where((m) => m.metadata.isDeleted == false);
   }
 
   @override
-  Future<Iterable<T>> listFromIndex(String indexName, String value) async {
+  Future<Iterable<T>> list({bool includeDeleted = false}) async {
+    final values = await databaseService.getAllValues(storeName);
+    return _toModels(values, includeDeleted: includeDeleted);
+  }
+
+  @override
+  Future<Iterable<T>> listFromIndex(
+    String indexName,
+    String value, {
+    bool includeDeleted = false,
+  }) async {
     final values = await databaseService.getAllValuesFromIndex(
       storeName,
       indexName,
       value,
     );
-    return values.map((v) => newInstance()..fromStore(v));
+    return _toModels(values, includeDeleted: includeDeleted);
   }
 
   @override
   Future<Iterable<T>> listFromSortedIndex(
     String indexName,
-    Object value,
-  ) async {
+    Object value, {
+    bool includeDeleted = false,
+  }) async {
     final values = await databaseService.getAllValuesFromSortedIndex(
       storeName,
       indexName,
       value,
     );
-    return values.map((v) => newInstance()..fromStore(v));
+    return _toModels(values, includeDeleted: includeDeleted);
   }
 
   //getAllValuesFromLowerBoundIndex
   @override
   Future<Iterable<T>> getAllValuesFromLowerBoundIndex(
     String indexName,
-    Object lowerBound,
-  ) async {
+    Object lowerBound, {
+    bool includeDeleted = false,
+  }) async {
     final values = await databaseService.getAllValuesFromLowerBoundIndex(
       storeName,
       indexName,
       lowerBound,
     );
-    return values.map((v) => newInstance()..fromStore(v));
+    return _toModels(values, includeDeleted: includeDeleted);
   }
 
   @override

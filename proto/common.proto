@@ -165,6 +165,7 @@ message UserFeedItemMessage {
 message UserFeedMessage {
     string user_id = 1 [(index) = true]; 
     repeated UserFeedItemMessage items = 2;
+    StorageMetadataMessage metadata = 3;
 }
 
 // Search Results 

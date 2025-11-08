@@ -593,13 +593,22 @@ const UserFeedMessage$json = {
       '6': '.resonate.UserFeedItemMessage',
       '10': 'items'
     },
+    {
+      '1': 'metadata',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
   ],
 };
 
 /// Descriptor for `UserFeedMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userFeedMessageDescriptor = $convert.base64Decode(
     'Cg9Vc2VyRmVlZE1lc3NhZ2USHQoHdXNlcl9pZBgBIAEoCUIEgLUYAVIGdXNlcklkEjMKBWl0ZW'
-    '1zGAIgAygLMh0ucmVzb25hdGUuVXNlckZlZWRJdGVtTWVzc2FnZVIFaXRlbXM=');
+    '1zGAIgAygLMh0ucmVzb25hdGUuVXNlckZlZWRJdGVtTWVzc2FnZVIFaXRlbXMSPAoIbWV0YWRh'
+    'dGEYAyABKAsyIC5yZXNvbmF0ZS5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
 
 @$core.Deprecated('Use searchResultMessageDescriptor instead')
 const SearchResultMessage$json = {

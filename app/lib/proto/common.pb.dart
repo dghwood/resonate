@@ -1692,10 +1692,12 @@ class UserFeedMessage extends $pb.GeneratedMessage {
   factory UserFeedMessage({
     $core.String? userId,
     $core.Iterable<UserFeedItemMessage>? items,
+    StorageMetadataMessage? metadata,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
     if (items != null) result.items.addAll(items);
+    if (metadata != null) result.metadata = metadata;
     return result;
   }
 
@@ -1716,6 +1718,8 @@ class UserFeedMessage extends $pb.GeneratedMessage {
     ..pc<UserFeedItemMessage>(
         2, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM,
         subBuilder: UserFeedItemMessage.create)
+    ..aOM<StorageMetadataMessage>(3, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1750,6 +1754,17 @@ class UserFeedMessage extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<UserFeedItemMessage> get items => $_getList(1);
+
+  @$pb.TagNumber(3)
+  StorageMetadataMessage get metadata => $_getN(2);
+  @$pb.TagNumber(3)
+  set metadata(StorageMetadataMessage value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMetadata() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMetadata() => $_clearField(3);
+  @$pb.TagNumber(3)
+  StorageMetadataMessage ensureMetadata() => $_ensure(2);
 }
 
 /// Search Results

@@ -2031,11 +2031,12 @@ func (b0 UserFeedItemMessage_builder) Build() *UserFeedItemMessage {
 }
 
 type UserFeedMessage struct {
-	state             protoimpl.MessageState  `protogen:"opaque.v1"`
-	xxx_hidden_UserId string                  `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
-	xxx_hidden_Items  *[]*UserFeedItemMessage `protobuf:"bytes,2,rep,name=items,proto3"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state               protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_UserId   string                  `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_Items    *[]*UserFeedItemMessage `protobuf:"bytes,2,rep,name=items,proto3"`
+	xxx_hidden_Metadata *StorageMetadataMessage `protobuf:"bytes,3,opt,name=metadata,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *UserFeedMessage) Reset() {
@@ -2079,6 +2080,13 @@ func (x *UserFeedMessage) GetItems() []*UserFeedItemMessage {
 	return nil
 }
 
+func (x *UserFeedMessage) GetMetadata() *StorageMetadataMessage {
+	if x != nil {
+		return x.xxx_hidden_Metadata
+	}
+	return nil
+}
+
 func (x *UserFeedMessage) SetUserId(v string) {
 	x.xxx_hidden_UserId = v
 }
@@ -2087,11 +2095,27 @@ func (x *UserFeedMessage) SetItems(v []*UserFeedItemMessage) {
 	x.xxx_hidden_Items = &v
 }
 
+func (x *UserFeedMessage) SetMetadata(v *StorageMetadataMessage) {
+	x.xxx_hidden_Metadata = v
+}
+
+func (x *UserFeedMessage) HasMetadata() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Metadata != nil
+}
+
+func (x *UserFeedMessage) ClearMetadata() {
+	x.xxx_hidden_Metadata = nil
+}
+
 type UserFeedMessage_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	UserId string
-	Items  []*UserFeedItemMessage
+	UserId   string
+	Items    []*UserFeedItemMessage
+	Metadata *StorageMetadataMessage
 }
 
 func (b0 UserFeedMessage_builder) Build() *UserFeedMessage {
@@ -2100,6 +2124,7 @@ func (b0 UserFeedMessage_builder) Build() *UserFeedMessage {
 	_, _ = b, x
 	x.xxx_hidden_UserId = b.UserId
 	x.xxx_hidden_Items = &b.Items
+	x.xxx_hidden_Metadata = b.Metadata
 	return m0
 }
 
@@ -2811,10 +2836,11 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x12user_subscriptions\x18\x04 \x03(\v2\x1b.resonate.PublicUserMessageR\x11userSubscriptions\"\xb8\x01\n" +
 	"\x13UserFeedItemMessage\x12G\n" +
 	"\fepisode_item\x18\x01 \x01(\v2$.resonate.UserFeedItemEpisodeMessageR\vepisodeItem\x12X\n" +
-	"\x11recommended_items\x18\x02 \x03(\v2+.resonate.UserFeedItemRecommendationMessageR\x10recommendedItems\"e\n" +
+	"\x11recommended_items\x18\x02 \x03(\v2+.resonate.UserFeedItemRecommendationMessageR\x10recommendedItems\"\xa3\x01\n" +
 	"\x0fUserFeedMessage\x12\x1d\n" +
 	"\auser_id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x123\n" +
-	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05items\"\xa8\x01\n" +
+	"\x05items\x18\x02 \x03(\v2\x1d.resonate.UserFeedItemMessageR\x05items\x12<\n" +
+	"\bmetadata\x18\x03 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xa8\x01\n" +
 	"\x13SearchResultMessage\x122\n" +
 	"\apodcast\x18\x01 \x01(\v2\x18.resonate.PodcastMessageR\apodcast\x12)\n" +
 	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\x122\n" +
@@ -2897,20 +2923,21 @@ var file_proto_common_proto_depIdxs = []int32{
 	12, // 25: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
 	13, // 26: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
 	14, // 27: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	1,  // 28: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
-	7,  // 29: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
-	2,  // 30: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
-	16, // 31: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
-	0,  // 32: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	20, // 33: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
-	0,  // 34: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 35: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	22, // 36: resonate.index:extendee -> google.protobuf.FieldOptions
-	37, // [37:37] is the sub-list for method output_type
-	37, // [37:37] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	36, // [36:37] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	0,  // 28: resonate.UserFeedMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 29: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	7,  // 30: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	2,  // 31: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	16, // 32: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	0,  // 33: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	20, // 34: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
+	0,  // 35: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	0,  // 36: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	22, // 37: resonate.index:extendee -> google.protobuf.FieldOptions
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	37, // [37:38] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }

@@ -81,6 +81,12 @@ class BaseModel<T extends GeneratedMessage> {
   String toString() => _message.toString();
 }
 
+class StorageModel<T extends GeneratedMessage> extends BaseModel<T> {
+  StorageModel(super.message);
+
+  StorageMetadata get metadata => throw UnimplementedError();
+}
+
 class StorageMetadata extends BaseModel<StorageMetadataMessage> {
   StorageMetadata({
     bool? isDeleted,
@@ -113,7 +119,7 @@ class StorageMetadata extends BaseModel<StorageMetadataMessage> {
   }
 }
 
-class Podcast extends BaseModel<PodcastMessage> {
+class Podcast extends StorageModel<PodcastMessage> {
   Podcast({
     required String id,
     String? title,
@@ -149,13 +155,17 @@ class Podcast extends BaseModel<PodcastMessage> {
   List<Episode> get episodes =>
       _message.episodes.map((e) => Episode.fromMessage(e)).toList();
 
-  setEpisodes(Iterable<Episode> episodes) {
+  void setEpisodes(Iterable<Episode> episodes) {
     _message.episodes.clear();
     _message.episodes.addAll(episodes.map((e) => e.toMessage()));
   }
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
-class Episode extends BaseModel<EpisodeMessage> {
+class Episode extends StorageModel<EpisodeMessage> {
   Episode({
     required String id,
     String? podcastId,
@@ -205,6 +215,10 @@ class Episode extends BaseModel<EpisodeMessage> {
   Duration get duration => Duration(seconds: _message.durationSeconds.toInt());
   int get episodeNumber => _message.episodeNumber.toInt();
   bool? get explicit => _message.explicit;
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
 class Token extends BaseModel<TokenMessage> {
@@ -319,7 +333,7 @@ class PublicUser extends BaseModel<PublicUserMessage> {
   }
 }
 
-class UserSubscription extends BaseModel<UserSubscriptionMessage> {
+class UserSubscription extends StorageModel<UserSubscriptionMessage> {
   UserSubscription({
     String? id,
     String? userId,
@@ -345,6 +359,7 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
   String get id => _message.id;
   String get userId => _message.userId;
   String get podcastId => _message.podcastId;
+  @override
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
 
@@ -352,7 +367,7 @@ class UserSubscription extends BaseModel<UserSubscriptionMessage> {
       _message.hasPodcast() ? Podcast.fromMessage(_message.podcast) : null;
 }
 
-class UserListen extends BaseModel<UserListenMessage> {
+class UserListen extends StorageModel<UserListenMessage> {
   UserListen({
     String? id,
     String? userId,
@@ -397,9 +412,13 @@ class UserListen extends BaseModel<UserListenMessage> {
     message.episode = episode.toMessage();
     return UserListen.fromMessage(message);
   }
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
-class UserFollow extends BaseModel<UserFollowMessage> {
+class UserFollow extends StorageModel<UserFollowMessage> {
   UserFollow({
     required String userId,
     required String followedUserId,
@@ -425,6 +444,7 @@ class UserFollow extends BaseModel<UserFollowMessage> {
   String get id => _message.id;
   String get userId => _message.userId;
   String get followedUserId => _message.followedUserId;
+  @override
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
   PublicUser? get user =>
@@ -469,7 +489,7 @@ class SearchResult extends BaseModel<SearchResultMessage> {
   User? get user => _message.hasUser() ? User.fromMessage(_message.user) : null;
 }
 
-class UserFeed extends BaseModel<UserFeedMessage> {
+class UserFeed extends StorageModel<UserFeedMessage> {
   UserFeed({String? userId}) : super(UserFeedMessage(userId: userId));
 
   UserFeed.fromMessage(super.message);
@@ -482,6 +502,10 @@ class UserFeed extends BaseModel<UserFeedMessage> {
 
   Iterable<UserFeedItem> get items =>
       _message.items.map((i) => UserFeedItem.fromMessage(i));
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
 
 class UserFeedItem extends BaseModel<UserFeedItemMessage> {
@@ -526,7 +550,7 @@ class UserFeedItemRecommendation
   Uint8List get descriptor => userFeedItemRecommendationMessageDescriptor;
 }
 
-class UserDownload extends BaseModel<UserDownloadMessage> {
+class UserDownload extends StorageModel<UserDownloadMessage> {
   UserDownload({
     String? id,
     String? episodeId,
@@ -563,6 +587,7 @@ class UserDownload extends BaseModel<UserDownloadMessage> {
   String get episodeId => _message.episodeId;
   String get filePath => _message.filePath;
 
+  @override
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
 
@@ -620,7 +645,7 @@ class UserContacts extends BaseModel<UserContactsMessage> {
       _message.contacts.map((c) => UserContact.fromMessage(c));
 }
 
-class Settings extends BaseModel<SettingsMessage> {
+class Settings extends StorageModel<SettingsMessage> {
   Settings({String? id}) : super(SettingsMessage(id: id));
 
   bool get enablePlaylist => _message.enablePlaylist;
@@ -632,4 +657,8 @@ class Settings extends BaseModel<SettingsMessage> {
 
   @override
   Uint8List get descriptor => settingsMessageDescriptor;
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
 }
