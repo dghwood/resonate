@@ -3,7 +3,7 @@ package search
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/services/search/taddy"
+	"github.com/dghwood/resonate/server/services/search/taddy"
 )
 
 func TestTopType(t *testing.T) {

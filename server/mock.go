@@ -6,12 +6,12 @@ import (
 	"os"
 	"time"
 
-	podcastService "github.com/dghwood/resonate/api/podcast"
-	"github.com/dghwood/resonate/log"
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/services/datastore"
-	"github.com/dghwood/resonate/services/fetch"
-	"github.com/dghwood/resonate/services/imagestore"
+	podcastService "github.com/dghwood/resonate/server/api/podcast"
+	"github.com/dghwood/resonate/server/log"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/services/datastore"
+	"github.com/dghwood/resonate/server/services/fetch"
+	"github.com/dghwood/resonate/server/services/imagestore"
 )
 
 func mockUser(phoneNumber string, name string, imageUrl string) *models.User {

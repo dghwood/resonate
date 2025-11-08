@@ -3,7 +3,7 @@ package fetch
 import (
 	"testing"
 
-	cacheService "github.com/dghwood/resonate/services/cachestore"
+	cacheService "github.com/dghwood/resonate/server/services/cachestore"
 )
 
 func TestKeyGeneration(t *testing.T) {

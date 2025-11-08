@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package resonate; 
 
-option go_package = "github.com/dghwood/resonate/proto";
+option go_package = "github.com/dghwood/resonate/server/proto";
 
 enum ErrorEnum {
     ERROR_UNKNOWN = 0; 

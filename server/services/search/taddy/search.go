@@ -8,8 +8,8 @@ import (
 
 	// "time"
 
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/services/fetch"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/services/fetch"
 )
 
 // This needs to implement an interface

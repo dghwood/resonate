@@ -1,11 +1,11 @@
 package search
 
 import (
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/proto"
 
-	"github.com/dghwood/resonate/services/datastore"
-	"github.com/dghwood/resonate/services/search"
+	"github.com/dghwood/resonate/server/services/datastore"
+	"github.com/dghwood/resonate/server/services/search"
 )
 
 type Query struct {

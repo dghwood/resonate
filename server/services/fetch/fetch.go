@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/dghwood/resonate/log"
-	"github.com/dghwood/resonate/services/cachestore"
+	"github.com/dghwood/resonate/server/log"
+	"github.com/dghwood/resonate/server/services/cachestore"
 )
 
 type Request struct {

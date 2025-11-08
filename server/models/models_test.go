@@ -2,8 +2,8 @@ package models
 
 import (
 	"testing"
-	// "github.com/dghwood/resonate/proto"
-	// "github.com/dghwood/resonate/proto"
+	// "github.com/dghwood/resonate/server/proto"
+	// "github.com/dghwood/resonate/server/proto"
 )
 
 func TestModel(t *testing.T) {

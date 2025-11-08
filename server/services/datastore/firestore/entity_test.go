@@ -3,7 +3,7 @@ package firestore
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/server/models"
 )
 
 func TestSave(t *testing.T) {

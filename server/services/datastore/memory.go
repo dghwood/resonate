@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"sort"
 
-	"github.com/dghwood/resonate/log"
-	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/server/log"
+	"github.com/dghwood/resonate/server/models"
 )
 
 type memoryDatabase struct {

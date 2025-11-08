@@ -3,7 +3,7 @@ package rss
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/services/fetch"
+	"github.com/dghwood/resonate/server/services/fetch"
 )
 
 func TestGet(t *testing.T) {

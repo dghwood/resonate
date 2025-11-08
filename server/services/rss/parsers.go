@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/utils"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/utils"
 )
 
 var pubDateFormats = []string{

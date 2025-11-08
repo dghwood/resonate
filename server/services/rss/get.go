@@ -1,9 +1,9 @@
 package rss
 
 import (
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/services/fetch"
-	"github.com/dghwood/resonate/utils"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/services/fetch"
+	"github.com/dghwood/resonate/server/utils"
 )
 
 func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {

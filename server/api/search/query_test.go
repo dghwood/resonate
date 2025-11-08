@@ -3,7 +3,7 @@ package search
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/services/search"
+	"github.com/dghwood/resonate/server/services/search"
 )
 
 func TestSearch(t *testing.T) {

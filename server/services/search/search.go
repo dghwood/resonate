@@ -3,9 +3,9 @@ package search
 import (
 	"os"
 
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/services/fetch"
-	"github.com/dghwood/resonate/services/search/taddy"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/services/fetch"
+	"github.com/dghwood/resonate/server/services/search/taddy"
 )
 
 type Search interface {

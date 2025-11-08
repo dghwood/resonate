@@ -3,8 +3,8 @@ package datastore
 import (
 	"testing"
 
-	"github.com/dghwood/resonate/models"
-	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/server/models"
+	"github.com/dghwood/resonate/server/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dghwood/resonate/errors"
-	pb "github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/server/errors"
+	pb "github.com/dghwood/resonate/server/proto"
 	"github.com/golang-jwt/jwt/v4"
 )
 

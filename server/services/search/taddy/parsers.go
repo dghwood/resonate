@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/dghwood/resonate/models"
+	"github.com/dghwood/resonate/server/models"
 )
 
 func parsePodcast(podcast TaddyPodcast, message *models.Podcast) (err error) {
