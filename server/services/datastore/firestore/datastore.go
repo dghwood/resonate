@@ -219,6 +219,9 @@ func (f *FirestoreDatastore) ListForIds(
 		// Descending order (with -)
 		query = query.Order(fmt.Sprintf("-%s", getFieldName(sortFieldNum)))
 	}
+	if params.Limit > 0 {
+		query = query.Limit(params.Limit)
+	}
 	if params.Cursor != nil && params.Cursor.Cursor != "" {
 		cursor, err := firestore.DecodeCursor(params.Cursor.Cursor)
 		if err != nil {

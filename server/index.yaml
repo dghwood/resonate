@@ -13,3 +13,8 @@ indexes:
   - name: meta.is_deleted
   - name: f8
     direction: desc
+
+- kind: resonate.UserMessage
+  properties:
+  - name: meta.is_deleted
+  - name: f11

@@ -290,6 +290,7 @@ const UserMessage$json = {
       '3': 11,
       '4': 1,
       '5': 9,
+      '8': {},
       '10': 'encryptedPhoneNumber'
     },
     {'1': 'image_url', '3': 4, '4': 1, '5': 9, '10': 'imageUrl'},
@@ -325,24 +326,39 @@ const UserMessage$json = {
       '6': '.resonate.StorageMetadataMessage',
       '10': 'metadata'
     },
-    {'1': 'num_followers', '3': 8, '4': 1, '5': 3, '10': 'numFollowers'},
-    {'1': 'num_following', '3': 12, '4': 1, '5': 3, '10': 'numFollowing'},
-    {'1': 'num_listens', '3': 13, '4': 1, '5': 3, '10': 'numListens'},
+    {
+      '1': 'num_followers',
+      '3': 8,
+      '4': 1,
+      '5': 3,
+      '8': {},
+      '10': 'numFollowers'
+    },
+    {
+      '1': 'num_following',
+      '3': 12,
+      '4': 1,
+      '5': 3,
+      '8': {},
+      '10': 'numFollowing'
+    },
+    {'1': 'num_listens', '3': 13, '4': 1, '5': 3, '8': {}, '10': 'numListens'},
   ],
 };
 
 /// Descriptor for `UserMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode(
     'CgtVc2VyTWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVlbW'
-    'FpbBgDIAEoCVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAogASgJUgtwaG9uZU51bWJlchI0ChZl'
-    'bmNyeXB0ZWRfcGhvbmVfbnVtYmVyGAsgASgJUhRlbmNyeXB0ZWRQaG9uZU51bWJlchIbCglpbW'
-    'FnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5yZXNvbmF0'
-    'ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW5zGAYgAy'
-    'gLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93aW5nGAcg'
-    'AygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxI8CghtZXRhZGF0YR'
-    'gJIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRhEiMKDW51'
-    'bV9mb2xsb3dlcnMYCCABKANSDG51bUZvbGxvd2VycxIjCg1udW1fZm9sbG93aW5nGAwgASgDUg'
-    'xudW1Gb2xsb3dpbmcSHwoLbnVtX2xpc3RlbnMYDSABKANSCm51bUxpc3RlbnM=');
+    'FpbBgDIAEoCVIFZW1haWwSIQoMcGhvbmVfbnVtYmVyGAogASgJUgtwaG9uZU51bWJlchI6ChZl'
+    'bmNyeXB0ZWRfcGhvbmVfbnVtYmVyGAsgASgJQgSAtRgBUhRlbmNyeXB0ZWRQaG9uZU51bWJlch'
+    'IbCglpbWFnZV91cmwYBCABKAlSCGltYWdlVXJsEkcKDXN1YnNjcmlwdGlvbnMYBSADKAsyIS5y'
+    'ZXNvbmF0ZS5Vc2VyU3Vic2NyaXB0aW9uTWVzc2FnZVINc3Vic2NyaXB0aW9ucxI1CgdsaXN0ZW'
+    '5zGAYgAygLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSOQoJZm9sbG93'
+    'aW5nGAcgAygLMhsucmVzb25hdGUuVXNlckZvbGxvd01lc3NhZ2VSCWZvbGxvd2luZxI8CghtZX'
+    'RhZGF0YRgJIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYXRh'
+    'EikKDW51bV9mb2xsb3dlcnMYCCABKANCBIC1GAFSDG51bUZvbGxvd2VycxIpCg1udW1fZm9sbG'
+    '93aW5nGAwgASgDQgSAtRgBUgxudW1Gb2xsb3dpbmcSJQoLbnVtX2xpc3RlbnMYDSABKANCBIC1'
+    'GAFSCm51bUxpc3RlbnM=');
 
 @$core.Deprecated('Use publicUserMessageDescriptor instead')
 const PublicUserMessage$json = {

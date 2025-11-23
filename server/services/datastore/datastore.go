@@ -34,6 +34,7 @@ type ListForIdsParams struct {
 	Entity         models.Model
 	Cursor         *models.QueryCursor
 	IncludeDeleted bool
+	Limit          int
 }
 
 type Datastore interface {

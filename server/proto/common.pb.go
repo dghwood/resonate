@@ -2892,22 +2892,22 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +
 	"\x06tokens\x18\x03 \x03(\v2\x16.resonate.TokenMessageR\x06tokens\x12<\n" +
-	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xa1\x04\n" +
+	"\bmetadata\x18\x04 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\"\xb9\x04\n" +
 	"\vUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12!\n" +
 	"\fphone_number\x18\n" +
-	" \x01(\tR\vphoneNumber\x124\n" +
-	"\x16encrypted_phone_number\x18\v \x01(\tR\x14encryptedPhoneNumber\x12\x1b\n" +
+	" \x01(\tR\vphoneNumber\x12:\n" +
+	"\x16encrypted_phone_number\x18\v \x01(\tB\x04\x80\xb5\x18\x01R\x14encryptedPhoneNumber\x12\x1b\n" +
 	"\timage_url\x18\x04 \x01(\tR\bimageUrl\x12G\n" +
 	"\rsubscriptions\x18\x05 \x03(\v2!.resonate.UserSubscriptionMessageR\rsubscriptions\x125\n" +
 	"\alistens\x18\x06 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x129\n" +
 	"\tfollowing\x18\a \x03(\v2\x1b.resonate.UserFollowMessageR\tfollowing\x12<\n" +
-	"\bmetadata\x18\t \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12#\n" +
-	"\rnum_followers\x18\b \x01(\x03R\fnumFollowers\x12#\n" +
-	"\rnum_following\x18\f \x01(\x03R\fnumFollowing\x12\x1f\n" +
-	"\vnum_listens\x18\r \x01(\x03R\n" +
+	"\bmetadata\x18\t \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12)\n" +
+	"\rnum_followers\x18\b \x01(\x03B\x04\x80\xb5\x18\x01R\fnumFollowers\x12)\n" +
+	"\rnum_following\x18\f \x01(\x03B\x04\x80\xb5\x18\x01R\fnumFollowing\x12%\n" +
+	"\vnum_listens\x18\r \x01(\x03B\x04\x80\xb5\x18\x01R\n" +
 	"numListens\"\xbf\x01\n" +
 	"\x11PublicUserMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +

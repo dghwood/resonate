@@ -121,6 +121,10 @@ func (p *User) GetUserIdFieldNum() int32 {
 	return 1
 }
 
+func (p *User) GetEncryptedPhoneNumberFieldNum() int32 {
+	return 11
+}
+
 func (p *User) SetIdFromPhoneNumber(phoneNumber string) {
 	// TODO(duncan): Change this.. ?
 	// p.Id = utils.HashPhoneNumber(phoneNumber)

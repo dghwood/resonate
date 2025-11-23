@@ -104,7 +104,7 @@ message UserMessage {
     // What about country code, etc. 
     // TODO(duncan): Maybe I should just not store this?
     string phone_number = 10;
-    string encrypted_phone_number = 11; 
+    string encrypted_phone_number = 11 [(index) = true]; 
     // Should this be a data url? 
     string image_url = 4;
     repeated UserSubscriptionMessage subscriptions = 5;
@@ -114,9 +114,9 @@ message UserMessage {
     StorageMetadataMessage metadata = 9;   
 
     // TODO(duncan): Do I want to move this to a seperate entity?
-    int64 num_followers = 8; 
-    int64 num_following = 12;
-    int64 num_listens = 13;
+    int64 num_followers = 8 [(index) = true]; 
+    int64 num_following = 12 [(index) = true];
+    int64 num_listens = 13 [(index) = true];
 }
 
 // Stripped down UserMessage for more public consumption

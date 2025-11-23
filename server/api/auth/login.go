@@ -78,12 +78,20 @@ func (f Login) Execute(
 		return errors.ERROR_INVALID_CREDENTIALS
 	}
 	// Now the user is authenticated
-	user := models.User{}
+	user := &models.User{}
 	user.SetIdFromPhoneNumber(phoneNumber)
 
 	// Get the user if they already exist
-	userErr := f.Datastore.Get(&user)
-	if userErr != nil && userErr != datastore.ErrorEntityNotFound {
+	it := f.Datastore.ListForIds(datastore.ListForIdsParams{
+		Ids:        []string{utils.HashPhoneNumber(phoneNumber)},
+		IdFieldNum: user.GetEncryptedPhoneNumberFieldNum(),
+		Entity:     user,
+		Limit:      1,
+	})
+	userErr := it.Next(user)
+	log.Infof("userErr %s", userErr)
+	log.Info(user)
+	if userErr != nil && userErr != datastore.IteratorDone {
 		log.Infof("Error getting user: %s", userErr)
 		return userErr
 	}
@@ -91,7 +99,7 @@ func (f Login) Execute(
 
 	// Add the new user since they don't exist
 	if !userExists {
-		err = f.Datastore.Put(&user)
+		err = f.Datastore.Put(user)
 		if err != nil {
 			return
 		}
