@@ -7,14 +7,16 @@ import (
 	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
 	"github.com/dghwood/resonate/services/rss"
+	"github.com/dghwood/resonate/services/secrets"
 	// "github.com/dghwood/resonate/services/secrets"
 )
 
+// TODO(duncan): Put these in the secrets?
 var projectID = "level-prism-477102-p5"
 var databaseId = "rxyz-db-test"
 
 func main() {
-	// secrets.AccessSecrets()
+	secrets.AccessSecrets()
 	numSkipped := 0
 	numCompleted := 0
 	ds := datastoreService.NewFirestoreDatastore(projectID, databaseId)
