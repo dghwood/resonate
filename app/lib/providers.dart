@@ -21,7 +21,7 @@ import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
 import 'package:resonate/services/player.dart';
-import 'package:resonate/services/secure_database.dart';
+import 'package:resonate/services/secure_database/secure_database.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
