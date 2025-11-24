@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';
@@ -73,9 +73,11 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final AbstractHttpService _client;
   final String _path;
   // TODO(duncan): This needs to be configurable
-  final String _baseUrl = 'http://localhost:8080';
-  // final String _baseUrl =
-  // 'https://rxyz-814908101471.northamerica-northeast1.run.app';
+
+  final String _baseUrl =
+      kReleaseMode
+          ? 'https://rxyz-app-814908101471.northamerica-northeast1.run.app'
+          : 'http://localhost:8080';
 
   @override
   Future<void> execute(Req request, Res response) async {

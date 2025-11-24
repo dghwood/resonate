@@ -7,7 +7,12 @@ echo "Starting Flutter web build process..."
 echo "-------------------------------------"
 
 cd ../app
-flutter build web --release
+# --ouput=/path/server/web
+# --debug 
+# --profile 
+# --release
+# --dart-define-from-file=config.env
+flutter build web --$1
 cd ../server
 
 echo "-------------------------------------"

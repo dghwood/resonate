@@ -1,5 +1,4 @@
 *.secrets
-*.toml
 # This is copied from build in the flutter 
 # directory
 web

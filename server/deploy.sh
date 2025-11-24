@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-sh web.sh; 
+sh web.sh release; 
 
 gcloud run deploy rxyz-app \
 --source . \
