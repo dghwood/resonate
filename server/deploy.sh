@@ -1,6 +1,16 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+sh web.sh; 
+
 gcloud run deploy rxyz-app \
 --source . \
 --region northamerica-northeast1 \
 --min-instances=0 \
 --max-instances=1 \
 --no-invoker-iam-check
+
+echo "-------------------------------------"
+echo "deployed"
