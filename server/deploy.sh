@@ -5,6 +5,12 @@ set -e
 
 sh web.sh release; 
 
+cat << EOF > project.toml; 
+#[[build.env]]
+#name = "GOOGLE_BUILDABLE"
+#value = "./jobs/podcasts/main.go"
+EOF
+
 gcloud run deploy rxyz-app \
 --source . \
 --region northamerica-northeast1 \
