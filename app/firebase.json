@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      ".git",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    // "rewrites": [
+    //   {
+    //     "source": "/api/*",
+    //     "run": {
+    //       "serviceId": "helloworld", // "service name" (from when you deployed the container image)
+    //       "region": "us-central1", // optional (if omitted, default is us-central1)
+    //       "pinTag": true // optional (see note below)
+    //     }
+    //   }
+    // ]
+  }
+}
