@@ -159,10 +159,6 @@ func main() {
 		w.Write(image)
 	})
 
-	staticDir := http.Dir("./web")
-	fileServer := http.FileServer(staticDir)
-	http.Handle("/", fileServer)
-
 	log.Info("listening on port " + port + "...")
 	log.Error(http.ListenAndServe(":"+port, nil))
 }

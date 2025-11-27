@@ -12,7 +12,8 @@ cd ../app
 # --profile 
 # --release
 # --dart-define-from-file=config.env
-flutter build web --$1
+# --base-href=
+flutter build web --$1 --base-href="https://storage.googleapis.com/rxyz-app-static/v0/"
 cd ../server
 
 echo "-------------------------------------"
