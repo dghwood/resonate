@@ -14,6 +14,35 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use internalResponseInfoDescriptor instead')
+const InternalResponseInfo$json = {
+  '1': 'InternalResponseInfo',
+  '2': [
+    {
+      '1': 'access_token',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'accessToken'
+    },
+    {
+      '1': 'refresh_token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.TokenMessage',
+      '10': 'refreshToken'
+    },
+  ],
+};
+
+/// Descriptor for `InternalResponseInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List internalResponseInfoDescriptor = $convert.base64Decode(
+    'ChRJbnRlcm5hbFJlc3BvbnNlSW5mbxI5CgxhY2Nlc3NfdG9rZW4YASABKAsyFi5yZXNvbmF0ZS'
+    '5Ub2tlbk1lc3NhZ2VSC2FjY2Vzc1Rva2VuEjsKDXJlZnJlc2hfdG9rZW4YAiABKAsyFi5yZXNv'
+    'bmF0ZS5Ub2tlbk1lc3NhZ2VSDHJlZnJlc2hUb2tlbg==');
+
 @$core.Deprecated('Use responseInfoDescriptor instead')
 const ResponseInfo$json = {
   '1': 'ResponseInfo',
@@ -28,6 +57,14 @@ const ResponseInfo$json = {
       '6': '.resonate.ErrorEnum',
       '10': 'error'
     },
+    {
+      '1': 'internal_info',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.InternalResponseInfo',
+      '10': 'internalInfo'
+    },
   ],
 };
 
@@ -35,7 +72,8 @@ const ResponseInfo$json = {
 final $typed_data.Uint8List responseInfoDescriptor = $convert.base64Decode(
     'CgxSZXNwb25zZUluZm8SGAoHc3VjY2VzcxgBIAEoCFIHc3VjY2VzcxIjCg1lcnJvcl9tZXNzYW'
     'dlGAIgASgJUgxlcnJvck1lc3NhZ2USKQoFZXJyb3IYAyABKA4yEy5yZXNvbmF0ZS5FcnJvckVu'
-    'dW1SBWVycm9y');
+    'dW1SBWVycm9yEkcKDWludGVybmFsX2luZm8YBCABKAsyIi5yZXNvbmF0ZS5hcGkuSW50ZXJuYW'
+    'xSZXNwb25zZUluZm9SDGludGVybmFsSW5mbw==');
 
 @$core.Deprecated('Use requestInfoDescriptor instead')
 const RequestInfo$json = {

@@ -46,7 +46,7 @@ class SearchContactsApiResponse
 class SearchContactsApiServer
     extends ServerApi<SearchContactsApiRequest, SearchContactsApiResponse> {
   SearchContactsApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          SearchContactsApiRequest(),
@@ -87,7 +87,7 @@ class SearchTopContactsApiServer
     extends
         ServerApi<SearchTopContactsApiRequest, SearchTopContactsApiResponse> {
   SearchTopContactsApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          SearchTopContactsApiRequest(),

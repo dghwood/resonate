@@ -9,6 +9,7 @@ import (
 	// "context"
 
 	"fmt"
+	"net/http"
 
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/utils"
@@ -236,4 +237,50 @@ type UserContacts struct {
 func (u *UserContacts) SetIdFromUserId(userId string) {
 	u.Id = "contacts-" + userId
 	u.UserId = userId
+}
+
+type Token struct {
+	*proto.TokenMessage
+}
+
+func NewToken() *Token {
+	return &Token{
+		&proto.TokenMessage{},
+	}
+}
+
+func (t *Token) FromTokenMessage(tokenMessage *proto.TokenMessage) {
+	t.TokenMessage = tokenMessage
+}
+
+func (t *Token) ToTokenString() string {
+	bytes, _ := pb.Marshal(t.TokenMessage)
+	return utils.Base64EncodeBytes(bytes)
+}
+
+func (t *Token) FromTokenString(s string) {
+	bytes, _ := utils.Base64DecodeBytes(s)
+	pb.Unmarshal(bytes, t)
+}
+
+func (t *Token) ToHttpCookie(name string) *http.Cookie {
+	return &http.Cookie{
+		Name:     name,
+		Value:    t.ToTokenString(),
+		HttpOnly: true,
+	}
+}
+
+func (t *Token) FromHttpCookie(cookie *http.Cookie) {
+	t.FromTokenString(cookie.Value)
+}
+
+type InternalInfo struct {
+	*proto.InternalResponseInfo
+}
+
+func NewInternalInfo() *InternalInfo {
+	return &InternalInfo{
+		&proto.InternalResponseInfo{},
+	}
 }

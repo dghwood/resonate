@@ -58,7 +58,7 @@ class GetPublicUserApiResponse
 class GetPublicUserApiServer
     extends ServerApi<GetPublicUserApiRequest, GetPublicUserApiResponse> {
   GetPublicUserApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          GetPublicUserApiRequest(),

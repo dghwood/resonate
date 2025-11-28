@@ -63,9 +63,9 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     path, {
     // Setting this means
     AuthUser? authUser,
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     bool requiresLogin = true,
-  }) : _client = client ?? HttpService(),
+  }) : _client = client,
        _path = path,
        _authUser = authUser;
 
@@ -77,7 +77,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final String _baseUrl =
       kReleaseMode
           ? 'https://rxyz-app-814908101471.northamerica-northeast1.run.app'
-          : 'http://localhost:8080';
+          : 'http://localhost';
 
   @override
   Future<void> execute(Req request, Res response) async {
@@ -85,6 +85,8 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     final url = Uri.parse('$_baseUrl/$_path');
     var authToken = "";
     if (_authUser != null) {
+      // This will be handled by default on web, since it's an http cookie
+      // but for app we need to handle this ourselves.
       requestInfo.accessToken = _authUser.accessToken!.toMessage();
       requestInfo.userId = _authUser.user?.id ?? '';
       _log.info("requesting $url");
@@ -92,9 +94,10 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     request.requestInfo = requestInfo;
     var resp = await _client.post(
       url,
-      headers: {'Resonate': 'its me, Mario!', 'Authorization': authToken},
+      // headers: {'Resonate': 'its me, Mario!', 'Authorization': authToken},
       body: request.writeToBuffer(),
     );
+
     response.fromBuffer(resp);
     if (!response.responseInfo.success) {
       throw ApiException(response.responseInfo.errorMessage);

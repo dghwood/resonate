@@ -36,7 +36,7 @@ class AddSubscriptionApiResponse
 class AddSubscriptionApiServer
     extends ServerApi<AddSubscriptionApiRequest, AddSubscriptionApiResponse> {
   AddSubscriptionApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          AddSubscriptionApiRequest(),
@@ -70,7 +70,7 @@ class RemoveSubscriptionApiServer
     extends
         ServerApi<RemoveSubscriptionApiRequest, RemoveSubscriptionApiResponse> {
   RemoveSubscriptionApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          RemoveSubscriptionApiRequest(),
@@ -116,7 +116,7 @@ class ListSubscriptionApiResponse
 class ListSubscriptionApiServer
     extends ServerApi<ListSubscriptionApiRequest, ListSubscriptionApiResponse> {
   ListSubscriptionApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          ListSubscriptionApiRequest(),

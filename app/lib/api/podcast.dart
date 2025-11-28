@@ -47,14 +47,16 @@ class GetPodcastApiResponse extends ApiResponse<GetPodcastMessage_Response> {
 
 class GetPodcastApiServer
     extends ServerApi<GetPodcastApiRequest, GetPodcastApiResponse> {
-  GetPodcastApiServer({AbstractHttpService? client, required AuthUser authUser})
-    : super(
-        GetPodcastApiRequest(),
-        GetPodcastApiResponse(),
-        'api/podcast/get',
-        authUser: authUser,
-        client: client,
-      );
+  GetPodcastApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         GetPodcastApiRequest(),
+         GetPodcastApiResponse(),
+         'api/podcast/get',
+         authUser: authUser,
+         client: client,
+       );
 }
 
 class ListPodcastEpisodesApiRequest
@@ -84,7 +86,7 @@ class ListPodcastEpisodesApiServer
           ListPodcastEpisodesApiResponse
         > {
   ListPodcastEpisodesApiServer({
-    AbstractHttpService? client,
+    required AbstractHttpService client,
     required AuthUser authUser,
   }) : super(
          ListPodcastEpisodesApiRequest(),

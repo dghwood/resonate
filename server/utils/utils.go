@@ -92,15 +92,26 @@ func GenerateUniqueID() string {
 	return hex.EncodeToString(bytes)
 }
 
+func Base64EncodeBytes(b []byte) string {
+	return base64.StdEncoding.EncodeToString(b)
+}
 func Base64Encode(s string) string {
-	return base64.StdEncoding.EncodeToString([]byte(s))
+	return Base64EncodeBytes([]byte(s))
 }
 
-func Base64Decode(s string) (string, error) {
-	data, err := base64.StdEncoding.DecodeString(s)
+func Base64DecodeBytes(s string) (data []byte, err error) {
+	data, err = base64.StdEncoding.DecodeString(s)
 	if err != nil {
 		log.Println("Error decoding base64 string:", err)
-		return "", err
+		return
 	}
-	return string(data), nil
+	return
+}
+
+func Base64Decode(s string) (t string, err error) {
+	data, err := Base64DecodeBytes(s)
+	if err == nil {
+		t = string(data)
+	}
+	return
 }

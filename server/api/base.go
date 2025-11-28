@@ -45,24 +45,59 @@ func returnError[R ApiResponseInterface](
 	response.GetResponseInfo().Error = err.Enum
 	writeProto(r, w, response)
 }
+
+func populateInternalInfo(r *http.Request) *proto.InternalResponseInfo {
+	internalInfo := proto.InternalResponseInfo{}
+	// What about refresh cookie
+	if tokenCookie, tokenErr := r.Cookie("Access-Token"); tokenErr == nil {
+		token := models.NewToken()
+		token.FromHttpCookie(tokenCookie)
+		internalInfo.SetAccessToken(token.TokenMessage)
+	}
+	if tokenCookie, tokenErr := r.Cookie("Refresh-Token"); tokenErr == nil {
+		token := models.NewToken()
+		token.FromHttpCookie(tokenCookie)
+		internalInfo.SetRefreshToken(token.TokenMessage)
+	}
+	return &internalInfo
+}
+func writeInternalInfo(internalInfo *proto.InternalResponseInfo, w http.ResponseWriter) {
+	if internalInfo == nil {
+		return
+	}
+	log.Info("internalInfo", internalInfo)
+	accessToken := internalInfo.GetAccessToken()
+	if accessToken != nil {
+		token := &models.Token{}
+		token.FromTokenMessage(accessToken)
+		cookie := token.ToHttpCookie("Access-Token")
+		http.SetCookie(w, cookie)
+	}
+	refreshToken := internalInfo.GetRefreshToken()
+	if refreshToken != nil {
+		token := &models.Token{}
+		token.FromTokenMessage(refreshToken)
+		cookie := token.ToHttpCookie("Refresh-Token")
+		http.SetCookie(w, cookie)
+	}
+}
+
 func handle[
 	request ApiRequestInterface,
 	response ApiResponseInterface](
 	f ApiInterface[request, response]) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// CORs headers
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		// TODO(duncan): Update this to not be *
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:58423")
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 		if r.Method == "OPTIONS" {
 			return
 		}
 		log.Info(r.URL.Path)
-
-		// TODO(duncan): Remove
-		// Add some delay, in dev the server is responding too
-		// quickly
-		// time.Sleep(2 * time.Second)
 
 		request := f.RequestProto()
 		err := parseProto(r, request)
@@ -72,10 +107,8 @@ func handle[
 		}
 
 		response := f.ResponseProto()
-
-		requestInfo := request.GetRequestInfo()
-		token := requestInfo.GetAccessToken()
-		userId, err := auth.ValidUserIdFromToken(token)
+		internalInfo := populateInternalInfo(r)
+		userId, err := auth.ValidUserIdFromToken(internalInfo.AccessToken)
 
 		if f.RequireSignIn() && err != nil {
 			log.Error("error logging in: ", err)
@@ -93,7 +126,7 @@ func handle[
 				Id: userId,
 			},
 			IsLoggedIn: err == nil,
-			Token:      token,
+			Token:      internalInfo.AccessToken,
 		}
 
 		err = f.Execute(&user, request, response)
@@ -108,7 +141,12 @@ func handle[
 				response.GetResponseInfo().ErrorMessage = err.Error()
 			}
 		} else {
-			response.GetResponseInfo().Success = true
+			// Deal with cookies
+			responseInfo := response.GetResponseInfo()
+			writeInternalInfo(responseInfo.GetInternalInfo(), w)
+			// Clear this before responding
+			responseInfo.ClearInternalInfo()
+			response.GetResponseInfo().SetSuccess(true)
 		}
 		writeProto(r, w, response)
 	}

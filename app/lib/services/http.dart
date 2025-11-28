@@ -1,7 +1,9 @@
-import 'dart:typed_data';
+import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:resonate/services/secure_database/secure_database.dart';
 
 Logger _log = Logger('services/http');
 
@@ -14,7 +16,10 @@ abstract class AbstractHttpService {
 }
 
 class HttpService implements AbstractHttpService {
-  HttpService();
+  HttpService({required AbstractSecureDatabase secureDatabase})
+    : _secureDatabase = secureDatabase;
+
+  final AbstractSecureDatabase _secureDatabase;
 
   @override
   Future<Uint8List> post(
@@ -22,21 +27,54 @@ class HttpService implements AbstractHttpService {
     Map<String, String>? headers,
     Uint8List? body,
   }) async {
+    headers ??= {};
+    headers['Content-Type'] = 'application/octet-stream';
     try {
-      var response = await http.post(
-        url,
-        // headers: headers,
-        headers: <String, String>{
-          'Content-Type':
-              'application/octet-stream', // Or other appropriate content type
-        },
-        body: body,
-      );
+      if (!kIsWeb) {
+        if (kReleaseMode && url.scheme != 'https') {
+          throw Exception('only send cookies in secure');
+        }
+        // load cookies from secure storage
+        var cookies = await _secureDatabase.read('cookies');
+        var cookieMap = jsonDecode(cookies);
+        var cookieHeader = [];
+        for (var key in cookieMap) {
+          cookieHeader.add('$key=${cookieMap[key]}');
+        }
+        headers['Cookie'] = cookieHeader.join('; ');
+      }
+    } on Exception {
+      // do nothing
+    }
+    try {
+      var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode != 200) {
         throw HttpServiceException(
           'Failed to post to $url: ${response.statusCode} ${response.reasonPhrase}',
         );
       }
+
+      // Handle cookies in app
+      if (!kIsWeb) {
+        var cookieHeader = response.headers['set-cookie'];
+        if (cookieHeader != null) {
+          var cookieStrings = cookieHeader.split(',');
+          Map<String, String> cookieMap = {};
+          for (var cookieString in cookieStrings) {
+            // just parse out the name=value pairs
+            var cookie = cookieString.split(';')[0];
+            var keyValue = cookie.split('=').map((e) => e.trim()).toList();
+            if (keyValue[0] != '' && keyValue[1] != '') {
+              cookieMap[keyValue[0]] = keyValue[1];
+            }
+          }
+          if (cookieMap.isNotEmpty) {
+            _log.info(cookieMap);
+            await _secureDatabase.write('cookies', jsonEncode(cookieMap));
+          }
+        }
+      }
+
       return response.bodyBytes;
     } catch (e) {
       throw HttpServiceException('Failed to post to $url: $e');

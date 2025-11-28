@@ -20,16 +20,93 @@ import 'errors.pbenum.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+class InternalResponseInfo extends $pb.GeneratedMessage {
+  factory InternalResponseInfo({
+    $0.TokenMessage? accessToken,
+    $0.TokenMessage? refreshToken,
+  }) {
+    final result = create();
+    if (accessToken != null) result.accessToken = accessToken;
+    if (refreshToken != null) result.refreshToken = refreshToken;
+    return result;
+  }
+
+  InternalResponseInfo._();
+
+  factory InternalResponseInfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory InternalResponseInfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'InternalResponseInfo',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<$0.TokenMessage>(1, _omitFieldNames ? '' : 'accessToken',
+        subBuilder: $0.TokenMessage.create)
+    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'refreshToken',
+        subBuilder: $0.TokenMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  InternalResponseInfo clone() =>
+      InternalResponseInfo()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  InternalResponseInfo copyWith(void Function(InternalResponseInfo) updates) =>
+      super.copyWith((message) => updates(message as InternalResponseInfo))
+          as InternalResponseInfo;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static InternalResponseInfo create() => InternalResponseInfo._();
+  @$core.override
+  InternalResponseInfo createEmptyInstance() => create();
+  static $pb.PbList<InternalResponseInfo> createRepeated() =>
+      $pb.PbList<InternalResponseInfo>();
+  @$core.pragma('dart2js:noInline')
+  static InternalResponseInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<InternalResponseInfo>(create);
+  static InternalResponseInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $0.TokenMessage get accessToken => $_getN(0);
+  @$pb.TagNumber(1)
+  set accessToken($0.TokenMessage value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasAccessToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAccessToken() => $_clearField(1);
+  @$pb.TagNumber(1)
+  $0.TokenMessage ensureAccessToken() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.TokenMessage get refreshToken => $_getN(1);
+  @$pb.TagNumber(2)
+  set refreshToken($0.TokenMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasRefreshToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRefreshToken() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.TokenMessage ensureRefreshToken() => $_ensure(1);
+}
+
 class ResponseInfo extends $pb.GeneratedMessage {
   factory ResponseInfo({
     $core.bool? success,
     $core.String? errorMessage,
     $1.ErrorEnum? error,
+    InternalResponseInfo? internalInfo,
   }) {
     final result = create();
     if (success != null) result.success = success;
     if (errorMessage != null) result.errorMessage = errorMessage;
     if (error != null) result.error = error;
+    if (internalInfo != null) result.internalInfo = internalInfo;
     return result;
   }
 
@@ -52,6 +129,8 @@ class ResponseInfo extends $pb.GeneratedMessage {
         defaultOrMaker: $1.ErrorEnum.ERROR_UNKNOWN,
         valueOf: $1.ErrorEnum.valueOf,
         enumValues: $1.ErrorEnum.values)
+    ..aOM<InternalResponseInfo>(4, _omitFieldNames ? '' : 'internalInfo',
+        subBuilder: InternalResponseInfo.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -101,6 +180,17 @@ class ResponseInfo extends $pb.GeneratedMessage {
   $core.bool hasError() => $_has(2);
   @$pb.TagNumber(3)
   void clearError() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  InternalResponseInfo get internalInfo => $_getN(3);
+  @$pb.TagNumber(4)
+  set internalInfo(InternalResponseInfo value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasInternalInfo() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearInternalInfo() => $_clearField(4);
+  @$pb.TagNumber(4)
+  InternalResponseInfo ensureInternalInfo() => $_ensure(3);
 }
 
 class RequestInfo extends $pb.GeneratedMessage {

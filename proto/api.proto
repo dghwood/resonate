@@ -7,10 +7,15 @@ import "proto/errors.proto";
 
 option go_package = "github.com/dghwood/resonate/proto";
 
+message InternalResponseInfo {
+    TokenMessage access_token = 1; 
+    TokenMessage refresh_token = 2;
+}
 message ResponseInfo {
     bool success = 1; 
     string error_message = 2; 
     ErrorEnum error = 3;
+    InternalResponseInfo internal_info = 4;
 }
 message RequestInfo {
     string user_id = 1; 

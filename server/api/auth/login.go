@@ -137,9 +137,17 @@ func (f Login) Execute(
 		return
 	}
 
-	response.AccessToken = accessToken
-	// This needs to be stored in the database
-	response.RefreshToken = refreshToken
+	internalInfo := response.GetResponseInfo().GetInternalInfo()
+	if internalInfo == nil {
+		internalInfo = models.NewInternalInfo().InternalResponseInfo
+		response.GetResponseInfo().SetInternalInfo(internalInfo)
+	}
+	internalInfo.SetAccessToken(accessToken)
+	internalInfo.SetRefreshToken(refreshToken)
+
+	// response.AccessToken = accessToken
+	// // This needs to be stored in the database
+	// response.RefreshToken = refreshToken
 	response.User = &user.UserMessage
 	return
 }

@@ -41,7 +41,7 @@ class LoginRequestApiResponse
 
 class LoginRequestApiServer
     extends ServerApi<LoginRequestApiRequest, LoginRequestApiResponse> {
-  LoginRequestApiServer({AbstractHttpService? client})
+  LoginRequestApiServer({required AbstractHttpService client})
     : super(
         LoginRequestApiRequest(),
         LoginRequestApiResponse(),
@@ -68,7 +68,7 @@ class LoginUserApiResponse extends ApiResponse<LoginUserMessage_Response> {
 
 class LoginUserApiServer
     extends ServerApi<LoginUserApiRequest, LoginUserApiResponse> {
-  LoginUserApiServer({AbstractHttpService? client})
+  LoginUserApiServer({required AbstractHttpService client})
     : super(
         LoginUserApiRequest(),
         LoginUserApiResponse(),
