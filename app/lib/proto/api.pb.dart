@@ -195,12 +195,10 @@ class ResponseInfo extends $pb.GeneratedMessage {
 class RequestInfo extends $pb.GeneratedMessage {
   factory RequestInfo({
     $core.String? userId,
-    $0.TokenMessage? accessToken,
     InternalInfo? internalInfo,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
-    if (accessToken != null) result.accessToken = accessToken;
     if (internalInfo != null) result.internalInfo = internalInfo;
     return result;
   }
@@ -219,9 +217,7 @@ class RequestInfo extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'userId')
-    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken',
-        subBuilder: $0.TokenMessage.create)
-    ..aOM<InternalInfo>(3, _omitFieldNames ? '' : 'internalInfo',
+    ..aOM<InternalInfo>(2, _omitFieldNames ? '' : 'internalInfo',
         subBuilder: InternalInfo.create)
     ..hasRequiredFields = false;
 
@@ -254,37 +250,25 @@ class RequestInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearUserId() => $_clearField(1);
 
+  /// TokenMessage access_token = 2;
   @$pb.TagNumber(2)
-  $0.TokenMessage get accessToken => $_getN(1);
+  InternalInfo get internalInfo => $_getN(1);
   @$pb.TagNumber(2)
-  set accessToken($0.TokenMessage value) => $_setField(2, value);
+  set internalInfo(InternalInfo value) => $_setField(2, value);
   @$pb.TagNumber(2)
-  $core.bool hasAccessToken() => $_has(1);
+  $core.bool hasInternalInfo() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAccessToken() => $_clearField(2);
+  void clearInternalInfo() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.TokenMessage ensureAccessToken() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  InternalInfo get internalInfo => $_getN(2);
-  @$pb.TagNumber(3)
-  set internalInfo(InternalInfo value) => $_setField(3, value);
-  @$pb.TagNumber(3)
-  $core.bool hasInternalInfo() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearInternalInfo() => $_clearField(3);
-  @$pb.TagNumber(3)
-  InternalInfo ensureInternalInfo() => $_ensure(2);
+  InternalInfo ensureInternalInfo() => $_ensure(1);
 }
 
 class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
   factory RefreshAuthMessage_Request({
     RequestInfo? requestInfo,
-    $0.TokenMessage? refreshToken,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
-    if (refreshToken != null) result.refreshToken = refreshToken;
     return result;
   }
 
@@ -303,8 +287,6 @@ class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
         subBuilder: RequestInfo.create)
-    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'refreshToken',
-        subBuilder: $0.TokenMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -341,27 +323,14 @@ class RefreshAuthMessage_Request extends $pb.GeneratedMessage {
   void clearRequestInfo() => $_clearField(1);
   @$pb.TagNumber(1)
   RequestInfo ensureRequestInfo() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  $0.TokenMessage get refreshToken => $_getN(1);
-  @$pb.TagNumber(2)
-  set refreshToken($0.TokenMessage value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasRefreshToken() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearRefreshToken() => $_clearField(2);
-  @$pb.TagNumber(2)
-  $0.TokenMessage ensureRefreshToken() => $_ensure(1);
 }
 
 class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
   factory RefreshAuthMessage_Response({
     ResponseInfo? responseInfo,
-    $0.TokenMessage? accessToken,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
-    if (accessToken != null) result.accessToken = accessToken;
     return result;
   }
 
@@ -380,8 +349,6 @@ class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
         subBuilder: ResponseInfo.create)
-    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken',
-        subBuilder: $0.TokenMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -419,17 +386,6 @@ class RefreshAuthMessage_Response extends $pb.GeneratedMessage {
   void clearResponseInfo() => $_clearField(1);
   @$pb.TagNumber(1)
   ResponseInfo ensureResponseInfo() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  $0.TokenMessage get accessToken => $_getN(1);
-  @$pb.TagNumber(2)
-  set accessToken($0.TokenMessage value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasAccessToken() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearAccessToken() => $_clearField(2);
-  @$pb.TagNumber(2)
-  $0.TokenMessage ensureAccessToken() => $_ensure(1);
 }
 
 /// Used to refresh access tokens
@@ -832,14 +788,10 @@ class LoginUserMessage_Request extends $pb.GeneratedMessage {
 class LoginUserMessage_Response extends $pb.GeneratedMessage {
   factory LoginUserMessage_Response({
     ResponseInfo? responseInfo,
-    $0.TokenMessage? accessToken,
-    $0.TokenMessage? refreshToken,
     $0.UserMessage? user,
   }) {
     final result = create();
     if (responseInfo != null) result.responseInfo = responseInfo;
-    if (accessToken != null) result.accessToken = accessToken;
-    if (refreshToken != null) result.refreshToken = refreshToken;
     if (user != null) result.user = user;
     return result;
   }
@@ -859,11 +811,7 @@ class LoginUserMessage_Response extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
         subBuilder: ResponseInfo.create)
-    ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken',
-        subBuilder: $0.TokenMessage.create)
-    ..aOM<$0.TokenMessage>(3, _omitFieldNames ? '' : 'refreshToken',
-        subBuilder: $0.TokenMessage.create)
-    ..aOM<$0.UserMessage>(4, _omitFieldNames ? '' : 'user',
+    ..aOM<$0.UserMessage>(2, _omitFieldNames ? '' : 'user',
         subBuilder: $0.UserMessage.create)
     ..hasRequiredFields = false;
 
@@ -901,38 +849,18 @@ class LoginUserMessage_Response extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ResponseInfo ensureResponseInfo() => $_ensure(0);
 
+  /// TokenMessage access_token = 2;
+  /// TokenMessage refresh_token = 3;
   @$pb.TagNumber(2)
-  $0.TokenMessage get accessToken => $_getN(1);
+  $0.UserMessage get user => $_getN(1);
   @$pb.TagNumber(2)
-  set accessToken($0.TokenMessage value) => $_setField(2, value);
+  set user($0.UserMessage value) => $_setField(2, value);
   @$pb.TagNumber(2)
-  $core.bool hasAccessToken() => $_has(1);
+  $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAccessToken() => $_clearField(2);
+  void clearUser() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.TokenMessage ensureAccessToken() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  $0.TokenMessage get refreshToken => $_getN(2);
-  @$pb.TagNumber(3)
-  set refreshToken($0.TokenMessage value) => $_setField(3, value);
-  @$pb.TagNumber(3)
-  $core.bool hasRefreshToken() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearRefreshToken() => $_clearField(3);
-  @$pb.TagNumber(3)
-  $0.TokenMessage ensureRefreshToken() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  $0.UserMessage get user => $_getN(3);
-  @$pb.TagNumber(4)
-  set user($0.UserMessage value) => $_setField(4, value);
-  @$pb.TagNumber(4)
-  $core.bool hasUser() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearUser() => $_clearField(4);
-  @$pb.TagNumber(4)
-  $0.UserMessage ensureUser() => $_ensure(3);
+  $0.UserMessage ensureUser() => $_ensure(1);
 }
 
 class LoginUserMessage extends $pb.GeneratedMessage {

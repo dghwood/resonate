@@ -19,19 +19,19 @@ message ResponseInfo {
 }
 message RequestInfo {
     string user_id = 1; 
-    TokenMessage access_token = 2; 
-    InternalInfo internal_info = 3;
+    // TokenMessage access_token = 2; 
+    InternalInfo internal_info = 2;
 }
 
 // Used to refresh access tokens
 message RefreshAuthMessage {
     message Request {
         RequestInfo request_info = 1; 
-        TokenMessage refresh_token = 2; 
+        // TokenMessage refresh_token = 2; 
     }
     message Response {
         ResponseInfo response_info = 1;
-        TokenMessage access_token = 2; 
+        // TokenMessage access_token = 2; 
     }
     Request request = 1;
     Response response = 2;
@@ -60,9 +60,9 @@ message LoginUserMessage {
     }
     message Response {
         ResponseInfo response_info = 1;
-        TokenMessage access_token = 2; 
-        TokenMessage refresh_token = 3;
-        UserMessage user = 4; 
+        // TokenMessage access_token = 2; 
+        // TokenMessage refresh_token = 3;
+        UserMessage user = 2; 
     }
     Request request = 1;
     Response response = 2;

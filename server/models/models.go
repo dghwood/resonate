@@ -152,7 +152,6 @@ type LoggedInUser struct {
 	proto.UserMessage
 
 	IsLoggedIn bool
-	Token      *proto.TokenMessage
 }
 
 func (p *LoggedInUser) New() Model {

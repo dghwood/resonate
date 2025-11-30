@@ -21,12 +21,16 @@ func (f Login) RequireSignIn() bool { return false }
 
 func (f Login) RequestProto() *proto.LoginUserMessage_Request {
 	return &proto.LoginUserMessage_Request{
-		RequestInfo: &proto.RequestInfo{},
+		RequestInfo: &proto.RequestInfo{
+			InternalInfo: &proto.InternalInfo{},
+		},
 	}
 }
 func (f Login) ResponseProto() *proto.LoginUserMessage_Response {
 	return &proto.LoginUserMessage_Response{
-		ResponseInfo: &proto.ResponseInfo{},
+		ResponseInfo: &proto.ResponseInfo{
+			InternalInfo: &proto.InternalInfo{},
+		},
 	}
 }
 
@@ -138,10 +142,6 @@ func (f Login) Execute(
 	}
 
 	internalInfo := response.GetResponseInfo().GetInternalInfo()
-	if internalInfo == nil {
-		internalInfo = models.NewInternalInfo().InternalInfo
-		response.GetResponseInfo().SetInternalInfo(internalInfo)
-	}
 	internalInfo.SetAccessToken(accessToken)
 	internalInfo.SetRefreshToken(refreshToken)
 

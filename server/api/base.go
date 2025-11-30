@@ -16,11 +16,13 @@ import (
 type ApiRequestInterface interface {
 	pb.Message
 	GetRequestInfo() *proto.RequestInfo
+	SetRequestInfo(requestInfo *proto.RequestInfo)
 }
 
 type ApiResponseInterface interface {
 	pb.Message
 	GetResponseInfo() *proto.ResponseInfo
+	SetResponseInfo(responseInfo *proto.ResponseInfo)
 }
 
 type ApiExecuteData struct {
@@ -46,8 +48,9 @@ func returnError[R ApiResponseInterface](
 	writeProto(r, w, response)
 }
 
-func populateInternalInfo(r *http.Request) *proto.InternalInfo {
-	internalInfo := proto.InternalInfo{}
+func populateInternalInfo(r *http.Request, requestInfo *proto.RequestInfo) {
+	internalInfo := &proto.InternalInfo{}
+	requestInfo.SetInternalInfo(internalInfo)
 	// What about refresh cookie
 	if tokenCookie, tokenErr := r.Cookie("Access-Token"); tokenErr == nil {
 		token := models.NewToken()
@@ -59,7 +62,6 @@ func populateInternalInfo(r *http.Request) *proto.InternalInfo {
 		token.FromHttpCookie(tokenCookie)
 		internalInfo.SetRefreshToken(token.TokenMessage)
 	}
-	return &internalInfo
 }
 func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) {
 	if internalInfo == nil {
@@ -88,8 +90,7 @@ func handle[
 	f ApiInterface[request, response]) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// CORs headers
-		// TODO(duncan): Update this to not be *
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:58423")
+		w.Header().Set("Access-Control-Allow-Origin", "https://app.resonate.xyz")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -107,8 +108,9 @@ func handle[
 		}
 
 		response := f.ResponseProto()
-		internalInfo := populateInternalInfo(r)
-		userId, err := auth.ValidUserIdFromToken(internalInfo.AccessToken)
+		requestInfo := request.GetRequestInfo()
+		populateInternalInfo(r, requestInfo)
+		userId, err := auth.ValidUserIdFromToken(requestInfo.GetInternalInfo().GetAccessToken())
 
 		if f.RequireSignIn() && err != nil {
 			log.Error("error logging in: ", err)
@@ -126,7 +128,6 @@ func handle[
 				Id: userId,
 			},
 			IsLoggedIn: err == nil,
-			Token:      internalInfo.AccessToken,
 		}
 
 		err = f.Execute(&user, request, response)

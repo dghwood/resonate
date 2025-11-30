@@ -228,8 +228,7 @@ func (b0 ResponseInfo_builder) Build() *ResponseInfo {
 type RequestInfo struct {
 	state                   protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_UserId       string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
-	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
-	xxx_hidden_InternalInfo *InternalInfo          `protobuf:"bytes,3,opt,name=internal_info,json=internalInfo,proto3"`
+	xxx_hidden_InternalInfo *InternalInfo          `protobuf:"bytes,2,opt,name=internal_info,json=internalInfo,proto3"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -266,13 +265,6 @@ func (x *RequestInfo) GetUserId() string {
 	return ""
 }
 
-func (x *RequestInfo) GetAccessToken() *TokenMessage {
-	if x != nil {
-		return x.xxx_hidden_AccessToken
-	}
-	return nil
-}
-
 func (x *RequestInfo) GetInternalInfo() *InternalInfo {
 	if x != nil {
 		return x.xxx_hidden_InternalInfo
@@ -284,19 +276,8 @@ func (x *RequestInfo) SetUserId(v string) {
 	x.xxx_hidden_UserId = v
 }
 
-func (x *RequestInfo) SetAccessToken(v *TokenMessage) {
-	x.xxx_hidden_AccessToken = v
-}
-
 func (x *RequestInfo) SetInternalInfo(v *InternalInfo) {
 	x.xxx_hidden_InternalInfo = v
-}
-
-func (x *RequestInfo) HasAccessToken() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_AccessToken != nil
 }
 
 func (x *RequestInfo) HasInternalInfo() bool {
@@ -306,10 +287,6 @@ func (x *RequestInfo) HasInternalInfo() bool {
 	return x.xxx_hidden_InternalInfo != nil
 }
 
-func (x *RequestInfo) ClearAccessToken() {
-	x.xxx_hidden_AccessToken = nil
-}
-
 func (x *RequestInfo) ClearInternalInfo() {
 	x.xxx_hidden_InternalInfo = nil
 }
@@ -317,8 +294,8 @@ func (x *RequestInfo) ClearInternalInfo() {
 type RequestInfo_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	UserId       string
-	AccessToken  *TokenMessage
+	UserId string
+	// TokenMessage access_token = 2;
 	InternalInfo *InternalInfo
 }
 
@@ -327,7 +304,6 @@ func (b0 RequestInfo_builder) Build() *RequestInfo {
 	b, x := &b0, m0
 	_, _ = b, x
 	x.xxx_hidden_UserId = b.UserId
-	x.xxx_hidden_AccessToken = b.AccessToken
 	x.xxx_hidden_InternalInfo = b.InternalInfo
 	return m0
 }
@@ -3009,11 +2985,10 @@ func (b0 SearchTopContactsMessage_builder) Build() *SearchTopContactsMessage {
 }
 
 type RefreshAuthMessage_Request struct {
-	state                   protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_RequestInfo  *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
-	xxx_hidden_RefreshToken *TokenMessage          `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *RefreshAuthMessage_Request) Reset() {
@@ -3048,19 +3023,8 @@ func (x *RefreshAuthMessage_Request) GetRequestInfo() *RequestInfo {
 	return nil
 }
 
-func (x *RefreshAuthMessage_Request) GetRefreshToken() *TokenMessage {
-	if x != nil {
-		return x.xxx_hidden_RefreshToken
-	}
-	return nil
-}
-
 func (x *RefreshAuthMessage_Request) SetRequestInfo(v *RequestInfo) {
 	x.xxx_hidden_RequestInfo = v
-}
-
-func (x *RefreshAuthMessage_Request) SetRefreshToken(v *TokenMessage) {
-	x.xxx_hidden_RefreshToken = v
 }
 
 func (x *RefreshAuthMessage_Request) HasRequestInfo() bool {
@@ -3070,26 +3034,14 @@ func (x *RefreshAuthMessage_Request) HasRequestInfo() bool {
 	return x.xxx_hidden_RequestInfo != nil
 }
 
-func (x *RefreshAuthMessage_Request) HasRefreshToken() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_RefreshToken != nil
-}
-
 func (x *RefreshAuthMessage_Request) ClearRequestInfo() {
 	x.xxx_hidden_RequestInfo = nil
-}
-
-func (x *RefreshAuthMessage_Request) ClearRefreshToken() {
-	x.xxx_hidden_RefreshToken = nil
 }
 
 type RefreshAuthMessage_Request_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	RequestInfo  *RequestInfo
-	RefreshToken *TokenMessage
+	RequestInfo *RequestInfo
 }
 
 func (b0 RefreshAuthMessage_Request_builder) Build() *RefreshAuthMessage_Request {
@@ -3097,14 +3049,12 @@ func (b0 RefreshAuthMessage_Request_builder) Build() *RefreshAuthMessage_Request
 	b, x := &b0, m0
 	_, _ = b, x
 	x.xxx_hidden_RequestInfo = b.RequestInfo
-	x.xxx_hidden_RefreshToken = b.RefreshToken
 	return m0
 }
 
 type RefreshAuthMessage_Response struct {
 	state                   protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
-	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -3141,19 +3091,8 @@ func (x *RefreshAuthMessage_Response) GetResponseInfo() *ResponseInfo {
 	return nil
 }
 
-func (x *RefreshAuthMessage_Response) GetAccessToken() *TokenMessage {
-	if x != nil {
-		return x.xxx_hidden_AccessToken
-	}
-	return nil
-}
-
 func (x *RefreshAuthMessage_Response) SetResponseInfo(v *ResponseInfo) {
 	x.xxx_hidden_ResponseInfo = v
-}
-
-func (x *RefreshAuthMessage_Response) SetAccessToken(v *TokenMessage) {
-	x.xxx_hidden_AccessToken = v
 }
 
 func (x *RefreshAuthMessage_Response) HasResponseInfo() bool {
@@ -3163,26 +3102,14 @@ func (x *RefreshAuthMessage_Response) HasResponseInfo() bool {
 	return x.xxx_hidden_ResponseInfo != nil
 }
 
-func (x *RefreshAuthMessage_Response) HasAccessToken() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_AccessToken != nil
-}
-
 func (x *RefreshAuthMessage_Response) ClearResponseInfo() {
 	x.xxx_hidden_ResponseInfo = nil
-}
-
-func (x *RefreshAuthMessage_Response) ClearAccessToken() {
-	x.xxx_hidden_AccessToken = nil
 }
 
 type RefreshAuthMessage_Response_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
 	ResponseInfo *ResponseInfo
-	AccessToken  *TokenMessage
 }
 
 func (b0 RefreshAuthMessage_Response_builder) Build() *RefreshAuthMessage_Response {
@@ -3190,7 +3117,6 @@ func (b0 RefreshAuthMessage_Response_builder) Build() *RefreshAuthMessage_Respon
 	b, x := &b0, m0
 	_, _ = b, x
 	x.xxx_hidden_ResponseInfo = b.ResponseInfo
-	x.xxx_hidden_AccessToken = b.AccessToken
 	return m0
 }
 
@@ -3471,9 +3397,7 @@ func (b0 LoginUserMessage_Request_builder) Build() *LoginUserMessage_Request {
 type LoginUserMessage_Response struct {
 	state                   protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_ResponseInfo *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3"`
-	xxx_hidden_AccessToken  *TokenMessage          `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
-	xxx_hidden_RefreshToken *TokenMessage          `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3"`
-	xxx_hidden_User         *UserMessage           `protobuf:"bytes,4,opt,name=user,proto3"`
+	xxx_hidden_User         *UserMessage           `protobuf:"bytes,2,opt,name=user,proto3"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -3510,20 +3434,6 @@ func (x *LoginUserMessage_Response) GetResponseInfo() *ResponseInfo {
 	return nil
 }
 
-func (x *LoginUserMessage_Response) GetAccessToken() *TokenMessage {
-	if x != nil {
-		return x.xxx_hidden_AccessToken
-	}
-	return nil
-}
-
-func (x *LoginUserMessage_Response) GetRefreshToken() *TokenMessage {
-	if x != nil {
-		return x.xxx_hidden_RefreshToken
-	}
-	return nil
-}
-
 func (x *LoginUserMessage_Response) GetUser() *UserMessage {
 	if x != nil {
 		return x.xxx_hidden_User
@@ -3533,14 +3443,6 @@ func (x *LoginUserMessage_Response) GetUser() *UserMessage {
 
 func (x *LoginUserMessage_Response) SetResponseInfo(v *ResponseInfo) {
 	x.xxx_hidden_ResponseInfo = v
-}
-
-func (x *LoginUserMessage_Response) SetAccessToken(v *TokenMessage) {
-	x.xxx_hidden_AccessToken = v
-}
-
-func (x *LoginUserMessage_Response) SetRefreshToken(v *TokenMessage) {
-	x.xxx_hidden_RefreshToken = v
 }
 
 func (x *LoginUserMessage_Response) SetUser(v *UserMessage) {
@@ -3554,20 +3456,6 @@ func (x *LoginUserMessage_Response) HasResponseInfo() bool {
 	return x.xxx_hidden_ResponseInfo != nil
 }
 
-func (x *LoginUserMessage_Response) HasAccessToken() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_AccessToken != nil
-}
-
-func (x *LoginUserMessage_Response) HasRefreshToken() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_RefreshToken != nil
-}
-
 func (x *LoginUserMessage_Response) HasUser() bool {
 	if x == nil {
 		return false
@@ -3579,14 +3467,6 @@ func (x *LoginUserMessage_Response) ClearResponseInfo() {
 	x.xxx_hidden_ResponseInfo = nil
 }
 
-func (x *LoginUserMessage_Response) ClearAccessToken() {
-	x.xxx_hidden_AccessToken = nil
-}
-
-func (x *LoginUserMessage_Response) ClearRefreshToken() {
-	x.xxx_hidden_RefreshToken = nil
-}
-
 func (x *LoginUserMessage_Response) ClearUser() {
 	x.xxx_hidden_User = nil
 }
@@ -3595,9 +3475,9 @@ type LoginUserMessage_Response_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
 	ResponseInfo *ResponseInfo
-	AccessToken  *TokenMessage
-	RefreshToken *TokenMessage
-	User         *UserMessage
+	// TokenMessage access_token = 2;
+	// TokenMessage refresh_token = 3;
+	User *UserMessage
 }
 
 func (b0 LoginUserMessage_Response_builder) Build() *LoginUserMessage_Response {
@@ -3605,8 +3485,6 @@ func (b0 LoginUserMessage_Response_builder) Build() *LoginUserMessage_Response {
 	b, x := &b0, m0
 	_, _ = b, x
 	x.xxx_hidden_ResponseInfo = b.ResponseInfo
-	x.xxx_hidden_AccessToken = b.AccessToken
-	x.xxx_hidden_RefreshToken = b.RefreshToken
 	x.xxx_hidden_User = b.User
 	return m0
 }
@@ -8554,20 +8432,17 @@ const file_proto_api_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12#\n" +
 	"\rerror_message\x18\x02 \x01(\tR\ferrorMessage\x12)\n" +
 	"\x05error\x18\x03 \x01(\x0e2\x13.resonate.ErrorEnumR\x05error\x12?\n" +
-	"\rinternal_info\x18\x04 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"\xa2\x01\n" +
+	"\rinternal_info\x18\x04 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"g\n" +
 	"\vRequestInfo\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x129\n" +
-	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\x12?\n" +
-	"\rinternal_info\x18\x03 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"\xaf\x03\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12?\n" +
+	"\rinternal_info\x18\x02 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"\xb5\x02\n" +
 	"\x12RefreshAuthMessage\x12B\n" +
 	"\arequest\x18\x01 \x01(\v2(.resonate.api.RefreshAuthMessage.RequestR\arequest\x12E\n" +
-	"\bresponse\x18\x02 \x01(\v2).resonate.api.RefreshAuthMessage.ResponseR\bresponse\x1a\x84\x01\n" +
+	"\bresponse\x18\x02 \x01(\v2).resonate.api.RefreshAuthMessage.ResponseR\bresponse\x1aG\n" +
 	"\aRequest\x12<\n" +
-	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12;\n" +
-	"\rrefresh_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\frefreshToken\x1a\x86\x01\n" +
+	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x1aK\n" +
 	"\bResponse\x12?\n" +
-	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x129\n" +
-	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\"\xf2\x02\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\"\xf2\x02\n" +
 	"\x13LoginRequestMessage\x12C\n" +
 	"\arequest\x18\x01 \x01(\v2).resonate.api.LoginRequestMessage.RequestR\arequest\x12F\n" +
 	"\bresponse\x18\x02 \x01(\v2*.resonate.api.LoginRequestMessage.ResponseR\bresponse\x1a\x80\x01\n" +
@@ -8576,7 +8451,7 @@ const file_proto_api_proto_rawDesc = "" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12!\n" +
 	"\fphone_number\x18\x03 \x01(\tR\vphoneNumber\x1aK\n" +
 	"\bResponse\x12?\n" +
-	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\"\xa9\x04\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\"\xb0\x03\n" +
 	"\x10LoginUserMessage\x12@\n" +
 	"\arequest\x18\x01 \x01(\v2&.resonate.api.LoginUserMessage.RequestR\arequest\x12C\n" +
 	"\bresponse\x18\x02 \x01(\v2'.resonate.api.LoginUserMessage.ResponseR\bresponse\x1a\x9c\x01\n" +
@@ -8584,12 +8459,10 @@ const file_proto_api_proto_rawDesc = "" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\x12!\n" +
-	"\fphone_number\x18\x04 \x01(\tR\vphoneNumber\x1a\xee\x01\n" +
+	"\fphone_number\x18\x04 \x01(\tR\vphoneNumber\x1av\n" +
 	"\bResponse\x12?\n" +
-	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x129\n" +
-	"\faccess_token\x18\x02 \x01(\v2\x16.resonate.TokenMessageR\vaccessToken\x12;\n" +
-	"\rrefresh_token\x18\x03 \x01(\v2\x16.resonate.TokenMessageR\frefreshToken\x12)\n" +
-	"\x04user\x18\x04 \x01(\v2\x15.resonate.UserMessageR\x04user\"\x88\x03\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12)\n" +
+	"\x04user\x18\x02 \x01(\v2\x15.resonate.UserMessageR\x04user\"\x88\x03\n" +
 	"\x11CreateUserMessage\x12A\n" +
 	"\arequest\x18\x01 \x01(\v2'.resonate.api.CreateUserMessage.RequestR\arequest\x12D\n" +
 	"\bresponse\x18\x02 \x01(\v2(.resonate.api.CreateUserMessage.ResponseR\bresponse\x1ar\n" +
@@ -8956,177 +8829,172 @@ var file_proto_api_proto_depIdxs = []int32{
 	91,  // 1: resonate.api.InternalInfo.refresh_token:type_name -> resonate.TokenMessage
 	92,  // 2: resonate.api.ResponseInfo.error:type_name -> resonate.ErrorEnum
 	0,   // 3: resonate.api.ResponseInfo.internal_info:type_name -> resonate.api.InternalInfo
-	91,  // 4: resonate.api.RequestInfo.access_token:type_name -> resonate.TokenMessage
-	0,   // 5: resonate.api.RequestInfo.internal_info:type_name -> resonate.api.InternalInfo
-	33,  // 6: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
-	34,  // 7: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
-	35,  // 8: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
-	36,  // 9: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
-	37,  // 10: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
-	38,  // 11: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
-	39,  // 12: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
-	40,  // 13: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
-	41,  // 14: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
-	42,  // 15: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
-	43,  // 16: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
-	44,  // 17: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
-	45,  // 18: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
-	46,  // 19: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
-	47,  // 20: resonate.api.SearchTopMessage.request:type_name -> resonate.api.SearchTopMessage.Request
-	48,  // 21: resonate.api.SearchTopMessage.response:type_name -> resonate.api.SearchTopMessage.Response
-	49,  // 22: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
-	50,  // 23: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
-	51,  // 24: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
-	52,  // 25: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
-	53,  // 26: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
-	54,  // 27: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
-	55,  // 28: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
-	56,  // 29: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
-	57,  // 30: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
-	58,  // 31: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
-	59,  // 32: resonate.api.ListSubscriptionMessage.request:type_name -> resonate.api.ListSubscriptionMessage.Request
-	60,  // 33: resonate.api.ListSubscriptionMessage.response:type_name -> resonate.api.ListSubscriptionMessage.Response
-	61,  // 34: resonate.api.AddListenMessage.request:type_name -> resonate.api.AddListenMessage.Request
-	62,  // 35: resonate.api.AddListenMessage.response:type_name -> resonate.api.AddListenMessage.Response
-	63,  // 36: resonate.api.RemoveListenMessage.request:type_name -> resonate.api.RemoveListenMessage.Request
-	64,  // 37: resonate.api.RemoveListenMessage.response:type_name -> resonate.api.RemoveListenMessage.Response
-	65,  // 38: resonate.api.ListListenMessage.request:type_name -> resonate.api.ListListenMessage.Request
-	66,  // 39: resonate.api.ListListenMessage.response:type_name -> resonate.api.ListListenMessage.Response
-	67,  // 40: resonate.api.GetFeedMessage.request:type_name -> resonate.api.GetFeedMessage.Request
-	68,  // 41: resonate.api.GetFeedMessage.reponse:type_name -> resonate.api.GetFeedMessage.Response
-	69,  // 42: resonate.api.AddFollowMessage.request:type_name -> resonate.api.AddFollowMessage.Request
-	70,  // 43: resonate.api.AddFollowMessage.response:type_name -> resonate.api.AddFollowMessage.Response
-	71,  // 44: resonate.api.RemoveFollowMessage.request:type_name -> resonate.api.RemoveFollowMessage.Request
-	72,  // 45: resonate.api.RemoveFollowMessage.response:type_name -> resonate.api.RemoveFollowMessage.Response
-	73,  // 46: resonate.api.ListFollowMessage.request:type_name -> resonate.api.ListFollowMessage.Request
-	74,  // 47: resonate.api.ListFollowMessage.response:type_name -> resonate.api.ListFollowMessage.Response
-	75,  // 48: resonate.api.GetPublicUserMessage.request:type_name -> resonate.api.GetPublicUserMessage.Request
-	76,  // 49: resonate.api.GetPublicUserMessage.response:type_name -> resonate.api.GetPublicUserMessage.Response
-	77,  // 50: resonate.api.EditUserMessage.request:type_name -> resonate.api.EditUserMessage.Request
-	78,  // 51: resonate.api.EditUserMessage.response:type_name -> resonate.api.EditUserMessage.Response
-	79,  // 52: resonate.api.RemoveUserMessage.request:type_name -> resonate.api.RemoveUserMessage.Request
-	80,  // 53: resonate.api.RemoveUserMessage.response:type_name -> resonate.api.RemoveUserMessage.Response
-	81,  // 54: resonate.api.ListUserMessage.request:type_name -> resonate.api.ListUserMessage.Request
-	82,  // 55: resonate.api.ListUserMessage.response:type_name -> resonate.api.ListUserMessage.Response
-	83,  // 56: resonate.api.UploadImageMessage.request:type_name -> resonate.api.UploadImageMessage.Request
-	84,  // 57: resonate.api.UploadImageMessage.response:type_name -> resonate.api.UploadImageMessage.Response
-	85,  // 58: resonate.api.FindContactsMessage.request:type_name -> resonate.api.FindContactsMessage.Request
-	86,  // 59: resonate.api.FindContactsMessage.response:type_name -> resonate.api.FindContactsMessage.Response
-	2,   // 60: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	91,  // 61: resonate.api.RefreshAuthMessage.Request.refresh_token:type_name -> resonate.TokenMessage
-	1,   // 62: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	91,  // 63: resonate.api.RefreshAuthMessage.Response.access_token:type_name -> resonate.TokenMessage
-	2,   // 64: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 65: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 66: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 67: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	91,  // 68: resonate.api.LoginUserMessage.Response.access_token:type_name -> resonate.TokenMessage
-	91,  // 69: resonate.api.LoginUserMessage.Response.refresh_token:type_name -> resonate.TokenMessage
-	93,  // 70: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 71: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	93,  // 72: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 73: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 74: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 75: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 76: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 77: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 78: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	93,  // 79: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 80: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 81: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 82: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 83: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 84: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
-	2,   // 85: resonate.api.SearchTopMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 86: resonate.api.SearchTopMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	94,  // 87: resonate.api.SearchTopMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
-	2,   // 88: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 89: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	95,  // 90: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	2,   // 91: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 92: resonate.api.ListPodcastEpisodesMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 93: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 94: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
-	95,  // 95: resonate.api.ListPodcastEpisodesMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	12,  // 96: resonate.api.ListPodcastEpisodesMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 97: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 98: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 99: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
-	2,   // 100: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	97,  // 101: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,   // 102: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	97,  // 103: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	2,   // 104: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	97,  // 105: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,   // 106: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	97,  // 107: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	2,   // 108: resonate.api.ListSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 109: resonate.api.ListSubscriptionMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 110: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	97,  // 111: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	12,  // 112: resonate.api.ListSubscriptionMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 113: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	98,  // 114: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	1,   // 115: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	98,  // 116: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	2,   // 117: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	98,  // 118: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	1,   // 119: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	98,  // 120: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	2,   // 121: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 122: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 123: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	98,  // 124: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
-	12,  // 125: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 126: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 127: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	99,  // 128: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
-	2,   // 129: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	100, // 130: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	1,   // 131: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 132: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	2,   // 133: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	100, // 134: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	1,   // 135: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 136: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	2,   // 137: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 138: resonate.api.ListFollowMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 139: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 140: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
-	12,  // 141: resonate.api.ListFollowMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 142: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 143: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 144: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
-	2,   // 145: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	93,  // 146: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 147: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	93,  // 148: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 149: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 150: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 151: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 152: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 153: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
-	2,   // 154: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 155: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 156: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 157: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 158: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 159: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	12,  // 160: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 161: resonate.api.SearchContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 162: resonate.api.SearchContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 163: resonate.api.SearchContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 164: resonate.api.SearchContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	12,  // 165: resonate.api.SearchContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 166: resonate.api.SearchTopContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	102, // 167: resonate.api.SearchTopContactsMessage.Request.contacts:type_name -> resonate.UserContactMessage
-	1,   // 168: resonate.api.SearchTopContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 169: resonate.api.SearchTopContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	170, // [170:170] is the sub-list for method output_type
-	170, // [170:170] is the sub-list for method input_type
-	170, // [170:170] is the sub-list for extension type_name
-	170, // [170:170] is the sub-list for extension extendee
-	0,   // [0:170] is the sub-list for field type_name
+	0,   // 4: resonate.api.RequestInfo.internal_info:type_name -> resonate.api.InternalInfo
+	33,  // 5: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
+	34,  // 6: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
+	35,  // 7: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
+	36,  // 8: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
+	37,  // 9: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
+	38,  // 10: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
+	39,  // 11: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
+	40,  // 12: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
+	41,  // 13: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
+	42,  // 14: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
+	43,  // 15: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
+	44,  // 16: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
+	45,  // 17: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
+	46,  // 18: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
+	47,  // 19: resonate.api.SearchTopMessage.request:type_name -> resonate.api.SearchTopMessage.Request
+	48,  // 20: resonate.api.SearchTopMessage.response:type_name -> resonate.api.SearchTopMessage.Response
+	49,  // 21: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
+	50,  // 22: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
+	51,  // 23: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
+	52,  // 24: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
+	53,  // 25: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
+	54,  // 26: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
+	55,  // 27: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
+	56,  // 28: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
+	57,  // 29: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
+	58,  // 30: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
+	59,  // 31: resonate.api.ListSubscriptionMessage.request:type_name -> resonate.api.ListSubscriptionMessage.Request
+	60,  // 32: resonate.api.ListSubscriptionMessage.response:type_name -> resonate.api.ListSubscriptionMessage.Response
+	61,  // 33: resonate.api.AddListenMessage.request:type_name -> resonate.api.AddListenMessage.Request
+	62,  // 34: resonate.api.AddListenMessage.response:type_name -> resonate.api.AddListenMessage.Response
+	63,  // 35: resonate.api.RemoveListenMessage.request:type_name -> resonate.api.RemoveListenMessage.Request
+	64,  // 36: resonate.api.RemoveListenMessage.response:type_name -> resonate.api.RemoveListenMessage.Response
+	65,  // 37: resonate.api.ListListenMessage.request:type_name -> resonate.api.ListListenMessage.Request
+	66,  // 38: resonate.api.ListListenMessage.response:type_name -> resonate.api.ListListenMessage.Response
+	67,  // 39: resonate.api.GetFeedMessage.request:type_name -> resonate.api.GetFeedMessage.Request
+	68,  // 40: resonate.api.GetFeedMessage.reponse:type_name -> resonate.api.GetFeedMessage.Response
+	69,  // 41: resonate.api.AddFollowMessage.request:type_name -> resonate.api.AddFollowMessage.Request
+	70,  // 42: resonate.api.AddFollowMessage.response:type_name -> resonate.api.AddFollowMessage.Response
+	71,  // 43: resonate.api.RemoveFollowMessage.request:type_name -> resonate.api.RemoveFollowMessage.Request
+	72,  // 44: resonate.api.RemoveFollowMessage.response:type_name -> resonate.api.RemoveFollowMessage.Response
+	73,  // 45: resonate.api.ListFollowMessage.request:type_name -> resonate.api.ListFollowMessage.Request
+	74,  // 46: resonate.api.ListFollowMessage.response:type_name -> resonate.api.ListFollowMessage.Response
+	75,  // 47: resonate.api.GetPublicUserMessage.request:type_name -> resonate.api.GetPublicUserMessage.Request
+	76,  // 48: resonate.api.GetPublicUserMessage.response:type_name -> resonate.api.GetPublicUserMessage.Response
+	77,  // 49: resonate.api.EditUserMessage.request:type_name -> resonate.api.EditUserMessage.Request
+	78,  // 50: resonate.api.EditUserMessage.response:type_name -> resonate.api.EditUserMessage.Response
+	79,  // 51: resonate.api.RemoveUserMessage.request:type_name -> resonate.api.RemoveUserMessage.Request
+	80,  // 52: resonate.api.RemoveUserMessage.response:type_name -> resonate.api.RemoveUserMessage.Response
+	81,  // 53: resonate.api.ListUserMessage.request:type_name -> resonate.api.ListUserMessage.Request
+	82,  // 54: resonate.api.ListUserMessage.response:type_name -> resonate.api.ListUserMessage.Response
+	83,  // 55: resonate.api.UploadImageMessage.request:type_name -> resonate.api.UploadImageMessage.Request
+	84,  // 56: resonate.api.UploadImageMessage.response:type_name -> resonate.api.UploadImageMessage.Response
+	85,  // 57: resonate.api.FindContactsMessage.request:type_name -> resonate.api.FindContactsMessage.Request
+	86,  // 58: resonate.api.FindContactsMessage.response:type_name -> resonate.api.FindContactsMessage.Response
+	2,   // 59: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 60: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 61: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 62: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 63: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 64: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 65: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 66: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	93,  // 67: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 68: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 69: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 70: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 71: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 72: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 73: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	93,  // 74: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 75: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 76: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 77: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 78: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 79: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	2,   // 80: resonate.api.SearchTopMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 81: resonate.api.SearchTopMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	94,  // 82: resonate.api.SearchTopMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	2,   // 83: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 84: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	95,  // 85: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	2,   // 86: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 87: resonate.api.ListPodcastEpisodesMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 88: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	96,  // 89: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
+	95,  // 90: resonate.api.ListPodcastEpisodesMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	12,  // 91: resonate.api.ListPodcastEpisodesMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 92: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 93: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	96,  // 94: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
+	2,   // 95: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	97,  // 96: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,   // 97: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	97,  // 98: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	2,   // 99: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	97,  // 100: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,   // 101: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	97,  // 102: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	2,   // 103: resonate.api.ListSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 104: resonate.api.ListSubscriptionMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 105: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	97,  // 106: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	12,  // 107: resonate.api.ListSubscriptionMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 108: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	98,  // 109: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	1,   // 110: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	98,  // 111: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	2,   // 112: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	98,  // 113: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	1,   // 114: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	98,  // 115: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	2,   // 116: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 117: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 118: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	98,  // 119: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
+	12,  // 120: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 121: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 122: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 123: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
+	2,   // 124: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	100, // 125: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	1,   // 126: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	100, // 127: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	2,   // 128: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	100, // 129: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	1,   // 130: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	100, // 131: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	2,   // 132: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 133: resonate.api.ListFollowMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 134: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	100, // 135: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
+	12,  // 136: resonate.api.ListFollowMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 137: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 138: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 139: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
+	2,   // 140: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	93,  // 141: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 142: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	93,  // 143: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 144: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 145: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 146: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 147: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 148: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
+	2,   // 149: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 150: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 151: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 152: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 153: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 154: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	12,  // 155: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 156: resonate.api.SearchContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 157: resonate.api.SearchContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 158: resonate.api.SearchContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 159: resonate.api.SearchContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	12,  // 160: resonate.api.SearchContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 161: resonate.api.SearchTopContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	102, // 162: resonate.api.SearchTopContactsMessage.Request.contacts:type_name -> resonate.UserContactMessage
+	1,   // 163: resonate.api.SearchTopContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 164: resonate.api.SearchTopContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	165, // [165:165] is the sub-list for method output_type
+	165, // [165:165] is the sub-list for method input_type
+	165, // [165:165] is the sub-list for extension type_name
+	165, // [165:165] is the sub-list for extension extendee
+	0,   // [0:165] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }

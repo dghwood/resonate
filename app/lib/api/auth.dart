@@ -19,8 +19,6 @@ Logger _log = Logger('api/auth');
 
 String secureStorageUserIdKey = 'user';
 String secureStorageUserKey(String userId) => '$userId-user';
-String secureStorageAccessTokenKey(String userId) => '$userId-access';
-String secureStorageRefreshTokenKey(String userId) => '$userId-refresh';
 
 class LoginRequestApiRequest extends ApiRequest<LoginRequestMessage_Request> {
   LoginRequestApiRequest()
@@ -116,24 +114,13 @@ class LoginApi {
       var user = User.fromMessage(response.responsePb.user);
       var userStorage = UserStorage(
         user: User.fromMessage(response.responsePb.user),
-        accessToken: Token.fromMessage(response.responsePb.accessToken),
-        refreshToken: Token.fromMessage(response.responsePb.refreshToken),
       );
       await _secureDatabase.writeKey("user", user.id);
       // Do i need this to be able to support multiple users.
       // This should have ~16mb of space, so should be good enough.
-      // await _secureDatabase.write(userStorage.id, userStorage);
       await _secureDatabase.write(
         secureStorageUserKey(user.id),
         userStorage.user,
-      );
-      await _secureDatabase.write(
-        secureStorageAccessTokenKey(user.id),
-        userStorage.accessToken!,
-      );
-      await _secureDatabase.write(
-        secureStorageRefreshTokenKey(user.id),
-        userStorage.refreshToken!,
       );
 
       // Store them in the secureStorage
@@ -282,8 +269,6 @@ class AuthUser extends ChangeNotifier {
   late final GetFeedApi feedApi;
 
   final User _user = User();
-  final Token _accessToken = Token();
-  final Token _refreshToken = Token();
 
   // load from secure storage
   Future<void> loadFromStorage() async {
@@ -291,18 +276,7 @@ class AuthUser extends ChangeNotifier {
       _status = AuthUserStatus.loading;
       // These error out if they doesn't exist
       var userId = await _secureDatabase.readKey(secureStorageUserIdKey);
-      // await _secureDatabase.read(userId, _userStorage);
       await _secureDatabase.read(secureStorageUserKey(userId), _user);
-      await _secureDatabase.read(
-        secureStorageRefreshTokenKey(userId),
-        _refreshToken,
-      );
-      await _secureDatabase.read(
-        secureStorageAccessTokenKey(userId),
-        _accessToken,
-      );
-      _log.info('accessToken: $_accessToken');
-      _log.info('refreshToken: $_refreshToken');
       _log.info('user: $_user');
       await _setupPostLogin();
     } on Exception catch (_) {
@@ -317,8 +291,6 @@ class AuthUser extends ChangeNotifier {
 
   final UserStorage _userStorage = UserStorage();
   User? get user => isSignedInForDb ? _user : null;
-  Token? get accessToken => isSignedInForDb ? _accessToken : null;
-  Token? get refreshToken => isSignedInForDb ? _refreshToken : null;
 
   AuthUserStatus __status = AuthUserStatus.signedOut;
   set _status(AuthUserStatus newStatus) {
@@ -370,11 +342,7 @@ class AuthUser extends ChangeNotifier {
       case ApiOk():
         _log.info('loggedIn');
         _user.fromMessage(result.value.user.toMessage());
-        _accessToken.fromMessage(result.value.accessToken!.toMessage());
-        _refreshToken.fromMessage(result.value.refreshToken!.toMessage());
 
-        _log.info('accessToken: $_accessToken');
-        _log.info('refreshToken: $_refreshToken');
         _log.info('user: $_user');
         await _setupPostLogin();
         return ApiResult.ok(true);

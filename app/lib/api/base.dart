@@ -87,7 +87,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     if (_authUser != null) {
       // This will be handled by default on web, since it's an http cookie
       // but for app we need to handle this ourselves.
-      requestInfo.accessToken = _authUser.accessToken!.toMessage();
+      // requestInfo.accessToken = _authUser.accessToken!.toMessage();
       requestInfo.userId = _authUser.user?.id ?? '';
       _log.info("requesting $url");
     }

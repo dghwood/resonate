@@ -18,12 +18,16 @@ func (f Refresh) RequireSignIn() bool { return false }
 
 func (f Refresh) RequestProto() *proto.RefreshAuthMessage_Request {
 	return &proto.RefreshAuthMessage_Request{
-		RequestInfo: &proto.RequestInfo{},
+		RequestInfo: &proto.RequestInfo{
+			InternalInfo: &proto.InternalInfo{},
+		},
 	}
 }
 func (f Refresh) ResponseProto() *proto.RefreshAuthMessage_Response {
 	return &proto.RefreshAuthMessage_Response{
-		ResponseInfo: &proto.ResponseInfo{},
+		ResponseInfo: &proto.ResponseInfo{
+			InternalInfo: &proto.InternalInfo{},
+		},
 	}
 }
 
@@ -35,8 +39,8 @@ func (f Refresh) Execute(
 	request *proto.RefreshAuthMessage_Request,
 	response *proto.RefreshAuthMessage_Response) (err error) {
 
-	userId := request.RequestInfo.UserId
-	refreshToken := request.RefreshToken
+	userId := request.GetRequestInfo().GetUserId()
+	refreshToken := request.GetRequestInfo().GetInternalInfo().GetRefreshToken()
 
 	tokens := models.RefreshTokens{}
 	tokens.UserId = userId
@@ -68,6 +72,7 @@ func (f Refresh) Execute(
 		return
 	}
 
-	response.AccessToken = accessToken
+	// response.AccessToken = accessToken
+	response.GetResponseInfo().GetInternalInfo().SetAccessToken(accessToken)
 	return
 }

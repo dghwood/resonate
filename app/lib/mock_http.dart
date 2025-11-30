@@ -118,13 +118,13 @@ var mockHttpService = MockHttpService({
               name: 'Test User',
               email: 'example@example.com',
             ),
-            refreshToken: TokenMessage(token: 'mock-refresh-token'),
-            accessToken: TokenMessage(
-              token: 'mock-token',
-              expiryUtcTimestamp: Int64(
-                DateTime.now().add(Duration(days: 1)).millisecondsSinceEpoch,
-              ),
-            ),
+            // refreshToken: TokenMessage(token: 'mock-refresh-token'),
+            // accessToken: TokenMessage(
+            //   token: 'mock-token',
+            //   expiryUtcTimestamp: Int64(
+            //     DateTime.now().add(Duration(days: 1)).millisecondsSinceEpoch,
+            //   ),
+            // ),
           ).writeToBuffer(),
   '/api/user/get':
       () =>

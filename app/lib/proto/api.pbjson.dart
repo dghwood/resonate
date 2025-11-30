@@ -81,16 +81,8 @@ const RequestInfo$json = {
   '2': [
     {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     {
-      '1': 'access_token',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.resonate.TokenMessage',
-      '10': 'accessToken'
-    },
-    {
       '1': 'internal_info',
-      '3': 3,
+      '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.api.InternalInfo',
@@ -101,9 +93,8 @@ const RequestInfo$json = {
 
 /// Descriptor for `RequestInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List requestInfoDescriptor = $convert.base64Decode(
-    'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSOQoMYWNjZXNzX3Rva2VuGA'
-    'IgASgLMhYucmVzb25hdGUuVG9rZW5NZXNzYWdlUgthY2Nlc3NUb2tlbhI/Cg1pbnRlcm5hbF9p'
-    'bmZvGAMgASgLMhoucmVzb25hdGUuYXBpLkludGVybmFsSW5mb1IMaW50ZXJuYWxJbmZv');
+    'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSPwoNaW50ZXJuYWxfaW5mbx'
+    'gCIAEoCzIaLnJlc29uYXRlLmFwaS5JbnRlcm5hbEluZm9SDGludGVybmFsSW5mbw==');
 
 @$core.Deprecated('Use refreshAuthMessageDescriptor instead')
 const RefreshAuthMessage$json = {
@@ -141,14 +132,6 @@ const RefreshAuthMessage_Request$json = {
       '6': '.resonate.api.RequestInfo',
       '10': 'requestInfo'
     },
-    {
-      '1': 'refresh_token',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.resonate.TokenMessage',
-      '10': 'refreshToken'
-    },
   ],
 };
 
@@ -164,14 +147,6 @@ const RefreshAuthMessage_Response$json = {
       '6': '.resonate.api.ResponseInfo',
       '10': 'responseInfo'
     },
-    {
-      '1': 'access_token',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.resonate.TokenMessage',
-      '10': 'accessToken'
-    },
   ],
 };
 
@@ -179,12 +154,10 @@ const RefreshAuthMessage_Response$json = {
 final $typed_data.Uint8List refreshAuthMessageDescriptor = $convert.base64Decode(
     'ChJSZWZyZXNoQXV0aE1lc3NhZ2USQgoHcmVxdWVzdBgBIAEoCzIoLnJlc29uYXRlLmFwaS5SZW'
     'ZyZXNoQXV0aE1lc3NhZ2UuUmVxdWVzdFIHcmVxdWVzdBJFCghyZXNwb25zZRgCIAEoCzIpLnJl'
-    'c29uYXRlLmFwaS5SZWZyZXNoQXV0aE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGoQBCgdSZX'
-    'F1ZXN0EjwKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5mb1IL'
-    'cmVxdWVzdEluZm8SOwoNcmVmcmVzaF90b2tlbhgCIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2'
-    'FnZVIMcmVmcmVzaFRva2VuGoYBCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhou'
-    'cmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEjkKDGFjY2Vzc190b2tlbh'
-    'gCIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVILYWNjZXNzVG9rZW4=');
+    'c29uYXRlLmFwaS5SZWZyZXNoQXV0aE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGkcKB1JlcX'
+    'Vlc3QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgty'
+    'ZXF1ZXN0SW5mbxpLCghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdG'
+    'UuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZv');
 
 @$core.Deprecated('Use loginRequestMessageDescriptor instead')
 const LoginRequestMessage$json = {
@@ -307,24 +280,8 @@ const LoginUserMessage_Response$json = {
       '10': 'responseInfo'
     },
     {
-      '1': 'access_token',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.resonate.TokenMessage',
-      '10': 'accessToken'
-    },
-    {
-      '1': 'refresh_token',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.resonate.TokenMessage',
-      '10': 'refreshToken'
-    },
-    {
       '1': 'user',
-      '3': 4,
+      '3': 2,
       '4': 1,
       '5': 11,
       '6': '.resonate.UserMessage',
@@ -340,11 +297,9 @@ final $typed_data.Uint8List loginUserMessageDescriptor = $convert.base64Decode(
     'dGUuYXBpLkxvZ2luVXNlck1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGpwBCgdSZXF1ZXN0Ej'
     'wKDHJlcXVlc3RfaW5mbxgBIAEoCzIZLnJlc29uYXRlLmFwaS5SZXF1ZXN0SW5mb1ILcmVxdWVz'
     'dEluZm8SFAoFZW1haWwYAiABKAlSBWVtYWlsEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZB'
-    'IhCgxwaG9uZV9udW1iZXIYBCABKAlSC3Bob25lTnVtYmVyGu4BCghSZXNwb25zZRI/Cg1yZXNw'
-    'b25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbm'
-    'ZvEjkKDGFjY2Vzc190b2tlbhgCIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVILYWNjZXNz'
-    'VG9rZW4SOwoNcmVmcmVzaF90b2tlbhgDIAEoCzIWLnJlc29uYXRlLlRva2VuTWVzc2FnZVIMcm'
-    'VmcmVzaFRva2VuEikKBHVzZXIYBCABKAsyFS5yZXNvbmF0ZS5Vc2VyTWVzc2FnZVIEdXNlcg==');
+    'IhCgxwaG9uZV9udW1iZXIYBCABKAlSC3Bob25lTnVtYmVyGnYKCFJlc3BvbnNlEj8KDXJlc3Bv'
+    'bnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm'
+    '8SKQoEdXNlchgCIAEoCzIVLnJlc29uYXRlLlVzZXJNZXNzYWdlUgR1c2Vy');
 
 @$core.Deprecated('Use createUserMessageDescriptor instead')
 const CreateUserMessage$json = {
