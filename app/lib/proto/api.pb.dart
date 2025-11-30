@@ -20,8 +20,8 @@ import 'errors.pbenum.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
-class InternalResponseInfo extends $pb.GeneratedMessage {
-  factory InternalResponseInfo({
+class InternalInfo extends $pb.GeneratedMessage {
+  factory InternalInfo({
     $0.TokenMessage? accessToken,
     $0.TokenMessage? refreshToken,
   }) {
@@ -31,17 +31,17 @@ class InternalResponseInfo extends $pb.GeneratedMessage {
     return result;
   }
 
-  InternalResponseInfo._();
+  InternalInfo._();
 
-  factory InternalResponseInfo.fromBuffer($core.List<$core.int> data,
+  factory InternalInfo.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory InternalResponseInfo.fromJson($core.String json,
+  factory InternalInfo.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'InternalResponseInfo',
+      _omitMessageNames ? '' : 'InternalInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
       createEmptyInstance: create)
     ..aOM<$0.TokenMessage>(1, _omitFieldNames ? '' : 'accessToken',
@@ -51,26 +51,25 @@ class InternalResponseInfo extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  InternalResponseInfo clone() =>
-      InternalResponseInfo()..mergeFromMessage(this);
+  InternalInfo clone() => InternalInfo()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  InternalResponseInfo copyWith(void Function(InternalResponseInfo) updates) =>
-      super.copyWith((message) => updates(message as InternalResponseInfo))
-          as InternalResponseInfo;
+  InternalInfo copyWith(void Function(InternalInfo) updates) =>
+      super.copyWith((message) => updates(message as InternalInfo))
+          as InternalInfo;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static InternalResponseInfo create() => InternalResponseInfo._();
+  static InternalInfo create() => InternalInfo._();
   @$core.override
-  InternalResponseInfo createEmptyInstance() => create();
-  static $pb.PbList<InternalResponseInfo> createRepeated() =>
-      $pb.PbList<InternalResponseInfo>();
+  InternalInfo createEmptyInstance() => create();
+  static $pb.PbList<InternalInfo> createRepeated() =>
+      $pb.PbList<InternalInfo>();
   @$core.pragma('dart2js:noInline')
-  static InternalResponseInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<InternalResponseInfo>(create);
-  static InternalResponseInfo? _defaultInstance;
+  static InternalInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<InternalInfo>(create);
+  static InternalInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
   $0.TokenMessage get accessToken => $_getN(0);
@@ -100,7 +99,7 @@ class ResponseInfo extends $pb.GeneratedMessage {
     $core.bool? success,
     $core.String? errorMessage,
     $1.ErrorEnum? error,
-    InternalResponseInfo? internalInfo,
+    InternalInfo? internalInfo,
   }) {
     final result = create();
     if (success != null) result.success = success;
@@ -129,8 +128,8 @@ class ResponseInfo extends $pb.GeneratedMessage {
         defaultOrMaker: $1.ErrorEnum.ERROR_UNKNOWN,
         valueOf: $1.ErrorEnum.valueOf,
         enumValues: $1.ErrorEnum.values)
-    ..aOM<InternalResponseInfo>(4, _omitFieldNames ? '' : 'internalInfo',
-        subBuilder: InternalResponseInfo.create)
+    ..aOM<InternalInfo>(4, _omitFieldNames ? '' : 'internalInfo',
+        subBuilder: InternalInfo.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -182,25 +181,27 @@ class ResponseInfo extends $pb.GeneratedMessage {
   void clearError() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  InternalResponseInfo get internalInfo => $_getN(3);
+  InternalInfo get internalInfo => $_getN(3);
   @$pb.TagNumber(4)
-  set internalInfo(InternalResponseInfo value) => $_setField(4, value);
+  set internalInfo(InternalInfo value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasInternalInfo() => $_has(3);
   @$pb.TagNumber(4)
   void clearInternalInfo() => $_clearField(4);
   @$pb.TagNumber(4)
-  InternalResponseInfo ensureInternalInfo() => $_ensure(3);
+  InternalInfo ensureInternalInfo() => $_ensure(3);
 }
 
 class RequestInfo extends $pb.GeneratedMessage {
   factory RequestInfo({
     $core.String? userId,
     $0.TokenMessage? accessToken,
+    InternalInfo? internalInfo,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
     if (accessToken != null) result.accessToken = accessToken;
+    if (internalInfo != null) result.internalInfo = internalInfo;
     return result;
   }
 
@@ -220,6 +221,8 @@ class RequestInfo extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'userId')
     ..aOM<$0.TokenMessage>(2, _omitFieldNames ? '' : 'accessToken',
         subBuilder: $0.TokenMessage.create)
+    ..aOM<InternalInfo>(3, _omitFieldNames ? '' : 'internalInfo',
+        subBuilder: InternalInfo.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -261,6 +264,17 @@ class RequestInfo extends $pb.GeneratedMessage {
   void clearAccessToken() => $_clearField(2);
   @$pb.TagNumber(2)
   $0.TokenMessage ensureAccessToken() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  InternalInfo get internalInfo => $_getN(2);
+  @$pb.TagNumber(3)
+  set internalInfo(InternalInfo value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasInternalInfo() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInternalInfo() => $_clearField(3);
+  @$pb.TagNumber(3)
+  InternalInfo ensureInternalInfo() => $_ensure(2);
 }
 
 class RefreshAuthMessage_Request extends $pb.GeneratedMessage {

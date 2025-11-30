@@ -46,8 +46,8 @@ func returnError[R ApiResponseInterface](
 	writeProto(r, w, response)
 }
 
-func populateInternalInfo(r *http.Request) *proto.InternalResponseInfo {
-	internalInfo := proto.InternalResponseInfo{}
+func populateInternalInfo(r *http.Request) *proto.InternalInfo {
+	internalInfo := proto.InternalInfo{}
 	// What about refresh cookie
 	if tokenCookie, tokenErr := r.Cookie("Access-Token"); tokenErr == nil {
 		token := models.NewToken()
@@ -61,7 +61,7 @@ func populateInternalInfo(r *http.Request) *proto.InternalResponseInfo {
 	}
 	return &internalInfo
 }
-func writeInternalInfo(internalInfo *proto.InternalResponseInfo, w http.ResponseWriter) {
+func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) {
 	if internalInfo == nil {
 		return
 	}

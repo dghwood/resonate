@@ -276,11 +276,11 @@ func (t *Token) FromHttpCookie(cookie *http.Cookie) {
 }
 
 type InternalInfo struct {
-	*proto.InternalResponseInfo
+	*proto.InternalInfo
 }
 
 func NewInternalInfo() *InternalInfo {
 	return &InternalInfo{
-		&proto.InternalResponseInfo{},
+		&proto.InternalInfo{},
 	}
 }

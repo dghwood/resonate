@@ -14,9 +14,9 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use internalResponseInfoDescriptor instead')
-const InternalResponseInfo$json = {
-  '1': 'InternalResponseInfo',
+@$core.Deprecated('Use internalInfoDescriptor instead')
+const InternalInfo$json = {
+  '1': 'InternalInfo',
   '2': [
     {
       '1': 'access_token',
@@ -37,11 +37,11 @@ const InternalResponseInfo$json = {
   ],
 };
 
-/// Descriptor for `InternalResponseInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List internalResponseInfoDescriptor = $convert.base64Decode(
-    'ChRJbnRlcm5hbFJlc3BvbnNlSW5mbxI5CgxhY2Nlc3NfdG9rZW4YASABKAsyFi5yZXNvbmF0ZS'
-    '5Ub2tlbk1lc3NhZ2VSC2FjY2Vzc1Rva2VuEjsKDXJlZnJlc2hfdG9rZW4YAiABKAsyFi5yZXNv'
-    'bmF0ZS5Ub2tlbk1lc3NhZ2VSDHJlZnJlc2hUb2tlbg==');
+/// Descriptor for `InternalInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List internalInfoDescriptor = $convert.base64Decode(
+    'CgxJbnRlcm5hbEluZm8SOQoMYWNjZXNzX3Rva2VuGAEgASgLMhYucmVzb25hdGUuVG9rZW5NZX'
+    'NzYWdlUgthY2Nlc3NUb2tlbhI7Cg1yZWZyZXNoX3Rva2VuGAIgASgLMhYucmVzb25hdGUuVG9r'
+    'ZW5NZXNzYWdlUgxyZWZyZXNoVG9rZW4=');
 
 @$core.Deprecated('Use responseInfoDescriptor instead')
 const ResponseInfo$json = {
@@ -62,7 +62,7 @@ const ResponseInfo$json = {
       '3': 4,
       '4': 1,
       '5': 11,
-      '6': '.resonate.api.InternalResponseInfo',
+      '6': '.resonate.api.InternalInfo',
       '10': 'internalInfo'
     },
   ],
@@ -72,8 +72,8 @@ const ResponseInfo$json = {
 final $typed_data.Uint8List responseInfoDescriptor = $convert.base64Decode(
     'CgxSZXNwb25zZUluZm8SGAoHc3VjY2VzcxgBIAEoCFIHc3VjY2VzcxIjCg1lcnJvcl9tZXNzYW'
     'dlGAIgASgJUgxlcnJvck1lc3NhZ2USKQoFZXJyb3IYAyABKA4yEy5yZXNvbmF0ZS5FcnJvckVu'
-    'dW1SBWVycm9yEkcKDWludGVybmFsX2luZm8YBCABKAsyIi5yZXNvbmF0ZS5hcGkuSW50ZXJuYW'
-    'xSZXNwb25zZUluZm9SDGludGVybmFsSW5mbw==');
+    'dW1SBWVycm9yEj8KDWludGVybmFsX2luZm8YBCABKAsyGi5yZXNvbmF0ZS5hcGkuSW50ZXJuYW'
+    'xJbmZvUgxpbnRlcm5hbEluZm8=');
 
 @$core.Deprecated('Use requestInfoDescriptor instead')
 const RequestInfo$json = {
@@ -88,13 +88,22 @@ const RequestInfo$json = {
       '6': '.resonate.TokenMessage',
       '10': 'accessToken'
     },
+    {
+      '1': 'internal_info',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.InternalInfo',
+      '10': 'internalInfo'
+    },
   ],
 };
 
 /// Descriptor for `RequestInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List requestInfoDescriptor = $convert.base64Decode(
     'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSOQoMYWNjZXNzX3Rva2VuGA'
-    'IgASgLMhYucmVzb25hdGUuVG9rZW5NZXNzYWdlUgthY2Nlc3NUb2tlbg==');
+    'IgASgLMhYucmVzb25hdGUuVG9rZW5NZXNzYWdlUgthY2Nlc3NUb2tlbhI/Cg1pbnRlcm5hbF9p'
+    'bmZvGAMgASgLMhoucmVzb25hdGUuYXBpLkludGVybmFsSW5mb1IMaW50ZXJuYWxJbmZv');
 
 @$core.Deprecated('Use refreshAuthMessageDescriptor instead')
 const RefreshAuthMessage$json = {

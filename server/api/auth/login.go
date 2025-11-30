@@ -139,7 +139,7 @@ func (f Login) Execute(
 
 	internalInfo := response.GetResponseInfo().GetInternalInfo()
 	if internalInfo == nil {
-		internalInfo = models.NewInternalInfo().InternalResponseInfo
+		internalInfo = models.NewInternalInfo().InternalInfo
 		response.GetResponseInfo().SetInternalInfo(internalInfo)
 	}
 	internalInfo.SetAccessToken(accessToken)
