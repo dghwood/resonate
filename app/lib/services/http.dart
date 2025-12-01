@@ -1,9 +1,9 @@
-import 'dart:convert';
+import 'dart:io';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:resonate/services/secure_database/secure_database.dart';
 
 Logger _log = Logger('services/http');
 
@@ -16,10 +16,9 @@ abstract class AbstractHttpService {
 }
 
 class HttpService implements AbstractHttpService {
-  HttpService({required AbstractSecureDatabase secureDatabase})
-    : _secureDatabase = secureDatabase;
+  HttpService({required this.cookieJar});
 
-  final AbstractSecureDatabase _secureDatabase;
+  final CookieJar cookieJar;
 
   @override
   Future<Uint8List> post(
@@ -34,14 +33,11 @@ class HttpService implements AbstractHttpService {
         if (kReleaseMode && url.scheme != 'https') {
           throw Exception('only send cookies in secure');
         }
-        // load cookies from secure storage
-        var cookies = await _secureDatabase.read('cookies');
-        var cookieMap = jsonDecode(cookies);
-        var cookieHeader = [];
-        for (var key in cookieMap) {
-          cookieHeader.add('$key=${cookieMap[key]}');
+        final cookies = await cookieJar.loadForRequest(url);
+        if (cookies.isNotEmpty) {
+          headers['cookie'] =
+              cookies.map((c) => '${c.name}=${c.value}').join('; ');
         }
-        headers['Cookie'] = cookieHeader.join('; ');
       }
     } on Exception {
       // do nothing
@@ -56,22 +52,18 @@ class HttpService implements AbstractHttpService {
 
       // Handle cookies in app
       if (!kIsWeb) {
-        var cookieHeader = response.headers['set-cookie'];
-        if (cookieHeader != null) {
-          var cookieStrings = cookieHeader.split(',');
-          Map<String, String> cookieMap = {};
-          for (var cookieString in cookieStrings) {
-            // just parse out the name=value pairs
-            var cookie = cookieString.split(';')[0];
-            var keyValue = cookie.split('=').map((e) => e.trim()).toList();
-            if (keyValue[0] != '' && keyValue[1] != '') {
-              cookieMap[keyValue[0]] = keyValue[1];
+        final setCookieHeader = response.headers['set-cookie'];
+        if (setCookieHeader != null) {
+          var cookies = <Cookie>[];
+          var cookieParts = setCookieHeader.split(RegExp(r',(?=[a-zA-Z])'));
+          for (var part in cookieParts) {
+            try {
+              cookies.add(Cookie.fromSetCookieValue(part));
+            } catch (e) {
+              _log.warning('Failed to parse cookie part: $part');
             }
           }
-          if (cookieMap.isNotEmpty) {
-            _log.info(cookieMap);
-            await _secureDatabase.write('cookies', jsonEncode(cookieMap));
-          }
+          await cookieJar.saveFromResponse(url, cookies);
         }
       }
 

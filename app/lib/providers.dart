@@ -1,3 +1,4 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ import 'package:resonate/api/upload.dart';
 import 'package:resonate/api/user.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/services/contacts.dart';
+import 'package:resonate/services/cookie_jar.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http.dart';
@@ -25,11 +27,15 @@ import 'package:resonate/services/secure_database/secure_database.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
-
-  // Provider<AbstractHttpService>(create: (context) => mockHttpService),
   Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
+  Provider<CookieJar>(
+    create: (context) => PersistCookieJar(
+      storage: SecureStorage(context.read<AbstractSecureDatabase>()),
+    ),
+  ),
+  // Provider<AbstractHttpService>(create: (context) => mockHttpService),
   Provider<AbstractHttpService>(
-    create: (context) => HttpService(secureDatabase: context.read()),
+    create: (context) => HttpService(cookieJar: context.read()),
   ),
   Provider<SecureProtoDatabase>(
     create: (context) => SecureProtoDatabase(secureDatabase: context.read()),
