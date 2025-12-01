@@ -16,10 +16,12 @@ class DownloadItem extends ChangeNotifier {
     required this.filePath,
     required this.onDone,
     required this.onCancel,
-  });
+    required AbstractDatabaseService databaseService,
+  }) : _databaseService = databaseService;
 
   final Uri url;
   final String filePath;
+  final AbstractDatabaseService _databaseService;
   final Future<void> Function() onDone;
   final Future<void> Function() onCancel;
 
@@ -33,16 +35,19 @@ class DownloadItem extends ChangeNotifier {
   // Only call when done
   ApiResult<bool> get result => _result!;
 
+  AbstractFile _file(String filePath) {
+    if (kIsWeb) {
+      return IndexDbFile(filePath, _databaseService);
+    } else {
+      return FilesystemFile(filePath);
+    }
+  }
+
   void download() async {
     _log.info('download');
     _status = DownloadItemStatus.downloading;
     try {
-      AbstractFile file;
-      if (kIsWeb) {
-        file = IndexDbFile(filePath);
-      } else {
-        file = FilesystemFile(filePath);
-      }
+      final file = _file(filePath);
       _log.info('requesting $url');
       final request = http.Request('GET', url);
       // This seemed to be required for certain URLs
@@ -111,12 +116,14 @@ class DownloadItem extends ChangeNotifier {
 }
 
 class DownloadManager {
-  DownloadManager() {
+  DownloadManager({required AbstractDatabaseService databaseService})
+      : _databaseService = databaseService {
     // TODO(duncan): Cancel timer when nothing in queue
     Timer.periodic(Duration(seconds: 2), _handleQueue);
   }
   // TODO(duncan): This queue is in memory
   final List<DownloadItem> _queue = [];
+  final AbstractDatabaseService _databaseService;
 
   DownloadItem add({
     required Uri url,
@@ -130,6 +137,7 @@ class DownloadManager {
       filePath: filePath,
       onDone: onDone,
       onCancel: onCancel,
+      databaseService: _databaseService,
     );
     _queue.add(item);
     return item;
@@ -155,12 +163,15 @@ class DownloadManager {
     }
 
     // Now for any downloads not in the queue I need to delete them
-    AbstractFile file;
-    if (kIsWeb) {
-      file = IndexDbFile(filePath);
-    } else {
-      file = FilesystemFile(filePath);
+    AbstractFile _file(String filePath) {
+      if (kIsWeb) {
+        return IndexDbFile(filePath, _databaseService);
+      } else {
+        return FilesystemFile(filePath);
+      }
     }
+
+    final file = _file(filePath);
     _log.info('deleting file on disk: $filePath');
     await file.delete();
     _log.info('deleted file on disk');
