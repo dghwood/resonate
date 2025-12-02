@@ -15,10 +15,12 @@ class BetterPersistCookieJar extends PersistCookieJar {
   ) async {
     try {
       final cookies = await loadForRequest(url);
+      _log.info(cookies);
       if (cookies.isNotEmpty) {
-        headers['cookie'] = cookies
+        headers['Cookie'] = cookies
             .map((c) => '${c.name}=${c.value}')
             .join('; ');
+        _log.info('headers $headers');
       }
     } on DatabaseNotFoundException catch (_) {
       // Don't worry about not finding any cookies.
@@ -29,10 +31,11 @@ class BetterPersistCookieJar extends PersistCookieJar {
 
   Future<bool> actuallySaveFromResponse(Uri url, http.Response response) async {
     final setCookieHeader = response.headers['set-cookie'];
+
     if (setCookieHeader == null) {
       return true;
     }
-
+    _log.info('cookieHeader $setCookieHeader');
     var cookies = <Cookie>[];
     var cookieParts = setCookieHeader.split(',');
     for (var part in cookieParts) {

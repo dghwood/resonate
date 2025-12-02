@@ -27,7 +27,7 @@ class EpisodeDatabase extends ProtoModelDatabase<EpisodeMessage, Episode> {
     return results;
   }
 
-  final String _podcastIdIndexName = 'podcastId-publish_timestamp';
+  final String _podcastIdIndexName = 'podcastId_publish_timestamp';
 
   @override
   Future<void> upgradeFunction(

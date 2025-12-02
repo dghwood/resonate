@@ -77,7 +77,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final String _baseUrl =
       kReleaseMode
           ? 'https://rxyz-app-814908101471.northamerica-northeast1.run.app'
-          : 'http://localhost';
+          : (kIsWeb ? 'http://localhost' : 'http://10.0.2.2');
 
   @override
   Future<void> execute(Req request, Res response) async {

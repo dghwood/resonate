@@ -25,7 +25,7 @@ class FollowsDatabase
     return results;
   }
 
-  final String _userIdIndexName = 'userId-timestamp';
+  final String _userIdIndexName = 'userId_timestamp';
 
   @override
   Future<void> upgradeFunction(
