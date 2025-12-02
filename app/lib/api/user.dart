@@ -4,7 +4,7 @@ import 'package:resonate/api/base.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 
 final Logger _log = Logger('PublicUserApi');
 

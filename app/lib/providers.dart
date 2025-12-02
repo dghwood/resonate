@@ -18,24 +18,19 @@ import 'package:resonate/api/upload.dart';
 import 'package:resonate/api/user.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/services/contacts.dart';
-import 'package:resonate/services/cookie_jar.dart';
+import 'package:resonate/services/http/cookie_jar.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
   Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
-  Provider<CookieJar>(
-    create: (context) => PersistCookieJar(
-      storage: SecureStorage(context.read<AbstractSecureDatabase>()),
-    ),
-  ),
   // Provider<AbstractHttpService>(create: (context) => mockHttpService),
   Provider<AbstractHttpService>(
-    create: (context) => HttpService(cookieJar: context.read()),
+    create: (context) => HttpService(secureDatabse: context.read()),
   ),
   Provider<SecureProtoDatabase>(
     create: (context) => SecureProtoDatabase(secureDatabase: context.read()),

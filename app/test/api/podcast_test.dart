@@ -9,7 +9,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pbserver.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 import 'package:resonate/storage/podcast.dart';
 
 void main() {

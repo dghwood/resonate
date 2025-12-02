@@ -1,9 +1,9 @@
-import 'dart:io';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:resonate/services/http/cookie_jar.dart';
+import 'package:resonate/services/secure_database/secure_database.dart';
 
 Logger _log = Logger('services/http');
 
@@ -16,9 +16,12 @@ abstract class AbstractHttpService {
 }
 
 class HttpService implements AbstractHttpService {
-  HttpService({required this.cookieJar});
+  HttpService({required AbstractSecureDatabase secureDatabse})
+    : cookieJar = BetterPersistCookieJar(
+        storage: SecureCookieStorage(secureDatabase: secureDatabse),
+      );
 
-  final CookieJar cookieJar;
+  final BetterPersistCookieJar cookieJar;
 
   @override
   Future<Uint8List> post(
@@ -29,20 +32,7 @@ class HttpService implements AbstractHttpService {
     headers ??= {};
     headers['Content-Type'] = 'application/octet-stream';
     try {
-      if (!kIsWeb) {
-        if (kReleaseMode && url.scheme != 'https') {
-          throw Exception('only send cookies in secure');
-        }
-        final cookies = await cookieJar.loadForRequest(url);
-        if (cookies.isNotEmpty) {
-          headers['cookie'] =
-              cookies.map((c) => '${c.name}=${c.value}').join('; ');
-        }
-      }
-    } on Exception {
-      // do nothing
-    }
-    try {
+      cookieJar.actuallyLoadForRequest(headers, url);
       var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode != 200) {
         throw HttpServiceException(
@@ -50,22 +40,7 @@ class HttpService implements AbstractHttpService {
         );
       }
 
-      // Handle cookies in app
-      if (!kIsWeb) {
-        final setCookieHeader = response.headers['set-cookie'];
-        if (setCookieHeader != null) {
-          var cookies = <Cookie>[];
-          var cookieParts = setCookieHeader.split(RegExp(r',(?=[a-zA-Z])'));
-          for (var part in cookieParts) {
-            try {
-              cookies.add(Cookie.fromSetCookieValue(part));
-            } catch (e) {
-              _log.warning('Failed to parse cookie part: $part');
-            }
-          }
-          await cookieJar.saveFromResponse(url, cookies);
-        }
-      }
+      await cookieJar.actuallySaveFromResponse(url, response);
 
       return response.bodyBytes;
     } catch (e) {

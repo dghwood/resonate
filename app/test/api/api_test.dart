@@ -5,7 +5,7 @@ import 'package:resonate/api/user.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/proto/common.pb.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 
 void main() {
   group('CreateUserApi Tests', () {

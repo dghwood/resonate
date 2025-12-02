@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/proto/common.pb.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 
 EpisodeMessage mockEpisodeMessage({
   String id = '312',

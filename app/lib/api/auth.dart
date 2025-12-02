@@ -12,7 +12,7 @@ import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
 
 Logger _log = Logger('api/auth');

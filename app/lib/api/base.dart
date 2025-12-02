@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/proto/api.pb.dart';
-import 'package:resonate/services/http.dart';
+import 'package:resonate/services/http/http.dart';
 
 Logger _log = Logger("api/base");
 
