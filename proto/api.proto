@@ -228,6 +228,19 @@ message ListSubscriptionMessage {
     Response response = 2;
 }
 
+message SyncSubscriptionsMessage {
+    message Request {
+        RequestInfo request_info = 1;
+        repeated UserSubscriptionMessage subscriptions = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated UserSubscriptionMessage subscriptions = 2;
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
 message AddListenMessage {
     message Request {
         RequestInfo request_info = 1; 

@@ -3,10 +3,10 @@
 echo $HOME;
 
 protoc \
---proto_path=$HOME/Code/resonate \
---dart_out=$HOME/Code/resonate/app/lib/ \
---go_out=$HOME/Code/resonate/server \
+--proto_path=$PWD/../ \
+--dart_out=$PWD/../app/lib/ \
+--go_out=$PWD/../server \
 --go_opt=paths=source_relative \
 --go_opt=default_api_level=API_HYBRID \
-$HOME/Code/resonate/proto/*.proto 
+$PWD/../proto/*.proto
 echo 'built'

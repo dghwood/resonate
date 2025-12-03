@@ -83,6 +83,8 @@ func main() {
 		Datastore: datastore}, "/api/subscribe/add")
 	api.Attach(&subscribe.Remove{
 		Datastore: datastore}, "/api/subscribe/remove")
+	api.Attach(&subscribe.Sync{
+		Datastore: datastore}, "/api/subscribe/sync")
 
 	// Follows
 	api.Attach(&follows.List{
