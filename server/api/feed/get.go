@@ -65,6 +65,20 @@ func (f *Get) Execute(
 			},
 		})
 	}
+
+	// Add social items
+	socialItems, err := getSocialFeedItems(loggedInUser.Id, f.Datastore)
+	if err != nil {
+		log.Error(err)
+		// Don't fail the whole request?
+	} else {
+		for _, item := range socialItems {
+			userFeed.Items = append(userFeed.Items, &proto.UserFeedItemMessage{
+				RecommendedItems: []*proto.UserFeedItemRecommendationMessage{item},
+			})
+		}
+	}
+
 	log.Infof("Returning %d feed items", len(userFeed.Items))
 	response.Feed = userFeed
 	return

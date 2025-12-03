@@ -182,6 +182,10 @@ func (p *Listen) GetUserIdFieldNum() int32 {
 	return 2
 }
 
+func (p *Listen) GetListenTimestampFieldNum() int32 {
+	return 4
+}
+
 type Follow struct {
 	proto.UserFollowMessage
 }
