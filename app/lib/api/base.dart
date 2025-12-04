@@ -4,6 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/proto/api.pb.dart';
+import 'package:resonate/proto/errors.pbenum.dart';
 import 'package:resonate/services/http/http.dart';
 
 Logger _log = Logger("api/base");
@@ -100,6 +101,8 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
 
     response.fromBuffer(resp);
     if (!response.responseInfo.success) {
+      var error = response.responseInfo.error;
+      if (error == ErrorEnum.ERROR_INVALID_CREDENTIALS) {}
       throw ApiException(response.responseInfo.errorMessage);
     }
   }

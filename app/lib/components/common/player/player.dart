@@ -315,19 +315,22 @@ class PlayIconComponent extends StatelessWidget {
               borderRadius: BorderRadius.circular(50.0),
             ),
             width: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Bit lazy, but icon button here just keep the
-                // sizing and padding equal with the other buttons
-                IconButton(
-                  icon: Icon(Icons.play_circle_outline),
-                  color: Theme.of(context).colorScheme.primary,
-                  onPressed: () {},
-                ),
-                Text(formatDuration(notifier.duration)),
-                SizedBox(width: 8),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+              child: Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Bit lazy, but icon button here just keep the
+                  // sizing and padding equal with the other buttons
+                  Icon(
+                    Icons.play_circle_outline,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
+                  Text(formatDuration(notifier.duration)),
+                ],
+              ),
             ),
           ),
         );

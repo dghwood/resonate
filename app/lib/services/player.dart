@@ -3,6 +3,7 @@
 */
 import 'dart:async';
 
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:just_audio/just_audio.dart' as justAudio;
@@ -143,7 +144,16 @@ class PlayerService implements AbstractPlayerService {
       await _player.stop();
     }
     _episodeDuration = await _player.setAudioSource(
-      justAudio.AudioSource.uri(Uri.parse(episode.audioUrl)),
+      justAudio.AudioSource.uri(
+        Uri.parse(episode.audioUrl),
+        tag: MediaItem(
+          // Specify a unique ID for each media item:
+          id: episode.id,
+          title: episode.title,
+          // TODO(duncan): I need the podcast name here..
+          artUri: Uri.parse(episode.imageUrl),
+        ),
+      ),
       initialPosition: startDuration,
     );
     await _setupProgressStream();

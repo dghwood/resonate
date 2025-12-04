@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
 import 'package:protobuf/protobuf.dart';
 import 'package:resonate/api/auth.dart';

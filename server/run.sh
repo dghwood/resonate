@@ -2,7 +2,7 @@
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
-# nginx -c nginx.confg 
-# sh web.sh debug; 
+sudo nginx -s quit 
+sudo nginx -c $(pwd)/nginx.config
 gcloud auth application-default login --impersonate-service-account localtesting@level-prism-477102-p5.iam.gserviceaccount.com;
 go run .
