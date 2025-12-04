@@ -24,6 +24,7 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
+import 'package:resonate/storage/playlist_storage.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
@@ -60,7 +61,12 @@ final providers =
               databaseService: context.read(),
             ),
       ),
-      Provider<PlaylistApi>(create: (context) => PlaylistApi()),
+      Provider<PlaylistDatabase>(
+        create: (context) => PlaylistDatabase(context.read()),
+        lazy: false,
+      ),
+      Provider<PlaylistApi>(
+          create: (context) => PlaylistApi(context.read<PlaylistDatabase>())),
       ChangeNotifierProvider<PlayerApi>(
         create:
             (context) => PlayerApi(

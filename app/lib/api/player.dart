@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/models/playlist.dart';
+import 'package:resonate/storage/playlist_storage.dart';
 
 import 'package:resonate/services/player.dart';
 
@@ -9,55 +11,91 @@ Logger _log = Logger('api/player');
 
 // Should I move this to the player service directory?
 class PlaylistApi {
-  PlaylistApi();
+  final PlaylistDatabase _playlistDb;
+  late Playlist _playlist;
+  final String _playlistId = 'default_playlist';
+  bool _isInitialized = false;
 
-  final List<Episode> _episodes = [];
+  PlaylistApi(this._playlistDb);
 
-  Future<Iterable<Episode>> list() async {
-    return _episodes;
+  Future<void> init() async {
+    if (_isInitialized) return;
+    try {
+      _playlist = Playlist(id: _playlistId);
+      await _playlistDb.get(_playlist);
+    } catch (e) {
+      _playlist = Playlist(id: _playlistId);
+      await _playlistDb.put(_playlist);
+    }
+    _isInitialized = true;
   }
 
-  // For recommended episodes..
-  // TODO(duncan): Implement this..
-  final List<Episode> _autoEpisodes = [];
+  Future<void> _save() => _playlistDb.put(_playlist);
 
-  Future<void> next(Episode episode) async {
-    _episodes.insert(0, episode);
+  Episode? get playingNow => _playlist.playingNow;
+
+  Future<Iterable<Episode>> list() async {
+    await init();
+    return _playlist.upNext;
+  }
+
+  Future<void> setPlaying(Episode episode) async {
+    await init();
+    _playlist.toMessage().playingNow = episode.toMessage();
+    // Remove the episode from the up next list if it exists
+    _playlist.toMessage().upNext.removeWhere((e) => e.id == episode.id);
+    await _save();
   }
 
   Future<void> add(Episode episode) async {
-    _episodes.add(episode);
+    await init();
+    if (has(episode)) return;
+    _playlist.toMessage().upNext.add(episode.toMessage());
+    await _save();
+  }
+
+  Future<void> next(Episode episode) async {
+    await init();
+    _playlist.toMessage().upNext.removeWhere((e) => e.id == episode.id);
+    _playlist.toMessage().upNext.insert(0, episode.toMessage());
+    await _save();
   }
 
   Future<void> remove(Episode episode) async {
-    _episodes.remove(episode);
-  }
-
-  Future<void> replace(Episode fromEpisode, Episode? toEpisode) async {
-    await remove(fromEpisode);
-    if (toEpisode == null) return;
-    await next(toEpisode);
+    await init();
+    _playlist.toMessage().upNext.removeWhere((e) => e.id == episode.id);
+    if (_playlist.playingNow?.id == episode.id) {
+      _playlist.toMessage().clearPlayingNow();
+    }
+    await _save();
   }
 
   Future<void> clear() async {
-    _episodes.clear();
+    await init();
+    _playlist.toMessage().upNext.clear();
+    await _save();
   }
 
   Future<void> reorder(int oldIndex, int newIndex) async {
+    await init();
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    var item = _episodes.removeAt(oldIndex);
-    _episodes.insert(newIndex, item);
+    var item = _playlist.toMessage().upNext.removeAt(oldIndex);
+    _playlist.toMessage().upNext.insert(newIndex, item);
+    await _save();
   }
 
   bool has(Episode episode) {
-    return _episodes.any((e) => e == episode);
+    return _playlist.upNext.any((e) => e.id == episode.id) ||
+        _playlist.playingNow?.id == episode.id;
   }
 
-  bool get hasNext => _episodes.isNotEmpty;
-  Future<Episode> get pop async {
-    return _episodes.removeAt(0);
+  bool get hasNext => _playlist.upNext.isNotEmpty;
+
+  Future<Episode?> get getNext async {
+    await init();
+    return _playlist.upNext.isNotEmpty ? _playlist.upNext.first : null;
   }
 }
 
@@ -66,9 +104,9 @@ class PlayerApi extends ChangeNotifier {
     required AbstractPlayerService playerService,
     required PlaylistApi playlistApi,
     required AuthUser authUser,
-  }) : _playerService = playerService,
-       _authUser = authUser,
-       _playlistApi = playlistApi {
+  })  : _playerService = playerService,
+        _authUser = authUser,
+        _playlistApi = playlistApi {
     _playerService.streamState().listen(_onStateChange);
   }
 
@@ -77,8 +115,12 @@ class PlayerApi extends ChangeNotifier {
     switch (state) {
       case PlayerState.finished:
         // When the episode is finished load the next episode
-        if (!_playlistApi.hasNext) break;
-        _playlistApi.pop.then((e) => load(e));
+        _playlistApi.getNext.then((episode) {
+          if (episode != null) {
+            load(episode);
+          }
+        });
+        break;
       default:
         break;
     }
@@ -108,6 +150,7 @@ class PlayerApi extends ChangeNotifier {
       return true;
     }
 
+    await _playlistApi.setPlaying(episode);
     _currentEpisode = episode;
     // Check for listens..
     var listen = _authUser?.listenApi.get(episode.id);
