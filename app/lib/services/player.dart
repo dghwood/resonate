@@ -147,9 +147,9 @@ class PlayerService implements AbstractPlayerService {
       justAudio.AudioSource.uri(
         Uri.parse(episode.audioUrl),
         tag: MediaItem(
-          // Specify a unique ID for each media item:
           id: episode.id,
           title: episode.title,
+          duration: episode.duration,
           // TODO(duncan): I need the podcast name here..
           artUri: Uri.parse(episode.imageUrl),
         ),
