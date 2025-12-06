@@ -54,6 +54,10 @@ final _baseProviders = [
 final providers =
     _baseProviders +
     [
+      Provider<PlaylistDatabase>(
+        create: (context) => PlaylistDatabase(context.read()),
+        lazy: false,
+      ),
       Provider<SettingsApi>(
         create:
             (context) => SettingsApi(
@@ -62,18 +66,7 @@ final providers =
               databaseService: context.read(),
             ),
       ),
-      Provider<PlaylistDatabase>(
-        create: (context) => PlaylistDatabase(context.read()),
-        lazy: false,
-      ),
-      ChangeNotifierProvider<PlayerApi>(
-        create:
-            (context) => PlayerApi(
-              playlistApi: context.read(),
-              authUser: context.read(),
-              playerService: PlayerService(),
-            ),
-      ),
+
       // API
       Provider<SearchApi>(
         create:
@@ -102,11 +95,20 @@ final providers =
           );
         },
       ),
+
       Provider<PlaylistApi>(
         create:
             (context) => PlaylistApi(
               playlistDatabase: context.read(),
               episodeApi: context.read(),
+            ),
+      ),
+      ChangeNotifierProvider<PlayerApi>(
+        create:
+            (context) => PlayerApi(
+              playlistApi: context.read(),
+              authUser: context.read(),
+              playerService: PlayerService(),
             ),
       ),
       Provider<SubscriptionsApi>(
