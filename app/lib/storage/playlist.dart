@@ -1,5 +1,6 @@
 import 'package:idb_sqflite/idb_sqflite.dart' as idb;
-import 'package:resonate/models/playlist.dart';
+import 'package:resonate/models/models.dart';
+import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 
 class PlaylistDatabase extends ProtoModelDatabase<PlaylistMessage, Playlist> {
@@ -12,10 +13,8 @@ class PlaylistDatabase extends ProtoModelDatabase<PlaylistMessage, Playlist> {
   Playlist newInstance() => Playlist.fromMessage(PlaylistMessage());
 
   @override
-  void upgradeFunction(idb.VersionChangeEvent event) {
-    final db = event.database;
-    if (!db.objectStoreNames.contains(storeName)) {
-      db.createObjectStore(storeName, keyPath: 'id');
-    }
+  void upgradeFunction(idb.VersionChangeEvent versionChangeEvent) {
+    final db = versionChangeEvent.database;
+    db.createObjectStore(storeName, keyPath: 'field_1');
   }
 }

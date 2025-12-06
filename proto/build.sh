@@ -1,12 +1,11 @@
-# --go_out=$HOME/cs/resonate/server \
-# --go_opt=paths=source_relative \
-echo $PWD;
+WORKING_DIR=$HOME/Code/resonate
+echo $WORKING_DIR;
 
 protoc \
---proto_path=. \
---dart_out=app/lib/ \
---go_out=server \
+--proto_path=$WORKING_DIR \
+--dart_out=$WORKING_DIR/app/lib/ \
+--go_out=$WORKING_DIR/server \
 --go_opt=paths=source_relative \
 --go_opt=default_api_level=API_HYBRID \
-proto/*.proto
+$WORKING_DIR/proto/*.proto 
 echo 'built'

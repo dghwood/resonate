@@ -37,10 +37,10 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
         ListenableBuilder(
           listenable: widget.playerApi,
           builder: (context, _) {
-            if (widget.playerApi.episode == null) {
+            if (widget.playerApi.getPlayingEpisode() == null) {
               return Text('Nothing playing');
             }
-            var episode = widget.playerApi.episode!;
+            var episode = widget.playerApi.getPlayingEpisode()!;
             return ListTile(
               leading: ImageComponent(episode.imageUrl, radius: 10),
               title: Text(episode.title),
@@ -71,7 +71,10 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
                     (episode) => ListTile(
                       onTap: () async {
                         // Add playing Episode (if any to playlist)
-                        playlistApi.replace(episode, widget.playerApi.episode);
+                        playlistApi.replace(
+                          episode,
+                          widget.playerApi.getPlayingEpisode(),
+                        );
                         // Start playing it
                         await widget.playerApi.load(episode);
                         setState(() {});

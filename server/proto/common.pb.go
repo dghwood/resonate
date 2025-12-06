@@ -2814,6 +2814,116 @@ func (b0 SettingsMessage_builder) Build() *SettingsMessage {
 	return m0
 }
 
+type PlaylistMessage struct {
+	state            protoimpl.MessageState  `protogen:"hybrid.v1"`
+	Id               string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Metadata         *StorageMetadataMessage `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	PlayingEpisodeId string                  `protobuf:"bytes,3,opt,name=playing_episode_id,json=playingEpisodeId,proto3" json:"playing_episode_id,omitempty"`
+	UpNextEpisodeIds []string                `protobuf:"bytes,4,rep,name=up_next_episode_ids,json=upNextEpisodeIds,proto3" json:"up_next_episode_ids,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *PlaylistMessage) Reset() {
+	*x = PlaylistMessage{}
+	mi := &file_proto_common_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlaylistMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlaylistMessage) ProtoMessage() {}
+
+func (x *PlaylistMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlaylistMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PlaylistMessage) GetMetadata() *StorageMetadataMessage {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *PlaylistMessage) GetPlayingEpisodeId() string {
+	if x != nil {
+		return x.PlayingEpisodeId
+	}
+	return ""
+}
+
+func (x *PlaylistMessage) GetUpNextEpisodeIds() []string {
+	if x != nil {
+		return x.UpNextEpisodeIds
+	}
+	return nil
+}
+
+func (x *PlaylistMessage) SetId(v string) {
+	x.Id = v
+}
+
+func (x *PlaylistMessage) SetMetadata(v *StorageMetadataMessage) {
+	x.Metadata = v
+}
+
+func (x *PlaylistMessage) SetPlayingEpisodeId(v string) {
+	x.PlayingEpisodeId = v
+}
+
+func (x *PlaylistMessage) SetUpNextEpisodeIds(v []string) {
+	x.UpNextEpisodeIds = v
+}
+
+func (x *PlaylistMessage) HasMetadata() bool {
+	if x == nil {
+		return false
+	}
+	return x.Metadata != nil
+}
+
+func (x *PlaylistMessage) ClearMetadata() {
+	x.Metadata = nil
+}
+
+type PlaylistMessage_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Id               string
+	Metadata         *StorageMetadataMessage
+	PlayingEpisodeId string
+	UpNextEpisodeIds []string
+}
+
+func (b0 PlaylistMessage_builder) Build() *PlaylistMessage {
+	m0 := &PlaylistMessage{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.Id = b.Id
+	x.Metadata = b.Metadata
+	x.PlayingEpisodeId = b.PlayingEpisodeId
+	x.UpNextEpisodeIds = b.UpNextEpisodeIds
+	return m0
+}
+
 var file_proto_common_proto_extTypes = []protoimpl.ExtensionInfo{
 	{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
@@ -2980,10 +3090,15 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x0fSettingsMessage\x12\x14\n" +
 	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
 	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12'\n" +
-	"\x0fenable_playlist\x18\x03 \x01(\bR\x0eenablePlaylist:5\n" +
+	"\x0fenable_playlist\x18\x03 \x01(\bR\x0eenablePlaylist\"\xc2\x01\n" +
+	"\x0fPlaylistMessage\x12\x14\n" +
+	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
+	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12,\n" +
+	"\x12playing_episode_id\x18\x03 \x01(\tR\x10playingEpisodeId\x12-\n" +
+	"\x13up_next_episode_ids\x18\x04 \x03(\tR\x10upNextEpisodeIds:5\n" +
 	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
-var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_common_proto_goTypes = []any{
 	(*StorageMetadataMessage)(nil),            // 0: resonate.StorageMetadataMessage
 	(*PodcastMessage)(nil),                    // 1: resonate.PodcastMessage
@@ -3007,7 +3122,8 @@ var file_proto_common_proto_goTypes = []any{
 	(*UserContactsMessage)(nil),               // 19: resonate.UserContactsMessage
 	(*UserContactMessage)(nil),                // 20: resonate.UserContactMessage
 	(*SettingsMessage)(nil),                   // 21: resonate.SettingsMessage
-	(*descriptorpb.FieldOptions)(nil),         // 22: google.protobuf.FieldOptions
+	(*PlaylistMessage)(nil),                   // 22: resonate.PlaylistMessage
+	(*descriptorpb.FieldOptions)(nil),         // 23: google.protobuf.FieldOptions
 }
 var file_proto_common_proto_depIdxs = []int32{
 	2,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
@@ -3047,12 +3163,13 @@ var file_proto_common_proto_depIdxs = []int32{
 	20, // 34: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
 	0,  // 35: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	0,  // 36: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	22, // 37: resonate.index:extendee -> google.protobuf.FieldOptions
-	38, // [38:38] is the sub-list for method output_type
-	38, // [38:38] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	37, // [37:38] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	0,  // 37: resonate.PlaylistMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	23, // 38: resonate.index:extendee -> google.protobuf.FieldOptions
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	38, // [38:39] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }
@@ -3066,7 +3183,7 @@ func file_proto_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   23,
 			NumExtensions: 1,
 			NumServices:   0,
 		},

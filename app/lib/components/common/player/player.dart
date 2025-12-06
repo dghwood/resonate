@@ -61,7 +61,7 @@ class PlayerComponent extends StatelessWidget {
         if (_playerApi.state == PlayerState.init) {
           return Text('Nothing Playing');
         }
-        var episode = _playerApi.episode!;
+        var episode = _playerApi.getPlayingEpisode()!;
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Center(
@@ -291,7 +291,7 @@ class PlayIconComponent extends StatelessWidget {
   late final PlayIconNotifier notifier;
 
   void _onPressed() async {
-    var currentEpisode = playerApi.episode;
+    var currentEpisode = playerApi.getPlayingEpisode();
     if (currentEpisode != null && episode.id == currentEpisode.id) {
       return;
     }
