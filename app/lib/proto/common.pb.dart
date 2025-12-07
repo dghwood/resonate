@@ -2359,6 +2359,96 @@ class SettingsMessage extends $pb.GeneratedMessage {
   void clearEnablePlaylist() => $_clearField(3);
 }
 
+class PlaylistMessage extends $pb.GeneratedMessage {
+  factory PlaylistMessage({
+    $core.String? id,
+    StorageMetadataMessage? metadata,
+    $core.String? playingEpisodeId,
+    $core.Iterable<$core.String>? upNextEpisodeIds,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (metadata != null) result.metadata = metadata;
+    if (playingEpisodeId != null) result.playingEpisodeId = playingEpisodeId;
+    if (upNextEpisodeIds != null)
+      result.upNextEpisodeIds.addAll(upNextEpisodeIds);
+    return result;
+  }
+
+  PlaylistMessage._();
+
+  factory PlaylistMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory PlaylistMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PlaylistMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOM<StorageMetadataMessage>(2, _omitFieldNames ? '' : 'metadata',
+        subBuilder: StorageMetadataMessage.create)
+    ..aOS(3, _omitFieldNames ? '' : 'playingEpisodeId')
+    ..pPS(4, _omitFieldNames ? '' : 'upNextEpisodeIds')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PlaylistMessage clone() => PlaylistMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PlaylistMessage copyWith(void Function(PlaylistMessage) updates) =>
+      super.copyWith((message) => updates(message as PlaylistMessage))
+          as PlaylistMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PlaylistMessage create() => PlaylistMessage._();
+  @$core.override
+  PlaylistMessage createEmptyInstance() => create();
+  static $pb.PbList<PlaylistMessage> createRepeated() =>
+      $pb.PbList<PlaylistMessage>();
+  @$core.pragma('dart2js:noInline')
+  static PlaylistMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PlaylistMessage>(create);
+  static PlaylistMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  StorageMetadataMessage get metadata => $_getN(1);
+  @$pb.TagNumber(2)
+  set metadata(StorageMetadataMessage value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasMetadata() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMetadata() => $_clearField(2);
+  @$pb.TagNumber(2)
+  StorageMetadataMessage ensureMetadata() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get playingEpisodeId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set playingEpisodeId($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPlayingEpisodeId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPlayingEpisodeId() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<$core.String> get upNextEpisodeIds => $_getList(3);
+}
+
 class Common {
   static final index = $pb.Extension<$core.bool>(
       _omitMessageNames ? '' : 'google.protobuf.FieldOptions',

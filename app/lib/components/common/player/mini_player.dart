@@ -17,8 +17,6 @@ class BottomPlayerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheet(
-      // showDragHandle: true,
-      // shadowColor: Theme.of(context).colorScheme.primary,
       backgroundColor: Theme.of(context).colorScheme.surfaceBright,
       enableDrag: false,
       constraints: BoxConstraints(maxHeight: 80),
@@ -29,11 +27,11 @@ class BottomPlayerComponent extends StatelessWidget {
           builder: (context, _) {
             _log.info(_playerApi.state);
             if (_playerApi.state == PlayerState.init ||
-                _playerApi.episode == null) {
+                _playerApi.getPlayingEpisode() == null) {
               return SizedBox();
             }
 
-            var episode = _playerApi.episode!;
+            var episode = _playerApi.getPlayingEpisode()!;
             return Container(
               alignment: Alignment.bottomCenter,
               width: double.infinity,

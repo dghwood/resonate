@@ -662,3 +662,58 @@ class Settings extends StorageModel<SettingsMessage> {
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
 }
+
+class Playlist extends StorageModel<PlaylistMessage> {
+  Playlist({required String id}) : super(PlaylistMessage(id: id));
+
+  Playlist.fromMessage(super.message);
+
+  @override
+  String get id => _message.id;
+
+  @override
+  Uint8List get descriptor => playlistMessageDescriptor;
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
+
+  String? get playingEpisodeId =>
+      _message.hasPlayingEpisodeId() ? _message.playingEpisodeId : null;
+  void setPlayingEpisodeId(String episodeId) =>
+      _message.playingEpisodeId = episodeId;
+
+  Iterable<String> get upNextEpisodeIds => _message.upNextEpisodeIds;
+
+  void addNext(Episode episode) {
+    _message.upNextEpisodeIds.insert(0, episode.id);
+  }
+
+  void add(Episode episode) {
+    _message.upNextEpisodeIds.add(episode.id);
+  }
+
+  void remove(Episode episode) {
+    _message.upNextEpisodeIds.removeWhere((e) => e == episode.id);
+  }
+
+  void reorder(int oldIndex, int newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    var item = _message.upNextEpisodeIds.removeAt(oldIndex);
+    _message.upNextEpisodeIds.insert(newIndex, item);
+  }
+
+  bool has(Episode episode) {
+    return _message.upNextEpisodeIds.any((e) => e == episode.id);
+  }
+
+  String get pop {
+    return _message.upNextEpisodeIds.removeAt(0);
+  }
+
+  void clear() {
+    return _message.upNextEpisodeIds.clear();
+  }
+}

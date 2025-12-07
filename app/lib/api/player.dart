@@ -1,65 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/playlist.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/storage/playlist.dart';
 
 import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('api/player');
-
-// Should I move this to the player service directory?
-class PlaylistApi {
-  PlaylistApi();
-
-  final List<Episode> _episodes = [];
-
-  Future<Iterable<Episode>> list() async {
-    return _episodes;
-  }
-
-  // For recommended episodes..
-  // TODO(duncan): Implement this..
-  final List<Episode> _autoEpisodes = [];
-
-  Future<void> next(Episode episode) async {
-    _episodes.insert(0, episode);
-  }
-
-  Future<void> add(Episode episode) async {
-    _episodes.add(episode);
-  }
-
-  Future<void> remove(Episode episode) async {
-    _episodes.remove(episode);
-  }
-
-  Future<void> replace(Episode fromEpisode, Episode? toEpisode) async {
-    await remove(fromEpisode);
-    if (toEpisode == null) return;
-    await next(toEpisode);
-  }
-
-  Future<void> clear() async {
-    _episodes.clear();
-  }
-
-  Future<void> reorder(int oldIndex, int newIndex) async {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    var item = _episodes.removeAt(oldIndex);
-    _episodes.insert(newIndex, item);
-  }
-
-  bool has(Episode episode) {
-    return _episodes.any((e) => e == episode);
-  }
-
-  bool get hasNext => _episodes.isNotEmpty;
-  Future<Episode> get pop async {
-    return _episodes.removeAt(0);
-  }
-}
 
 class PlayerApi extends ChangeNotifier {
   PlayerApi({
@@ -73,12 +21,15 @@ class PlayerApi extends ChangeNotifier {
   }
 
   void _onStateChange(PlayerState state) {
-    _log.info('$state');
     switch (state) {
       case PlayerState.finished:
         // When the episode is finished load the next episode
-        if (!_playlistApi.hasNext) break;
-        _playlistApi.pop.then((e) => load(e));
+        _playlistApi.pop.then((episode) {
+          if (episode != null) {
+            load(episode);
+          }
+        });
+        break;
       default:
         break;
     }
@@ -90,9 +41,7 @@ class PlayerApi extends ChangeNotifier {
   final PlaylistApi _playlistApi;
   PlaylistApi get playlistApi => _playlistApi;
 
-  Episode? _currentEpisode;
-
-  Episode? get episode => _currentEpisode;
+  Episode? getPlayingEpisode() => _playlistApi.playing;
   Stream<PlayerProgress> get progressStream => _playerService.streamProgress();
 
   void _setupListenLogging(Episode episode) {
@@ -102,31 +51,33 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<bool> load(Episode episode) async {
-    _log.info('load::${episode.id}::${episode.audioUrl}');
-    // Implements equals in Episode class
-    if (_currentEpisode?.id == episode.id) {
+    if (getPlayingEpisode() == episode) {
       return true;
     }
 
-    _currentEpisode = episode;
     // Check for listens..
     var listen = _authUser?.listenApi.get(episode.id);
     var startDuration =
         listen != null ? Duration(seconds: listen.seconds) : null;
 
+    // When should I do this?
+    await _playlistApi.setPlaying(episode);
+    _playlistApi.setPlaying(episode);
+
     await _playerService.load(episode, startDuration: startDuration);
     // Don't wait..
     _playerService.play();
     _setupListenLogging(episode);
+
     return true;
   }
 
   PlayerState get state => _playerService.state;
 
   void _logProgress() {
-    if (_currentEpisode == null) return;
+    if (getPlayingEpisode() == null) return;
     // This will hit the server
-    _authUser?.listenApi.add(_currentEpisode!, _playerService.progress);
+    _authUser?.listenApi.add(getPlayingEpisode()!, _playerService.progress);
   }
 
   Future<void> play() async {

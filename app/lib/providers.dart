@@ -10,6 +10,7 @@ import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
+import 'package:resonate/api/playlist.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
 import 'package:resonate/api/settings.dart';
@@ -24,6 +25,7 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
+import 'package:resonate/storage/playlist.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
@@ -60,15 +62,7 @@ final providers =
               databaseService: context.read(),
             ),
       ),
-      Provider<PlaylistApi>(create: (context) => PlaylistApi()),
-      ChangeNotifierProvider<PlayerApi>(
-        create:
-            (context) => PlayerApi(
-              playlistApi: context.read(),
-              authUser: context.read(),
-              playerService: PlayerService(),
-            ),
-      ),
+
       // API
       Provider<SearchApi>(
         create:
@@ -96,6 +90,23 @@ final providers =
             databaseService: context.read(),
           );
         },
+      ),
+
+      Provider<PlaylistApi>(
+        lazy: false,
+        create:
+            (context) => PlaylistApi(
+              databaseService: context.read(),
+              episodeApi: context.read(),
+            ),
+      ),
+      ChangeNotifierProvider<PlayerApi>(
+        create:
+            (context) => PlayerApi(
+              playlistApi: context.read(),
+              authUser: context.read(),
+              playerService: PlayerService(),
+            ),
       ),
       Provider<SubscriptionsApi>(
         create:

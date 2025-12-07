@@ -222,3 +222,10 @@ message SettingsMessage {
     
     bool enable_playlist = 3;
 }
+
+message PlaylistMessage {
+    string id = 1 [(index) = true];
+    StorageMetadataMessage metadata = 2;
+    string playing_episode_id = 3;
+    repeated string up_next_episode_ids = 4;
+}
