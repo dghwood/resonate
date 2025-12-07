@@ -4,16 +4,17 @@ import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/services/database.dart';
 import 'package:resonate/storage/playlist.dart';
 
 final Logger _log = Logger('/api/playlist');
 
 class PlaylistApi {
   PlaylistApi({
-    required PlaylistDatabase playlistDatabase,
+    required AbstractDatabaseService databaseService,
     required GetEpisodeApi episodeApi,
   }) : _episodeApi = episodeApi,
-       _playlistDatabase = playlistDatabase;
+       _playlistDatabase = PlaylistDatabase(databaseService);
 
   final PlaylistDatabase _playlistDatabase;
   final GetEpisodeApi _episodeApi;
@@ -70,6 +71,9 @@ class PlaylistApi {
           : null;
 
   Future<void> setPlaying(Episode episode) async {
+    _log.info('setting playlist ${episode.title}');
+    // add to cache
+    _episodeCache[episode.id] = episode;
     _playlist.setPlayingEpisodeId(episode.id);
     _save();
   }

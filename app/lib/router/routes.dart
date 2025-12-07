@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/download.dart';
+import 'package:resonate/api/listens.dart';
+import 'package:resonate/api/playlist.dart';
 import 'package:resonate/api/podcast.dart';
+import 'package:resonate/api/result.dart';
+import 'package:resonate/api/subscription.dart';
+import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/player/mini_player.dart';
 import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/login/signin.dart';
@@ -15,6 +21,7 @@ import 'package:resonate/components/tabs/profile.dart';
 import 'package:resonate/components/tabs/search.dart';
 import 'package:resonate/router/navigation.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/services/database.dart';
 
 final Logger _log = Logger('router');
 
@@ -136,22 +143,12 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return Scaffold(
-          body: navigationShell,
-          bottomSheet: BottomPlayerComponent(playerApi: context.read()),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: navigationShell.currentIndex,
-            onTap:
-                (index) => navigationShell.goBranch(
-                  index,
-                  initialLocation: index == navigationShell.currentIndex,
-                ),
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-            ],
-          ),
+        _log.info('when does this fire?');
+        return AppShellComponent(
+          authUser: context.read(),
+          databaseService: context.read(),
+          playlistApi: context.read(),
+          navigationShell: navigationShell,
         );
       },
       branches: [
@@ -215,3 +212,86 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
     ),
   ],
 );
+
+class AppShellComponent extends StatefulWidget {
+  const AppShellComponent({
+    super.key,
+    required this.navigationShell,
+    required this.databaseService,
+    required this.playlistApi,
+    required this.authUser,
+  });
+
+  final StatefulNavigationShell navigationShell;
+  final AuthUser authUser;
+  final AbstractDatabaseService databaseService;
+  final PlaylistApi playlistApi;
+
+  @override
+  State<AppShellComponent> createState() => _AppShellComponentState();
+}
+
+class _AppShellComponentState extends State<AppShellComponent> {
+  @override
+  void initState() {
+    super.initState();
+    _setupFuture = _setupPostLogin();
+  }
+
+  Future<ApiResult<bool>> _setupPostLogin() async {
+    try {
+      await widget.databaseService.init(widget.authUser);
+      _log.info('db done');
+      await widget.authUser.subscriptionApi.init();
+      _log.info('subs done');
+      await widget.authUser.listenApi.init();
+      _log.info('listens done');
+      await widget.authUser.downloadApi.init();
+      _log.info('download done');
+      await widget.playlistApi.init();
+      // _log.info('playlist done');
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
+    return ApiResult.ok(true);
+  }
+
+  late final Future<ApiResult<bool>> _setupFuture;
+
+  @override
+  Widget build(BuildContext context) {
+    _log.info('AppShellComponent::build');
+    return FutureBuilder(
+      future: _setupFuture,
+      builder: (context, asyncSnapshot) {
+        if (asyncSnapshot.connectionState == ConnectionState.waiting) {
+          return Material(child: LoadingSpinnerComponent());
+        }
+        var result = asyncSnapshot.requireData;
+        switch (result) {
+          case ApiOk():
+            break;
+          case ApiError():
+            return Text('REALL BIG ERROR');
+        }
+        return Scaffold(
+          body: widget.navigationShell,
+          bottomSheet: BottomPlayerComponent(playerApi: context.read()),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: widget.navigationShell.currentIndex,
+            onTap:
+                (index) => widget.navigationShell.goBranch(
+                  index,
+                  initialLocation: index == widget.navigationShell.currentIndex,
+                ),
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+              BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

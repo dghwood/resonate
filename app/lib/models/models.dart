@@ -672,6 +672,9 @@ class Playlist extends StorageModel<PlaylistMessage> {
   String get id => _message.id;
 
   @override
+  Uint8List get descriptor => playlistMessageDescriptor;
+
+  @override
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
 

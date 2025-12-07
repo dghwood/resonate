@@ -60,14 +60,15 @@ class PlayerApi extends ChangeNotifier {
     var startDuration =
         listen != null ? Duration(seconds: listen.seconds) : null;
 
+    // When should I do this?
+    await _playlistApi.setPlaying(episode);
+    _playlistApi.setPlaying(episode);
+
     await _playerService.load(episode, startDuration: startDuration);
     // Don't wait..
     _playerService.play();
     _setupListenLogging(episode);
 
-    // When should I do this?
-    await _playlistApi.setPlaying(episode);
-    _playlistApi.setPlaying(episode);
     return true;
   }
 

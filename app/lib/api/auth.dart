@@ -273,14 +273,14 @@ class AuthUser extends ChangeNotifier {
   // load from secure storage
   Future<void> loadFromStorage() async {
     try {
-      _status = AuthUserStatus.loading;
+      setStatusAndNotify(AuthUserStatus.loading);
       // These error out if they doesn't exist
       var userId = await _secureDatabase.readKey(secureStorageUserIdKey);
       await _secureDatabase.read(secureStorageUserKey(userId), _user);
       _log.info('user: $_user');
-      await _setupPostLogin();
+      setStatusAndNotify(AuthUserStatus.signedIn);
     } on Exception catch (_) {
-      _status = AuthUserStatus.signedOut;
+      setStatusAndNotify(AuthUserStatus.signedOut);
       return;
     }
   }
@@ -290,34 +290,21 @@ class AuthUser extends ChangeNotifier {
   final AbstractDatabaseService _databaseService;
 
   final UserStorage _userStorage = UserStorage();
-  User? get user => isSignedInForDb ? _user : null;
+  User? get user => _status == AuthUserStatus.signedIn ? _user : null;
 
-  AuthUserStatus __status = AuthUserStatus.signedOut;
-  set _status(AuthUserStatus newStatus) {
-    if (_status == newStatus) return; // No change
-    __status = newStatus;
+  AuthUserStatus _status = AuthUserStatus.signedOut;
+  void setStatusAndNotify(AuthUserStatus status) {
+    // if (_status == status) return;
+    _status = status;
     notifyListeners();
   }
 
-  AuthUserStatus get _status => __status;
-  AuthUserStatus get status => __status;
+  AuthUserStatus get status => _status;
 
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
-  // Temporarily set to allow DB to see the user signed in before we update the
-  // notifier status
-  bool _isSignedInForDb = false;
-  bool get isSignedInForDb =>
-      _isSignedInForDb || _status == AuthUserStatus.signedIn;
 
   Future<void> _setupPostLogin() async {
-    await _databaseService.init(this);
-    _isSignedInForDb = true;
-    // This loads the user subscriptions into memory
-    await subscriptionApi.init();
-    await listenApi.init();
-    await downloadApi.init();
-    _isSignedInForDb = false;
-    _status = AuthUserStatus.signedIn;
+    // setStatusAndNotify(AuthUserStatus.signedIn);
   }
 
   Future<ApiResult<bool>> signout() async {
@@ -326,7 +313,7 @@ class AuthUser extends ChangeNotifier {
       var userId = _userStorage.user.id;
       await _secureDatabase.delete(userId);
       _userStorage.reset();
-      _status = AuthUserStatus.signedOut;
+      setStatusAndNotify(AuthUserStatus.signedOut);
       return ApiResult.ok(true);
     } on Exception catch (e) {
       return ApiResult.error(e);
@@ -336,7 +323,7 @@ class AuthUser extends ChangeNotifier {
   Future<ApiResult<bool>> login(String phoneNumber, String password) async {
     _log.info('login');
     // Don't let this notify listeners.
-    __status = AuthUserStatus.loading;
+    _status = AuthUserStatus.loading;
     var result = await _loginApi.login(phoneNumber, password);
     switch (result) {
       case ApiOk():
@@ -344,15 +331,11 @@ class AuthUser extends ChangeNotifier {
         _user.fromMessage(result.value.user.toMessage());
 
         _log.info('user: $_user');
-        await _setupPostLogin();
+        _status = AuthUserStatus.signedIn;
         return ApiResult.ok(true);
       case ApiError():
         _log.info('loggedInError::${result.error}');
-        // Don't let this notify listeners
-        // Otherwise it just redirects
-        // TODO(duncan): Auto-redirect doesn't seem
-        //               right here
-        __status = AuthUserStatus.signedOut;
+        _status = AuthUserStatus.signedOut;
         return ApiResult.error(result.error);
     }
   }

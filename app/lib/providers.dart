@@ -54,10 +54,6 @@ final _baseProviders = [
 final providers =
     _baseProviders +
     [
-      Provider<PlaylistDatabase>(
-        create: (context) => PlaylistDatabase(context.read()),
-        lazy: false,
-      ),
       Provider<SettingsApi>(
         create:
             (context) => SettingsApi(
@@ -97,9 +93,10 @@ final providers =
       ),
 
       Provider<PlaylistApi>(
+        lazy: false,
         create:
             (context) => PlaylistApi(
-              playlistDatabase: context.read(),
+              databaseService: context.read(),
               episodeApi: context.read(),
             ),
       ),

@@ -8,6 +8,7 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/router/navigation.dart';
 
 /* Flow 
 
@@ -210,6 +211,13 @@ class SignInValidateFlowComponent extends StatelessWidget {
   }
 
   Widget done(BuildContext context, bool result) {
+    command.clear();
+    if (result) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Navigation to the loading screen to init the app
+        Navigate(context).toHome();
+      });
+    }
     return init(context);
   }
 

@@ -99,7 +99,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<Iterable<DatabaseStoreType>> getAllValues(String storeName) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readonly');
@@ -123,7 +123,7 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object value,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     // TODO(duncan): This throws an error when the object store
@@ -153,7 +153,7 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object value,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readonly');
@@ -179,7 +179,7 @@ class DatabaseService implements AbstractDatabaseService {
     String indexName,
     Object lowerBound,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readonly');
@@ -203,7 +203,7 @@ class DatabaseService implements AbstractDatabaseService {
   @override
   Future<void> setValue(String storeName, DatabaseStoreType value) async {
     _log.info('setValue::$storeName');
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readwrite');
@@ -217,7 +217,7 @@ class DatabaseService implements AbstractDatabaseService {
     String storeName,
     Map<String, DatabaseStoreType> values,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readwrite');
@@ -230,7 +230,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<DatabaseStoreType> getValue(String storeName, String key) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readonly');
@@ -248,7 +248,7 @@ class DatabaseService implements AbstractDatabaseService {
     String storeName,
     Iterable<String> keys,
   ) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     _log.info('getMany::$keys');
@@ -267,7 +267,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> deleteValue(String storeName, String key) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readwrite');
@@ -278,7 +278,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   Future<void> clear(String storeName) async {
-    if (_authUser == null || !_authUser!.isSignedInForDb) {
+    if (_authUser == null || !_authUser!.isSignedIn) {
       throw UserNotSignedInError();
     }
     var txn = _db.transaction(storeName, 'readwrite');
