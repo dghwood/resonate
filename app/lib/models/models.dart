@@ -709,8 +709,10 @@ class Playlist extends StorageModel<PlaylistMessage> {
     return _message.upNextEpisodeIds.any((e) => e == episode.id);
   }
 
-  String get pop {
-    return _message.upNextEpisodeIds.removeAt(0);
+  String? get pop {
+    return _message.upNextEpisodeIds.isNotEmpty
+        ? _message.upNextEpisodeIds.removeAt(0)
+        : null;
   }
 
   void clear() {

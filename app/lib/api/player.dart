@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
@@ -8,6 +10,8 @@ import 'package:resonate/storage/playlist.dart';
 import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('api/player');
+
+enum PlayerLoadingState { init, loading, complete }
 
 class PlayerApi extends ChangeNotifier {
   PlayerApi({
@@ -42,19 +46,27 @@ class PlayerApi extends ChangeNotifier {
   PlaylistApi get playlistApi => _playlistApi;
 
   Episode? getPlayingEpisode() => _playlistApi.playing;
+  // This is kinda special since it gets killed when i new episode plays.
   Stream<PlayerProgress> get progressStream => _playerService.streamProgress();
 
+  StreamSubscription<PlayerProgress>? _listenSubscription;
   void _setupListenLogging(Episode episode) {
-    progressStream.listen((progress) {
+    // Feels like i could do more more cleverly
+    // like check if it not null || cancelled?
+    _listenSubscription?.cancel();
+    _listenSubscription = progressStream.listen((progress) {
+      // _log.info('adding::listen::${episode.title}::${DateTime.now().second}');
       _authUser?.listenApi.add(episode, progress, server: false);
     });
   }
 
+  PlayerLoadingState _loadingState = PlayerLoadingState.init;
   Future<bool> load(Episode episode) async {
-    if (getPlayingEpisode() == episode) {
-      return true;
+    if (getPlayingEpisode() == episode &&
+        _loadingState != PlayerLoadingState.init) {
+      return _loadingState == PlayerLoadingState.complete;
     }
-
+    _loadingState = PlayerLoadingState.loading;
     // Check for listens..
     var listen = _authUser?.listenApi.get(episode.id);
     var startDuration =
@@ -65,9 +77,10 @@ class PlayerApi extends ChangeNotifier {
     _playlistApi.setPlaying(episode);
 
     await _playerService.load(episode, startDuration: startDuration);
+    _loadingState = PlayerLoadingState.complete;
     // Don't wait..
-    _playerService.play();
-    _setupListenLogging(episode);
+    // _playerService.play();
+    // _setupListenLogging(episode);
 
     return true;
   }
@@ -81,10 +94,14 @@ class PlayerApi extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    _log.info('play');
+    var episode = getPlayingEpisode();
+    if (episode == null) return;
+    _log.info('play::$_loadingState');
+    if (!await load(episode)) return;
     // Don't await, since it holds until playback stops..
     _playerService.play();
     _logProgress();
+    _setupListenLogging(episode);
   }
 
   Future<void> pause() async {

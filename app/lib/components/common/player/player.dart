@@ -291,12 +291,14 @@ class PlayIconComponent extends StatelessWidget {
   late final PlayIconNotifier notifier;
 
   void _onPressed() async {
-    var currentEpisode = playerApi.getPlayingEpisode();
-    if (currentEpisode != null && episode.id == currentEpisode.id) {
-      return;
+    // var currentEpisode = playerApi.getPlayingEpisode();
+    // if (currentEpisode != null && episode.id == currentEpisode.id) {
+    //   return;
+    // }
+    if (await playerApi.load(episode)) {
+      await playerApi.play();
+      notifier.listen();
     }
-    await playerApi.load(episode);
-    notifier.listen();
   }
 
   @override

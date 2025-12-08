@@ -24,6 +24,7 @@ class PlayButtonComponent extends StatelessWidget {
             _playerApi.pause();
           },
         );
+      case PlayerState.init:
       case PlayerState.paused:
         return IconButton(
           iconSize: size,
@@ -36,7 +37,7 @@ class PlayButtonComponent extends StatelessWidget {
       case PlayerState.loading:
         // TODO(duncan): Center this somehow?
         return LoadingSpinnerComponent(size: size);
-      case PlayerState.init:
+
       case PlayerState.finished:
         return Icon(Icons.done, size: size);
     }

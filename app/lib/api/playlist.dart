@@ -1,5 +1,7 @@
 // Should I move this to the player service directory?
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:protobuf_google/protobuf_google.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/errors/errors.dart';
@@ -129,6 +131,7 @@ class PlaylistApi {
   bool get hasNext => _playlist.upNextEpisodeIds.isNotEmpty;
   Future<Episode?> get pop async {
     var episodeId = _playlist.pop;
+    if (episodeId == null) return null;
     await _save();
     return _episodeCache[episodeId];
   }
