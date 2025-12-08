@@ -5,6 +5,7 @@ import (
 
 	token "github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -42,6 +43,11 @@ func (f Refresh) Execute(
 	userId := request.GetRequestInfo().GetUserId()
 	refreshToken := request.GetRequestInfo().GetInternalInfo().GetRefreshToken()
 
+	if refreshToken == nil {
+		log.Errorf("refresh called without refreshToken")
+		return errors.ERROR_INVALID_CREDENTIALS
+	}
+
 	tokens := models.RefreshTokens{}
 	tokens.UserId = userId
 	err = f.Datastore.Get(&tokens)
@@ -52,12 +58,13 @@ func (f Refresh) Execute(
 	isTokenGood := false
 	for _, token := range tokens.Tokens {
 		if token.Token == refreshToken.Token &&
-			refreshToken.ExpiryUtcTimestamp < time.Now().UTC().Unix() {
+			token.ExpiryUtcTimestamp > time.Now().UTC().Unix() {
 			isTokenGood = true
 			break
 		}
 	}
 	if !isTokenGood {
+		log.Error("Refresh Token not found or expired")
 		return errors.ERROR_INVALID_CREDENTIALS
 	}
 
@@ -73,6 +80,7 @@ func (f Refresh) Execute(
 	}
 
 	// response.AccessToken = accessToken
+	log.Infof("new access token %s", accessToken)
 	response.GetResponseInfo().GetInternalInfo().SetAccessToken(accessToken)
 	return
 }

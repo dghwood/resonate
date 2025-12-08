@@ -39,13 +39,16 @@ class LoginRequestApiResponse
 
 class LoginRequestApiServer
     extends ServerApi<LoginRequestApiRequest, LoginRequestApiResponse> {
-  LoginRequestApiServer({required AbstractHttpService client})
-    : super(
-        LoginRequestApiRequest(),
-        LoginRequestApiResponse(),
-        'api/login/request',
-        client: client,
-      );
+  LoginRequestApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         LoginRequestApiRequest(),
+         LoginRequestApiResponse(),
+         'api/login/request',
+         client: client,
+         authUser: authUser,
+       );
 }
 
 class LoginUserApiRequest extends ApiRequest<LoginUserMessage_Request> {
@@ -66,21 +69,31 @@ class LoginUserApiResponse extends ApiResponse<LoginUserMessage_Response> {
 
 class LoginUserApiServer
     extends ServerApi<LoginUserApiRequest, LoginUserApiResponse> {
-  LoginUserApiServer({required AbstractHttpService client})
-    : super(
-        LoginUserApiRequest(),
-        LoginUserApiResponse(),
-        'api/login',
-        client: client,
-      );
+  LoginUserApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         LoginUserApiRequest(),
+         LoginUserApiResponse(),
+         'api/login',
+         client: client,
+         authUser: authUser,
+       );
 }
 
 class LoginApi {
   LoginApi({
     required AbstractHttpService httpService,
     required SecureProtoDatabase secureDatabase,
-  }) : _requestServer = LoginRequestApiServer(client: httpService),
-       _userServer = LoginUserApiServer(client: httpService),
+    required AuthUser authUser,
+  }) : _requestServer = LoginRequestApiServer(
+         client: httpService,
+         authUser: authUser,
+       ),
+       _userServer = LoginUserApiServer(
+         client: httpService,
+         authUser: authUser,
+       ),
        _secureDatabase = secureDatabase;
 
   final LoginRequestApiServer _requestServer;
@@ -230,12 +243,13 @@ class AuthUser extends ChangeNotifier {
     required AbstractHttpService httpService,
     required SecureProtoDatabase secureDatabase,
     required AbstractDatabaseService databaseService,
-  }) : _loginApi = LoginApi(
-         httpService: httpService,
-         secureDatabase: secureDatabase,
-       ),
-       _databaseService = databaseService,
+  }) : _databaseService = databaseService,
        _secureDatabase = secureDatabase {
+    _loginApi = LoginApi(
+      authUser: this,
+      httpService: httpService,
+      secureDatabase: secureDatabase,
+    );
     subscriptionApi = SubscriptionApi(
       client: httpService,
       databaseService: databaseService,
@@ -285,7 +299,7 @@ class AuthUser extends ChangeNotifier {
     }
   }
 
-  final LoginApi _loginApi;
+  late final LoginApi _loginApi;
   final SecureProtoDatabase _secureDatabase;
   final AbstractDatabaseService _databaseService;
 

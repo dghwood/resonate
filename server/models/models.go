@@ -267,6 +267,9 @@ func (t *Token) ToHttpCookie(name string) *http.Cookie {
 		Name:     name,
 		Value:    t.ToTokenString(),
 		HttpOnly: true,
+		Path:     "/api",
+		// Have this last ~forever
+		MaxAge: 3600 * 365 * 100,
 	}
 }
 

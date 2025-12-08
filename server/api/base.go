@@ -74,6 +74,16 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		token.FromTokenMessage(accessToken)
 		cookie := token.ToHttpCookie("Access-Token")
 		http.SetCookie(w, cookie)
+
+		// Set another non-http cookie just to check if this exists in the
+		// front end on web.
+		boolCookie := &http.Cookie{
+			Name:   "Access-Token-Available",
+			Value:  "true",
+			MaxAge: 3600 * 24 * 100,
+			Path:   "/api",
+		}
+		http.SetCookie(w, boolCookie)
 	}
 	refreshToken := internalInfo.GetRefreshToken()
 	if refreshToken != nil {
@@ -81,6 +91,16 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		token.FromTokenMessage(refreshToken)
 		cookie := token.ToHttpCookie("Refresh-Token")
 		http.SetCookie(w, cookie)
+
+		// Set another non-http cookie just to check if this exists in the
+		// front end on web.
+		boolCookie := &http.Cookie{
+			Name:   "Refresh-Token-Available",
+			Value:  "true",
+			MaxAge: 3600 * 24 * 100,
+			Path:   "/api",
+		}
+		http.SetCookie(w, boolCookie)
 	}
 }
 
