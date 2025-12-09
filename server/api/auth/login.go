@@ -136,7 +136,7 @@ func (f Login) Execute(
 	}
 
 	// Generate the access token
-	accessToken, err := token.GetAccessToken(&user.UserMessage, 2*time.Minute)
+	accessToken, err := token.GetAccessToken(&user.UserMessage, 15*time.Minute)
 	if err != nil {
 		return
 	}

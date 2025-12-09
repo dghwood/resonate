@@ -63,6 +63,7 @@ func populateInternalInfo(r *http.Request, requestInfo *proto.RequestInfo) {
 		internalInfo.SetRefreshToken(token.TokenMessage)
 	}
 }
+
 func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) {
 	if internalInfo == nil {
 		return
@@ -72,35 +73,45 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 	if accessToken != nil {
 		token := &models.Token{}
 		token.FromTokenMessage(accessToken)
-		cookie := token.ToHttpCookie("Access-Token")
-		http.SetCookie(w, cookie)
+		http.SetCookie(w, &http.Cookie{
+			Name:     "Access-Token",
+			Value:    token.ToTokenString(),
+			HttpOnly: true,
+			Path:     "/api",
+			// Have this last ~forever
+			MaxAge: 3600 * 24 * 365 * 100,
+		})
 
 		// Set another non-http cookie just to check if this exists in the
 		// front end on web.
-		boolCookie := &http.Cookie{
+		http.SetCookie(w, &http.Cookie{
 			Name:   "Access-Token-Available",
 			Value:  "true",
-			MaxAge: 3600 * 24 * 100,
+			MaxAge: 3600 * 24 * 365 * 100,
 			Path:   "/api",
-		}
-		http.SetCookie(w, boolCookie)
+		})
 	}
 	refreshToken := internalInfo.GetRefreshToken()
 	if refreshToken != nil {
 		token := &models.Token{}
 		token.FromTokenMessage(refreshToken)
-		cookie := token.ToHttpCookie("Refresh-Token")
-		http.SetCookie(w, cookie)
+		http.SetCookie(w, &http.Cookie{
+			Name:     "Refresh-Token",
+			Value:    token.ToTokenString(),
+			HttpOnly: true,
+			Path:     "/api/login",
+			// Have this last ~forever
+			MaxAge: 3600 * 24 * 365 * 100,
+		})
 
 		// Set another non-http cookie just to check if this exists in the
 		// front end on web.
-		boolCookie := &http.Cookie{
+		http.SetCookie(w, &http.Cookie{
 			Name:   "Refresh-Token-Available",
 			Value:  "true",
-			MaxAge: 3600 * 24 * 100,
+			MaxAge: 3600 * 24 * 365 * 100,
 			Path:   "/api",
-		}
-		http.SetCookie(w, boolCookie)
+		})
 	}
 }
 
