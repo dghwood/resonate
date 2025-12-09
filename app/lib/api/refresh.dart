@@ -47,19 +47,28 @@ class RefreshTokenApi {
   }) : _server = RefreshTokenApiServer(authUser: authUser, client: client);
 
   final RefreshTokenApiServer _server;
-  bool _isLoading = false;
 
-  Future<ApiResult<bool>> refresh() async {
-    _isLoading = true;
+  Future<ApiResult<bool>> _refresh() async {
     var request = RefreshAuthApiRequest();
     var response = RefreshAuthApiResponse();
     try {
       await _server.execute(request, response);
-      _isLoading = false;
       return ApiResult.ok(true);
     } on Exception catch (e) {
-      _isLoading = false;
       return ApiResult.error(e);
     }
+  }
+
+  Future<ApiResult<bool>>? _singleRefresh;
+  Future<ApiResult<bool>> refresh() async {
+    if (_singleRefresh != null) {
+      return _singleRefresh!;
+    }
+    _singleRefresh = _refresh();
+    // Any additional calls during this time
+    // will return the single future value.
+    var value = await _singleRefresh!;
+    _singleRefresh = null;
+    return value;
   }
 }
