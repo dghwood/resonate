@@ -72,11 +72,11 @@ class SubscriptionGridComponent extends StatefulWidget {
 }
 
 class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
-  late Future<IterableApiResult<Iterable<UserSubscription>>> _future;
+  // late Future<IterableApiResult<Iterable<UserSubscription>>> _future;
   @override
   void initState() {
     super.initState();
-    _future = widget.subscriptionsApi.listForUser(widget.user.id);
+    // _future = widget.subscriptionsApi.listForUser(widget.user.id);
   }
 
   @override
@@ -98,38 +98,45 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
               style: Theme.of(context).textTheme.labelMedium,
             ),
           Expanded(
-            child: FutureBuilder(
-              future: _future,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return SkeletonLoadingComponent(
-                    child: GridView.builder(
-                      scrollDirection: widget.axis,
-                      itemCount: 10,
-                      gridDelegate: gridDelegate,
-                      itemBuilder: (context, _) {
-                        return SubscriptionComponent.mock;
-                      },
-                    ),
-                  );
-                }
-                ;
-                var result = snapshot.requireData;
-                switch (result) {
-                  case ApiOkIterable():
-                    break;
-                  case ApiErrorIterable():
-                    return Text('Error loading subscriptions: ${result.error}');
-                }
+            child: ListenableBuilder(
+              listenable: widget.subscriptionsApi,
+              builder: (context, _) {
+                return FutureBuilder(
+                  future: widget.subscriptionsApi.listForUser(widget.user.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SkeletonLoadingComponent(
+                        child: GridView.builder(
+                          scrollDirection: widget.axis,
+                          itemCount: 10,
+                          gridDelegate: gridDelegate,
+                          itemBuilder: (context, _) {
+                            return SubscriptionComponent.mock;
+                          },
+                        ),
+                      );
+                    }
+                    ;
+                    var result = snapshot.requireData;
+                    switch (result) {
+                      case ApiOkIterable():
+                        break;
+                      case ApiErrorIterable():
+                        return Text(
+                          'Error loading subscriptions: ${result.error}',
+                        );
+                    }
 
-                return InfiniteScrollGridComponent(
-                  axis: widget.axis,
-                  gridDelegate: gridDelegate,
-                  iterableApiResult: result,
-                  scrollController: widget.scrollController,
-                  itemBuilder: (BuildContext context, userSubscription) {
-                    return SubscriptionComponent(
-                      subscription: userSubscription,
+                    return InfiniteScrollGridComponent(
+                      axis: widget.axis,
+                      gridDelegate: gridDelegate,
+                      iterableApiResult: result,
+                      scrollController: widget.scrollController,
+                      itemBuilder: (BuildContext context, userSubscription) {
+                        return SubscriptionComponent(
+                          subscription: userSubscription,
+                        );
+                      },
                     );
                   },
                 );

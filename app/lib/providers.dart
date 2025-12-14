@@ -108,7 +108,7 @@ final providers =
               playerService: PlayerService(),
             ),
       ),
-      Provider<SubscriptionsApi>(
+      ChangeNotifierProvider<SubscriptionsApi>(
         create:
             (context) => SubscriptionsApi(
               httpService: context.read(),

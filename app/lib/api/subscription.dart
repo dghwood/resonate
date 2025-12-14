@@ -275,7 +275,7 @@ class SubscriptionApi extends ChangeNotifier {
   }
 }
 
-class SubscriptionsApi {
+class SubscriptionsApi extends ChangeNotifier {
   SubscriptionsApi({
     required AuthUser authUser,
     required AbstractHttpService httpService,
@@ -285,7 +285,13 @@ class SubscriptionsApi {
          authUser: authUser,
          client: httpService,
        ),
-       _podcastApi = podcastApi;
+       _podcastApi = podcastApi {
+    _authUser.subscriptionApi.addListener(onSubscriptionApi);
+  }
+
+  void onSubscriptionApi() {
+    notifyListeners();
+  }
 
   final AuthUser _authUser;
   final PodcastApi _podcastApi;
