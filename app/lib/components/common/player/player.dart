@@ -113,7 +113,7 @@ class PlayerComponent extends StatelessWidget {
                     ),
                   ],
                 ),
-                PlayerSliderComponent(playerApi: _playerApi),
+                PlayerSliderComponent(playerApi: _playerApi, episode: episode),
               ],
             ),
           ),
@@ -140,30 +140,35 @@ class PlayerComponent extends StatelessWidget {
   slider to enable seek. 
 */
 class PlayerSliderComponent extends StatefulWidget {
-  const PlayerSliderComponent({super.key, required PlayerApi playerApi})
-    : _playerApi = playerApi;
+  const PlayerSliderComponent({
+    super.key,
+    required PlayerApi playerApi,
+    required this.episode,
+  }) : _playerApi = playerApi;
 
   final PlayerApi _playerApi;
+  final Episode episode;
 
   @override
   State<PlayerSliderComponent> createState() => _PlayerSliderComponentState();
 }
 
 class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
-  PlayerProgress _playerProgress = PlayerProgress();
+  PlayerProgress? _playerProgress;
   double _value = 0.0;
   StreamSubscription<PlayerProgress>? _progressSubscription;
 
   @override
   void initState() {
     super.initState();
-    _progressSubscription = widget._playerApi.progressStream.listen((progress) {
-      // _log.info('progress::$progress');
-      setState(() {
-        _playerProgress = progress;
-        _value = progress.percentProgress;
-      });
-    });
+    _progressSubscription = widget._playerApi
+        .subscribeToEpisodeProgress(widget.episode.id)
+        .listen((progress) {
+          setState(() {
+            _playerProgress = progress;
+            _value = progress.percentProgress;
+          });
+        });
   }
 
   @override
@@ -174,6 +179,14 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
 
   @override
   Widget build(BuildContext context) {
+    var progress =
+        _playerProgress ??
+        PlayerProgress(
+          bufferedDuration: Duration.zero,
+          progressDuration: Duration.zero,
+          episodeId: widget.episode.id,
+          playerState: PlayerState.init,
+        );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -181,7 +194,7 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
           Slider(
             value: _value,
             // Use this for buffering..
-            secondaryTrackValue: _playerProgress.percentBuffered,
+            secondaryTrackValue: progress.percentBuffered,
             onChangeStart: (_) {
               _progressSubscription?.pause();
             },
@@ -204,12 +217,12 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
             children: [
               Text(
                 formatDurationHHMMSS(
-                  _playerProgress.calculateProgressDuration(_value),
+                  progress.calculateProgressDuration(_value),
                 ),
               ),
               Text(
                 formatDurationHHMMSS(
-                  _playerProgress.calculateRemainingDuration(_value),
+                  progress.calculateRemainingDuration(_value),
                 ),
               ),
             ],
@@ -229,16 +242,20 @@ class PlayIconNotifier extends ChangeNotifier {
     required this.authUser,
   }) {
     _duration = episode.duration;
-    var listen = authUser.listenApi.get(episode.id);
-    if (listen == null) return;
-
-    _duration = episode.duration - Duration(seconds: listen.seconds);
+    var userListen = authUser.listenApi.get(episode.id);
+    if (userListen == null) return;
+    _log.info('found user listen ${episode.title}');
+    _duration = episode.duration - Duration(seconds: userListen.seconds);
     _status = PlayIconNotifierStatus.listened;
-    if (listen.completed) {
+    if (userListen.completed) {
       _status = PlayIconNotifierStatus.finished;
     }
-  }
 
+    if (playerApi.getPlayingEpisode() == episode) {
+      listen();
+    }
+    // playerApi.addListener(listener)
+  }
   final PlayerApi playerApi;
   final Episode episode;
   final AuthUser authUser;
@@ -247,12 +264,17 @@ class PlayIconNotifier extends ChangeNotifier {
   Duration _duration = Duration.zero;
   Duration get duration => _duration;
   StreamSubscription<PlayerProgress>? _progressStream;
+  PlayerState _playerState = PlayerState.init;
+  PlayerState get playerState => _playerState;
 
   void _onProgress(PlayerProgress progress) {
     if (progress.duration == null) return;
-
+    _playerState = progress.playerState;
+    _status = PlayIconNotifierStatus.listening;
     _duration =
-        progress.duration! - (progress.progressDuration ?? Duration.zero);
+        progress.duration != null
+            ? progress.duration! - (progress.progressDuration)
+            : Duration.zero;
     if (progress.completed) {
       _status = PlayIconNotifierStatus.finished;
     }
@@ -260,8 +282,9 @@ class PlayIconNotifier extends ChangeNotifier {
   }
 
   void listen() {
-    _status = PlayIconNotifierStatus.listening;
-    _progressStream = playerApi.progressStream.listen(_onProgress);
+    _progressStream = playerApi
+        .subscribeToEpisodeProgress(episode.id)
+        .listen(_onProgress);
   }
 
   @override
@@ -313,12 +336,14 @@ class PlayIconComponent extends StatelessWidget {
               border: Border.all(
                 width: 1.0,
                 color: Theme.of(context).dividerColor,
+                // color: Theme.of(context).colorScheme.primary,
               ),
               borderRadius: BorderRadius.circular(50.0),
             ),
-            width: 100,
+            // width: 100,
+            constraints: BoxConstraints(minWidth: 100),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: Row(
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,7 +355,9 @@ class PlayIconComponent extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
 
-                  Text(formatDuration(notifier.duration)),
+                  Text(_durationText()),
+                  // Text('${notifier.status}'),
+                  // Text('${notifier.playerState}'),
                 ],
               ),
             ),
@@ -338,5 +365,20 @@ class PlayIconComponent extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _durationText() {
+    String postfix = '';
+    String duration = formatDuration(notifier.duration);
+    switch (notifier.status) {
+      case PlayIconNotifierStatus.init:
+        break;
+      case PlayIconNotifierStatus.listened:
+      case PlayIconNotifierStatus.listening:
+        postfix = ' left';
+      case PlayIconNotifierStatus.finished:
+        duration = 'completed';
+    }
+    return '$duration$postfix';
   }
 }

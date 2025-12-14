@@ -58,7 +58,7 @@ class BottomPlayerComponent extends StatelessWidget {
                       ),
                     ),
                     StreamBuilder(
-                      stream: _playerApi.progressStream,
+                      stream: _playerApi.subscribeToEpisodeProgress(episode.id),
                       builder: (context, asyncSnapshot) {
                         var value = 0.0;
                         if (asyncSnapshot.hasData) {

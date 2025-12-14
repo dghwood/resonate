@@ -174,6 +174,7 @@ class ListenApi {
 
       listen = _createListen(episodeId, progress);
       await _database.put(listen);
+      _listens[episodeId] = listen;
     } on Exception catch (e) {
       return ApiResult.error(e);
     }

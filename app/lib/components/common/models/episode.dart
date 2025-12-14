@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -72,10 +73,11 @@ class EpisodeComponent extends StatelessWidget {
               ),
               if (context.read<SettingsApi>().settings.enablePlaylist)
                 PlaylistAddIcon(episode: episode, playerApi: context.read()),
-              DownloadIconComponent(
-                downloadApi: context.read<AuthUser>().downloadApi,
-                episode: episode,
-              ),
+              if (!kIsWeb)
+                DownloadIconComponent(
+                  downloadApi: context.read<AuthUser>().downloadApi,
+                  episode: episode,
+                ),
             ],
           ),
           // Text(episode.audioUrl),

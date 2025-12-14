@@ -48,13 +48,20 @@ class PlayerApi extends ChangeNotifier {
   Episode? getPlayingEpisode() => _playlistApi.playing;
   // This is kinda special since it gets killed when i new episode plays.
   Stream<PlayerProgress> get progressStream => _playerService.streamProgress();
+  Stream<PlayerProgress> subscribeToEpisodeProgress(String episodeId) {
+    return _playerService.streamProgress().where(
+      (e) => e.episodeId == episodeId,
+    );
+  }
 
   StreamSubscription<PlayerProgress>? _listenSubscription;
   void _setupListenLogging(Episode episode) {
     // Feels like i could do more more cleverly
     // like check if it not null || cancelled?
     _listenSubscription?.cancel();
-    _listenSubscription = progressStream.listen((progress) {
+    _listenSubscription = subscribeToEpisodeProgress(episode.id).listen((
+      progress,
+    ) {
       // _log.info('adding::listen::${episode.title}::${DateTime.now().second}');
       _authUser?.listenApi.add(episode, progress, server: false);
     });
