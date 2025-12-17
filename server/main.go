@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dghwood/resonate/config"
 	"github.com/dghwood/resonate/api"
 	cacheService "github.com/dghwood/resonate/services/cachestore/cloudstorage"
 	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
@@ -27,10 +28,7 @@ import (
 
 func main() {
 	log.Info("Starting server...")
-	port := os.Getenv("PORT")
-	if len(port) == 0 {
-		port = "8080"
-	}
+	cfg := config.Load()
 	// Loads the Env Variables from the Secrets Manager
 	secrets.AccessSecrets()
 
@@ -159,6 +157,6 @@ func main() {
 		w.Write(image)
 	})
 
-	log.Info("listening on port " + port + "...")
-	log.Error(http.ListenAndServe(":"+port, nil))
+	log.Info("listening on port " + cfg.Port + "...")
+	log.Error(http.ListenAndServe(":"+cfg.Port, nil))
 }
