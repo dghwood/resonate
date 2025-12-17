@@ -31,25 +31,25 @@ func (f *Add) Execute(
 	response *proto.AddSubscriptionMessage_Response) (err error) {
 
 	if loggedInUser.Id != request.Subscription.UserId {
-		log.Error(errors.ERROR_PERMISSION_DENIED)
+		log.Error("permission denied", "error", errors.ERROR_PERMISSION_DENIED)
 		return errors.ERROR_PERMISSION_DENIED
 	}
 
 	subscription := models.Subscription{}
 	models.Merge(&subscription.UserSubscriptionMessage, request.Subscription)
-	log.Info(&subscription)
+	log.Info("subscription", "subscription", &subscription)
 	// Check the podcast exists
 	podcast := models.Podcast{}
 	podcast.Id = subscription.PodcastId
 	err = f.Datastore.Get(&podcast)
 	if err != nil {
-		log.Error(err)
+		log.Error("error getting podcast", "error", err)
 		return
 	}
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&subscription)
 	if err != nil {
-		log.Error(err)
+		log.Error("error putting subscription", "error", err)
 		return
 	}
 	response.Subscription = &subscription.UserSubscriptionMessage
@@ -57,7 +57,7 @@ func (f *Add) Execute(
 	podcast.NumSubscriptions += 1
 	err = f.Datastore.Put(&podcast)
 	if err != nil {
-		log.Error(err)
+		log.Error("error putting podcast", "error", err)
 		return
 	}
 	return

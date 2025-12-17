@@ -39,7 +39,7 @@ func NewCached(store cachestore.Cachestore) *Client {
 
 func (c *Client) Get(request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
-		log.Info("Cache is nil")
+		log.Info("cache is nil")
 		return c.get(request)
 	}
 	cacheKey, err := generateKey(request)
@@ -58,13 +58,13 @@ func (c *Client) Get(request Request) (resp []byte, err error) {
 	}
 	cacheErr := c.cachestore.Put(cacheKey, resp)
 	if cacheErr != nil {
-		log.Errorf("Cache failed to put %s", cacheErr)
+		log.Error("cache failed to put", "error", cacheErr)
 	}
 	return
 }
 
 func (c *Client) Post(request Request) (resp []byte, err error) {
-	log.Infof("POST:%s:%d", request.Url, len(request.Body))
+	log.Info("POST", "url", request.Url, "body_length", len(request.Body))
 	if c.cachestore == nil {
 		return c.post(request)
 	}
@@ -75,7 +75,7 @@ func (c *Client) Post(request Request) (resp []byte, err error) {
 	if request.CacheTtl > 0 {
 		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
 		if err == nil {
-			log.Info("cache hit:%s", request.Url)
+			log.Info("cache hit", "url", request.Url)
 			return
 		}
 	}
@@ -85,7 +85,7 @@ func (c *Client) Post(request Request) (resp []byte, err error) {
 	}
 	cacheErr := c.cachestore.Put(cacheKey, resp)
 	if cacheErr != nil {
-		log.Errorf("Cache failed to put %s", cacheErr)
+		log.Error("cache failed to put", "error", cacheErr)
 	}
 	return
 }
@@ -112,7 +112,7 @@ func (c *Client) post(request Request) (resp []byte, err error) {
 }
 
 func (c *Client) get(request Request) (resp []byte, err error) {
-	log.Infof("Fetch::Get::%s", request)
+	log.Info("Fetch::Get", "request", request)
 	req, err := http.NewRequest("GET", request.Url, nil)
 	addHeaders(req, request.Headers)
 	if err != nil {

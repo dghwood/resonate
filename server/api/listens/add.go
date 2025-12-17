@@ -31,17 +31,17 @@ func (f *Add) Execute(
 	response *proto.AddListenMessage_Response) (err error) {
 
 	if loggedInUser.Id != request.Listen.UserId {
-		log.Error(errors.ERROR_PERMISSION_DENIED)
+		log.Error("permission denied", "error", errors.ERROR_PERMISSION_DENIED)
 		return errors.ERROR_PERMISSION_DENIED
 	}
 
 	listen := models.Listen{}
 	models.Merge(&listen.UserListenMessage, request.Listen)
-	log.Info(&listen)
+	log.Info("listen", "listen", &listen)
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(&listen)
 	if err != nil {
-		log.Error(err)
+		log.Error("error putting listen", "error", err)
 		return
 	}
 	response.Listen = &listen.UserListenMessage

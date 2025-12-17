@@ -26,7 +26,7 @@ import (
 )
 
 func main() {
-	log.Info("Starting server...")
+	log.Info("starting server...")
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
 		port = "8080"
@@ -43,7 +43,7 @@ func main() {
 	for _, env_var := range env_variables {
 		_, ok := os.LookupEnv(env_var)
 		if !ok {
-			log.Errorf("Environment variable %s not set", env_var)
+			log.Error("environment variable not set", "variable", env_var)
 			return
 		}
 	}
@@ -142,16 +142,16 @@ func main() {
 		if r.Method == "OPTIONS" {
 			return
 		}
-		log.Info(r.URL.Path)
+		log.Info("request", "url", r.URL.Path)
 		resourceId := r.URL.Path[len("/images/users/"):]
 		if len(resourceId) == 0 {
 			http.Error(w, "Invalid resourceId", http.StatusBadRequest)
 			return
 		}
-		log.Infof("getting resourceId: %s", resourceId)
+		log.Info("getting resourceId", "resource_id", resourceId)
 		image, err := imagestore.Get(resourceId, 0)
 		if err != nil {
-			log.Error(err)
+			log.Error("error getting image", "error", err)
 			http.Error(w, "Image not found", http.StatusNotFound)
 			return
 		}
@@ -159,6 +159,6 @@ func main() {
 		w.Write(image)
 	})
 
-	log.Info("listening on port " + port + "...")
-	log.Error(http.ListenAndServe(":"+port, nil))
+	log.Info("listening on port", "port", port)
+	log.Error("server error", "error", http.ListenAndServe(":"+port, nil))
 }

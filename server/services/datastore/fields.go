@@ -70,7 +70,7 @@ func GetFields(message models.Model) (item DatastoreItem) {
 					for i := 0; i < v.Len(); i++ {
 						bytes, err := proto.Marshal(v.Get(i).Message().Interface())
 						if err != nil {
-							log.Error("error marshalling proto")
+							log.Error("error marshalling proto", "error", err)
 							return true
 						}
 						b[i] = bytes
@@ -83,7 +83,7 @@ func GetFields(message models.Model) (item DatastoreItem) {
 				} else {
 					bytes, err := proto.Marshal(value.Message().Interface())
 					if err != nil {
-						log.Error("error marshalling proto")
+						log.Error("error marshalling proto", "error", err)
 						return true
 					}
 					field.Value = bytes

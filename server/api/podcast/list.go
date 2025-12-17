@@ -36,11 +36,11 @@ func (f *List) executeFromDatabase(
 	log.Info("List::executeFromDatabase")
 	var cursor *models.QueryCursor
 	cursorPb := request.Cursor
-	log.Info("cursorPb: ", cursorPb)
+	log.Info("cursorPb", "cursor_pb", cursorPb)
 	if cursorPb != nil {
 		cursor = &models.QueryCursor{}
 		models.Merge(cursor, cursorPb)
-		log.Info("cursor: ", cursor)
+		log.Info("cursor", "cursor", cursor)
 	}
 	// Check the updated timestamp, and request the episodes from DB
 	episode := &models.Episode{}
@@ -61,14 +61,14 @@ func (f *List) executeFromDatabase(
 			break
 		}
 		if er != nil {
-			log.Error(er)
+			log.Error("error iterating", "error", er)
 			return er
 		}
 		if i > 20 {
 			cursor := it.Cursor()
 			if cursor != nil {
 				response.Cursor = &cursor.QueryCursor
-				log.Info("returned cursor: ", response.Cursor)
+				log.Info("returned cursor", "cursor", response.Cursor)
 			}
 			break
 		}
@@ -76,7 +76,7 @@ func (f *List) executeFromDatabase(
 		response.Episodes = append(
 			response.Episodes, &episode.EpisodeMessage)
 	}
-	log.Infof("returning %d episodes", len(response.Episodes))
+	log.Info("returning episodes", "num_episodes", len(response.Episodes))
 	return
 }
 func (f *List) Execute(
@@ -87,13 +87,13 @@ func (f *List) Execute(
 	log.Info("List::Execute")
 
 	id := request.PodcastId
-	log.Info("fetching podcast for : ", id)
+	log.Info("fetching podcast for", "id", id)
 
 	podcast := &models.Podcast{}
 	podcast.Id = id
 	url, err := podcast.GetUrlFromId()
 	if err != nil {
-		log.Error(err)
+		log.Error("error getting url from id", "error", err)
 		return
 	}
 
@@ -112,7 +112,7 @@ func (f *List) Execute(
 	// Don't let the updated podcast override other fields
 	models.Merge(podcast, &updatedPodcast)
 	if err != nil {
-		log.Error(err)
+		log.Error("error getting rss", "error", err)
 		return
 	}
 
@@ -137,13 +137,13 @@ func (f *List) asyncSyncToDatabase(
 ) {
 	// TODO(duncan): This takes too long
 	if err := f.Datastore.PutMulti(episodes); err != nil {
-		log.Errorf("putting episodes error : %s", err)
+		log.Error("putting episodes error", "error", err)
 		return
 	}
 	// Put the episode after the podcast since you want to update
 	// the fetch date, latest episode timestamp
 	log.Info("putting podcast")
 	if err := f.Datastore.Put(podcast); err != nil {
-		log.Errorf("putting podcast error : %s", err)
+		log.Error("putting podcast error", "error", err)
 	}
 }

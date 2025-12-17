@@ -43,19 +43,19 @@ func (f *Get) Execute(
 	request *proto.GetFeedMessage_Request,
 	response *proto.GetFeedMessage_Response) (err error) {
 
-	log.Infof("Execute:%s", loggedInUser.Id)
+	log.Info("Execute", "user_id", loggedInUser.Id)
 	podcastIds, err := getUserSubscriptionEpisodeIds(loggedInUser.Id, f.Datastore)
 	if err != nil {
-		log.Error(err)
+		log.Error("error getting user subscription episode ids", "error", err)
 		return
 	}
-	log.Infof("Found %d subscriptions", len(podcastIds))
+	log.Info("Found subscriptions", "num_subscriptions", len(podcastIds))
 	episodes, err := getEpisodesForPodcastIds(podcastIds, f.Datastore)
 	if err != nil {
-		log.Error(err)
+		log.Error("error getting episodes for podcast ids", "error", err)
 		return
 	}
-	log.Infof("Found %d episodes", len(episodes))
+	log.Info("Found episodes", "num_episodes", len(episodes))
 	userFeed := &proto.UserFeedMessage{}
 	userFeed.UserId = loggedInUser.Id
 	for _, episode := range episodes {
@@ -65,7 +65,7 @@ func (f *Get) Execute(
 			},
 		})
 	}
-	log.Infof("Returning %d feed items", len(userFeed.Items))
+	log.Info("Returning feed items", "num_items", len(userFeed.Items))
 	response.Feed = userFeed
 	return
 }

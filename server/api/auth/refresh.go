@@ -44,7 +44,7 @@ func (f Refresh) Execute(
 	refreshToken := request.GetRequestInfo().GetInternalInfo().GetRefreshToken()
 
 	if refreshToken == nil {
-		log.Errorf("refresh called without refreshToken")
+		log.Error("refresh called without refreshToken")
 		return errors.ERROR_INVALID_CREDENTIALS
 	}
 
@@ -64,7 +64,7 @@ func (f Refresh) Execute(
 		}
 	}
 	if !isTokenGood {
-		log.Error("Refresh Token not found or expired")
+		log.Error("refresh token not found or expired")
 		return errors.ERROR_INVALID_CREDENTIALS
 	}
 
@@ -80,7 +80,7 @@ func (f Refresh) Execute(
 	}
 
 	// response.AccessToken = accessToken
-	log.Infof("new access token %s", accessToken)
+	log.Info("new access token", "access_token", accessToken)
 	response.GetResponseInfo().GetInternalInfo().SetAccessToken(accessToken)
 	return
 }

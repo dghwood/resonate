@@ -30,7 +30,7 @@ func (f *FirestoreIterator) Cursor() *models.QueryCursor {
 	cursor, err := f.Iterator.Cursor()
 	if err != nil {
 		// TODO(duncan): Throw an error?
-		log.Error(err)
+		log.Error("error getting cursor", "error", err)
 		return nil
 	}
 	queryCursor := &models.QueryCursor{}
@@ -58,7 +58,7 @@ func NewFirestoreDatastore(
 	ctx, _ := getContext(10)
 	client, err := firestore.NewClientWithDatabase(ctx, projectId, databaseId)
 	if err != nil {
-		log.Errorf("Failed to create client: %v", err)
+		log.Error("failed to create client", "error", err)
 	}
 
 	return &FirestoreDatastore{
@@ -76,7 +76,7 @@ func (f *FirestoreDatastore) Put(entity models.Model) (err error) {
 	ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
-	log.Infof("Putting key: %s", key)
+	log.Info("putting key", "key", key)
 	_, err = f.client.Put(ctx, key, &model)
 	return
 }
@@ -85,7 +85,7 @@ func (f *FirestoreDatastore) Get(entity models.Model) (err error) {
 	ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
-	log.Infof("Getting key: %s", key)
+	log.Info("getting key", "key", key)
 	err = f.client.Get(ctx, key, &model)
 	if errors.Is(err, firestore.ErrNoSuchEntity) {
 		return datastore.ErrorEntityNotFound
@@ -226,7 +226,7 @@ func (f *FirestoreDatastore) ListForIds(
 		cursor, err := firestore.DecodeCursor(params.Cursor.Cursor)
 		if err != nil {
 			// Throw an error?
-			log.Error(err)
+			log.Error("error decoding cursor", "error", err)
 		}
 		query = query.Start(cursor)
 	}

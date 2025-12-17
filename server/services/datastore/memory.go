@@ -129,9 +129,9 @@ func (ds *MemoryDatastore) ListForIds(
 	entity := params.Entity
 	// cursor := params.Cursor
 
-	log.Infof("ListForIds: %s %d %d", ids, idFieldNum, sortFieldNum)
+	log.Info("ListForIds", "ids", ids, "idFieldNum", idFieldNum, "sortFieldNum", sortFieldNum)
 	database := ds.getDb(entity)
-	log.Infof("database with %d entries", len(database.Data))
+	log.Info("database", "num_entries", len(database.Data))
 
 	data := make([]DatastoreItem, 0)
 	for _, item := range database.Data {
@@ -147,7 +147,7 @@ func (ds *MemoryDatastore) ListForIds(
 			}
 		}
 	}
-	log.Infof("data with %d entries", len(data))
+	log.Info("data", "num_entries", len(data))
 
 	// I'm sure this will throw an error if the wrong type
 	if sortFieldNum >= 0 {

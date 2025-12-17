@@ -32,7 +32,7 @@ func (f *Image) Execute(
 	response *proto.UploadImageMessage_Response) (err error) {
 
 	// Check the image isn't too big
-	log.Infof("Image size: %d bytes", len(request.ImageBytes))
+	log.Info("Image size", "bytes", len(request.ImageBytes))
 	// TODO(duncan): Get the image size smaller
 	if len(request.ImageBytes) > 500*1024 {
 		err = errors.ERROR_UPLOAD_SIZE_EXCEEDED

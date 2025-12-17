@@ -68,7 +68,7 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 	if internalInfo == nil {
 		return
 	}
-	log.Info("internalInfo", internalInfo)
+	log.Info("internalInfo", "internal_info", internalInfo)
 	accessToken := internalInfo.GetAccessToken()
 	if accessToken != nil {
 		token := &models.Token{}
@@ -129,12 +129,12 @@ func handle[
 		if r.Method == "OPTIONS" {
 			return
 		}
-		log.Info(r.URL.Path)
+		log.Info("request", "url", r.URL.Path)
 
 		request := f.RequestProto()
 		err := parseProto(r, request)
 		if err != nil {
-			log.Error(err)
+			log.Error("error parsing proto", "error", err)
 			return
 		}
 
@@ -144,7 +144,7 @@ func handle[
 		userId, err := auth.ValidUserIdFromToken(requestInfo.GetInternalInfo().GetAccessToken())
 
 		if f.RequireSignIn() && err != nil {
-			log.Error("error logging in: ", err)
+			log.Error("error logging in", "error", err)
 			returnErr := errors.ERROR_INTERNAL
 			if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
 				returnErr = errors.ERROR_TIME_EXPIRED
@@ -164,7 +164,7 @@ func handle[
 		err = f.Execute(&user, request, response)
 
 		if err != nil {
-			log.Error(err)
+			log.Error("error executing", "error", err)
 			if appErr, ok := err.(errors.Error); ok {
 				response.GetResponseInfo().Error = appErr.Enum
 			} else {
@@ -199,7 +199,7 @@ func writeProto(
 	}
 	responseBytes, err := pb.Marshal(response)
 	if err != nil {
-		log.Error("failed to marshal response", err)
+		log.Error("failed to marshal response", "error", err)
 	}
 	w.Header().Set("Content-Type", "application/x-protobuf")
 	w.Write(responseBytes)

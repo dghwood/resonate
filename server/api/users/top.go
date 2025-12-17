@@ -48,26 +48,26 @@ func (f *Top) Execute(
 		users = append(users, entity)
 	}
 
-	log.Infof("found %d users", len(users))
+	log.Info("found users", "num_users", len(users))
 
 	// Add to datastore
 	if len(request.Contacts) > 0 {
-		log.Infof("request has contacts: %d", len(request.Contacts))
+		log.Info("request has contacts", "num_contacts", len(request.Contacts))
 		userContacts := &models.UserContacts{}
 		userContacts.SetIdFromUserId(loggedInUser.Id)
 		userContacts.Contacts = request.Contacts
 		err = f.Datastore.Put(userContacts)
 		if err != nil {
-			log.Error(err)
+			log.Error("error putting user contacts", "error", err)
 			return
 		}
 
 		for _, contact := range request.Contacts {
 			for _, user := range users {
-				log.Info(contact.PhoneNumber)
-				log.Info(user.PhoneNumber)
-				log.Info(utils.HashPhoneNumber(contact.PhoneNumber))
-				log.Info(user.EncryptedPhoneNumber)
+				log.Info("contact phone number", "phone_number", contact.PhoneNumber)
+				log.Info("user phone number", "phone_number", user.PhoneNumber)
+				log.Info("hashed contact phone number", "hashed_phone_number", utils.HashPhoneNumber(contact.PhoneNumber))
+				log.Info("encrypted user phone number", "encrypted_phone_number", user.EncryptedPhoneNumber)
 				if utils.HashPhoneNumber(contact.PhoneNumber) == user.EncryptedPhoneNumber {
 					log.Info("found match")
 					response.Users = append(response.Users, user.ToPublicUser())
@@ -75,12 +75,12 @@ func (f *Top) Execute(
 			}
 			// No cursor?
 		}
-		log.Infof("returning contacts: %d", len(response.Users))
+		log.Info("returning contacts", "num_contacts", len(response.Users))
 		return
 	}
 
 	// Just return all the users
-	log.Infof("returning all users: %d", len(users))
+	log.Info("returning all users", "num_users", len(users))
 	for _, user := range users {
 		response.Users = append(response.Users, user.ToPublicUser())
 	}

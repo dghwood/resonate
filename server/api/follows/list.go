@@ -34,7 +34,7 @@ func (f *List) Execute(
 	// Whether to return followed or following users
 	isFollowed := request.IsFollowed
 
-	log.Infof("follows for user %s", userId)
+	log.Info("follows for user", "user_id", userId)
 
 	var cursor *models.QueryCursor
 	if cursorPb := request.Cursor; cursorPb != nil {

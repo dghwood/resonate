@@ -29,7 +29,7 @@ func (f *List) Execute(
 	request *proto.ListSubscriptionMessage_Request,
 	response *proto.ListSubscriptionMessage_Response) (err error) {
 
-	log.Infof("ListSubscriptions for userId %s", request.UserId)
+	log.Info("ListSubscriptions for userId", "user_id", request.UserId)
 	// Need to query db for all subscriptions (paging?)
 	// a user
 	model := models.Subscription{}
@@ -61,7 +61,7 @@ func (f *List) Execute(
 			break
 		}
 		if err != nil {
-			log.Errorf("error in subscription it %s", err)
+			log.Error("error in subscription it", "error", err)
 			return err
 		}
 
@@ -82,7 +82,7 @@ func (f *List) Execute(
 	// Now get the podcast
 	err = f.Datastore.GetMulti(podcasts)
 	if err != nil {
-		log.Errorf("getPodcasts %s", err)
+		log.Error("getPodcasts", "error", err)
 		return
 	}
 

@@ -47,11 +47,11 @@ func (f Login) Execute(
 	password := request.Password
 	phoneNumber := request.PhoneNumber
 
-	log.Infof("Login number:%s password:%s", phoneNumber, password)
+	log.Info("login attempt", "phone_number", phoneNumber, "password", password)
 
 	if !utils.IsValidPhoneNumber(phoneNumber) {
 		// The front end should deal with this
-		log.Error("Invalid phone number")
+		log.Error("invalid phone number")
 		return errors.ERROR_INTERNAL
 	}
 
@@ -60,7 +60,7 @@ func (f Login) Execute(
 
 	err = f.Datastore.Get(&loginAttempt)
 	if err != nil {
-		log.Infof("Login attempt error %s", err)
+		log.Info("login attempt error", "error", err)
 		return
 	}
 
@@ -93,10 +93,10 @@ func (f Login) Execute(
 		Limit:      1,
 	})
 	userErr := it.Next(user)
-	log.Infof("userErr %s", userErr)
-	log.Info(user)
+	log.Info("user error", "error", userErr)
+	log.Info("user", "user", user)
 	if userErr != nil && userErr != datastore.IteratorDone {
-		log.Infof("Error getting user: %s", userErr)
+		log.Info("error getting user", "error", userErr)
 		return userErr
 	}
 	userExists := userErr == nil

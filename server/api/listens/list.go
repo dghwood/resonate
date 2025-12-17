@@ -38,14 +38,14 @@ func (f *List) Execute(
 	if userId == "" {
 		return errors.ERROR_INTERNAL
 	}
-	log.Infof("listens for user %s", userId)
+	log.Info("listens for user", "user_id", userId)
 	var cursor *models.QueryCursor
 	cursorPb := request.Cursor
-	log.Info("cursorPb: ", cursorPb)
+	log.Info("cursorPb", "cursor_pb", cursorPb)
 	if cursorPb != nil {
 		cursor = &models.QueryCursor{}
 		models.Merge(cursor, cursorPb)
-		log.Info("cursor: ", cursor)
+		log.Info("cursor", "cursor", cursor)
 	}
 
 	// TODO(duncan): Do I need to have permissions here?

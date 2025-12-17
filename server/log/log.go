@@ -1,30 +1,16 @@
 package log
 
 import (
-	logger "log"
+	"log/slog"
 	"os"
 )
 
-var std = logger.New(
-	os.Stderr, "",
-	logger.Lshortfile|logger.LstdFlags)
+var std = slog.New(slog.NewJSONHandler(os.Stderr, nil))
 
-func Info(v ...interface{}) {
-	std.Print(append([]interface{}{"INFO: "}, v...)...)
+func Info(msg string, args ...any) {
+	std.Info(msg, args...)
 }
 
-func Infof(format string, v ...interface{}) {
-	std.Printf("INFO: "+format, v...)
-}
-
-func Error(v ...interface{}) {
-	std.Print(append([]interface{}{"ERROR: "}, v...)...)
-}
-
-func Errorf(format string, v ...interface{}) {
-	std.Printf("ERROR: "+format, v...)
-}
-
-func Print(v ...interface{}) {
-	Info(v...)
+func Error(msg string, args ...any) {
+	std.Error(msg, args...)
 }

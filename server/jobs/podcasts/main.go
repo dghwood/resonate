@@ -30,10 +30,10 @@ func main() {
 			break
 		}
 		if err != nil {
-			log.Error(err)
+			log.Error("error iterating", "error", err)
 			return
 		}
-		log.Infof("updating podcast::%s::%d", model.Title, model.NumSubscriptions)
+		log.Info("updating podcast", "title", model.Title, "num_subscriptions", model.NumSubscriptions)
 		if model.NumSubscriptions == 0 {
 			// Don't refresh podcasts without subscriptions
 			numSkipped += 1
@@ -43,21 +43,21 @@ func main() {
 		podcast, episodes, err := rss.Get(model.Url, fetch) // Use cached?
 		models.Merge(&model, &podcast)
 		if err != nil {
-			log.Error(err)
+			log.Error("error getting rss", "error", err)
 			return
 		}
 		err = ds.PutMulti(episodes)
 		if err != nil {
-			log.Error(err)
+			log.Error("error putting episodes", "error", err)
 			return
 		}
 		err = ds.Put(&model)
 		if err != nil {
-			log.Error(err)
+			log.Error("error putting model", "error", err)
 			return
 		}
 		numCompleted += 1
 	}
 
-	log.Infof("Finished updating podcasts, %d completed, %d skipped", numCompleted, numSkipped)
+	log.Info("Finished updating podcasts", "completed", numCompleted, "skipped", numSkipped)
 }

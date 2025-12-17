@@ -120,7 +120,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		for _, user := range users {
 			for _, episode := range response.Episodes {
 				if rand.Intn(5) == 0 { // Randomly select some episodes
-					log.Infof("Adding listen for user %s to episode %s", user.Id, episode.Title)
+					log.Info("Adding listen for user", "user_id", user.Id, "episode_title", episode.Title)
 					listen := models.Listen{}
 					listen.Id = fmt.Sprintf("%s-%s", user.Id, episode.Id)
 					listen.UserId = user.Id
