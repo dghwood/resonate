@@ -8,6 +8,7 @@ import (
 
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
+	"context"
 	pb "google.golang.org/protobuf/proto"
 )
 
@@ -27,6 +28,7 @@ func (f ApiTest) ResponseProto() *proto.EditUserMessage_Response {
 	}
 }
 func (f *ApiTest) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.EditUserMessage_Request,
 	response *proto.EditUserMessage_Response) (err error) {
@@ -72,7 +74,10 @@ func TestApi(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(requestBytes))
 	res := httptest.NewRecorder()
 
-	handle(api)(res, req)
+	handle[
+		*proto.EditUserMessage_Request,
+		*proto.EditUserMessage_Response,
+	](api)(res, req)
 
 	response := api.ResponseProto()
 	err = pb.Unmarshal(res.Body.Bytes(), response)
@@ -85,7 +90,7 @@ func TestApi(t *testing.T) {
 	if !api.IsExecuted {
 		t.Errorf("failed to execute request")
 	}
-	if res.Header().Get("Access-Control-Allow-Origin") != "*" {
+	if res.Header().Get("Access-Control-Allow-Origin") != "https://app.resonate.xyz" {
 		t.Errorf("failed to set Access-Control-Allow-Origin")
 	}
 }

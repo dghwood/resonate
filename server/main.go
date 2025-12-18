@@ -23,6 +23,7 @@ import (
 	"github.com/dghwood/resonate/api/upload"
 	"github.com/dghwood/resonate/api/users"
 	"github.com/dghwood/resonate/log"
+	"github.com/dghwood/resonate/proto"
 )
 
 func main() {
@@ -125,11 +126,17 @@ func main() {
 		Datastore: datastore}, "/api/search/top")
 
 	// Upload
-	api.Attach(&upload.Image{
+	api.Attach[
+		*proto.UploadImageMessage_Request,
+		*proto.UploadImageMessage_Response,
+	](&upload.Image{
 		Datastore: imagestore}, "/api/upload/image")
 
 	// Find
-	api.Attach(&find.Users{
+	api.Attach[
+		*proto.FindContactsMessage_Request,
+		*proto.FindContactsMessage_Response,
+	](&find.Users{
 		Datastore: datastore,
 	}, "/api/find/users")
 
