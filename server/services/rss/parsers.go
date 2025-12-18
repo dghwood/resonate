@@ -74,7 +74,11 @@ func stripHtmlTags(input string) string {
 func parsePodcast(rssFeed RSSFeed, podcast *models.Podcast) (err error) {
 	podcast.Title = trim(rssFeed.Channel.Title)
 	podcast.Description = stripHtmlTags(rssFeed.Channel.Description)
-	podcast.ImageUrl = trim(rssFeed.Channel.Image.Url)
+	if rssFeed.Channel.Image.Url != "" {
+		podcast.ImageUrl = trim(rssFeed.Channel.Image.Url)
+	} else if rssFeed.Channel.Image.Href != "" {
+		podcast.ImageUrl = trim(rssFeed.Channel.Image.Href)
+	}
 	return
 }
 
