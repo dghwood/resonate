@@ -49,6 +49,7 @@ func returnError[R ApiResponseInterface](
 }
 
 func populateInternalInfo(r *http.Request, requestInfo *proto.RequestInfo) {
+	log.Info("Cookies: ", r.Cookies())
 	internalInfo := &proto.InternalInfo{}
 	requestInfo.SetInternalInfo(internalInfo)
 	// What about refresh cookie

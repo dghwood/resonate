@@ -32,7 +32,8 @@ class HttpService implements AbstractHttpService {
     headers ??= {};
     headers['Content-Type'] = 'application/octet-stream';
     try {
-      cookieJar.actuallyLoadForRequest(headers, url);
+      await cookieJar.actuallyLoadForRequest(headers, url);
+      _log.info('headers::$headers');
       var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode != 200) {
         throw HttpServiceException(
