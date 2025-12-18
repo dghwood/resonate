@@ -98,6 +98,7 @@ class ImageComponent extends StatelessWidget {
         height: height,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
+          _log.warning(error);
           return Icon(Icons.image, size: width);
         },
       ),

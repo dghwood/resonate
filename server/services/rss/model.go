@@ -15,7 +15,8 @@ type RSSChannel struct {
 }
 
 type RssChannelImage struct {
-	Url string `xml:"url"`
+	Url  string `xml:"url"`
+	Href string `xml:"href,attr"`
 }
 
 type RssEnclosure struct {

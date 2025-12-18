@@ -60,10 +60,21 @@ func parseRSS(body []byte) (rssFeed RSSFeed, err error) {
 	return
 }
 
+func trim(input string) string {
+	return strings.TrimSpace(input)
+}
+
+func stripHtmlTags(input string) string {
+	// This is a simple regex to strip HTML tags.
+	output := strings.ReplaceAll(trim(input), "<p>", "")
+	output = strings.ReplaceAll(output, "</p>", "")
+	return output
+}
+
 func parsePodcast(rssFeed RSSFeed, podcast *models.Podcast) (err error) {
-	podcast.Title = rssFeed.Channel.Title
-	podcast.Description = rssFeed.Channel.Description
-	podcast.ImageUrl = rssFeed.Channel.Image.Url
+	podcast.Title = trim(rssFeed.Channel.Title)
+	podcast.Description = stripHtmlTags(rssFeed.Channel.Description)
+	podcast.ImageUrl = trim(rssFeed.Channel.Image.Url)
 	return
 }
 
@@ -87,13 +98,13 @@ func parseEpisodes(podcast *models.Podcast, rssFeed RSSFeed) (episodes []*models
 
 func parseEpisode(podcast *models.Podcast, rssItem RSSItem, episode *models.Episode) (err error) {
 	// TODO(duncan): Move this to models?
-	episode.Id = fmt.Sprintf("%s::%s", podcast.Id, rssItem.Guid)
-	episode.Title = rssItem.Title
-	episode.PodcastId = podcast.Id
-	episode.Description = rssItem.Description
+	episode.Id = fmt.Sprintf("%s::%s", trim(podcast.Id), trim(rssItem.Guid))
+	episode.Title = trim(rssItem.Title)
+	episode.PodcastId = trim(podcast.Id)
+	episode.Description = stripHtmlTags(rssItem.Description)
 	episode.DurationSeconds = parseDurationSeconds(rssItem.Duration)
-	episode.AudioUrl = rssItem.AudioUrl.Url
-	episode.ImageUrl = podcast.ImageUrl
+	episode.AudioUrl = trim(rssItem.AudioUrl.Url)
+	episode.ImageUrl = trim(podcast.ImageUrl)
 	episode.PublishTimestamp = parsePubDateTimeSeconds(rssItem.PubDate)
 	return
 }
