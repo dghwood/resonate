@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/bin/vmservice_io.dart';
-
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
@@ -8,10 +6,8 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
-import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
-import 'package:resonate/storage/podcast.dart';
 import 'package:resonate/storage/subscriptions.dart';
 
 Logger _log = Logger('api/subscription');
@@ -314,7 +310,13 @@ class SubscriptionsApi extends ChangeNotifier {
     var user = _authUser.user;
 
     if (user != null && user.id == userId) {
-      return await _authUser.subscriptionApi.list();
+      var result = await get();
+      switch (result) {
+        case ApiOk():
+          return IterableApiResult.ok(result.value);
+        case ApiError():
+          return IterableApiResult.error(result.error);
+      }
     }
 
     var request = ListSubscriptionApiRequest(
@@ -345,7 +347,7 @@ class SubscriptionsApi extends ChangeNotifier {
     return await _authUser.subscriptionApi.listLocal();
   }
 
-  Future<ApiResult<Iterable<Podcast>>> get() async {
+  Future<ApiResult<Iterable<UserSubscription>>> get() async {
     var subscriptionApi = _authUser.subscriptionApi;
     var result = await subscriptionApi.listLocal();
 
@@ -367,6 +369,16 @@ class SubscriptionsApi extends ChangeNotifier {
         return ApiResult.error(podcastResult.error);
     }
 
-    return ApiResult.ok(podcastResult.value);
+    Map<String, UserSubscription> subscriptionsMap = {};
+    for (var subscription in subscriptions) {
+      subscriptionsMap[subscription.podcastId] = subscription;
+    }
+    for (var podcast in podcastResult.value) {
+      var subscription = subscriptionsMap[podcast.id];
+      if (subscription == null) continue;
+      subscriptionsMap[podcast.id] = subscription.copyWithPodcast(podcast);
+    }
+    // TODO(duncan): I need to sort this list..
+    return ApiResult.ok(subscriptionsMap.values);
   }
 }

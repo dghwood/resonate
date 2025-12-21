@@ -365,6 +365,12 @@ class UserSubscription extends StorageModel<UserSubscriptionMessage> {
 
   Podcast? get podcast =>
       _message.hasPodcast() ? Podcast.fromMessage(_message.podcast) : null;
+
+  UserSubscription copyWithPodcast(Podcast podcast) {
+    var message = UserSubscriptionMessage()..mergeFromMessage(_message);
+    message.podcast = podcast.toMessage();
+    return UserSubscription.fromMessage(message);
+  }
 }
 
 class UserListen extends StorageModel<UserListenMessage> {

@@ -113,7 +113,7 @@ class ProfileMetricComponent extends StatelessWidget {
 }
 
 class PublicUserProfileComponent extends StatelessWidget {
-  const PublicUserProfileComponent({
+  PublicUserProfileComponent({
     super.key,
     required this.userId,
     required this.publicUserApi,
@@ -124,76 +124,99 @@ class PublicUserProfileComponent extends StatelessWidget {
 
   final PublicUserApi publicUserApi;
   final AuthUser authUser;
+  final ValueNotifier<int> _refreshNotifer = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
     final isAuthUser = authUser.user?.id == userId;
-    return FutureBuilder(
-      future: publicUserApi.get(userId),
-      builder: (context, asyncSnapshot) {
-        if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-          return LoadingSpinnerComponent();
-        }
-        var result = asyncSnapshot.requireData;
-        switch (result) {
-          case ApiOk():
-            break;
-          case ApiError():
-            return Text('Error: ${result.error}');
-        }
-        var user = result.value;
-
-        return DefaultTabController(
-          length: 2 + (isAuthUser ? 1 : 0),
-          child: NestedScrollView(
-            controller: controller,
-            headerSliverBuilder:
-                (context, _) => <Widget>[
-                  PublicUserProfileAppBar(controller: controller, user: user),
-                  SliverToBoxAdapter(
-                    child: PublicUserHeaderComponent(
-                      user: user,
-                      authUser: authUser,
+    return ValueListenableBuilder(
+      valueListenable: _refreshNotifer,
+      builder: (context, value, child) {
+        return FutureBuilder(
+          future: publicUserApi.get(userId),
+          builder: (context, asyncSnapshot) {
+            if (asyncSnapshot.connectionState == ConnectionState.waiting) {
+              return LoadingSpinnerComponent();
+            }
+            var result = asyncSnapshot.requireData;
+            switch (result) {
+              case ApiOk():
+                break;
+              case ApiError():
+                return Scaffold(
+                  body: Center(
+                    child: Column(
+                      children: [
+                        Text(result.error.toString()),
+                        TextButton(
+                          onPressed: () {
+                            _refreshNotifer.value++;
+                          },
+                          child: Text('Retry'),
+                        ),
+                      ],
                     ),
                   ),
+                );
+            }
+            var user = result.value;
 
-                  PinnedHeaderSliver(
-                    child: Container(
-                      color: Theme.of(context).colorScheme.surface,
-                      child: TabBar(
-                        tabs: [
-                          Tab(text: 'Listens'),
-                          Tab(text: 'Subscriptions'),
-                          if (isAuthUser) Tab(text: 'Downloads'),
-                        ],
+            return DefaultTabController(
+              length: 2 + (isAuthUser ? 1 : 0),
+              child: NestedScrollView(
+                controller: controller,
+                headerSliverBuilder:
+                    (context, _) => <Widget>[
+                      PublicUserProfileAppBar(
+                        controller: controller,
+                        user: user,
+                      ),
+                      SliverToBoxAdapter(
+                        child: PublicUserHeaderComponent(
+                          user: user,
+                          authUser: authUser,
+                        ),
+                      ),
+
+                      PinnedHeaderSliver(
+                        child: Container(
+                          color: Theme.of(context).colorScheme.surface,
+                          child: TabBar(
+                            tabs: [
+                              Tab(text: 'Listens'),
+                              Tab(text: 'Subscriptions'),
+                              if (isAuthUser) Tab(text: 'Downloads'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                body: TabBarView(
+                  // The content for each tab
+                  children: <Widget>[
+                    PublicUserListensComponent(
+                      user: user,
+                      scrollController: controller,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SubscriptionGridComponent(
+                        subscriptionsApi: context.read(),
+                        user: user,
+                        showTitle: false,
+                        crossAxisCount: 3,
+                        axis: Axis.vertical,
+                        scrollController: controller,
                       ),
                     ),
-                  ),
-                ],
-            body: TabBarView(
-              // The content for each tab
-              children: <Widget>[
-                PublicUserListensComponent(
-                  user: user,
-                  scrollController: controller,
+                    if (isAuthUser)
+                      DownloadsListComponent(downloadsApi: context.read()),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SubscriptionGridComponent(
-                    subscriptionsApi: context.read(),
-                    user: user,
-                    showTitle: false,
-                    crossAxisCount: 3,
-                    axis: Axis.vertical,
-                    scrollController: controller,
-                  ),
-                ),
-                if (isAuthUser)
-                  DownloadsListComponent(downloadsApi: context.read()),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );

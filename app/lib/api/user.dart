@@ -15,11 +15,18 @@ class PublicUserApi {
   }) : _server = GetPublicUserApiServer(
          client: httpService,
          authUser: authUser,
-       );
+       ),
+       _authUser = authUser;
 
   final GetPublicUserApiServer _server;
+  final AuthUser _authUser;
 
   Future<ApiResult<PublicUser>> get(String userId) async {
+    var user = _authUser.user;
+    if (user != null && user.id == userId) {
+      // Load from local
+      return ApiResult.ok(PublicUser.fromUser(user));
+    }
     var request = GetPublicUserApiRequest(userId: userId);
     var response = GetPublicUserApiResponse();
     try {

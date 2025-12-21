@@ -124,6 +124,10 @@ class ListenApi {
   UserListen? get(String episodeId) => _listens[episodeId];
 
   Future<ApiResult<Iterable<UserListen>>> list({User? user}) async {
+    return await listLocal();
+  }
+
+  Future<ApiResult<Iterable<UserListen>>> listLocal({User? user}) async {
     // Do I need to check with the server?
     try {
       var result = await _database.list();
@@ -135,7 +139,6 @@ class ListenApi {
 
   Future<ApiResult<Iterable<UserListen>>> sync() async {
     var result = await list();
-    // TODO(duncanwood): Sync with the server
     return result;
   }
 
@@ -215,6 +218,18 @@ class ListensApi {
     String userId, {
     QueryCursor? cursor,
   }) async {
+    var user = _authUser.user;
+
+    if (user != null && user.id == userId) {
+      var result = await get();
+      switch (result) {
+        case ApiOk():
+          return IterableApiResult.ok(result.value);
+        case ApiError():
+          return IterableApiResult.error(result.error);
+      }
+    }
+
     var request = ListListenApiRequest(userId: userId, includeEpisodes: true);
     var response = ListListenApiResponse();
     try {
@@ -233,7 +248,7 @@ class ListensApi {
 
   Future<ApiResult<Iterable<UserListen>>> get() async {
     var listenApi = _authUser.listenApi;
-    var result = await listenApi.list();
+    var result = await listenApi.listLocal();
     _log.info('got $result');
     switch (result) {
       case ApiOk():

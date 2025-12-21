@@ -154,31 +154,23 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
       branches: [
         // Home
         StatefulShellBranch(
-          // navigatorKey: _shellNavigatorKeyHome,
           routes: [
-            GoRoute(
-              // redirect: _signInRedirect,
-              builder: (context, state) => HomePage(),
-              path: Routes.home,
-              // routes: sharedRoutes,
-            ),
+            GoRoute(builder: (context, state) => HomePage(), path: Routes.home),
             ...sharedRoutes,
           ],
         ),
+        // Search
         StatefulShellBranch(
-          // navigatorKey: _shellNavigatorKeyHome,
           routes: [
             GoRoute(
-              // redirect: _signInRedirect,
               builder: (context, state) => SearchPageComponent(),
               path: Routes.search,
-              // routes: sharedRoutes,
             ),
             ...sharedRoutes,
           ],
         ),
+        // Profile
         StatefulShellBranch(
-          // navigatorKey: _shellNavigatorKeyHome,
           routes: [
             GoRoute(
               // TODO(duncan): Update this to consume a user id
