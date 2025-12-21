@@ -120,7 +120,6 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
                     ),
                   );
                 }
-                ;
                 var result = snapshot.requireData;
                 switch (result) {
                   case ApiOkIterable():

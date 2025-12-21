@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/bin/vmservice_io.dart';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
@@ -171,21 +173,28 @@ class SubscriptionApi extends ChangeNotifier {
 
   UserSubscription? get(String podcastId) => _subscriptions[podcastId];
 
-  Future<ApiResult<Iterable<UserSubscription>>> list() async {
-    // I need to check with the server
+  Future<IterableApiResult<Iterable<UserSubscription>>> list() async {
+    return await listLocal();
+  }
+
+  Future<IterableApiResult<Iterable<UserSubscription>>> listLocal() async {
     try {
       var result = await _subscriptionDatabase.list();
-      return ApiResult.ok(result);
+      return IterableApiResult.ok(result);
     } on Exception catch (e) {
       _log.info('Failed to initialize subscription database: $e');
-      return ApiResult.error(e);
+      return IterableApiResult.error(e);
     }
   }
 
   Future<ApiResult<Iterable<UserSubscription>>> sync() async {
     var result = await list();
-    // TODO(duncanwood): Sync with the server
-    return result;
+    switch (result) {
+      case ApiOkIterable():
+        return ApiResult.ok(result.result);
+      case ApiErrorIterable():
+        return ApiResult.error(result.error);
+    }
   }
 
   UserSubscription _createSubscription(String podcastId) {
@@ -301,6 +310,13 @@ class SubscriptionsApi extends ChangeNotifier {
     String userId, {
     QueryCursor? cusor,
   }) async {
+    Exception? serverError;
+    var user = _authUser.user;
+
+    if (user != null && user.id == userId) {
+      return await _authUser.subscriptionApi.list();
+    }
+
     var request = ListSubscriptionApiRequest(
       userId: userId,
       includePodcasts: true,
@@ -317,22 +333,30 @@ class SubscriptionsApi extends ChangeNotifier {
                 : null,
       );
     } on Exception catch (e) {
-      return IterableApiResult.error(e);
+      serverError = e;
     }
+
+    if (user == null || user.id != userId) {
+      // If not the authUser then return the server error
+      return IterableApiResult.error(serverError);
+    }
+
+    // Try local database
+    return await _authUser.subscriptionApi.listLocal();
   }
 
   Future<ApiResult<Iterable<Podcast>>> get() async {
     var subscriptionApi = _authUser.subscriptionApi;
-    var result = await subscriptionApi.list();
+    var result = await subscriptionApi.listLocal();
 
     switch (result) {
-      case ApiOk():
+      case ApiOkIterable():
         break;
-      case ApiError():
+      case ApiErrorIterable():
         return ApiResult.error(result.error);
     }
 
-    var subscriptions = result.value;
+    var subscriptions = result.result;
     var podcastIds = subscriptions.map((s) => s.podcastId);
     var podcastResult = await _podcastApi.getMany(podcastIds);
 

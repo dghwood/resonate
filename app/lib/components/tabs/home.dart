@@ -13,9 +13,14 @@ import 'package:resonate/models/models.dart';
 
 final Logger _log = Logger('components/tabs/home');
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var authUser = context.read<AuthUser>();
@@ -24,7 +29,18 @@ class HomePage extends StatelessWidget {
       child: NestedScrollView(
         headerSliverBuilder: (context, _) {
           return [
-            SliverAppBar(title: Text('RESONATES'), floating: true),
+            SliverAppBar(
+              title: Text('RESONATES'),
+              floating: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.refresh),
+                ),
+              ],
+            ),
             SliverToBoxAdapter(
               child: SubscriptionGridComponent(
                 height: 120,

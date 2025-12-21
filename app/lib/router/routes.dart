@@ -272,7 +272,7 @@ class _AppShellComponentState extends State<AppShellComponent> {
           case ApiOk():
             break;
           case ApiError():
-            return Text('REALL BIG ERROR');
+            return Text('REAL BIG ERROR');
         }
         return Scaffold(
           body: widget.navigationShell,

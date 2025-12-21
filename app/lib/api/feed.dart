@@ -95,11 +95,13 @@ class GetFeedApi extends ChangeNotifier {
     }
     var userId = _authUser.user!.id;
     var feed = UserFeed(userId: userId);
+    var localReturned = false;
     // Try database only for first call
     if (before == null) {
       try {
         await _database.get(feed);
         yield ApiResult.ok(feed);
+        localReturned = true;
       } on Exception catch (_) {
         // Do I return this?
         // yield ApiResult.error(e);
@@ -115,6 +117,7 @@ class GetFeedApi extends ChangeNotifier {
       _log.info("feed refreshed");
       yield ApiResult.ok(feed);
     } on Exception catch (e) {
+      if (localReturned) return;
       yield ApiResult.error(e);
     }
   }
