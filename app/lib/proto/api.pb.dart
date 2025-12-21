@@ -3585,6 +3585,228 @@ class ListSubscriptionMessage extends $pb.GeneratedMessage {
   ListSubscriptionMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class SyncSubscriptionMessage_Request extends $pb.GeneratedMessage {
+  factory SyncSubscriptionMessage_Request({
+    RequestInfo? requestInfo,
+    $core.Iterable<$0.UserSubscriptionMessage>? subscriptions,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (subscriptions != null) result.subscriptions.addAll(subscriptions);
+    return result;
+  }
+
+  SyncSubscriptionMessage_Request._();
+
+  factory SyncSubscriptionMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncSubscriptionMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncSubscriptionMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..pc<$0.UserSubscriptionMessage>(
+        2, _omitFieldNames ? '' : 'subscriptions', $pb.PbFieldType.PM,
+        subBuilder: $0.UserSubscriptionMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage_Request clone() =>
+      SyncSubscriptionMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage_Request copyWith(
+          void Function(SyncSubscriptionMessage_Request) updates) =>
+      super.copyWith(
+              (message) => updates(message as SyncSubscriptionMessage_Request))
+          as SyncSubscriptionMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage_Request create() =>
+      SyncSubscriptionMessage_Request._();
+  @$core.override
+  SyncSubscriptionMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<SyncSubscriptionMessage_Request> createRepeated() =>
+      $pb.PbList<SyncSubscriptionMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncSubscriptionMessage_Request>(
+          create);
+  static SyncSubscriptionMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserSubscriptionMessage> get subscriptions => $_getList(1);
+}
+
+class SyncSubscriptionMessage_Response extends $pb.GeneratedMessage {
+  factory SyncSubscriptionMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.UserSubscriptionMessage>? subscriptions,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (subscriptions != null) result.subscriptions.addAll(subscriptions);
+    return result;
+  }
+
+  SyncSubscriptionMessage_Response._();
+
+  factory SyncSubscriptionMessage_Response.fromBuffer(
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncSubscriptionMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncSubscriptionMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.UserSubscriptionMessage>(
+        2, _omitFieldNames ? '' : 'subscriptions', $pb.PbFieldType.PM,
+        subBuilder: $0.UserSubscriptionMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage_Response clone() =>
+      SyncSubscriptionMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage_Response copyWith(
+          void Function(SyncSubscriptionMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as SyncSubscriptionMessage_Response))
+          as SyncSubscriptionMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage_Response create() =>
+      SyncSubscriptionMessage_Response._();
+  @$core.override
+  SyncSubscriptionMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<SyncSubscriptionMessage_Response> createRepeated() =>
+      $pb.PbList<SyncSubscriptionMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncSubscriptionMessage_Response>(
+          create);
+  static SyncSubscriptionMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserSubscriptionMessage> get subscriptions => $_getList(1);
+}
+
+class SyncSubscriptionMessage extends $pb.GeneratedMessage {
+  factory SyncSubscriptionMessage({
+    SyncSubscriptionMessage_Request? request,
+    SyncSubscriptionMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  SyncSubscriptionMessage._();
+
+  factory SyncSubscriptionMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncSubscriptionMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncSubscriptionMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<SyncSubscriptionMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: SyncSubscriptionMessage_Request.create)
+    ..aOM<SyncSubscriptionMessage_Response>(
+        2, _omitFieldNames ? '' : 'response',
+        subBuilder: SyncSubscriptionMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage clone() =>
+      SyncSubscriptionMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncSubscriptionMessage copyWith(
+          void Function(SyncSubscriptionMessage) updates) =>
+      super.copyWith((message) => updates(message as SyncSubscriptionMessage))
+          as SyncSubscriptionMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage create() => SyncSubscriptionMessage._();
+  @$core.override
+  SyncSubscriptionMessage createEmptyInstance() => create();
+  static $pb.PbList<SyncSubscriptionMessage> createRepeated() =>
+      $pb.PbList<SyncSubscriptionMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SyncSubscriptionMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncSubscriptionMessage>(create);
+  static SyncSubscriptionMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  SyncSubscriptionMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(SyncSubscriptionMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  SyncSubscriptionMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  SyncSubscriptionMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(SyncSubscriptionMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  SyncSubscriptionMessage_Response ensureResponse() => $_ensure(1);
+}
+
 class AddListenMessage_Request extends $pb.GeneratedMessage {
   factory AddListenMessage_Request({
     RequestInfo? requestInfo,
