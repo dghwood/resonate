@@ -37,6 +37,9 @@ func NewCached(store cachestore.Cachestore) *Client {
 		cachestore: store,
 	}
 }
+func getContext(ctx context.Context, seconds int) (context.Context, context.CancelFunc) {
+	return context.WithTimeout(ctx, time.Second*time.Duration(seconds))
+}
 
 func (c *Client) Get(ctx context.Context, request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
@@ -48,7 +51,7 @@ func (c *Client) Get(ctx context.Context, request Request) (resp []byte, err err
 		return
 	}
 	if request.CacheTtl > 0 {
-		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+		resp, err = c.cachestore.Get(ctx, cacheKey, request.CacheTtl)
 		if err == nil {
 			return
 		}
@@ -57,7 +60,7 @@ func (c *Client) Get(ctx context.Context, request Request) (resp []byte, err err
 	if err != nil {
 		return
 	}
-	cacheErr := c.cachestore.Put(cacheKey, resp)
+	cacheErr := c.cachestore.Put(ctx, cacheKey, resp)
 	if cacheErr != nil {
 		log.Errorf("Cache failed to put %s", cacheErr)
 	}
@@ -74,7 +77,7 @@ func (c *Client) Post(ctx context.Context, request Request) (resp []byte, err er
 		return
 	}
 	if request.CacheTtl > 0 {
-		resp, err = c.cachestore.Get(cacheKey, request.CacheTtl)
+		resp, err = c.cachestore.Get(ctx, cacheKey, request.CacheTtl)
 		if err == nil {
 			log.Info("cache hit:%s", request.Url)
 			return
@@ -84,7 +87,7 @@ func (c *Client) Post(ctx context.Context, request Request) (resp []byte, err er
 	if err != nil {
 		return
 	}
-	cacheErr := c.cachestore.Put(cacheKey, resp)
+	cacheErr := c.cachestore.Put(ctx, cacheKey, resp)
 	if cacheErr != nil {
 		log.Errorf("Cache failed to put %s", cacheErr)
 	}

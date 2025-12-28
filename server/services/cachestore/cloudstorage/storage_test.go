@@ -1,6 +1,7 @@
 package cloudstorage
 
 import (
+	"context"
 	"testing"
 	"time"
 )
@@ -8,13 +9,13 @@ import (
 func TestPut(t *testing.T) {
 	store := NewStorageCachestore()
 	defer store.Close()
-
-	err := store.Put("foo", []byte("bar"))
+	ctx := context.Background()
+	err := store.Put(ctx, "foo", []byte("bar"))
 	if err != nil {
 		t.Error(err)
 	}
 
-	response, err := store.Get("foo", time.Hour)
+	response, err := store.Get(ctx, "foo", time.Hour)
 	if err != nil {
 		t.Error(err)
 	}
