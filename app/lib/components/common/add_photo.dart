@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/loading.dart';
-import 'package:resonate/utils/image.dart';
 import 'package:vector_math/vector_math_64.dart' as vector_math;
 
 import 'dart:ui' as ui;

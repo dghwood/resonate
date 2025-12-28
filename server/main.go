@@ -138,7 +138,7 @@ func main() {
 	// Matches all paths /images/users/.*
 	http.HandleFunc("/images/users/", func(w http.ResponseWriter, r *http.Request) {
 		// CORs headers
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "app.resonate.xyz")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		if r.Method == "OPTIONS" {

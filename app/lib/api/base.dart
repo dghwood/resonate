@@ -8,6 +8,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/proto/errors.pbenum.dart';
 import 'package:resonate/services/http/http.dart';
+import 'package:resonate/utils/constants.dart';
 
 Logger _log = Logger("api/base");
 
@@ -77,10 +78,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final String _path;
   // TODO(duncan): This needs to be configurable
 
-  final String _baseUrl =
-      kReleaseMode
-          ? 'https://rxyz-app-814908101471.northamerica-northeast1.run.app'
-          : (kIsWeb ? 'http://localhost' : 'http://10.0.2.2');
+  final String _baseUrl = BASE_URL;
 
   @override
   Future<void> execute(Req request, Res response, {int numAttempts = 0}) async {

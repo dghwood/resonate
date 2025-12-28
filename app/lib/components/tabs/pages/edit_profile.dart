@@ -58,7 +58,7 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
               switch (result) {
                 case ApiOk():
                   // var imageUrl = result.value;
-
+                  _log.info("image url length: ${result.value.length}");
                   setState(() {
                     newImageUrl = result.value;
                   });

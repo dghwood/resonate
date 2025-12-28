@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/utils/constants.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 final Logger _log = Logger('components/common/utils');
@@ -88,7 +89,7 @@ class ImageComponent extends StatelessWidget {
     if (src.startsWith('/')) {
       // TODO(duncan): Update with the actual
       // server address.
-      prefix = 'http://localhost:8080';
+      prefix = BASE_URL;
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
