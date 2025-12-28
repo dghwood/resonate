@@ -1,6 +1,7 @@
 package taddy
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"log"
@@ -39,7 +40,8 @@ func (t *TaddySearchApi) Podcasts(query string) (
 		CacheTtl: 24 * time.Hour,
 	}
 	// TODO(duncan): Read TTL from options?
-	responseBytes, err := t.Client.Post(request)
+	ctx := context.Background()
+	responseBytes, err := t.Client.Post(ctx, request)
 	if err != nil {
 		return
 	}
@@ -101,7 +103,8 @@ func (t *TaddySearchApi) fetchTopPage(pageNum int) (
 		CacheTtl: 24 * time.Hour,
 	}
 	// TODO(duncan): Read TTL from options?
-	responseBytes, err := client.Post(request)
+	ctx := context.Background()
+	responseBytes, err := client.Post(ctx, request)
 	if err != nil {
 		return
 	}

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"time"
 
 	"github.com/dghwood/resonate/errors"
@@ -41,6 +42,7 @@ func (f Login) ResponseProto() *proto.LoginUserMessage_Response {
 // and returns the user and access token, as well as a refresh token.
 // This also creates a new user if the user does not exist.
 func (f Login) Execute(
+	ctx context.Context,
 	_ *models.LoggedInUser,
 	request *proto.LoginUserMessage_Request,
 	response *proto.LoginUserMessage_Response) (err error) {

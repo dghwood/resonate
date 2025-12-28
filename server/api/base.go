@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -33,7 +34,7 @@ type ApiExecuteData struct {
 
 type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] interface {
 	// Execute(data ApiExecuteData) error
-	Execute(user *models.LoggedInUser, request request, response response) error
+	Execute(ctx context.Context, user *models.LoggedInUser, request request, response response) error
 	RequestProto() request
 	ResponseProto() response
 	RequireSignIn() bool
@@ -162,7 +163,7 @@ func handle[
 			IsLoggedIn: err == nil,
 		}
 
-		err = f.Execute(&user, request, response)
+		err = f.Execute(r.Context(), &user, request, response)
 
 		if err != nil {
 			log.Error(err)

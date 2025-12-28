@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"time"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/datastore"
@@ -40,7 +43,8 @@ func main() {
 			continue
 		}
 		// Should I check the last updated time?
-		podcast, episodes, err := rss.Get(model.Url, fetch) // Use cached?
+		ctx, _ := context.WithTimeout(context.Background(), time.Second*20)
+		podcast, episodes, err := rss.Get(ctx, model.Url, fetch) // Use cached?
 		models.Merge(&model, &podcast)
 		if err != nil {
 			log.Error(err)

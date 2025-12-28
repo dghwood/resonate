@@ -1,6 +1,7 @@
 package fetch
 
 import (
+	"context"
 	"testing"
 
 	cacheService "github.com/dghwood/resonate/services/cachestore"
@@ -32,7 +33,8 @@ func TestKeyGeneration(t *testing.T) {
 func TestFetchGet(t *testing.T) {
 	url := "https://feeds.megaphone.fm/how-long-gone"
 	client := New()
-	body, err := client.Get(Request{Url: url})
+	ctx := context.Background()
+	body, err := client.Get(ctx, Request{Url: url})
 	if err != nil {
 		t.Error(err)
 		return
@@ -47,7 +49,8 @@ func TestFetchGetCache(t *testing.T) {
 	url := "https://feeds.megaphone.fm/how-long-gone"
 	cachestore := cacheService.NewMemoryCachestore()
 	client := NewCached(cachestore)
-	body, err := client.Post(Request{Url: url, Body: []byte("test")})
+	ctx := context.Background()
+	body, err := client.Post(ctx, Request{Url: url, Body: []byte("test")})
 	if err != nil {
 		t.Error(err)
 		return

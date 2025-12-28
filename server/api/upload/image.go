@@ -1,6 +1,8 @@
 package upload
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
@@ -27,6 +29,7 @@ func (f Image) ResponseProto() *proto.UploadImageMessage_Response {
 }
 
 func (f *Image) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.UploadImageMessage_Request,
 	response *proto.UploadImageMessage_Response) (err error) {

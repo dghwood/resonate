@@ -1,6 +1,7 @@
 package listens
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
@@ -29,8 +30,8 @@ func TestList(t *testing.T) {
 	user := models.LoggedInUser{}
 	user.IsLoggedIn = true
 	user.Id = "456"
-
-	err := list.Execute(&user, request, response)
+	ctx := context.Background()
+	err := list.Execute(ctx, &user, request, response)
 	if err != nil {
 		t.Errorf("Execute() error = %v", err)
 	}

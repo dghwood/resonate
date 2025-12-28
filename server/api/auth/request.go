@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -33,6 +34,7 @@ func (f Request) ResponseProto() *proto.LoginRequestMessage_Response {
 // This texts the user with a code to login
 // Note this is both for new users and existing
 func (f Request) Execute(
+	ctx context.Context,
 	_ *models.LoggedInUser,
 	request *proto.LoginRequestMessage_Request,
 	response *proto.LoginRequestMessage_Response) (err error) {

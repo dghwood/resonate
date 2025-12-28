@@ -1,6 +1,8 @@
 package find
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
@@ -27,6 +29,7 @@ func (f Users) ResponseProto() *proto.FindContactsMessage_Response {
 }
 
 func (f *Users) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.FindContactsMessage_Request,
 	response *proto.FindContactsMessage_Response) (err error) {

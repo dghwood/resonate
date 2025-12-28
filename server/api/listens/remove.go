@@ -1,6 +1,8 @@
 package listens
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -24,6 +26,7 @@ func (f Remove) ResponseProto() *proto.RemoveListenMessage_Response {
 }
 
 func (f *Remove) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.RemoveListenMessage_Request,
 	response *proto.RemoveListenMessage_Response) (err error) {

@@ -1,6 +1,7 @@
 package podcast
 
 import (
+	"context"
 	"testing"
 
 	"github.com/dghwood/resonate/models"
@@ -18,8 +19,8 @@ func TestList(t *testing.T) {
 		PodcastId: "123",
 	}
 	var response = proto.ListPodcastEpisodesMessage_Response{}
-
-	err := api.Execute(nil, &request, &response)
+	ctx := context.Background()
+	err := api.Execute(ctx, nil, &request, &response)
 	if err != nil {
 		t.Error(err)
 	}
@@ -48,7 +49,8 @@ func TestListDb(t *testing.T) {
 	}
 	var response = proto.ListPodcastEpisodesMessage_Response{}
 
-	err := api.Execute(nil, &request, &response)
+	ctx := context.Background()
+	err := api.Execute(ctx, nil, &request, &response)
 	if err != nil {
 		t.Error(err)
 	}

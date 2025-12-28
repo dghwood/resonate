@@ -1,6 +1,8 @@
 package listens
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
@@ -26,6 +28,7 @@ func (f Add) ResponseProto() *proto.AddListenMessage_Response {
 }
 
 func (f *Add) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.AddListenMessage_Request,
 	response *proto.AddListenMessage_Response) (err error) {

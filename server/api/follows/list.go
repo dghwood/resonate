@@ -1,6 +1,8 @@
 package follows
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -25,6 +27,7 @@ func (f List) ResponseProto() *proto.ListFollowMessage_Response {
 }
 
 func (f *List) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.ListFollowMessage_Request,
 	response *proto.ListFollowMessage_Response) (err error) {

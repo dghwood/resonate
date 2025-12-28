@@ -1,6 +1,8 @@
 package users
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/errors"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
@@ -26,6 +28,7 @@ func (f Edit) ResponseProto() *proto.EditUserMessage_Response {
 }
 
 func (f *Edit) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.EditUserMessage_Request,
 	response *proto.EditUserMessage_Response) (err error) {

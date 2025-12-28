@@ -1,6 +1,7 @@
 package subscribe
 
 import (
+	"context"
 	"testing"
 
 	"github.com/dghwood/resonate/models"
@@ -77,7 +78,8 @@ func TestSyncExecute(t *testing.T) {
 	user := &models.LoggedInUser{}
 	user.Id = "123"
 	user.IsLoggedIn = true
-	err := sync.Execute(user, request, response)
+	ctx := context.Background()
+	err := sync.Execute(ctx, user, request, response)
 	if err != nil {
 		t.Errorf("Execute() error = %v", err)
 	}

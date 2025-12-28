@@ -2,6 +2,7 @@ package fetch
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,22 +26,22 @@ type Client struct {
 
 func New() *Client {
 	return &Client{
-		client:     &http.Client{Timeout: 5 * time.Second},
+		client:     &http.Client{},
 		cachestore: nil,
 	}
 }
 
 func NewCached(store cachestore.Cachestore) *Client {
 	return &Client{
-		client:     &http.Client{Timeout: 5 * time.Second},
+		client:     &http.Client{},
 		cachestore: store,
 	}
 }
 
-func (c *Client) Get(request Request) (resp []byte, err error) {
+func (c *Client) Get(ctx context.Context, request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
 		log.Info("Cache is nil")
-		return c.get(request)
+		return c.get(ctx, request)
 	}
 	cacheKey, err := generateKey(request)
 	if err != nil {
@@ -52,7 +53,7 @@ func (c *Client) Get(request Request) (resp []byte, err error) {
 			return
 		}
 	}
-	resp, err = c.get(request)
+	resp, err = c.get(ctx, request)
 	if err != nil {
 		return
 	}
@@ -63,10 +64,10 @@ func (c *Client) Get(request Request) (resp []byte, err error) {
 	return
 }
 
-func (c *Client) Post(request Request) (resp []byte, err error) {
+func (c *Client) Post(ctx context.Context, request Request) (resp []byte, err error) {
 	log.Infof("POST:%s:%d", request.Url, len(request.Body))
 	if c.cachestore == nil {
-		return c.post(request)
+		return c.post(ctx, request)
 	}
 	cacheKey, err := generateKey(request)
 	if err != nil {
@@ -79,7 +80,7 @@ func (c *Client) Post(request Request) (resp []byte, err error) {
 			return
 		}
 	}
-	resp, err = c.post(request)
+	resp, err = c.post(ctx, request)
 	if err != nil {
 		return
 	}
@@ -90,9 +91,8 @@ func (c *Client) Post(request Request) (resp []byte, err error) {
 	return
 }
 
-func (c *Client) post(request Request) (resp []byte, err error) {
-
-	req, err := http.NewRequest("POST", request.Url, bytes.NewBuffer(request.Body))
+func (c *Client) post(ctx context.Context, request Request) (resp []byte, err error) {
+	req, err := http.NewRequestWithContext(ctx, "POST", request.Url, bytes.NewBuffer(request.Body))
 	addHeaders(req, request.Headers)
 	if err != nil {
 		return
@@ -111,9 +111,9 @@ func (c *Client) post(request Request) (resp []byte, err error) {
 
 }
 
-func (c *Client) get(request Request) (resp []byte, err error) {
+func (c *Client) get(ctx context.Context, request Request) (resp []byte, err error) {
 	log.Infof("Fetch::Get::%s", request)
-	req, err := http.NewRequest("GET", request.Url, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", request.Url, nil)
 	addHeaders(req, request.Headers)
 	if err != nil {
 		return

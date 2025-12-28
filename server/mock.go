@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"os"
@@ -97,7 +98,8 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		podcast := models.Podcast{}
 		podcast.SetIdFromUrl(url)
 		request.PodcastId = podcast.Id
-		err := podcastApi.Execute(nil,
+		ctx := context.Background()
+		err := podcastApi.Execute(ctx, nil,
 			request,
 			response)
 		if err != nil {

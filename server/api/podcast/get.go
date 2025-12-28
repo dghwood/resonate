@@ -1,6 +1,8 @@
 package podcast
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -28,6 +30,7 @@ func (f Get) ResponseProto() *proto.GetPodcastMessage_Response {
 }
 
 func (f *Get) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.GetPodcastMessage_Request,
 	response *proto.GetPodcastMessage_Response) (err error) {
@@ -49,7 +52,7 @@ func (f *Get) Execute(
 	}
 	log.Info("fetching podcast from: ", url)
 	// This should cache the request for the next request?
-	podcast, _, err := rss.Get(url, f.FetchClient)
+	podcast, _, err := rss.Get(ctx, url, f.FetchClient)
 	if err != nil {
 		log.Error(err)
 		return

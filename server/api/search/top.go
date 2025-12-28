@@ -1,6 +1,8 @@
 package search
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 
@@ -30,6 +32,7 @@ func (f Top) ResponseProto() *proto.SearchTopMessage_Response {
 TopSearch
 */
 func (f *Top) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.SearchTopMessage_Request,
 	response *proto.SearchTopMessage_Response) (err error) {

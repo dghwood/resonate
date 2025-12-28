@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"time"
 
 	token "github.com/dghwood/resonate/auth"
@@ -36,6 +37,7 @@ func (f Refresh) ResponseProto() *proto.RefreshAuthMessage_Response {
 //
 // This function refreshes the access token by using the provided refresh token.
 func (f Refresh) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.RefreshAuthMessage_Request,
 	response *proto.RefreshAuthMessage_Response) (err error) {

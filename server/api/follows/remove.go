@@ -1,6 +1,8 @@
 package follows
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -24,6 +26,7 @@ func (f Remove) ResponseProto() *proto.RemoveFollowMessage_Response {
 }
 
 func (f *Remove) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.RemoveFollowMessage_Request,
 	response *proto.RemoveFollowMessage_Response) (err error) {

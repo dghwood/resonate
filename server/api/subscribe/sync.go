@@ -1,6 +1,8 @@
 package subscribe
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -25,6 +27,7 @@ func (f Sync) ResponseProto() *proto.SyncSubscriptionMessage_Response {
 }
 
 func (f *Sync) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.SyncSubscriptionMessage_Request,
 	response *proto.SyncSubscriptionMessage_Response) (err error) {

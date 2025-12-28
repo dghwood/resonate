@@ -1,6 +1,7 @@
 package rss
 
 import (
+	"context"
 	"testing"
 
 	"github.com/dghwood/resonate/services/fetch"
@@ -8,7 +9,8 @@ import (
 
 func TestGet(t *testing.T) {
 	url := "https://feeds.megaphone.fm/how-long-gone"
-	podcast, episodes, err := Get(url, fetch.New())
+	ctx := context.Background()
+	podcast, episodes, err := Get(ctx, url, fetch.New())
 	if err != nil {
 		t.Error(err)
 	}

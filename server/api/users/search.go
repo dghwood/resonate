@@ -1,6 +1,7 @@
 package users
 
 import (
+	"context"
 	"strings"
 
 	"github.com/dghwood/resonate/models"
@@ -26,6 +27,7 @@ func (f Search) ResponseProto() *proto.SearchContactsMessage_Response {
 }
 
 func (f *Search) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.SearchContactsMessage_Request,
 	response *proto.SearchContactsMessage_Response) (err error) {

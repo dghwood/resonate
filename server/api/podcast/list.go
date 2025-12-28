@@ -1,6 +1,8 @@
 package podcast
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -80,6 +82,7 @@ func (f *List) executeFromDatabase(
 	return
 }
 func (f *List) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.ListPodcastEpisodesMessage_Request,
 	response *proto.ListPodcastEpisodesMessage_Response) (err error) {
@@ -108,7 +111,7 @@ func (f *List) Execute(
 		return f.executeFromDatabase(podcast, loggedInUser, request, response)
 	}
 
-	updatedPodcast, episodes, err := rss.Get(url, f.FetchClient)
+	updatedPodcast, episodes, err := rss.Get(ctx, url, f.FetchClient)
 	// Don't let the updated podcast override other fields
 	models.Merge(podcast, &updatedPodcast)
 	if err != nil {

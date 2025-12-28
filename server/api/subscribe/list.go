@@ -1,6 +1,8 @@
 package subscribe
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -25,6 +27,7 @@ func (f List) ResponseProto() *proto.ListSubscriptionMessage_Response {
 }
 
 func (f *List) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.ListSubscriptionMessage_Request,
 	response *proto.ListSubscriptionMessage_Response) (err error) {

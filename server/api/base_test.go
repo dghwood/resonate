@@ -2,6 +2,7 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -27,6 +28,7 @@ func (f ApiTest) ResponseProto() *proto.EditUserMessage_Response {
 	}
 }
 func (f *ApiTest) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.EditUserMessage_Request,
 	response *proto.EditUserMessage_Response) (err error) {

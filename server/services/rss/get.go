@@ -1,15 +1,17 @@
 package rss
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/fetch"
 	"github.com/dghwood/resonate/utils"
 )
 
-func Get(feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {
+func Get(ctx context.Context, feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {
 
 	// TODO(duncan): How long should the cache last..
-	body, err := client.Get(fetch.Request{
+	body, err := client.Get(ctx, fetch.Request{
 		Url:      feedUrl,
 		CacheTtl: 0})
 	if err != nil {

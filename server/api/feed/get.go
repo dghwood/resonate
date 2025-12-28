@@ -1,6 +1,8 @@
 package feed
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -39,6 +41,7 @@ TODO(duncan):
 * Piece that all together in a feed
 */
 func (f *Get) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.GetFeedMessage_Request,
 	response *proto.GetFeedMessage_Response) (err error) {

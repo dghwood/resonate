@@ -1,6 +1,8 @@
 package users
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
@@ -24,6 +26,7 @@ func (f List) ResponseProto() *proto.ListUserMessage_Response {
 }
 
 func (f *List) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.ListUserMessage_Request,
 	response *proto.ListUserMessage_Response) (err error) {

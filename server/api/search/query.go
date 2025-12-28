@@ -1,6 +1,8 @@
 package search
 
 import (
+	"context"
+
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 
@@ -33,6 +35,7 @@ func (f Query) ResponseProto() *proto.SearchMessage_Response {
 }
 
 func (f *Query) Execute(
+	ctx context.Context,
 	loggedInUser *models.LoggedInUser,
 	request *proto.SearchMessage_Request,
 	response *proto.SearchMessage_Response) (err error) {
