@@ -182,6 +182,7 @@ func handle[
 			response.GetResponseInfo().SetSuccess(true)
 		}
 		writeProto(r, w, response)
+		log.Info(response.GetResponseInfo())
 	}
 }
 func Attach[request ApiRequestInterface, response ApiResponseInterface](

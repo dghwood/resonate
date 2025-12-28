@@ -8,6 +8,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
+import 'package:resonate/storage/podcast.dart';
 import 'package:resonate/storage/subscriptions.dart';
 
 Logger _log = Logger('api/subscription');
@@ -125,6 +126,47 @@ class ListSubscriptionApiServer
        );
 }
 
+class SyncSubscriptionApiRequest
+    extends ApiRequest<SyncSubscriptionMessage_Request> {
+  SyncSubscriptionApiRequest({Iterable<UserSubscription>? subscriptions})
+    : super(
+        SyncSubscriptionMessage_Request(
+          requestInfo: RequestInfo(),
+          subscriptions: subscriptions?.map((s) => s.toMessage()).toList(),
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
+}
+
+class SyncSubscriptionApiResponse
+    extends ApiResponse<SyncSubscriptionMessage_Response> {
+  SyncSubscriptionApiResponse() : super(SyncSubscriptionMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  Iterable<UserSubscription> get subscriptions =>
+      responsePb.subscriptions.map((s) => UserSubscription.fromMessage(s));
+}
+
+class SyncSubscriptionApiServer
+    extends ServerApi<SyncSubscriptionApiRequest, SyncSubscriptionApiResponse> {
+  SyncSubscriptionApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         SyncSubscriptionApiRequest(),
+         SyncSubscriptionApiResponse(),
+         'api/subscribe/sync',
+         authUser: authUser,
+         client: client,
+       );
+}
+
 class SubscriptionApi extends ChangeNotifier {
   SubscriptionApi({
     required AbstractHttpService client,
@@ -139,20 +181,27 @@ class SubscriptionApi extends ChangeNotifier {
          client: client,
          authUser: authUser,
        ),
+       _syncServer = SyncSubscriptionApiServer(
+         client: client,
+         authUser: authUser,
+       ),
+       _podcastDatabase = PodcastDatabase(databaseService),
        //  _podcastDatabase = PodcastDatabase(databaseService),
        _subscriptionDatabase = SubscriptionDatabase(databaseService);
 
   final AuthUser _authUser;
   final AddSubscriptionApiServer _subscribeServer;
   final RemoveSubscriptionApiServer _unsubscribeServer;
+  final SyncSubscriptionApiServer _syncServer;
   final SubscriptionDatabase _subscriptionDatabase;
-  // final PodcastDatabase _podcastDatabase;
+  // For adding podcasts to the database
+  // when syncing.
+  final PodcastDatabase _podcastDatabase;
 
   final Map<String, UserSubscription> _subscriptions = {};
 
   Future<void> init() async {
     _log.info('Initializing SubscriptionApi...');
-    // This should try the db and server..
     var result = await sync();
     switch (result) {
       case ApiOk():
@@ -184,12 +233,36 @@ class SubscriptionApi extends ChangeNotifier {
   }
 
   Future<ApiResult<Iterable<UserSubscription>>> sync() async {
-    var result = await list();
+    var result = await listLocal();
     switch (result) {
       case ApiOkIterable():
-        return ApiResult.ok(result.result);
+        break;
       case ApiErrorIterable():
         return ApiResult.error(result.error);
+    }
+
+    var subscriptions = result.result;
+    var request = SyncSubscriptionApiRequest(subscriptions: subscriptions);
+    var response = SyncSubscriptionApiResponse();
+    try {
+      await _syncServer.execute(request, response);
+      // log to database
+      // await _subscriptionDatabase.clear();
+      subscriptions = response.subscriptions;
+      // add the podcast messages
+      for (var sub in subscriptions) {
+        if (sub.podcast != null) {
+          // remove the podcast and add to db.
+          _log.info("adding podcast ${sub.podcast!.id}");
+          await _podcastDatabase.put(sub.podcast!);
+          sub.dropPodcast();
+        }
+      }
+      await _subscriptionDatabase.putAll(subscriptions);
+      _log.info('Synced ${subscriptions.length} subscriptions');
+      return ApiResult.ok(subscriptions);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
     }
   }
 
@@ -360,6 +433,7 @@ class SubscriptionsApi extends ChangeNotifier {
 
     var subscriptions = result.result;
     var podcastIds = subscriptions.map((s) => s.podcastId);
+    _log.info('for podcastIds: $podcastIds');
     var podcastResult = await _podcastApi.getMany(podcastIds);
 
     switch (podcastResult) {

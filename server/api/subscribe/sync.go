@@ -57,7 +57,9 @@ func (f *Sync) Execute(
 		authorativeSubscriptions[model.PodcastId] = &model.UserSubscriptionMessage
 	}
 
+	subcriptionClientMap := make(map[string]bool)
 	for _, subscription := range request.GetSubscriptions() {
+		subcriptionClientMap[subscription.GetId()] = true
 		// If the subscription does exist ()
 		dbSubscription, ok := authorativeSubscriptions[subscription.PodcastId]
 		if !ok {
@@ -76,10 +78,34 @@ func (f *Sync) Execute(
 		}
 	}
 
+	// For any subscriptions from the server not on the client
+	// load the podcast message
+	podcastModels := make([]*models.Podcast, 0)
+	for _, subscription := range authorativeSubscriptions {
+		if _, ok := subcriptionClientMap[subscription.GetId()]; !ok {
+			podcast := &models.Podcast{}
+			podcast.SetId(subscription.GetPodcastId())
+			podcastModels = append(podcastModels, podcast)
+		}
+	}
+
+	if len(podcastModels) > 0 {
+		err := f.Datastore.GetMulti(podcastModels)
+		if err != nil {
+			log.Errorf("error getting podcasts %s", err)
+			return err
+		}
+		for _, podcast := range podcastModels {
+			authorativeSubscriptions[podcast.Id].Podcast = &podcast.PodcastMessage
+		}
+		log.Infof("loaded %d podcasts", len(podcastModels))
+	}
+
 	// Return subscriptions
 	// TODO(duncan): Should I delete the deleted ones?
 	for _, subscription := range authorativeSubscriptions {
 		response.Subscriptions = append(response.Subscriptions, subscription)
 	}
+	log.Infof("returning %d subscriptions", len(response.Subscriptions))
 	return
 }

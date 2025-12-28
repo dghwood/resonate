@@ -102,17 +102,20 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
     response.fromBuffer(resp);
     if (!response.responseInfo.success) {
       var error = response.responseInfo.error;
-      if (error == ErrorEnum.ERROR_TIME_EXPIRED) {
-        var result = await _refreshAccessToken();
-        switch (result) {
-          case ApiOk():
-            // retry the request
-            await execute(request, response, numAttempts: numAttempts + 1);
-          case ApiError():
-            // Signout..
-            _authUser?.signout();
-            throw ApiException(response.responseInfo.errorMessage);
-        }
+      switch (error) {
+        case ErrorEnum.ERROR_TIME_EXPIRED:
+          var result = await _refreshAccessToken();
+          switch (result) {
+            case ApiOk():
+              // retry the request
+              await execute(request, response, numAttempts: numAttempts + 1);
+            case ApiError():
+              // Signout..
+              _authUser?.signout();
+              throw ApiException(response.responseInfo.errorMessage);
+          }
+        default:
+          throw ApiException(response.responseInfo.errorMessage);
       }
     }
   }

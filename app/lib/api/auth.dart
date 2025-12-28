@@ -107,7 +107,9 @@ class LoginApi {
     var response = LoginRequestApiResponse();
     try {
       await _requestServer.execute(request, response);
+      _log.info(response.responseInfo);
     } on Exception catch (e) {
+      _log.info("request error $e");
       return ApiResult.error(e);
     }
     return ApiResult.ok(true);

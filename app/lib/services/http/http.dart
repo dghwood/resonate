@@ -32,7 +32,9 @@ class HttpService implements AbstractHttpService {
     headers ??= {};
     headers['Content-Type'] = 'application/octet-stream';
     try {
-      await cookieJar.actuallyLoadForRequest(headers, url);
+      if (!kIsWeb) {
+        await cookieJar.actuallyLoadForRequest(headers, url);
+      }
       _log.info('headers::$headers');
       var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode != 200) {
@@ -40,9 +42,9 @@ class HttpService implements AbstractHttpService {
           'Failed to post to $url: ${response.statusCode} ${response.reasonPhrase}',
         );
       }
-
-      await cookieJar.actuallySaveFromResponse(url, response);
-
+      if (!kIsWeb) {
+        await cookieJar.actuallySaveFromResponse(url, response);
+      }
       return response.bodyBytes;
     } catch (e) {
       throw HttpServiceException('Failed to post to $url: $e');

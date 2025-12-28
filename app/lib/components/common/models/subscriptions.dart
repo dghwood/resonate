@@ -80,6 +80,12 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
     widget.subscriptionsApi.addListener(listener);
   }
 
+  @override
+  void dispose() {
+    widget.subscriptionsApi.removeListener(listener);
+    super.dispose();
+  }
+
   void listener() {
     setState(() {
       _future = widget.subscriptionsApi.listForUser(widget.user.id);

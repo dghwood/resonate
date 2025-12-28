@@ -363,6 +363,10 @@ class UserSubscription extends StorageModel<UserSubscriptionMessage> {
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);
 
+  void dropPodcast() {
+    _message.clearPodcast();
+  }
+
   Podcast? get podcast =>
       _message.hasPodcast() ? Podcast.fromMessage(_message.podcast) : null;
 
