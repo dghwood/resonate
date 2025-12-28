@@ -10,12 +10,10 @@ import (
 )
 
 func Get(ctx context.Context, feedUrl string, client *fetch.Client) (podcast models.Podcast, episodes []*models.Episode, err error) {
-	lctx, cancel := context.WithTimeout(ctx, time.Second*20)
 	// How long should the TTL be?
-	body, err := client.Get(lctx, fetch.Request{
+	body, err := client.Get(ctx, fetch.Request{
 		Url:      feedUrl,
 		CacheTtl: time.Second * 60})
-	cancel()
 	if err != nil {
 		return
 	}

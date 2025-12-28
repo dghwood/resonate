@@ -7,6 +7,8 @@ import (
 	"encoding/gob"
 	"net/http"
 	"strings"
+
+	"github.com/dghwood/resonate/log"
 )
 
 func generateKey(request Request) (key string, err error) {
@@ -16,6 +18,9 @@ func generateKey(request Request) (key string, err error) {
 
 	bytes := sha256.Sum256([]byte(url + string(body)))
 	key = base64.StdEncoding.EncodeToString(bytes[:])
+	key = strings.ReplaceAll(key, "/", "_")
+	key = strings.ReplaceAll(key, "+", "-")
+	log.Info(key)
 	return
 }
 

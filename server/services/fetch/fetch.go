@@ -37,9 +37,6 @@ func NewCached(store cachestore.Cachestore) *Client {
 		cachestore: store,
 	}
 }
-func getContext(ctx context.Context, seconds int) (context.Context, context.CancelFunc) {
-	return context.WithTimeout(ctx, time.Second*time.Duration(seconds))
-}
 
 func (c *Client) Get(ctx context.Context, request Request) (resp []byte, err error) {
 	if c.cachestore == nil {
