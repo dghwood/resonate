@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-sh web.sh release; 
+# sh web.sh release; 
 
 cat << EOF > project.toml; 
 #[[build.env]]

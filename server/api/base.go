@@ -80,6 +80,7 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 			Value:    token.ToTokenString(),
 			HttpOnly: true,
 			Path:     "/api",
+			Secure:   true,
 			// Have this last ~forever
 			MaxAge: 3600 * 24 * 365 * 100,
 		})
@@ -89,6 +90,7 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		http.SetCookie(w, &http.Cookie{
 			Name:   "Access-Token-Available",
 			Value:  "true",
+			Secure: true,
 			MaxAge: 3600 * 24 * 365 * 100,
 			Path:   "/api",
 		})
@@ -101,6 +103,7 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 			Name:     "Refresh-Token",
 			Value:    token.ToTokenString(),
 			HttpOnly: true,
+			Secure:   true,
 			Path:     "/api/login",
 			// Have this last ~forever
 			MaxAge: 3600 * 24 * 365 * 100,
@@ -111,6 +114,7 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		http.SetCookie(w, &http.Cookie{
 			Name:   "Refresh-Token-Available",
 			Value:  "true",
+			Secure: true,
 			MaxAge: 3600 * 24 * 365 * 100,
 			Path:   "/api",
 		})
@@ -123,7 +127,7 @@ func handle[
 	f ApiInterface[request, response]) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// CORs headers
-		w.Header().Set("Access-Control-Allow-Origin", "https://app.resonate.xyz")
+		w.Header().Set("Access-Control-Allow-Origin", "https://app.resonates.xyz")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")

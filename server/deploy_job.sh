@@ -11,6 +11,9 @@
 # value = "./jobs/podcasts/main.go"
 # EOF
 
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
 gcloud builds submit --pack \
   env=GOOGLE_BUILDABLE="./jobs/podcasts/main.go" \
   image="northamerica-northeast1-docker.pkg.dev/level-prism-477102-p5/cloud-run-source-deploy/rxyz-podcasts"
