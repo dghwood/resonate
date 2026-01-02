@@ -7,7 +7,7 @@ import (
 )
 
 func TestPut(t *testing.T) {
-	store := NewStorageCachestore()
+	store := NewStorageCachestore("rxyz-fetch-cache")
 	defer store.Close()
 	ctx := context.Background()
 	err := store.Put(ctx, "foo", []byte("bar"))

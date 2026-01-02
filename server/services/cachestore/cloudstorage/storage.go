@@ -21,7 +21,7 @@ func (d *StorageCachestore) Close() {
 	d.client.Close()
 }
 
-func NewStorageCachestore() *StorageCachestore {
+func NewStorageCachestore(bucketName string) *StorageCachestore {
 	ctx, _ := getContext(10)
 	client, err := storage.NewClient(ctx)
 	if err != nil {
@@ -29,7 +29,7 @@ func NewStorageCachestore() *StorageCachestore {
 	}
 	return &StorageCachestore{
 		client: client,
-		bucket: "rxyz-cache",
+		bucket: bucketName,
 	}
 }
 

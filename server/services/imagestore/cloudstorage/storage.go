@@ -21,7 +21,7 @@ func (d *StorageImagestore) Close() {
 	d.client.Close()
 }
 
-func NewStorageCachestore() *StorageImagestore {
+func NewStorageCachestore(bucketName string) *StorageImagestore {
 	ctx, _ := getContext(10)
 	client, err := storage.NewClient(ctx)
 	if err != nil {
@@ -29,7 +29,7 @@ func NewStorageCachestore() *StorageImagestore {
 	}
 	return &StorageImagestore{
 		client: client,
-		bucket: "resonate-images",
+		bucket: bucketName,
 	}
 }
 

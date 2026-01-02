@@ -1,6 +1,6 @@
 indexes:
 # Update indexes
-# gcloud datastore indexes create index.yaml --database rxyz-db-test
+# gcloud datastore indexes create index.yaml --database rxyz-db --project=resonates-xyz
 - kind: 'resonate.EpisodeMessage'
   properties:
   - name: 'f2'

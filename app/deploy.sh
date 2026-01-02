@@ -14,4 +14,5 @@ flutter build web --$1
 # gcloud storage buckets update gs://rxyz-app-static --cors-file=cors.cfg
 
 # Use firebase hosting (not app hosting)
+firebase login --reauth
 firebase deploy --only hosting

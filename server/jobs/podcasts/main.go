@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/dghwood/resonate/constants"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/datastore"
@@ -11,15 +12,13 @@ import (
 	fetchService "github.com/dghwood/resonate/services/fetch"
 	"github.com/dghwood/resonate/services/rss"
 	"github.com/dghwood/resonate/services/secrets"
-	// "github.com/dghwood/resonate/services/secrets"
 )
 
-// TODO(duncan): Put these in the secrets?
-var projectID = "level-prism-477102-p5"
-var databaseId = "rxyz-db-test"
+var projectID = constants.CLOUD_PROJECT_ID
+var databaseId = constants.CLOUD_DATABASE_ID
 
 func main() {
-	secrets.AccessSecrets()
+	secrets.AccessSecrets(constants.CLOUD_SECRETS_KEY)
 	numSkipped := 0
 	numCompleted := 0
 	ds := datastoreService.NewFirestoreDatastore(projectID, databaseId)

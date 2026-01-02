@@ -5,10 +5,11 @@ import (
 	"os"
 
 	"github.com/dghwood/resonate/api"
+	"github.com/dghwood/resonate/constants"
 	cacheService "github.com/dghwood/resonate/services/cachestore/cloudstorage"
 	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
-	imagestoreService "github.com/dghwood/resonate/services/imagestore"
+	imagestoreService "github.com/dghwood/resonate/services/imagestore/cloudstorage"
 	searchService "github.com/dghwood/resonate/services/search"
 	"github.com/dghwood/resonate/services/secrets"
 
@@ -32,7 +33,7 @@ func main() {
 		port = "8080"
 	}
 	// Loads the Env Variables from the Secrets Manager
-	secrets.AccessSecrets()
+	secrets.AccessSecrets(constants.CLOUD_SECRETS_KEY)
 
 	env_variables := []string{
 		"USER_ID_SALT",
@@ -48,16 +49,13 @@ func main() {
 		}
 	}
 
-	var projectID = "level-prism-477102-p5"
-	var databaseId = "rxyz-db-test"
+	var projectID = constants.CLOUD_PROJECT_ID
+	var databaseId = constants.CLOUD_DATABASE_ID
 
-	cachestore := cacheService.NewStorageCachestore()
+	cachestore := cacheService.NewStorageCachestore(constants.CLOUD_STORAGE_BUCKET_CACHE)
 	fetch := fetchService.NewCached(cachestore)
-	imagestore := imagestoreService.NewMemoryImageStore()
-	// datastore := datastoreService.NewMemoryDatastore()
-	// datastore := NewMockDatastore(fetch, imagestore)
+	imagestore := imagestoreService.NewStorageCachestore(constants.CLOUD_STORAGE_BUCKET_IMAGES)
 	datastore := datastoreService.NewFirestoreDatastore(projectID, databaseId)
-	// searchApi := searchService.NewMockSearch()
 	searchApi := searchService.NewTaddySearch(fetch)
 
 	// Login API endpoints

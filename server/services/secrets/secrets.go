@@ -17,8 +17,8 @@ type Secrets struct {
 	TADDY_USER_ID string `json:"TADDY_USER_ID"`
 }
 
-func AccessSecrets() (err error) {
-	name := "projects/814908101471/secrets/app_secrets/versions/1"
+func AccessSecrets(version string) (err error) {
+	name := version
 
 	// Create the client.
 	ctx := context.Background()
