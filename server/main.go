@@ -133,32 +133,6 @@ func main() {
 		Datastore: datastore,
 	}, "/api/find/users")
 
-	// Matches all paths /images/users/.*
-	http.HandleFunc("/images/users/", func(w http.ResponseWriter, r *http.Request) {
-		// CORs headers
-		w.Header().Set("Access-Control-Allow-Origin", "https://app.resonates.xyz")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-		if r.Method == "OPTIONS" {
-			return
-		}
-		log.Info(r.URL.Path)
-		resourceId := r.URL.Path[len("/images/users/"):]
-		if len(resourceId) == 0 {
-			http.Error(w, "Invalid resourceId", http.StatusBadRequest)
-			return
-		}
-		log.Infof("getting resourceId: %s", resourceId)
-		image, err := imagestore.Get(resourceId, 0)
-		if err != nil {
-			log.Error(err)
-			http.Error(w, "Image not found", http.StatusNotFound)
-			return
-		}
-		// w.Header().Set("Content-Type", "image/png")
-		w.Write(image)
-	})
-
 	log.Info("listening on port " + port + "...")
 	log.Error(http.ListenAndServe(":"+port, nil))
 }

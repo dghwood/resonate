@@ -1,12 +1,16 @@
 package imagestore
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 type MemoryImageStore struct {
 	Data map[string][]byte
 }
 
 func (m *MemoryImageStore) Put(
+	ctx context.Context,
 	key string,
 	response []byte) (err error) {
 	m.Data[key] = response
@@ -14,6 +18,7 @@ func (m *MemoryImageStore) Put(
 }
 
 func (m *MemoryImageStore) Get(
+	ctx context.Context,
 	key string,
 	ttl time.Duration) (response []byte, err error) {
 	response, ok := m.Data[key]

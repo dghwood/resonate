@@ -41,8 +41,8 @@ func getContext(seconds int) (context.Context, context.CancelFunc) {
 	return ctx, cancel
 }
 
-func (d *StorageImagestore) Put(key string, response []byte) (err error) {
-	ctx, _ := getContext(10)
+func (d *StorageImagestore) Put(ctx context.Context, key string, response []byte) (err error) {
+	// ctx, _ := getContext(10)
 	object := d.client.Bucket(d.bucket).Object(key)
 	writer := object.NewWriter(ctx)
 	buffer := bytes.NewBuffer(response)
@@ -55,8 +55,8 @@ func (d *StorageImagestore) Put(key string, response []byte) (err error) {
 	return
 }
 
-func (d *StorageImagestore) Get(key string, ttl time.Duration) (response []byte, err error) {
-	ctx, _ := getContext(10)
+func (d *StorageImagestore) Get(ctx context.Context, key string, ttl time.Duration) (response []byte, err error) {
+	// ctx, _ := getContext(10)
 	object := d.client.Bucket(d.bucket).Object(key)
 	attrs, err := object.Attrs(ctx)
 	if err != nil {

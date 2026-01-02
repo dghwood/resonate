@@ -43,10 +43,11 @@ func (f *Image) Execute(
 	}
 	imageId := utils.GenerateUniqueID()
 
-	err = f.Datastore.Put(imageId, request.ImageBytes)
+	err = f.Datastore.Put(ctx, imageId, request.ImageBytes)
 	if err != nil {
 		return
 	}
-	response.ImageUrl = "/images/users/" + imageId
+	response.ImageUrl = "https://storage.googleapis.com/rxyz-images/" + imageId
+	// response.ImageUrl = "/images/users/" + imageId
 	return
 }

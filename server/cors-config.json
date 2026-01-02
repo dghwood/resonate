@@ -1,0 +1,15 @@
+[
+    {
+        "origin": [
+            "https://app.resonates.xyz"
+        ],
+        "method": [
+            "GET",
+            "OPTIONS"
+        ],
+        "responseHeader": [
+            "Content-Type"
+        ],
+        "maxAgeSeconds": 3600
+    }
+]

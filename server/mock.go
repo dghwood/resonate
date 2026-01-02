@@ -41,7 +41,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 		panic(err)
 	}
 	imageId := "stock"
-	err = is.Put(imageId, imageBytes)
+	err = is.Put(context.Background(), imageId, imageBytes)
 	if err != nil {
 		panic(err)
 	}
