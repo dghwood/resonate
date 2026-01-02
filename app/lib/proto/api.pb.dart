@@ -4523,6 +4523,219 @@ class ListListenMessage extends $pb.GeneratedMessage {
   ListListenMessage_Response ensureResponse() => $_ensure(1);
 }
 
+class SyncListenMessage_Request extends $pb.GeneratedMessage {
+  factory SyncListenMessage_Request({
+    RequestInfo? requestInfo,
+    $core.Iterable<$0.UserListenMessage>? listens,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (listens != null) result.listens.addAll(listens);
+    return result;
+  }
+
+  SyncListenMessage_Request._();
+
+  factory SyncListenMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncListenMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncListenMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..pc<$0.UserListenMessage>(
+        2, _omitFieldNames ? '' : 'listens', $pb.PbFieldType.PM,
+        subBuilder: $0.UserListenMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage_Request clone() =>
+      SyncListenMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage_Request copyWith(
+          void Function(SyncListenMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as SyncListenMessage_Request))
+          as SyncListenMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage_Request create() => SyncListenMessage_Request._();
+  @$core.override
+  SyncListenMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<SyncListenMessage_Request> createRepeated() =>
+      $pb.PbList<SyncListenMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncListenMessage_Request>(create);
+  static SyncListenMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserListenMessage> get listens => $_getList(1);
+}
+
+class SyncListenMessage_Response extends $pb.GeneratedMessage {
+  factory SyncListenMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.UserListenMessage>? listens,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (listens != null) result.listens.addAll(listens);
+    return result;
+  }
+
+  SyncListenMessage_Response._();
+
+  factory SyncListenMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncListenMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncListenMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.UserListenMessage>(
+        2, _omitFieldNames ? '' : 'listens', $pb.PbFieldType.PM,
+        subBuilder: $0.UserListenMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage_Response clone() =>
+      SyncListenMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage_Response copyWith(
+          void Function(SyncListenMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as SyncListenMessage_Response))
+          as SyncListenMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage_Response create() => SyncListenMessage_Response._();
+  @$core.override
+  SyncListenMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<SyncListenMessage_Response> createRepeated() =>
+      $pb.PbList<SyncListenMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncListenMessage_Response>(create);
+  static SyncListenMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserListenMessage> get listens => $_getList(1);
+}
+
+class SyncListenMessage extends $pb.GeneratedMessage {
+  factory SyncListenMessage({
+    SyncListenMessage_Request? request,
+    SyncListenMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  SyncListenMessage._();
+
+  factory SyncListenMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncListenMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncListenMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<SyncListenMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: SyncListenMessage_Request.create)
+    ..aOM<SyncListenMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: SyncListenMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage clone() => SyncListenMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncListenMessage copyWith(void Function(SyncListenMessage) updates) =>
+      super.copyWith((message) => updates(message as SyncListenMessage))
+          as SyncListenMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage create() => SyncListenMessage._();
+  @$core.override
+  SyncListenMessage createEmptyInstance() => create();
+  static $pb.PbList<SyncListenMessage> createRepeated() =>
+      $pb.PbList<SyncListenMessage>();
+  @$core.pragma('dart2js:noInline')
+  static SyncListenMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncListenMessage>(create);
+  static SyncListenMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  SyncListenMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(SyncListenMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  SyncListenMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  SyncListenMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(SyncListenMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  SyncListenMessage_Response ensureResponse() => $_ensure(1);
+}
+
 class GetFeedMessage_Request extends $pb.GeneratedMessage {
   factory GetFeedMessage_Request({
     RequestInfo? requestInfo,

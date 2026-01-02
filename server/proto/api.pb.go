@@ -2064,6 +2064,99 @@ func (b0 ListListenMessage_builder) Build() *ListListenMessage {
 	return m0
 }
 
+type SyncListenMessage struct {
+	state         protoimpl.MessageState      `protogen:"hybrid.v1"`
+	Request       *SyncListenMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
+	Response      *SyncListenMessage_Response `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncListenMessage) Reset() {
+	*x = SyncListenMessage{}
+	mi := &file_proto_api_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncListenMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncListenMessage) ProtoMessage() {}
+
+func (x *SyncListenMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *SyncListenMessage) GetRequest() *SyncListenMessage_Request {
+	if x != nil {
+		return x.Request
+	}
+	return nil
+}
+
+func (x *SyncListenMessage) GetResponse() *SyncListenMessage_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *SyncListenMessage) SetRequest(v *SyncListenMessage_Request) {
+	x.Request = v
+}
+
+func (x *SyncListenMessage) SetResponse(v *SyncListenMessage_Response) {
+	x.Response = v
+}
+
+func (x *SyncListenMessage) HasRequest() bool {
+	if x == nil {
+		return false
+	}
+	return x.Request != nil
+}
+
+func (x *SyncListenMessage) HasResponse() bool {
+	if x == nil {
+		return false
+	}
+	return x.Response != nil
+}
+
+func (x *SyncListenMessage) ClearRequest() {
+	x.Request = nil
+}
+
+func (x *SyncListenMessage) ClearResponse() {
+	x.Response = nil
+}
+
+type SyncListenMessage_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Request  *SyncListenMessage_Request
+	Response *SyncListenMessage_Response
+}
+
+func (b0 SyncListenMessage_builder) Build() *SyncListenMessage {
+	m0 := &SyncListenMessage{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.Request = b.Request
+	x.Response = b.Response
+	return m0
+}
+
 type GetFeedMessage struct {
 	state         protoimpl.MessageState   `protogen:"hybrid.v1"`
 	Request       *GetFeedMessage_Request  `protobuf:"bytes,1,opt,name=request,proto3" json:"request,omitempty"`
@@ -2074,7 +2167,7 @@ type GetFeedMessage struct {
 
 func (x *GetFeedMessage) Reset() {
 	*x = GetFeedMessage{}
-	mi := &file_proto_api_proto_msgTypes[22]
+	mi := &file_proto_api_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2086,7 +2179,7 @@ func (x *GetFeedMessage) String() string {
 func (*GetFeedMessage) ProtoMessage() {}
 
 func (x *GetFeedMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[22]
+	mi := &file_proto_api_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2167,7 +2260,7 @@ type AddFollowMessage struct {
 
 func (x *AddFollowMessage) Reset() {
 	*x = AddFollowMessage{}
-	mi := &file_proto_api_proto_msgTypes[23]
+	mi := &file_proto_api_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2179,7 +2272,7 @@ func (x *AddFollowMessage) String() string {
 func (*AddFollowMessage) ProtoMessage() {}
 
 func (x *AddFollowMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[23]
+	mi := &file_proto_api_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2260,7 +2353,7 @@ type RemoveFollowMessage struct {
 
 func (x *RemoveFollowMessage) Reset() {
 	*x = RemoveFollowMessage{}
-	mi := &file_proto_api_proto_msgTypes[24]
+	mi := &file_proto_api_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2272,7 +2365,7 @@ func (x *RemoveFollowMessage) String() string {
 func (*RemoveFollowMessage) ProtoMessage() {}
 
 func (x *RemoveFollowMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[24]
+	mi := &file_proto_api_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2353,7 +2446,7 @@ type ListFollowMessage struct {
 
 func (x *ListFollowMessage) Reset() {
 	*x = ListFollowMessage{}
-	mi := &file_proto_api_proto_msgTypes[25]
+	mi := &file_proto_api_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2365,7 +2458,7 @@ func (x *ListFollowMessage) String() string {
 func (*ListFollowMessage) ProtoMessage() {}
 
 func (x *ListFollowMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[25]
+	mi := &file_proto_api_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2446,7 +2539,7 @@ type GetPublicUserMessage struct {
 
 func (x *GetPublicUserMessage) Reset() {
 	*x = GetPublicUserMessage{}
-	mi := &file_proto_api_proto_msgTypes[26]
+	mi := &file_proto_api_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2458,7 +2551,7 @@ func (x *GetPublicUserMessage) String() string {
 func (*GetPublicUserMessage) ProtoMessage() {}
 
 func (x *GetPublicUserMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[26]
+	mi := &file_proto_api_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2539,7 +2632,7 @@ type EditUserMessage struct {
 
 func (x *EditUserMessage) Reset() {
 	*x = EditUserMessage{}
-	mi := &file_proto_api_proto_msgTypes[27]
+	mi := &file_proto_api_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2551,7 +2644,7 @@ func (x *EditUserMessage) String() string {
 func (*EditUserMessage) ProtoMessage() {}
 
 func (x *EditUserMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[27]
+	mi := &file_proto_api_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2632,7 +2725,7 @@ type RemoveUserMessage struct {
 
 func (x *RemoveUserMessage) Reset() {
 	*x = RemoveUserMessage{}
-	mi := &file_proto_api_proto_msgTypes[28]
+	mi := &file_proto_api_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2644,7 +2737,7 @@ func (x *RemoveUserMessage) String() string {
 func (*RemoveUserMessage) ProtoMessage() {}
 
 func (x *RemoveUserMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[28]
+	mi := &file_proto_api_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2725,7 +2818,7 @@ type ListUserMessage struct {
 
 func (x *ListUserMessage) Reset() {
 	*x = ListUserMessage{}
-	mi := &file_proto_api_proto_msgTypes[29]
+	mi := &file_proto_api_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2737,7 +2830,7 @@ func (x *ListUserMessage) String() string {
 func (*ListUserMessage) ProtoMessage() {}
 
 func (x *ListUserMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[29]
+	mi := &file_proto_api_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2818,7 +2911,7 @@ type UploadImageMessage struct {
 
 func (x *UploadImageMessage) Reset() {
 	*x = UploadImageMessage{}
-	mi := &file_proto_api_proto_msgTypes[30]
+	mi := &file_proto_api_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2830,7 +2923,7 @@ func (x *UploadImageMessage) String() string {
 func (*UploadImageMessage) ProtoMessage() {}
 
 func (x *UploadImageMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[30]
+	mi := &file_proto_api_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2911,7 +3004,7 @@ type FindContactsMessage struct {
 
 func (x *FindContactsMessage) Reset() {
 	*x = FindContactsMessage{}
-	mi := &file_proto_api_proto_msgTypes[31]
+	mi := &file_proto_api_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2923,7 +3016,7 @@ func (x *FindContactsMessage) String() string {
 func (*FindContactsMessage) ProtoMessage() {}
 
 func (x *FindContactsMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[31]
+	mi := &file_proto_api_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3002,7 +3095,7 @@ type SearchContactsMessage struct {
 
 func (x *SearchContactsMessage) Reset() {
 	*x = SearchContactsMessage{}
-	mi := &file_proto_api_proto_msgTypes[32]
+	mi := &file_proto_api_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3014,7 +3107,7 @@ func (x *SearchContactsMessage) String() string {
 func (*SearchContactsMessage) ProtoMessage() {}
 
 func (x *SearchContactsMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[32]
+	mi := &file_proto_api_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3045,7 +3138,7 @@ type SearchTopContactsMessage struct {
 
 func (x *SearchTopContactsMessage) Reset() {
 	*x = SearchTopContactsMessage{}
-	mi := &file_proto_api_proto_msgTypes[33]
+	mi := &file_proto_api_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3057,7 +3150,7 @@ func (x *SearchTopContactsMessage) String() string {
 func (*SearchTopContactsMessage) ProtoMessage() {}
 
 func (x *SearchTopContactsMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[33]
+	mi := &file_proto_api_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3089,7 +3182,7 @@ type RefreshAuthMessage_Request struct {
 
 func (x *RefreshAuthMessage_Request) Reset() {
 	*x = RefreshAuthMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[34]
+	mi := &file_proto_api_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3101,7 +3194,7 @@ func (x *RefreshAuthMessage_Request) String() string {
 func (*RefreshAuthMessage_Request) ProtoMessage() {}
 
 func (x *RefreshAuthMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[34]
+	mi := &file_proto_api_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3157,7 +3250,7 @@ type RefreshAuthMessage_Response struct {
 
 func (x *RefreshAuthMessage_Response) Reset() {
 	*x = RefreshAuthMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[35]
+	mi := &file_proto_api_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3169,7 +3262,7 @@ func (x *RefreshAuthMessage_Response) String() string {
 func (*RefreshAuthMessage_Response) ProtoMessage() {}
 
 func (x *RefreshAuthMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[35]
+	mi := &file_proto_api_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3227,7 +3320,7 @@ type LoginRequestMessage_Request struct {
 
 func (x *LoginRequestMessage_Request) Reset() {
 	*x = LoginRequestMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[36]
+	mi := &file_proto_api_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3239,7 +3332,7 @@ func (x *LoginRequestMessage_Request) String() string {
 func (*LoginRequestMessage_Request) ProtoMessage() {}
 
 func (x *LoginRequestMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[36]
+	mi := &file_proto_api_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3321,7 +3414,7 @@ type LoginRequestMessage_Response struct {
 
 func (x *LoginRequestMessage_Response) Reset() {
 	*x = LoginRequestMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[37]
+	mi := &file_proto_api_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3333,7 +3426,7 @@ func (x *LoginRequestMessage_Response) String() string {
 func (*LoginRequestMessage_Response) ProtoMessage() {}
 
 func (x *LoginRequestMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[37]
+	mi := &file_proto_api_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3392,7 +3485,7 @@ type LoginUserMessage_Request struct {
 
 func (x *LoginUserMessage_Request) Reset() {
 	*x = LoginUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[38]
+	mi := &file_proto_api_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3404,7 +3497,7 @@ func (x *LoginUserMessage_Request) String() string {
 func (*LoginUserMessage_Request) ProtoMessage() {}
 
 func (x *LoginUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[38]
+	mi := &file_proto_api_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3502,7 +3595,7 @@ type LoginUserMessage_Response struct {
 
 func (x *LoginUserMessage_Response) Reset() {
 	*x = LoginUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[39]
+	mi := &file_proto_api_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3514,7 +3607,7 @@ func (x *LoginUserMessage_Response) String() string {
 func (*LoginUserMessage_Response) ProtoMessage() {}
 
 func (x *LoginUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[39]
+	mi := &file_proto_api_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3597,7 +3690,7 @@ type CreateUserMessage_Request struct {
 
 func (x *CreateUserMessage_Request) Reset() {
 	*x = CreateUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[40]
+	mi := &file_proto_api_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3609,7 +3702,7 @@ func (x *CreateUserMessage_Request) String() string {
 func (*CreateUserMessage_Request) ProtoMessage() {}
 
 func (x *CreateUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[40]
+	mi := &file_proto_api_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3690,7 +3783,7 @@ type CreateUserMessage_Response struct {
 
 func (x *CreateUserMessage_Response) Reset() {
 	*x = CreateUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[41]
+	mi := &file_proto_api_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3702,7 +3795,7 @@ func (x *CreateUserMessage_Response) String() string {
 func (*CreateUserMessage_Response) ProtoMessage() {}
 
 func (x *CreateUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[41]
+	mi := &file_proto_api_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3783,7 +3876,7 @@ type GetUserMessage_Request struct {
 
 func (x *GetUserMessage_Request) Reset() {
 	*x = GetUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[42]
+	mi := &file_proto_api_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3795,7 +3888,7 @@ func (x *GetUserMessage_Request) String() string {
 func (*GetUserMessage_Request) ProtoMessage() {}
 
 func (x *GetUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[42]
+	mi := &file_proto_api_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3865,7 +3958,7 @@ type GetUserMessage_Response struct {
 
 func (x *GetUserMessage_Response) Reset() {
 	*x = GetUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[43]
+	mi := &file_proto_api_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3877,7 +3970,7 @@ func (x *GetUserMessage_Response) String() string {
 func (*GetUserMessage_Response) ProtoMessage() {}
 
 func (x *GetUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[43]
+	mi := &file_proto_api_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3958,7 +4051,7 @@ type UpdateUserMessage_Request struct {
 
 func (x *UpdateUserMessage_Request) Reset() {
 	*x = UpdateUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[44]
+	mi := &file_proto_api_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3970,7 +4063,7 @@ func (x *UpdateUserMessage_Request) String() string {
 func (*UpdateUserMessage_Request) ProtoMessage() {}
 
 func (x *UpdateUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[44]
+	mi := &file_proto_api_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4051,7 +4144,7 @@ type UpdateUserMessage_Response struct {
 
 func (x *UpdateUserMessage_Response) Reset() {
 	*x = UpdateUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[45]
+	mi := &file_proto_api_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4063,7 +4156,7 @@ func (x *UpdateUserMessage_Response) String() string {
 func (*UpdateUserMessage_Response) ProtoMessage() {}
 
 func (x *UpdateUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[45]
+	mi := &file_proto_api_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4144,7 +4237,7 @@ type SearchMessage_Request struct {
 
 func (x *SearchMessage_Request) Reset() {
 	*x = SearchMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[46]
+	mi := &file_proto_api_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4156,7 +4249,7 @@ func (x *SearchMessage_Request) String() string {
 func (*SearchMessage_Request) ProtoMessage() {}
 
 func (x *SearchMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[46]
+	mi := &file_proto_api_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4226,7 +4319,7 @@ type SearchMessage_Response struct {
 
 func (x *SearchMessage_Response) Reset() {
 	*x = SearchMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[47]
+	mi := &file_proto_api_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4238,7 +4331,7 @@ func (x *SearchMessage_Response) String() string {
 func (*SearchMessage_Response) ProtoMessage() {}
 
 func (x *SearchMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[47]
+	mi := &file_proto_api_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4318,7 +4411,7 @@ type SearchTopMessage_Request struct {
 
 func (x *SearchTopMessage_Request) Reset() {
 	*x = SearchTopMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[48]
+	mi := &file_proto_api_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4330,7 +4423,7 @@ func (x *SearchTopMessage_Request) String() string {
 func (*SearchTopMessage_Request) ProtoMessage() {}
 
 func (x *SearchTopMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[48]
+	mi := &file_proto_api_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4387,7 +4480,7 @@ type SearchTopMessage_Response struct {
 
 func (x *SearchTopMessage_Response) Reset() {
 	*x = SearchTopMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[49]
+	mi := &file_proto_api_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4399,7 +4492,7 @@ func (x *SearchTopMessage_Response) String() string {
 func (*SearchTopMessage_Response) ProtoMessage() {}
 
 func (x *SearchTopMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[49]
+	mi := &file_proto_api_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4480,7 +4573,7 @@ type GetPodcastMessage_Request struct {
 
 func (x *GetPodcastMessage_Request) Reset() {
 	*x = GetPodcastMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[50]
+	mi := &file_proto_api_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4492,7 +4585,7 @@ func (x *GetPodcastMessage_Request) String() string {
 func (*GetPodcastMessage_Request) ProtoMessage() {}
 
 func (x *GetPodcastMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[50]
+	mi := &file_proto_api_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4562,7 +4655,7 @@ type GetPodcastMessage_Response struct {
 
 func (x *GetPodcastMessage_Response) Reset() {
 	*x = GetPodcastMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[51]
+	mi := &file_proto_api_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4574,7 +4667,7 @@ func (x *GetPodcastMessage_Response) String() string {
 func (*GetPodcastMessage_Response) ProtoMessage() {}
 
 func (x *GetPodcastMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[51]
+	mi := &file_proto_api_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4656,7 +4749,7 @@ type ListPodcastEpisodesMessage_Request struct {
 
 func (x *ListPodcastEpisodesMessage_Request) Reset() {
 	*x = ListPodcastEpisodesMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[52]
+	mi := &file_proto_api_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4668,7 +4761,7 @@ func (x *ListPodcastEpisodesMessage_Request) String() string {
 func (*ListPodcastEpisodesMessage_Request) ProtoMessage() {}
 
 func (x *ListPodcastEpisodesMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[52]
+	mi := &file_proto_api_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4765,7 +4858,7 @@ type ListPodcastEpisodesMessage_Response struct {
 
 func (x *ListPodcastEpisodesMessage_Response) Reset() {
 	*x = ListPodcastEpisodesMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[53]
+	mi := &file_proto_api_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4777,7 +4870,7 @@ func (x *ListPodcastEpisodesMessage_Response) String() string {
 func (*ListPodcastEpisodesMessage_Response) ProtoMessage() {}
 
 func (x *ListPodcastEpisodesMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[53]
+	mi := &file_proto_api_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4896,7 +4989,7 @@ type GetEpisodeMessage_Request struct {
 
 func (x *GetEpisodeMessage_Request) Reset() {
 	*x = GetEpisodeMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[54]
+	mi := &file_proto_api_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4908,7 +5001,7 @@ func (x *GetEpisodeMessage_Request) String() string {
 func (*GetEpisodeMessage_Request) ProtoMessage() {}
 
 func (x *GetEpisodeMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[54]
+	mi := &file_proto_api_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4978,7 +5071,7 @@ type GetEpisodeMessage_Response struct {
 
 func (x *GetEpisodeMessage_Response) Reset() {
 	*x = GetEpisodeMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[55]
+	mi := &file_proto_api_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4990,7 +5083,7 @@ func (x *GetEpisodeMessage_Response) String() string {
 func (*GetEpisodeMessage_Response) ProtoMessage() {}
 
 func (x *GetEpisodeMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[55]
+	mi := &file_proto_api_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5071,7 +5164,7 @@ type AddSubscriptionMessage_Request struct {
 
 func (x *AddSubscriptionMessage_Request) Reset() {
 	*x = AddSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[56]
+	mi := &file_proto_api_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5083,7 +5176,7 @@ func (x *AddSubscriptionMessage_Request) String() string {
 func (*AddSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *AddSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[56]
+	mi := &file_proto_api_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5164,7 +5257,7 @@ type AddSubscriptionMessage_Response struct {
 
 func (x *AddSubscriptionMessage_Response) Reset() {
 	*x = AddSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[57]
+	mi := &file_proto_api_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5176,7 +5269,7 @@ func (x *AddSubscriptionMessage_Response) String() string {
 func (*AddSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *AddSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[57]
+	mi := &file_proto_api_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5257,7 +5350,7 @@ type RemoveSubscriptionMessage_Request struct {
 
 func (x *RemoveSubscriptionMessage_Request) Reset() {
 	*x = RemoveSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[58]
+	mi := &file_proto_api_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5269,7 +5362,7 @@ func (x *RemoveSubscriptionMessage_Request) String() string {
 func (*RemoveSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *RemoveSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[58]
+	mi := &file_proto_api_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5350,7 +5443,7 @@ type RemoveSubscriptionMessage_Response struct {
 
 func (x *RemoveSubscriptionMessage_Response) Reset() {
 	*x = RemoveSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[59]
+	mi := &file_proto_api_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5362,7 +5455,7 @@ func (x *RemoveSubscriptionMessage_Response) String() string {
 func (*RemoveSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *RemoveSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[59]
+	mi := &file_proto_api_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5445,7 +5538,7 @@ type ListSubscriptionMessage_Request struct {
 
 func (x *ListSubscriptionMessage_Request) Reset() {
 	*x = ListSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[60]
+	mi := &file_proto_api_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5457,7 +5550,7 @@ func (x *ListSubscriptionMessage_Request) String() string {
 func (*ListSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *ListSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[60]
+	mi := &file_proto_api_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5565,7 +5658,7 @@ type ListSubscriptionMessage_Response struct {
 
 func (x *ListSubscriptionMessage_Response) Reset() {
 	*x = ListSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[61]
+	mi := &file_proto_api_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5577,7 +5670,7 @@ func (x *ListSubscriptionMessage_Response) String() string {
 func (*ListSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *ListSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[61]
+	mi := &file_proto_api_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5671,7 +5764,7 @@ type SyncSubscriptionMessage_Request struct {
 
 func (x *SyncSubscriptionMessage_Request) Reset() {
 	*x = SyncSubscriptionMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[62]
+	mi := &file_proto_api_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5683,7 +5776,7 @@ func (x *SyncSubscriptionMessage_Request) String() string {
 func (*SyncSubscriptionMessage_Request) ProtoMessage() {}
 
 func (x *SyncSubscriptionMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[62]
+	mi := &file_proto_api_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5753,7 +5846,7 @@ type SyncSubscriptionMessage_Response struct {
 
 func (x *SyncSubscriptionMessage_Response) Reset() {
 	*x = SyncSubscriptionMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[63]
+	mi := &file_proto_api_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5765,7 +5858,7 @@ func (x *SyncSubscriptionMessage_Response) String() string {
 func (*SyncSubscriptionMessage_Response) ProtoMessage() {}
 
 func (x *SyncSubscriptionMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[63]
+	mi := &file_proto_api_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5835,7 +5928,7 @@ type AddListenMessage_Request struct {
 
 func (x *AddListenMessage_Request) Reset() {
 	*x = AddListenMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[64]
+	mi := &file_proto_api_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5847,7 +5940,7 @@ func (x *AddListenMessage_Request) String() string {
 func (*AddListenMessage_Request) ProtoMessage() {}
 
 func (x *AddListenMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[64]
+	mi := &file_proto_api_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5928,7 +6021,7 @@ type AddListenMessage_Response struct {
 
 func (x *AddListenMessage_Response) Reset() {
 	*x = AddListenMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[65]
+	mi := &file_proto_api_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5940,7 +6033,7 @@ func (x *AddListenMessage_Response) String() string {
 func (*AddListenMessage_Response) ProtoMessage() {}
 
 func (x *AddListenMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[65]
+	mi := &file_proto_api_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6021,7 +6114,7 @@ type RemoveListenMessage_Request struct {
 
 func (x *RemoveListenMessage_Request) Reset() {
 	*x = RemoveListenMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[66]
+	mi := &file_proto_api_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6033,7 +6126,7 @@ func (x *RemoveListenMessage_Request) String() string {
 func (*RemoveListenMessage_Request) ProtoMessage() {}
 
 func (x *RemoveListenMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[66]
+	mi := &file_proto_api_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6114,7 +6207,7 @@ type RemoveListenMessage_Response struct {
 
 func (x *RemoveListenMessage_Response) Reset() {
 	*x = RemoveListenMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[67]
+	mi := &file_proto_api_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6126,7 +6219,7 @@ func (x *RemoveListenMessage_Response) String() string {
 func (*RemoveListenMessage_Response) ProtoMessage() {}
 
 func (x *RemoveListenMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[67]
+	mi := &file_proto_api_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6210,7 +6303,7 @@ type ListListenMessage_Request struct {
 
 func (x *ListListenMessage_Request) Reset() {
 	*x = ListListenMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[68]
+	mi := &file_proto_api_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6222,7 +6315,7 @@ func (x *ListListenMessage_Request) String() string {
 func (*ListListenMessage_Request) ProtoMessage() {}
 
 func (x *ListListenMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[68]
+	mi := &file_proto_api_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6331,7 +6424,7 @@ type ListListenMessage_Response struct {
 
 func (x *ListListenMessage_Response) Reset() {
 	*x = ListListenMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[69]
+	mi := &file_proto_api_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6343,7 +6436,7 @@ func (x *ListListenMessage_Response) String() string {
 func (*ListListenMessage_Response) ProtoMessage() {}
 
 func (x *ListListenMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[69]
+	mi := &file_proto_api_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6427,6 +6520,170 @@ func (b0 ListListenMessage_Response_builder) Build() *ListListenMessage_Response
 	return m0
 }
 
+type SyncListenMessage_Request struct {
+	state         protoimpl.MessageState `protogen:"hybrid.v1"`
+	RequestInfo   *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
+	Listens       []*UserListenMessage   `protobuf:"bytes,2,rep,name=listens,proto3" json:"listens,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncListenMessage_Request) Reset() {
+	*x = SyncListenMessage_Request{}
+	mi := &file_proto_api_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncListenMessage_Request) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncListenMessage_Request) ProtoMessage() {}
+
+func (x *SyncListenMessage_Request) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *SyncListenMessage_Request) GetRequestInfo() *RequestInfo {
+	if x != nil {
+		return x.RequestInfo
+	}
+	return nil
+}
+
+func (x *SyncListenMessage_Request) GetListens() []*UserListenMessage {
+	if x != nil {
+		return x.Listens
+	}
+	return nil
+}
+
+func (x *SyncListenMessage_Request) SetRequestInfo(v *RequestInfo) {
+	x.RequestInfo = v
+}
+
+func (x *SyncListenMessage_Request) SetListens(v []*UserListenMessage) {
+	x.Listens = v
+}
+
+func (x *SyncListenMessage_Request) HasRequestInfo() bool {
+	if x == nil {
+		return false
+	}
+	return x.RequestInfo != nil
+}
+
+func (x *SyncListenMessage_Request) ClearRequestInfo() {
+	x.RequestInfo = nil
+}
+
+type SyncListenMessage_Request_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestInfo *RequestInfo
+	Listens     []*UserListenMessage
+}
+
+func (b0 SyncListenMessage_Request_builder) Build() *SyncListenMessage_Request {
+	m0 := &SyncListenMessage_Request{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.RequestInfo = b.RequestInfo
+	x.Listens = b.Listens
+	return m0
+}
+
+type SyncListenMessage_Response struct {
+	state         protoimpl.MessageState `protogen:"hybrid.v1"`
+	ResponseInfo  *ResponseInfo          `protobuf:"bytes,1,opt,name=response_info,json=responseInfo,proto3" json:"response_info,omitempty"`
+	Listens       []*UserListenMessage   `protobuf:"bytes,2,rep,name=listens,proto3" json:"listens,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncListenMessage_Response) Reset() {
+	*x = SyncListenMessage_Response{}
+	mi := &file_proto_api_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncListenMessage_Response) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncListenMessage_Response) ProtoMessage() {}
+
+func (x *SyncListenMessage_Response) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_api_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *SyncListenMessage_Response) GetResponseInfo() *ResponseInfo {
+	if x != nil {
+		return x.ResponseInfo
+	}
+	return nil
+}
+
+func (x *SyncListenMessage_Response) GetListens() []*UserListenMessage {
+	if x != nil {
+		return x.Listens
+	}
+	return nil
+}
+
+func (x *SyncListenMessage_Response) SetResponseInfo(v *ResponseInfo) {
+	x.ResponseInfo = v
+}
+
+func (x *SyncListenMessage_Response) SetListens(v []*UserListenMessage) {
+	x.Listens = v
+}
+
+func (x *SyncListenMessage_Response) HasResponseInfo() bool {
+	if x == nil {
+		return false
+	}
+	return x.ResponseInfo != nil
+}
+
+func (x *SyncListenMessage_Response) ClearResponseInfo() {
+	x.ResponseInfo = nil
+}
+
+type SyncListenMessage_Response_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	ResponseInfo *ResponseInfo
+	Listens      []*UserListenMessage
+}
+
+func (b0 SyncListenMessage_Response_builder) Build() *SyncListenMessage_Response {
+	m0 := &SyncListenMessage_Response{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.ResponseInfo = b.ResponseInfo
+	x.Listens = b.Listens
+	return m0
+}
+
 type GetFeedMessage_Request struct {
 	state       protoimpl.MessageState `protogen:"hybrid.v1"`
 	RequestInfo *RequestInfo           `protobuf:"bytes,1,opt,name=request_info,json=requestInfo,proto3" json:"request_info,omitempty"`
@@ -6439,7 +6696,7 @@ type GetFeedMessage_Request struct {
 
 func (x *GetFeedMessage_Request) Reset() {
 	*x = GetFeedMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[70]
+	mi := &file_proto_api_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6451,7 +6708,7 @@ func (x *GetFeedMessage_Request) String() string {
 func (*GetFeedMessage_Request) ProtoMessage() {}
 
 func (x *GetFeedMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[70]
+	mi := &file_proto_api_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6535,7 +6792,7 @@ type GetFeedMessage_Response struct {
 
 func (x *GetFeedMessage_Response) Reset() {
 	*x = GetFeedMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[71]
+	mi := &file_proto_api_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6547,7 +6804,7 @@ func (x *GetFeedMessage_Response) String() string {
 func (*GetFeedMessage_Response) ProtoMessage() {}
 
 func (x *GetFeedMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[71]
+	mi := &file_proto_api_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6628,7 +6885,7 @@ type AddFollowMessage_Request struct {
 
 func (x *AddFollowMessage_Request) Reset() {
 	*x = AddFollowMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[72]
+	mi := &file_proto_api_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6640,7 +6897,7 @@ func (x *AddFollowMessage_Request) String() string {
 func (*AddFollowMessage_Request) ProtoMessage() {}
 
 func (x *AddFollowMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[72]
+	mi := &file_proto_api_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6721,7 +6978,7 @@ type AddFollowMessage_Response struct {
 
 func (x *AddFollowMessage_Response) Reset() {
 	*x = AddFollowMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[73]
+	mi := &file_proto_api_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6733,7 +6990,7 @@ func (x *AddFollowMessage_Response) String() string {
 func (*AddFollowMessage_Response) ProtoMessage() {}
 
 func (x *AddFollowMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[73]
+	mi := &file_proto_api_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6814,7 +7071,7 @@ type RemoveFollowMessage_Request struct {
 
 func (x *RemoveFollowMessage_Request) Reset() {
 	*x = RemoveFollowMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[74]
+	mi := &file_proto_api_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6826,7 +7083,7 @@ func (x *RemoveFollowMessage_Request) String() string {
 func (*RemoveFollowMessage_Request) ProtoMessage() {}
 
 func (x *RemoveFollowMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[74]
+	mi := &file_proto_api_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6907,7 +7164,7 @@ type RemoveFollowMessage_Response struct {
 
 func (x *RemoveFollowMessage_Response) Reset() {
 	*x = RemoveFollowMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[75]
+	mi := &file_proto_api_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6919,7 +7176,7 @@ func (x *RemoveFollowMessage_Response) String() string {
 func (*RemoveFollowMessage_Response) ProtoMessage() {}
 
 func (x *RemoveFollowMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[75]
+	mi := &file_proto_api_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7004,7 +7261,7 @@ type ListFollowMessage_Request struct {
 
 func (x *ListFollowMessage_Request) Reset() {
 	*x = ListFollowMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[76]
+	mi := &file_proto_api_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7016,7 +7273,7 @@ func (x *ListFollowMessage_Request) String() string {
 func (*ListFollowMessage_Request) ProtoMessage() {}
 
 func (x *ListFollowMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[76]
+	mi := &file_proto_api_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7138,7 +7395,7 @@ type ListFollowMessage_Response struct {
 
 func (x *ListFollowMessage_Response) Reset() {
 	*x = ListFollowMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[77]
+	mi := &file_proto_api_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7150,7 +7407,7 @@ func (x *ListFollowMessage_Response) String() string {
 func (*ListFollowMessage_Response) ProtoMessage() {}
 
 func (x *ListFollowMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[77]
+	mi := &file_proto_api_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7244,7 +7501,7 @@ type GetPublicUserMessage_Request struct {
 
 func (x *GetPublicUserMessage_Request) Reset() {
 	*x = GetPublicUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[78]
+	mi := &file_proto_api_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7256,7 +7513,7 @@ func (x *GetPublicUserMessage_Request) String() string {
 func (*GetPublicUserMessage_Request) ProtoMessage() {}
 
 func (x *GetPublicUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[78]
+	mi := &file_proto_api_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7326,7 +7583,7 @@ type GetPublicUserMessage_Response struct {
 
 func (x *GetPublicUserMessage_Response) Reset() {
 	*x = GetPublicUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[79]
+	mi := &file_proto_api_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7338,7 +7595,7 @@ func (x *GetPublicUserMessage_Response) String() string {
 func (*GetPublicUserMessage_Response) ProtoMessage() {}
 
 func (x *GetPublicUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[79]
+	mi := &file_proto_api_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7419,7 +7676,7 @@ type EditUserMessage_Request struct {
 
 func (x *EditUserMessage_Request) Reset() {
 	*x = EditUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[80]
+	mi := &file_proto_api_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7431,7 +7688,7 @@ func (x *EditUserMessage_Request) String() string {
 func (*EditUserMessage_Request) ProtoMessage() {}
 
 func (x *EditUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[80]
+	mi := &file_proto_api_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7512,7 +7769,7 @@ type EditUserMessage_Response struct {
 
 func (x *EditUserMessage_Response) Reset() {
 	*x = EditUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[81]
+	mi := &file_proto_api_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7524,7 +7781,7 @@ func (x *EditUserMessage_Response) String() string {
 func (*EditUserMessage_Response) ProtoMessage() {}
 
 func (x *EditUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[81]
+	mi := &file_proto_api_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7605,7 +7862,7 @@ type RemoveUserMessage_Request struct {
 
 func (x *RemoveUserMessage_Request) Reset() {
 	*x = RemoveUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[82]
+	mi := &file_proto_api_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7617,7 +7874,7 @@ func (x *RemoveUserMessage_Request) String() string {
 func (*RemoveUserMessage_Request) ProtoMessage() {}
 
 func (x *RemoveUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[82]
+	mi := &file_proto_api_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7686,7 +7943,7 @@ type RemoveUserMessage_Response struct {
 
 func (x *RemoveUserMessage_Response) Reset() {
 	*x = RemoveUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[83]
+	mi := &file_proto_api_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7698,7 +7955,7 @@ func (x *RemoveUserMessage_Response) String() string {
 func (*RemoveUserMessage_Response) ProtoMessage() {}
 
 func (x *RemoveUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[83]
+	mi := &file_proto_api_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7755,7 +8012,7 @@ type ListUserMessage_Request struct {
 
 func (x *ListUserMessage_Request) Reset() {
 	*x = ListUserMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[84]
+	mi := &file_proto_api_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7767,7 +8024,7 @@ func (x *ListUserMessage_Request) String() string {
 func (*ListUserMessage_Request) ProtoMessage() {}
 
 func (x *ListUserMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[84]
+	mi := &file_proto_api_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7837,7 +8094,7 @@ type ListUserMessage_Response struct {
 
 func (x *ListUserMessage_Response) Reset() {
 	*x = ListUserMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[85]
+	mi := &file_proto_api_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7849,7 +8106,7 @@ func (x *ListUserMessage_Response) String() string {
 func (*ListUserMessage_Response) ProtoMessage() {}
 
 func (x *ListUserMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[85]
+	mi := &file_proto_api_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7919,7 +8176,7 @@ type UploadImageMessage_Request struct {
 
 func (x *UploadImageMessage_Request) Reset() {
 	*x = UploadImageMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[86]
+	mi := &file_proto_api_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7931,7 +8188,7 @@ func (x *UploadImageMessage_Request) String() string {
 func (*UploadImageMessage_Request) ProtoMessage() {}
 
 func (x *UploadImageMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[86]
+	mi := &file_proto_api_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8004,7 +8261,7 @@ type UploadImageMessage_Response struct {
 
 func (x *UploadImageMessage_Response) Reset() {
 	*x = UploadImageMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[87]
+	mi := &file_proto_api_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8016,7 +8273,7 @@ func (x *UploadImageMessage_Response) String() string {
 func (*UploadImageMessage_Response) ProtoMessage() {}
 
 func (x *UploadImageMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[87]
+	mi := &file_proto_api_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8087,7 +8344,7 @@ type FindContactsMessage_Request struct {
 
 func (x *FindContactsMessage_Request) Reset() {
 	*x = FindContactsMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[88]
+	mi := &file_proto_api_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8099,7 +8356,7 @@ func (x *FindContactsMessage_Request) String() string {
 func (*FindContactsMessage_Request) ProtoMessage() {}
 
 func (x *FindContactsMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[88]
+	mi := &file_proto_api_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8194,7 +8451,7 @@ type FindContactsMessage_Response struct {
 
 func (x *FindContactsMessage_Response) Reset() {
 	*x = FindContactsMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[89]
+	mi := &file_proto_api_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8206,7 +8463,7 @@ func (x *FindContactsMessage_Response) String() string {
 func (*FindContactsMessage_Response) ProtoMessage() {}
 
 func (x *FindContactsMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[89]
+	mi := &file_proto_api_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8301,7 +8558,7 @@ type SearchContactsMessage_Request struct {
 
 func (x *SearchContactsMessage_Request) Reset() {
 	*x = SearchContactsMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[90]
+	mi := &file_proto_api_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8313,7 +8570,7 @@ func (x *SearchContactsMessage_Request) String() string {
 func (*SearchContactsMessage_Request) ProtoMessage() {}
 
 func (x *SearchContactsMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[90]
+	mi := &file_proto_api_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8408,7 +8665,7 @@ type SearchContactsMessage_Response struct {
 
 func (x *SearchContactsMessage_Response) Reset() {
 	*x = SearchContactsMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[91]
+	mi := &file_proto_api_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8420,7 +8677,7 @@ func (x *SearchContactsMessage_Response) String() string {
 func (*SearchContactsMessage_Response) ProtoMessage() {}
 
 func (x *SearchContactsMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[91]
+	mi := &file_proto_api_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8514,7 +8771,7 @@ type SearchTopContactsMessage_Request struct {
 
 func (x *SearchTopContactsMessage_Request) Reset() {
 	*x = SearchTopContactsMessage_Request{}
-	mi := &file_proto_api_proto_msgTypes[92]
+	mi := &file_proto_api_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8526,7 +8783,7 @@ func (x *SearchTopContactsMessage_Request) String() string {
 func (*SearchTopContactsMessage_Request) ProtoMessage() {}
 
 func (x *SearchTopContactsMessage_Request) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[92]
+	mi := &file_proto_api_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8596,7 +8853,7 @@ type SearchTopContactsMessage_Response struct {
 
 func (x *SearchTopContactsMessage_Response) Reset() {
 	*x = SearchTopContactsMessage_Response{}
-	mi := &file_proto_api_proto_msgTypes[93]
+	mi := &file_proto_api_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8608,7 +8865,7 @@ func (x *SearchTopContactsMessage_Response) String() string {
 func (*SearchTopContactsMessage_Response) ProtoMessage() {}
 
 func (x *SearchTopContactsMessage_Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_api_proto_msgTypes[93]
+	mi := &file_proto_api_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8859,7 +9116,16 @@ const file_proto_api_proto_rawDesc = "" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x125\n" +
 	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x121\n" +
-	"\x06cursor\x18\x05 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\"\xa0\x03\n" +
+	"\x06cursor\x18\x05 \x01(\v2\x19.resonate.api.QueryCursorR\x06cursor\"\xa1\x03\n" +
+	"\x11SyncListenMessage\x12A\n" +
+	"\arequest\x18\x01 \x01(\v2'.resonate.api.SyncListenMessage.RequestR\arequest\x12D\n" +
+	"\bresponse\x18\x02 \x01(\v2(.resonate.api.SyncListenMessage.ResponseR\bresponse\x1a~\n" +
+	"\aRequest\x12<\n" +
+	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x125\n" +
+	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x1a\x82\x01\n" +
+	"\bResponse\x12?\n" +
+	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x125\n" +
+	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\"\xa0\x03\n" +
 	"\x0eGetFeedMessage\x12>\n" +
 	"\arequest\x18\x01 \x01(\v2$.resonate.api.GetFeedMessage.RequestR\arequest\x12?\n" +
 	"\areponse\x18\x02 \x01(\v2%.resonate.api.GetFeedMessage.ResponseR\areponse\x1a\x90\x01\n" +
@@ -8975,7 +9241,7 @@ const file_proto_api_proto_rawDesc = "" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x121\n" +
 	"\x05users\x18\x02 \x03(\v2\x1b.resonate.PublicUserMessageR\x05usersB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
-var file_proto_api_proto_msgTypes = make([]protoimpl.MessageInfo, 94)
+var file_proto_api_proto_msgTypes = make([]protoimpl.MessageInfo, 97)
 var file_proto_api_proto_goTypes = []any{
 	(*InternalInfo)(nil),                        // 0: resonate.api.InternalInfo
 	(*ResponseInfo)(nil),                        // 1: resonate.api.ResponseInfo
@@ -8999,268 +9265,277 @@ var file_proto_api_proto_goTypes = []any{
 	(*AddListenMessage)(nil),                    // 19: resonate.api.AddListenMessage
 	(*RemoveListenMessage)(nil),                 // 20: resonate.api.RemoveListenMessage
 	(*ListListenMessage)(nil),                   // 21: resonate.api.ListListenMessage
-	(*GetFeedMessage)(nil),                      // 22: resonate.api.GetFeedMessage
-	(*AddFollowMessage)(nil),                    // 23: resonate.api.AddFollowMessage
-	(*RemoveFollowMessage)(nil),                 // 24: resonate.api.RemoveFollowMessage
-	(*ListFollowMessage)(nil),                   // 25: resonate.api.ListFollowMessage
-	(*GetPublicUserMessage)(nil),                // 26: resonate.api.GetPublicUserMessage
-	(*EditUserMessage)(nil),                     // 27: resonate.api.EditUserMessage
-	(*RemoveUserMessage)(nil),                   // 28: resonate.api.RemoveUserMessage
-	(*ListUserMessage)(nil),                     // 29: resonate.api.ListUserMessage
-	(*UploadImageMessage)(nil),                  // 30: resonate.api.UploadImageMessage
-	(*FindContactsMessage)(nil),                 // 31: resonate.api.FindContactsMessage
-	(*SearchContactsMessage)(nil),               // 32: resonate.api.SearchContactsMessage
-	(*SearchTopContactsMessage)(nil),            // 33: resonate.api.SearchTopContactsMessage
-	(*RefreshAuthMessage_Request)(nil),          // 34: resonate.api.RefreshAuthMessage.Request
-	(*RefreshAuthMessage_Response)(nil),         // 35: resonate.api.RefreshAuthMessage.Response
-	(*LoginRequestMessage_Request)(nil),         // 36: resonate.api.LoginRequestMessage.Request
-	(*LoginRequestMessage_Response)(nil),        // 37: resonate.api.LoginRequestMessage.Response
-	(*LoginUserMessage_Request)(nil),            // 38: resonate.api.LoginUserMessage.Request
-	(*LoginUserMessage_Response)(nil),           // 39: resonate.api.LoginUserMessage.Response
-	(*CreateUserMessage_Request)(nil),           // 40: resonate.api.CreateUserMessage.Request
-	(*CreateUserMessage_Response)(nil),          // 41: resonate.api.CreateUserMessage.Response
-	(*GetUserMessage_Request)(nil),              // 42: resonate.api.GetUserMessage.Request
-	(*GetUserMessage_Response)(nil),             // 43: resonate.api.GetUserMessage.Response
-	(*UpdateUserMessage_Request)(nil),           // 44: resonate.api.UpdateUserMessage.Request
-	(*UpdateUserMessage_Response)(nil),          // 45: resonate.api.UpdateUserMessage.Response
-	(*SearchMessage_Request)(nil),               // 46: resonate.api.SearchMessage.Request
-	(*SearchMessage_Response)(nil),              // 47: resonate.api.SearchMessage.Response
-	(*SearchTopMessage_Request)(nil),            // 48: resonate.api.SearchTopMessage.Request
-	(*SearchTopMessage_Response)(nil),           // 49: resonate.api.SearchTopMessage.Response
-	(*GetPodcastMessage_Request)(nil),           // 50: resonate.api.GetPodcastMessage.Request
-	(*GetPodcastMessage_Response)(nil),          // 51: resonate.api.GetPodcastMessage.Response
-	(*ListPodcastEpisodesMessage_Request)(nil),  // 52: resonate.api.ListPodcastEpisodesMessage.Request
-	(*ListPodcastEpisodesMessage_Response)(nil), // 53: resonate.api.ListPodcastEpisodesMessage.Response
-	(*GetEpisodeMessage_Request)(nil),           // 54: resonate.api.GetEpisodeMessage.Request
-	(*GetEpisodeMessage_Response)(nil),          // 55: resonate.api.GetEpisodeMessage.Response
-	(*AddSubscriptionMessage_Request)(nil),      // 56: resonate.api.AddSubscriptionMessage.Request
-	(*AddSubscriptionMessage_Response)(nil),     // 57: resonate.api.AddSubscriptionMessage.Response
-	(*RemoveSubscriptionMessage_Request)(nil),   // 58: resonate.api.RemoveSubscriptionMessage.Request
-	(*RemoveSubscriptionMessage_Response)(nil),  // 59: resonate.api.RemoveSubscriptionMessage.Response
-	(*ListSubscriptionMessage_Request)(nil),     // 60: resonate.api.ListSubscriptionMessage.Request
-	(*ListSubscriptionMessage_Response)(nil),    // 61: resonate.api.ListSubscriptionMessage.Response
-	(*SyncSubscriptionMessage_Request)(nil),     // 62: resonate.api.SyncSubscriptionMessage.Request
-	(*SyncSubscriptionMessage_Response)(nil),    // 63: resonate.api.SyncSubscriptionMessage.Response
-	(*AddListenMessage_Request)(nil),            // 64: resonate.api.AddListenMessage.Request
-	(*AddListenMessage_Response)(nil),           // 65: resonate.api.AddListenMessage.Response
-	(*RemoveListenMessage_Request)(nil),         // 66: resonate.api.RemoveListenMessage.Request
-	(*RemoveListenMessage_Response)(nil),        // 67: resonate.api.RemoveListenMessage.Response
-	(*ListListenMessage_Request)(nil),           // 68: resonate.api.ListListenMessage.Request
-	(*ListListenMessage_Response)(nil),          // 69: resonate.api.ListListenMessage.Response
-	(*GetFeedMessage_Request)(nil),              // 70: resonate.api.GetFeedMessage.Request
-	(*GetFeedMessage_Response)(nil),             // 71: resonate.api.GetFeedMessage.Response
-	(*AddFollowMessage_Request)(nil),            // 72: resonate.api.AddFollowMessage.Request
-	(*AddFollowMessage_Response)(nil),           // 73: resonate.api.AddFollowMessage.Response
-	(*RemoveFollowMessage_Request)(nil),         // 74: resonate.api.RemoveFollowMessage.Request
-	(*RemoveFollowMessage_Response)(nil),        // 75: resonate.api.RemoveFollowMessage.Response
-	(*ListFollowMessage_Request)(nil),           // 76: resonate.api.ListFollowMessage.Request
-	(*ListFollowMessage_Response)(nil),          // 77: resonate.api.ListFollowMessage.Response
-	(*GetPublicUserMessage_Request)(nil),        // 78: resonate.api.GetPublicUserMessage.Request
-	(*GetPublicUserMessage_Response)(nil),       // 79: resonate.api.GetPublicUserMessage.Response
-	(*EditUserMessage_Request)(nil),             // 80: resonate.api.EditUserMessage.Request
-	(*EditUserMessage_Response)(nil),            // 81: resonate.api.EditUserMessage.Response
-	(*RemoveUserMessage_Request)(nil),           // 82: resonate.api.RemoveUserMessage.Request
-	(*RemoveUserMessage_Response)(nil),          // 83: resonate.api.RemoveUserMessage.Response
-	(*ListUserMessage_Request)(nil),             // 84: resonate.api.ListUserMessage.Request
-	(*ListUserMessage_Response)(nil),            // 85: resonate.api.ListUserMessage.Response
-	(*UploadImageMessage_Request)(nil),          // 86: resonate.api.UploadImageMessage.Request
-	(*UploadImageMessage_Response)(nil),         // 87: resonate.api.UploadImageMessage.Response
-	(*FindContactsMessage_Request)(nil),         // 88: resonate.api.FindContactsMessage.Request
-	(*FindContactsMessage_Response)(nil),        // 89: resonate.api.FindContactsMessage.Response
-	(*SearchContactsMessage_Request)(nil),       // 90: resonate.api.SearchContactsMessage.Request
-	(*SearchContactsMessage_Response)(nil),      // 91: resonate.api.SearchContactsMessage.Response
-	(*SearchTopContactsMessage_Request)(nil),    // 92: resonate.api.SearchTopContactsMessage.Request
-	(*SearchTopContactsMessage_Response)(nil),   // 93: resonate.api.SearchTopContactsMessage.Response
-	(*TokenMessage)(nil),                        // 94: resonate.TokenMessage
-	(ErrorEnum)(0),                              // 95: resonate.ErrorEnum
-	(*UserMessage)(nil),                         // 96: resonate.UserMessage
-	(*SearchResultsMessage)(nil),                // 97: resonate.SearchResultsMessage
-	(*PodcastMessage)(nil),                      // 98: resonate.PodcastMessage
-	(*EpisodeMessage)(nil),                      // 99: resonate.EpisodeMessage
-	(*UserSubscriptionMessage)(nil),             // 100: resonate.UserSubscriptionMessage
-	(*UserListenMessage)(nil),                   // 101: resonate.UserListenMessage
-	(*UserFeedMessage)(nil),                     // 102: resonate.UserFeedMessage
-	(*UserFollowMessage)(nil),                   // 103: resonate.UserFollowMessage
-	(*PublicUserMessage)(nil),                   // 104: resonate.PublicUserMessage
-	(*UserContactMessage)(nil),                  // 105: resonate.UserContactMessage
+	(*SyncListenMessage)(nil),                   // 22: resonate.api.SyncListenMessage
+	(*GetFeedMessage)(nil),                      // 23: resonate.api.GetFeedMessage
+	(*AddFollowMessage)(nil),                    // 24: resonate.api.AddFollowMessage
+	(*RemoveFollowMessage)(nil),                 // 25: resonate.api.RemoveFollowMessage
+	(*ListFollowMessage)(nil),                   // 26: resonate.api.ListFollowMessage
+	(*GetPublicUserMessage)(nil),                // 27: resonate.api.GetPublicUserMessage
+	(*EditUserMessage)(nil),                     // 28: resonate.api.EditUserMessage
+	(*RemoveUserMessage)(nil),                   // 29: resonate.api.RemoveUserMessage
+	(*ListUserMessage)(nil),                     // 30: resonate.api.ListUserMessage
+	(*UploadImageMessage)(nil),                  // 31: resonate.api.UploadImageMessage
+	(*FindContactsMessage)(nil),                 // 32: resonate.api.FindContactsMessage
+	(*SearchContactsMessage)(nil),               // 33: resonate.api.SearchContactsMessage
+	(*SearchTopContactsMessage)(nil),            // 34: resonate.api.SearchTopContactsMessage
+	(*RefreshAuthMessage_Request)(nil),          // 35: resonate.api.RefreshAuthMessage.Request
+	(*RefreshAuthMessage_Response)(nil),         // 36: resonate.api.RefreshAuthMessage.Response
+	(*LoginRequestMessage_Request)(nil),         // 37: resonate.api.LoginRequestMessage.Request
+	(*LoginRequestMessage_Response)(nil),        // 38: resonate.api.LoginRequestMessage.Response
+	(*LoginUserMessage_Request)(nil),            // 39: resonate.api.LoginUserMessage.Request
+	(*LoginUserMessage_Response)(nil),           // 40: resonate.api.LoginUserMessage.Response
+	(*CreateUserMessage_Request)(nil),           // 41: resonate.api.CreateUserMessage.Request
+	(*CreateUserMessage_Response)(nil),          // 42: resonate.api.CreateUserMessage.Response
+	(*GetUserMessage_Request)(nil),              // 43: resonate.api.GetUserMessage.Request
+	(*GetUserMessage_Response)(nil),             // 44: resonate.api.GetUserMessage.Response
+	(*UpdateUserMessage_Request)(nil),           // 45: resonate.api.UpdateUserMessage.Request
+	(*UpdateUserMessage_Response)(nil),          // 46: resonate.api.UpdateUserMessage.Response
+	(*SearchMessage_Request)(nil),               // 47: resonate.api.SearchMessage.Request
+	(*SearchMessage_Response)(nil),              // 48: resonate.api.SearchMessage.Response
+	(*SearchTopMessage_Request)(nil),            // 49: resonate.api.SearchTopMessage.Request
+	(*SearchTopMessage_Response)(nil),           // 50: resonate.api.SearchTopMessage.Response
+	(*GetPodcastMessage_Request)(nil),           // 51: resonate.api.GetPodcastMessage.Request
+	(*GetPodcastMessage_Response)(nil),          // 52: resonate.api.GetPodcastMessage.Response
+	(*ListPodcastEpisodesMessage_Request)(nil),  // 53: resonate.api.ListPodcastEpisodesMessage.Request
+	(*ListPodcastEpisodesMessage_Response)(nil), // 54: resonate.api.ListPodcastEpisodesMessage.Response
+	(*GetEpisodeMessage_Request)(nil),           // 55: resonate.api.GetEpisodeMessage.Request
+	(*GetEpisodeMessage_Response)(nil),          // 56: resonate.api.GetEpisodeMessage.Response
+	(*AddSubscriptionMessage_Request)(nil),      // 57: resonate.api.AddSubscriptionMessage.Request
+	(*AddSubscriptionMessage_Response)(nil),     // 58: resonate.api.AddSubscriptionMessage.Response
+	(*RemoveSubscriptionMessage_Request)(nil),   // 59: resonate.api.RemoveSubscriptionMessage.Request
+	(*RemoveSubscriptionMessage_Response)(nil),  // 60: resonate.api.RemoveSubscriptionMessage.Response
+	(*ListSubscriptionMessage_Request)(nil),     // 61: resonate.api.ListSubscriptionMessage.Request
+	(*ListSubscriptionMessage_Response)(nil),    // 62: resonate.api.ListSubscriptionMessage.Response
+	(*SyncSubscriptionMessage_Request)(nil),     // 63: resonate.api.SyncSubscriptionMessage.Request
+	(*SyncSubscriptionMessage_Response)(nil),    // 64: resonate.api.SyncSubscriptionMessage.Response
+	(*AddListenMessage_Request)(nil),            // 65: resonate.api.AddListenMessage.Request
+	(*AddListenMessage_Response)(nil),           // 66: resonate.api.AddListenMessage.Response
+	(*RemoveListenMessage_Request)(nil),         // 67: resonate.api.RemoveListenMessage.Request
+	(*RemoveListenMessage_Response)(nil),        // 68: resonate.api.RemoveListenMessage.Response
+	(*ListListenMessage_Request)(nil),           // 69: resonate.api.ListListenMessage.Request
+	(*ListListenMessage_Response)(nil),          // 70: resonate.api.ListListenMessage.Response
+	(*SyncListenMessage_Request)(nil),           // 71: resonate.api.SyncListenMessage.Request
+	(*SyncListenMessage_Response)(nil),          // 72: resonate.api.SyncListenMessage.Response
+	(*GetFeedMessage_Request)(nil),              // 73: resonate.api.GetFeedMessage.Request
+	(*GetFeedMessage_Response)(nil),             // 74: resonate.api.GetFeedMessage.Response
+	(*AddFollowMessage_Request)(nil),            // 75: resonate.api.AddFollowMessage.Request
+	(*AddFollowMessage_Response)(nil),           // 76: resonate.api.AddFollowMessage.Response
+	(*RemoveFollowMessage_Request)(nil),         // 77: resonate.api.RemoveFollowMessage.Request
+	(*RemoveFollowMessage_Response)(nil),        // 78: resonate.api.RemoveFollowMessage.Response
+	(*ListFollowMessage_Request)(nil),           // 79: resonate.api.ListFollowMessage.Request
+	(*ListFollowMessage_Response)(nil),          // 80: resonate.api.ListFollowMessage.Response
+	(*GetPublicUserMessage_Request)(nil),        // 81: resonate.api.GetPublicUserMessage.Request
+	(*GetPublicUserMessage_Response)(nil),       // 82: resonate.api.GetPublicUserMessage.Response
+	(*EditUserMessage_Request)(nil),             // 83: resonate.api.EditUserMessage.Request
+	(*EditUserMessage_Response)(nil),            // 84: resonate.api.EditUserMessage.Response
+	(*RemoveUserMessage_Request)(nil),           // 85: resonate.api.RemoveUserMessage.Request
+	(*RemoveUserMessage_Response)(nil),          // 86: resonate.api.RemoveUserMessage.Response
+	(*ListUserMessage_Request)(nil),             // 87: resonate.api.ListUserMessage.Request
+	(*ListUserMessage_Response)(nil),            // 88: resonate.api.ListUserMessage.Response
+	(*UploadImageMessage_Request)(nil),          // 89: resonate.api.UploadImageMessage.Request
+	(*UploadImageMessage_Response)(nil),         // 90: resonate.api.UploadImageMessage.Response
+	(*FindContactsMessage_Request)(nil),         // 91: resonate.api.FindContactsMessage.Request
+	(*FindContactsMessage_Response)(nil),        // 92: resonate.api.FindContactsMessage.Response
+	(*SearchContactsMessage_Request)(nil),       // 93: resonate.api.SearchContactsMessage.Request
+	(*SearchContactsMessage_Response)(nil),      // 94: resonate.api.SearchContactsMessage.Response
+	(*SearchTopContactsMessage_Request)(nil),    // 95: resonate.api.SearchTopContactsMessage.Request
+	(*SearchTopContactsMessage_Response)(nil),   // 96: resonate.api.SearchTopContactsMessage.Response
+	(*TokenMessage)(nil),                        // 97: resonate.TokenMessage
+	(ErrorEnum)(0),                              // 98: resonate.ErrorEnum
+	(*UserMessage)(nil),                         // 99: resonate.UserMessage
+	(*SearchResultsMessage)(nil),                // 100: resonate.SearchResultsMessage
+	(*PodcastMessage)(nil),                      // 101: resonate.PodcastMessage
+	(*EpisodeMessage)(nil),                      // 102: resonate.EpisodeMessage
+	(*UserSubscriptionMessage)(nil),             // 103: resonate.UserSubscriptionMessage
+	(*UserListenMessage)(nil),                   // 104: resonate.UserListenMessage
+	(*UserFeedMessage)(nil),                     // 105: resonate.UserFeedMessage
+	(*UserFollowMessage)(nil),                   // 106: resonate.UserFollowMessage
+	(*PublicUserMessage)(nil),                   // 107: resonate.PublicUserMessage
+	(*UserContactMessage)(nil),                  // 108: resonate.UserContactMessage
 }
 var file_proto_api_proto_depIdxs = []int32{
-	94,  // 0: resonate.api.InternalInfo.access_token:type_name -> resonate.TokenMessage
-	94,  // 1: resonate.api.InternalInfo.refresh_token:type_name -> resonate.TokenMessage
-	95,  // 2: resonate.api.ResponseInfo.error:type_name -> resonate.ErrorEnum
+	97,  // 0: resonate.api.InternalInfo.access_token:type_name -> resonate.TokenMessage
+	97,  // 1: resonate.api.InternalInfo.refresh_token:type_name -> resonate.TokenMessage
+	98,  // 2: resonate.api.ResponseInfo.error:type_name -> resonate.ErrorEnum
 	0,   // 3: resonate.api.ResponseInfo.internal_info:type_name -> resonate.api.InternalInfo
 	0,   // 4: resonate.api.RequestInfo.internal_info:type_name -> resonate.api.InternalInfo
-	34,  // 5: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
-	35,  // 6: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
-	36,  // 7: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
-	37,  // 8: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
-	38,  // 9: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
-	39,  // 10: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
-	40,  // 11: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
-	41,  // 12: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
-	42,  // 13: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
-	43,  // 14: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
-	44,  // 15: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
-	45,  // 16: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
-	46,  // 17: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
-	47,  // 18: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
-	48,  // 19: resonate.api.SearchTopMessage.request:type_name -> resonate.api.SearchTopMessage.Request
-	49,  // 20: resonate.api.SearchTopMessage.response:type_name -> resonate.api.SearchTopMessage.Response
-	50,  // 21: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
-	51,  // 22: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
-	52,  // 23: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
-	53,  // 24: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
-	54,  // 25: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
-	55,  // 26: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
-	56,  // 27: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
-	57,  // 28: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
-	58,  // 29: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
-	59,  // 30: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
-	60,  // 31: resonate.api.ListSubscriptionMessage.request:type_name -> resonate.api.ListSubscriptionMessage.Request
-	61,  // 32: resonate.api.ListSubscriptionMessage.response:type_name -> resonate.api.ListSubscriptionMessage.Response
-	62,  // 33: resonate.api.SyncSubscriptionMessage.request:type_name -> resonate.api.SyncSubscriptionMessage.Request
-	63,  // 34: resonate.api.SyncSubscriptionMessage.response:type_name -> resonate.api.SyncSubscriptionMessage.Response
-	64,  // 35: resonate.api.AddListenMessage.request:type_name -> resonate.api.AddListenMessage.Request
-	65,  // 36: resonate.api.AddListenMessage.response:type_name -> resonate.api.AddListenMessage.Response
-	66,  // 37: resonate.api.RemoveListenMessage.request:type_name -> resonate.api.RemoveListenMessage.Request
-	67,  // 38: resonate.api.RemoveListenMessage.response:type_name -> resonate.api.RemoveListenMessage.Response
-	68,  // 39: resonate.api.ListListenMessage.request:type_name -> resonate.api.ListListenMessage.Request
-	69,  // 40: resonate.api.ListListenMessage.response:type_name -> resonate.api.ListListenMessage.Response
-	70,  // 41: resonate.api.GetFeedMessage.request:type_name -> resonate.api.GetFeedMessage.Request
-	71,  // 42: resonate.api.GetFeedMessage.reponse:type_name -> resonate.api.GetFeedMessage.Response
-	72,  // 43: resonate.api.AddFollowMessage.request:type_name -> resonate.api.AddFollowMessage.Request
-	73,  // 44: resonate.api.AddFollowMessage.response:type_name -> resonate.api.AddFollowMessage.Response
-	74,  // 45: resonate.api.RemoveFollowMessage.request:type_name -> resonate.api.RemoveFollowMessage.Request
-	75,  // 46: resonate.api.RemoveFollowMessage.response:type_name -> resonate.api.RemoveFollowMessage.Response
-	76,  // 47: resonate.api.ListFollowMessage.request:type_name -> resonate.api.ListFollowMessage.Request
-	77,  // 48: resonate.api.ListFollowMessage.response:type_name -> resonate.api.ListFollowMessage.Response
-	78,  // 49: resonate.api.GetPublicUserMessage.request:type_name -> resonate.api.GetPublicUserMessage.Request
-	79,  // 50: resonate.api.GetPublicUserMessage.response:type_name -> resonate.api.GetPublicUserMessage.Response
-	80,  // 51: resonate.api.EditUserMessage.request:type_name -> resonate.api.EditUserMessage.Request
-	81,  // 52: resonate.api.EditUserMessage.response:type_name -> resonate.api.EditUserMessage.Response
-	82,  // 53: resonate.api.RemoveUserMessage.request:type_name -> resonate.api.RemoveUserMessage.Request
-	83,  // 54: resonate.api.RemoveUserMessage.response:type_name -> resonate.api.RemoveUserMessage.Response
-	84,  // 55: resonate.api.ListUserMessage.request:type_name -> resonate.api.ListUserMessage.Request
-	85,  // 56: resonate.api.ListUserMessage.response:type_name -> resonate.api.ListUserMessage.Response
-	86,  // 57: resonate.api.UploadImageMessage.request:type_name -> resonate.api.UploadImageMessage.Request
-	87,  // 58: resonate.api.UploadImageMessage.response:type_name -> resonate.api.UploadImageMessage.Response
-	88,  // 59: resonate.api.FindContactsMessage.request:type_name -> resonate.api.FindContactsMessage.Request
-	89,  // 60: resonate.api.FindContactsMessage.response:type_name -> resonate.api.FindContactsMessage.Response
-	2,   // 61: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 62: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 63: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 64: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 65: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 66: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 67: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 68: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	96,  // 69: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 70: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 71: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 72: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 73: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 74: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 75: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	96,  // 76: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 77: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 78: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 79: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 80: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	97,  // 81: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
-	2,   // 82: resonate.api.SearchTopMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 83: resonate.api.SearchTopMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	97,  // 84: resonate.api.SearchTopMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
-	2,   // 85: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 86: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	98,  // 87: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	2,   // 88: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 89: resonate.api.ListPodcastEpisodesMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 90: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	99,  // 91: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
-	98,  // 92: resonate.api.ListPodcastEpisodesMessage.Response.podcast:type_name -> resonate.PodcastMessage
-	12,  // 93: resonate.api.ListPodcastEpisodesMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 94: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 95: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	99,  // 96: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
-	2,   // 97: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	100, // 98: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,   // 99: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 100: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	2,   // 101: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	100, // 102: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
-	1,   // 103: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 104: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
-	2,   // 105: resonate.api.ListSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 106: resonate.api.ListSubscriptionMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 107: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 108: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	12,  // 109: resonate.api.ListSubscriptionMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 110: resonate.api.SyncSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	100, // 111: resonate.api.SyncSubscriptionMessage.Request.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	1,   // 112: resonate.api.SyncSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	100, // 113: resonate.api.SyncSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	2,   // 114: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	101, // 115: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	1,   // 116: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 117: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	2,   // 118: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	101, // 119: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
-	1,   // 120: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 121: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
-	2,   // 122: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 123: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 124: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	101, // 125: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
-	12,  // 126: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 127: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 128: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	102, // 129: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
-	2,   // 130: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	103, // 131: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	1,   // 132: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	103, // 133: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	2,   // 134: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	103, // 135: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
-	1,   // 136: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	103, // 137: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
-	2,   // 138: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 139: resonate.api.ListFollowMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 140: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	103, // 141: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
-	12,  // 142: resonate.api.ListFollowMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 143: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 144: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	104, // 145: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
-	2,   // 146: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	96,  // 147: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
-	1,   // 148: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	96,  // 149: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
-	2,   // 150: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 151: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 152: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 153: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	104, // 154: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
-	2,   // 155: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	1,   // 156: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	2,   // 157: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 158: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 159: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	104, // 160: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	12,  // 161: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 162: resonate.api.SearchContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	12,  // 163: resonate.api.SearchContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
-	1,   // 164: resonate.api.SearchContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	104, // 165: resonate.api.SearchContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	12,  // 166: resonate.api.SearchContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
-	2,   // 167: resonate.api.SearchTopContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
-	105, // 168: resonate.api.SearchTopContactsMessage.Request.contacts:type_name -> resonate.UserContactMessage
-	1,   // 169: resonate.api.SearchTopContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
-	104, // 170: resonate.api.SearchTopContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
-	171, // [171:171] is the sub-list for method output_type
-	171, // [171:171] is the sub-list for method input_type
-	171, // [171:171] is the sub-list for extension type_name
-	171, // [171:171] is the sub-list for extension extendee
-	0,   // [0:171] is the sub-list for field type_name
+	35,  // 5: resonate.api.RefreshAuthMessage.request:type_name -> resonate.api.RefreshAuthMessage.Request
+	36,  // 6: resonate.api.RefreshAuthMessage.response:type_name -> resonate.api.RefreshAuthMessage.Response
+	37,  // 7: resonate.api.LoginRequestMessage.request:type_name -> resonate.api.LoginRequestMessage.Request
+	38,  // 8: resonate.api.LoginRequestMessage.response:type_name -> resonate.api.LoginRequestMessage.Response
+	39,  // 9: resonate.api.LoginUserMessage.request:type_name -> resonate.api.LoginUserMessage.Request
+	40,  // 10: resonate.api.LoginUserMessage.response:type_name -> resonate.api.LoginUserMessage.Response
+	41,  // 11: resonate.api.CreateUserMessage.request:type_name -> resonate.api.CreateUserMessage.Request
+	42,  // 12: resonate.api.CreateUserMessage.response:type_name -> resonate.api.CreateUserMessage.Response
+	43,  // 13: resonate.api.GetUserMessage.request:type_name -> resonate.api.GetUserMessage.Request
+	44,  // 14: resonate.api.GetUserMessage.response:type_name -> resonate.api.GetUserMessage.Response
+	45,  // 15: resonate.api.UpdateUserMessage.request:type_name -> resonate.api.UpdateUserMessage.Request
+	46,  // 16: resonate.api.UpdateUserMessage.response:type_name -> resonate.api.UpdateUserMessage.Response
+	47,  // 17: resonate.api.SearchMessage.request:type_name -> resonate.api.SearchMessage.Request
+	48,  // 18: resonate.api.SearchMessage.response:type_name -> resonate.api.SearchMessage.Response
+	49,  // 19: resonate.api.SearchTopMessage.request:type_name -> resonate.api.SearchTopMessage.Request
+	50,  // 20: resonate.api.SearchTopMessage.response:type_name -> resonate.api.SearchTopMessage.Response
+	51,  // 21: resonate.api.GetPodcastMessage.request:type_name -> resonate.api.GetPodcastMessage.Request
+	52,  // 22: resonate.api.GetPodcastMessage.response:type_name -> resonate.api.GetPodcastMessage.Response
+	53,  // 23: resonate.api.ListPodcastEpisodesMessage.request:type_name -> resonate.api.ListPodcastEpisodesMessage.Request
+	54,  // 24: resonate.api.ListPodcastEpisodesMessage.response:type_name -> resonate.api.ListPodcastEpisodesMessage.Response
+	55,  // 25: resonate.api.GetEpisodeMessage.request:type_name -> resonate.api.GetEpisodeMessage.Request
+	56,  // 26: resonate.api.GetEpisodeMessage.response:type_name -> resonate.api.GetEpisodeMessage.Response
+	57,  // 27: resonate.api.AddSubscriptionMessage.request:type_name -> resonate.api.AddSubscriptionMessage.Request
+	58,  // 28: resonate.api.AddSubscriptionMessage.response:type_name -> resonate.api.AddSubscriptionMessage.Response
+	59,  // 29: resonate.api.RemoveSubscriptionMessage.request:type_name -> resonate.api.RemoveSubscriptionMessage.Request
+	60,  // 30: resonate.api.RemoveSubscriptionMessage.response:type_name -> resonate.api.RemoveSubscriptionMessage.Response
+	61,  // 31: resonate.api.ListSubscriptionMessage.request:type_name -> resonate.api.ListSubscriptionMessage.Request
+	62,  // 32: resonate.api.ListSubscriptionMessage.response:type_name -> resonate.api.ListSubscriptionMessage.Response
+	63,  // 33: resonate.api.SyncSubscriptionMessage.request:type_name -> resonate.api.SyncSubscriptionMessage.Request
+	64,  // 34: resonate.api.SyncSubscriptionMessage.response:type_name -> resonate.api.SyncSubscriptionMessage.Response
+	65,  // 35: resonate.api.AddListenMessage.request:type_name -> resonate.api.AddListenMessage.Request
+	66,  // 36: resonate.api.AddListenMessage.response:type_name -> resonate.api.AddListenMessage.Response
+	67,  // 37: resonate.api.RemoveListenMessage.request:type_name -> resonate.api.RemoveListenMessage.Request
+	68,  // 38: resonate.api.RemoveListenMessage.response:type_name -> resonate.api.RemoveListenMessage.Response
+	69,  // 39: resonate.api.ListListenMessage.request:type_name -> resonate.api.ListListenMessage.Request
+	70,  // 40: resonate.api.ListListenMessage.response:type_name -> resonate.api.ListListenMessage.Response
+	71,  // 41: resonate.api.SyncListenMessage.request:type_name -> resonate.api.SyncListenMessage.Request
+	72,  // 42: resonate.api.SyncListenMessage.response:type_name -> resonate.api.SyncListenMessage.Response
+	73,  // 43: resonate.api.GetFeedMessage.request:type_name -> resonate.api.GetFeedMessage.Request
+	74,  // 44: resonate.api.GetFeedMessage.reponse:type_name -> resonate.api.GetFeedMessage.Response
+	75,  // 45: resonate.api.AddFollowMessage.request:type_name -> resonate.api.AddFollowMessage.Request
+	76,  // 46: resonate.api.AddFollowMessage.response:type_name -> resonate.api.AddFollowMessage.Response
+	77,  // 47: resonate.api.RemoveFollowMessage.request:type_name -> resonate.api.RemoveFollowMessage.Request
+	78,  // 48: resonate.api.RemoveFollowMessage.response:type_name -> resonate.api.RemoveFollowMessage.Response
+	79,  // 49: resonate.api.ListFollowMessage.request:type_name -> resonate.api.ListFollowMessage.Request
+	80,  // 50: resonate.api.ListFollowMessage.response:type_name -> resonate.api.ListFollowMessage.Response
+	81,  // 51: resonate.api.GetPublicUserMessage.request:type_name -> resonate.api.GetPublicUserMessage.Request
+	82,  // 52: resonate.api.GetPublicUserMessage.response:type_name -> resonate.api.GetPublicUserMessage.Response
+	83,  // 53: resonate.api.EditUserMessage.request:type_name -> resonate.api.EditUserMessage.Request
+	84,  // 54: resonate.api.EditUserMessage.response:type_name -> resonate.api.EditUserMessage.Response
+	85,  // 55: resonate.api.RemoveUserMessage.request:type_name -> resonate.api.RemoveUserMessage.Request
+	86,  // 56: resonate.api.RemoveUserMessage.response:type_name -> resonate.api.RemoveUserMessage.Response
+	87,  // 57: resonate.api.ListUserMessage.request:type_name -> resonate.api.ListUserMessage.Request
+	88,  // 58: resonate.api.ListUserMessage.response:type_name -> resonate.api.ListUserMessage.Response
+	89,  // 59: resonate.api.UploadImageMessage.request:type_name -> resonate.api.UploadImageMessage.Request
+	90,  // 60: resonate.api.UploadImageMessage.response:type_name -> resonate.api.UploadImageMessage.Response
+	91,  // 61: resonate.api.FindContactsMessage.request:type_name -> resonate.api.FindContactsMessage.Request
+	92,  // 62: resonate.api.FindContactsMessage.response:type_name -> resonate.api.FindContactsMessage.Response
+	2,   // 63: resonate.api.RefreshAuthMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 64: resonate.api.RefreshAuthMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 65: resonate.api.LoginRequestMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 66: resonate.api.LoginRequestMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 67: resonate.api.LoginUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 68: resonate.api.LoginUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 69: resonate.api.LoginUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 70: resonate.api.CreateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	99,  // 71: resonate.api.CreateUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 72: resonate.api.CreateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 73: resonate.api.CreateUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 74: resonate.api.GetUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 75: resonate.api.GetUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 76: resonate.api.GetUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 77: resonate.api.UpdateUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	99,  // 78: resonate.api.UpdateUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 79: resonate.api.UpdateUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 80: resonate.api.UpdateUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 81: resonate.api.SearchMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 82: resonate.api.SearchMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	100, // 83: resonate.api.SearchMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	2,   // 84: resonate.api.SearchTopMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 85: resonate.api.SearchTopMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	100, // 86: resonate.api.SearchTopMessage.Response.search_results:type_name -> resonate.SearchResultsMessage
+	2,   // 87: resonate.api.GetPodcastMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 88: resonate.api.GetPodcastMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	101, // 89: resonate.api.GetPodcastMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	2,   // 90: resonate.api.ListPodcastEpisodesMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 91: resonate.api.ListPodcastEpisodesMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 92: resonate.api.ListPodcastEpisodesMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	102, // 93: resonate.api.ListPodcastEpisodesMessage.Response.episodes:type_name -> resonate.EpisodeMessage
+	101, // 94: resonate.api.ListPodcastEpisodesMessage.Response.podcast:type_name -> resonate.PodcastMessage
+	12,  // 95: resonate.api.ListPodcastEpisodesMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 96: resonate.api.GetEpisodeMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 97: resonate.api.GetEpisodeMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	102, // 98: resonate.api.GetEpisodeMessage.Response.episode:type_name -> resonate.EpisodeMessage
+	2,   // 99: resonate.api.AddSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	103, // 100: resonate.api.AddSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,   // 101: resonate.api.AddSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	103, // 102: resonate.api.AddSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	2,   // 103: resonate.api.RemoveSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	103, // 104: resonate.api.RemoveSubscriptionMessage.Request.subscription:type_name -> resonate.UserSubscriptionMessage
+	1,   // 105: resonate.api.RemoveSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	103, // 106: resonate.api.RemoveSubscriptionMessage.Response.subscription:type_name -> resonate.UserSubscriptionMessage
+	2,   // 107: resonate.api.ListSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 108: resonate.api.ListSubscriptionMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 109: resonate.api.ListSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	103, // 110: resonate.api.ListSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	12,  // 111: resonate.api.ListSubscriptionMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 112: resonate.api.SyncSubscriptionMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	103, // 113: resonate.api.SyncSubscriptionMessage.Request.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	1,   // 114: resonate.api.SyncSubscriptionMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	103, // 115: resonate.api.SyncSubscriptionMessage.Response.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	2,   // 116: resonate.api.AddListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	104, // 117: resonate.api.AddListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	1,   // 118: resonate.api.AddListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	104, // 119: resonate.api.AddListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	2,   // 120: resonate.api.RemoveListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	104, // 121: resonate.api.RemoveListenMessage.Request.listen:type_name -> resonate.UserListenMessage
+	1,   // 122: resonate.api.RemoveListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	104, // 123: resonate.api.RemoveListenMessage.Response.listen:type_name -> resonate.UserListenMessage
+	2,   // 124: resonate.api.ListListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 125: resonate.api.ListListenMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 126: resonate.api.ListListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	104, // 127: resonate.api.ListListenMessage.Response.listens:type_name -> resonate.UserListenMessage
+	12,  // 128: resonate.api.ListListenMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 129: resonate.api.SyncListenMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	104, // 130: resonate.api.SyncListenMessage.Request.listens:type_name -> resonate.UserListenMessage
+	1,   // 131: resonate.api.SyncListenMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	104, // 132: resonate.api.SyncListenMessage.Response.listens:type_name -> resonate.UserListenMessage
+	2,   // 133: resonate.api.GetFeedMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 134: resonate.api.GetFeedMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	105, // 135: resonate.api.GetFeedMessage.Response.feed:type_name -> resonate.UserFeedMessage
+	2,   // 136: resonate.api.AddFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	106, // 137: resonate.api.AddFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	1,   // 138: resonate.api.AddFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	106, // 139: resonate.api.AddFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	2,   // 140: resonate.api.RemoveFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	106, // 141: resonate.api.RemoveFollowMessage.Request.follow:type_name -> resonate.UserFollowMessage
+	1,   // 142: resonate.api.RemoveFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	106, // 143: resonate.api.RemoveFollowMessage.Response.follow:type_name -> resonate.UserFollowMessage
+	2,   // 144: resonate.api.ListFollowMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 145: resonate.api.ListFollowMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 146: resonate.api.ListFollowMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	106, // 147: resonate.api.ListFollowMessage.Response.follows:type_name -> resonate.UserFollowMessage
+	12,  // 148: resonate.api.ListFollowMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 149: resonate.api.GetPublicUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 150: resonate.api.GetPublicUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	107, // 151: resonate.api.GetPublicUserMessage.Response.user:type_name -> resonate.PublicUserMessage
+	2,   // 152: resonate.api.EditUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	99,  // 153: resonate.api.EditUserMessage.Request.user:type_name -> resonate.UserMessage
+	1,   // 154: resonate.api.EditUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	99,  // 155: resonate.api.EditUserMessage.Response.user:type_name -> resonate.UserMessage
+	2,   // 156: resonate.api.RemoveUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 157: resonate.api.RemoveUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 158: resonate.api.ListUserMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 159: resonate.api.ListUserMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	107, // 160: resonate.api.ListUserMessage.Response.users:type_name -> resonate.PublicUserMessage
+	2,   // 161: resonate.api.UploadImageMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	1,   // 162: resonate.api.UploadImageMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	2,   // 163: resonate.api.FindContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 164: resonate.api.FindContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 165: resonate.api.FindContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	107, // 166: resonate.api.FindContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	12,  // 167: resonate.api.FindContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 168: resonate.api.SearchContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	12,  // 169: resonate.api.SearchContactsMessage.Request.cursor:type_name -> resonate.api.QueryCursor
+	1,   // 170: resonate.api.SearchContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	107, // 171: resonate.api.SearchContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	12,  // 172: resonate.api.SearchContactsMessage.Response.cursor:type_name -> resonate.api.QueryCursor
+	2,   // 173: resonate.api.SearchTopContactsMessage.Request.request_info:type_name -> resonate.api.RequestInfo
+	108, // 174: resonate.api.SearchTopContactsMessage.Request.contacts:type_name -> resonate.UserContactMessage
+	1,   // 175: resonate.api.SearchTopContactsMessage.Response.response_info:type_name -> resonate.api.ResponseInfo
+	107, // 176: resonate.api.SearchTopContactsMessage.Response.users:type_name -> resonate.PublicUserMessage
+	177, // [177:177] is the sub-list for method output_type
+	177, // [177:177] is the sub-list for method input_type
+	177, // [177:177] is the sub-list for extension type_name
+	177, // [177:177] is the sub-list for extension extendee
+	0,   // [0:177] is the sub-list for field type_name
 }
 
 func init() { file_proto_api_proto_init() }
@@ -9276,7 +9551,7 @@ func file_proto_api_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_api_proto_rawDesc), len(file_proto_api_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   94,
+			NumMessages:   97,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

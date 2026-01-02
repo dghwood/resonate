@@ -94,6 +94,10 @@ class ListenApi {
     required AbstractDatabaseService databaseService,
   }) : _addServer = AddListenApiServer(authUser: authUser, client: httpService),
        _database = ListenDatabase(databaseService),
+       _syncServer = SyncListenApiServer(
+         authUser: authUser,
+         client: httpService,
+       ),
        _authUser = authUser,
        _episodeDatabase = EpisodeDatabase(databaseService);
 
@@ -101,6 +105,7 @@ class ListenApi {
   final ListenDatabase _database;
   final EpisodeDatabase _episodeDatabase;
   final AuthUser _authUser;
+  final SyncListenApiServer _syncServer;
 
   final Map<String, UserListen> _listens = {};
 
@@ -113,6 +118,7 @@ class ListenApi {
       case ApiOk():
         var subscription = result.value;
 
+        // Add the listens in memory
         for (final sub in subscription) {
           _listens[sub.episodeId] = sub;
         }
@@ -138,8 +144,37 @@ class ListenApi {
   }
 
   Future<ApiResult<Iterable<UserListen>>> sync() async {
-    var result = await list();
-    return result;
+    var result = await listLocal();
+    switch (result) {
+      case ApiOk():
+        break;
+      case ApiError():
+        return ApiResult.error(result.error);
+    }
+
+    var listens = result.value;
+    var request = SyncListenApiRequest(listens: listens);
+    var response = SyncListenApiResponse();
+    try {
+      await _syncServer.execute(request, response);
+      // log to database
+      // await _subscriptionDatabase.clear();
+      listens = response.listens;
+      // add the podcast messages
+      for (var sub in listens) {
+        if (sub.episode != null) {
+          // remove the podcast and add to db.
+          _log.info("adding episode ${sub.episode!.id}");
+          await _episodeDatabase.put(sub.episode!);
+          sub.dropEpisode();
+        }
+      }
+      await _database.putAll(listens);
+      _log.info('Synced ${listens.length} subscriptions');
+      return ApiResult.ok(listens);
+    } on Exception catch (e) {
+      return ApiResult.error(e);
+    }
   }
 
   UserListen _createListen(String episodeId, PlayerProgress progress) {
@@ -281,4 +316,43 @@ class ListensApi {
     // TODO(duncan): I need to sort this list..
     return ApiResult.ok(listensMap.values);
   }
+}
+
+class SyncListenApiRequest extends ApiRequest<SyncListenMessage_Request> {
+  SyncListenApiRequest({Iterable<UserListen>? listens})
+    : super(
+        SyncListenMessage_Request(
+          requestInfo: RequestInfo(),
+          listens: listens?.map((s) => s.toMessage()).toList(),
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
+}
+
+class SyncListenApiResponse extends ApiResponse<SyncListenMessage_Response> {
+  SyncListenApiResponse() : super(SyncListenMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  Iterable<UserListen> get listens =>
+      responsePb.listens.map((s) => UserListen.fromMessage(s));
+}
+
+class SyncListenApiServer
+    extends ServerApi<SyncListenApiRequest, SyncListenApiResponse> {
+  SyncListenApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         SyncListenApiRequest(),
+         SyncListenApiResponse(),
+         'api/listens/sync',
+         authUser: authUser,
+         client: client,
+       );
 }

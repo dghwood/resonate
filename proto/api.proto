@@ -287,6 +287,19 @@ message ListListenMessage {
     Response response = 2; 
 }
 
+message SyncListenMessage {
+    message Request {
+        RequestInfo request_info = 1; 
+        repeated UserListenMessage listens = 2; 
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated UserListenMessage listens = 2; 
+    }
+    Request request = 1;
+    Response response = 2;
+}
+
 message GetFeedMessage {
     message Request {
         RequestInfo request_info = 1; 

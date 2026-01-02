@@ -423,6 +423,10 @@ class UserListen extends StorageModel<UserListenMessage> {
     return UserListen.fromMessage(message);
   }
 
+  void dropEpisode() {
+    _message.clearEpisode();
+  }
+
   @override
   StorageMetadata get metadata =>
       StorageMetadata.fromMessage(_message.metadata);

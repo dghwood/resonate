@@ -326,10 +326,6 @@ class AuthUser extends ChangeNotifier {
 
   bool get isSignedIn => _status == AuthUserStatus.signedIn;
 
-  Future<void> _setupPostLogin() async {
-    // setStatusAndNotify(AuthUserStatus.signedIn);
-  }
-
   Future<ApiResult<bool>> signout() async {
     _log.info('signout');
     try {

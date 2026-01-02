@@ -1555,6 +1555,87 @@ final $typed_data.Uint8List listListenMessageDescriptor = $convert.base64Decode(
     'MhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2xpc3RlbnMSMQoGY3Vyc29yGAUgASgLMh'
     'kucmVzb25hdGUuYXBpLlF1ZXJ5Q3Vyc29yUgZjdXJzb3I=');
 
+@$core.Deprecated('Use syncListenMessageDescriptor instead')
+const SyncListenMessage$json = {
+  '1': 'SyncListenMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SyncListenMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.SyncListenMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [SyncListenMessage_Request$json, SyncListenMessage_Response$json],
+};
+
+@$core.Deprecated('Use syncListenMessageDescriptor instead')
+const SyncListenMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {
+      '1': 'listens',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listens'
+    },
+  ],
+};
+
+@$core.Deprecated('Use syncListenMessageDescriptor instead')
+const SyncListenMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'listens',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserListenMessage',
+      '10': 'listens'
+    },
+  ],
+};
+
+/// Descriptor for `SyncListenMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List syncListenMessageDescriptor = $convert.base64Decode(
+    'ChFTeW5jTGlzdGVuTWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLlN5bm'
+    'NMaXN0ZW5NZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
+    'bmF0ZS5hcGkuU3luY0xpc3Rlbk1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGn4KB1JlcXVlc3'
+    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
+    'ZXN0SW5mbxI1CgdsaXN0ZW5zGAIgAygLMhsucmVzb25hdGUuVXNlckxpc3Rlbk1lc3NhZ2VSB2'
+    'xpc3RlbnMaggEKCFJlc3BvbnNlEj8KDXJlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5h'
+    'cGkuUmVzcG9uc2VJbmZvUgxyZXNwb25zZUluZm8SNQoHbGlzdGVucxgCIAMoCzIbLnJlc29uYX'
+    'RlLlVzZXJMaXN0ZW5NZXNzYWdlUgdsaXN0ZW5z');
+
 @$core.Deprecated('Use getFeedMessageDescriptor instead')
 const GetFeedMessage$json = {
   '1': 'GetFeedMessage',

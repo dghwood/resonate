@@ -234,6 +234,7 @@ class _AppShellComponentState extends State<AppShellComponent> {
     try {
       await widget.databaseService.init(widget.authUser);
       _log.info('db done');
+      // TODO(duncan): Sync the user message
       await widget.authUser.subscriptionApi.init();
       _log.info('subs done');
       await widget.authUser.listenApi.init();

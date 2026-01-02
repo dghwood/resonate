@@ -99,6 +99,8 @@ func main() {
 		Datastore: datastore}, "/api/listens/add")
 	api.Attach(&listens.Remove{
 		Datastore: datastore}, "/api/listens/remove")
+	api.Attach(&listens.Sync{
+		Datastore: datastore}, "/api/listens/sync")
 
 	// Users
 	api.Attach(&users.List{
