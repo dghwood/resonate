@@ -1,6 +1,7 @@
 package datastore
 
 import (
+	"context"
 	"reflect"
 	"sort"
 
@@ -38,14 +39,14 @@ func (ds *MemoryDatastore) getDb(entity models.Model) memoryDatabase {
 	return db
 }
 
-func (ds *MemoryDatastore) Put(entity models.Model) error {
+func (ds *MemoryDatastore) Put(ctx context.Context, entity models.Model) error {
 	database := ds.getDb(entity)
 	database.Data[entity.GetId()] = GetFields(entity)
 
 	return nil
 }
 
-func (ds *MemoryDatastore) Get(entity models.Model) error {
+func (ds *MemoryDatastore) Get(ctx context.Context, entity models.Model) error {
 	database := ds.getDb(entity)
 	if val, ok := database.Data[entity.GetId()]; ok {
 		RetrieveFields(val, entity)
@@ -54,7 +55,7 @@ func (ds *MemoryDatastore) Get(entity models.Model) error {
 	return ErrorEntityNotFound
 }
 
-func (ds *MemoryDatastore) PutMulti(src any) error {
+func (ds *MemoryDatastore) PutMulti(ctx context.Context, src any) error {
 	entities := reflect.ValueOf(src)
 	if entities.Kind() != reflect.Slice {
 		return ErrorParameterNotCorrect
@@ -67,7 +68,7 @@ func (ds *MemoryDatastore) PutMulti(src any) error {
 	return nil
 }
 
-func (ds *MemoryDatastore) GetMulti(src any) error {
+func (ds *MemoryDatastore) GetMulti(ctx context.Context, src any) error {
 	entities := reflect.ValueOf(src)
 	if entities.Kind() != reflect.Slice {
 		return ErrorParameterNotCorrect
@@ -107,7 +108,7 @@ func (it *MemoryDatastoreIterator) Cursor() *models.QueryCursor {
 	return cursor
 }
 
-func (ds *MemoryDatastore) List(entity models.Model) (iter Iterator) {
+func (ds *MemoryDatastore) List(ctx context.Context, entity models.Model) (iter Iterator) {
 	database := ds.getDb(entity)
 	data := make([]DatastoreItem, 0)
 	for _, fields := range database.Data {
@@ -121,6 +122,7 @@ func (ds *MemoryDatastore) List(entity models.Model) (iter Iterator) {
 }
 
 func (ds *MemoryDatastore) ListForIds(
+	ctx context.Context,
 	params ListForIdsParams,
 ) Iterator {
 	ids := params.Ids

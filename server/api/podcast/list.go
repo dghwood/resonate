@@ -2,6 +2,7 @@ package podcast
 
 import (
 	"context"
+	"time"
 
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
@@ -31,6 +32,7 @@ func (f List) ResponseProto() *proto.ListPodcastEpisodesMessage_Response {
 }
 
 func (f *List) executeFromDatabase(
+	ctx context.Context,
 	podcast *models.Podcast,
 	loggedInUser *models.LoggedInUser,
 	request *proto.ListPodcastEpisodesMessage_Request,
@@ -47,6 +49,7 @@ func (f *List) executeFromDatabase(
 	// Check the updated timestamp, and request the episodes from DB
 	episode := &models.Episode{}
 	it := f.Datastore.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          []string{podcast.Id},
 			IdFieldNum:   episode.GetPodcastIdFieldNum(),
@@ -101,14 +104,15 @@ func (f *List) Execute(
 	}
 
 	// Try the database,
-	if f.Datastore.Get(podcast) == nil &&
+	if f.Datastore.Get(ctx, podcast) == nil &&
 		podcast.LatestEpisodeTimestamp > 0 &&
 		// Move this to models?
 		// This returns from the DB if the podcast has been fetched in the last 12 hours
 		utils.TimestampDelta(
 			podcast.LastFetchTimestamp,
 			utils.Now()).Hours() < 12 {
-		return f.executeFromDatabase(podcast, loggedInUser, request, response)
+		return f.executeFromDatabase(
+			ctx, podcast, loggedInUser, request, response)
 	}
 
 	updatedPodcast, episodes, err := rss.Get(ctx, url, f.FetchClient)
@@ -134,19 +138,25 @@ func (f *List) Execute(
 	return
 }
 
+// This is creating a bit of a race condition when the
+// user goes to subscribe, since if this hasn't finished the
+// subscribe add won't successfully run.
+// although it will get picked up on sync.
 func (f *List) asyncSyncToDatabase(
 	podcast *models.Podcast,
 	episodes []*models.Episode,
 ) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*60)
+	defer cancel()
 	// TODO(duncan): This takes too long
-	if err := f.Datastore.PutMulti(episodes); err != nil {
+	if err := f.Datastore.PutMulti(ctx, episodes); err != nil {
 		log.Errorf("putting episodes error : %s", err)
 		return
 	}
 	// Put the episode after the podcast since you want to update
 	// the fetch date, latest episode timestamp
 	log.Info("putting podcast")
-	if err := f.Datastore.Put(podcast); err != nil {
+	if err := f.Datastore.Put(ctx, podcast); err != nil {
 		log.Errorf("putting podcast error : %s", err)
 	}
 }

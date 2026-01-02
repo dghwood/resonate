@@ -38,7 +38,7 @@ func (f *List) Execute(
 		model.Id = userIds[i]
 	}
 
-	err = f.Datastore.GetMulti(models)
+	err = f.Datastore.GetMulti(ctx, models)
 	if err != nil {
 		return
 	}

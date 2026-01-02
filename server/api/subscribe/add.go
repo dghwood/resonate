@@ -44,13 +44,13 @@ func (f *Add) Execute(
 	// Check the podcast exists
 	podcast := models.Podcast{}
 	podcast.Id = subscription.PodcastId
-	err = f.Datastore.Get(&podcast)
+	err = f.Datastore.Get(ctx, &podcast)
 	if err != nil {
 		log.Error(err)
 		return
 	}
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&subscription)
+	err = f.Datastore.Put(ctx, &subscription)
 	if err != nil {
 		log.Error(err)
 		return
@@ -58,7 +58,7 @@ func (f *Add) Execute(
 	response.Subscription = &subscription.UserSubscriptionMessage
 
 	podcast.NumSubscriptions += 1
-	err = f.Datastore.Put(&podcast)
+	err = f.Datastore.Put(ctx, &podcast)
 	if err != nil {
 		log.Error(err)
 		return

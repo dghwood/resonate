@@ -52,7 +52,7 @@ func (f Refresh) Execute(
 
 	tokens := models.RefreshTokens{}
 	tokens.UserId = userId
-	err = f.Datastore.Get(&tokens)
+	err = f.Datastore.Get(context.Background(), &tokens)
 	if err != nil {
 		return
 	}

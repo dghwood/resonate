@@ -32,7 +32,7 @@ func (f *Search) Execute(
 	request *proto.SearchContactsMessage_Request,
 	response *proto.SearchContactsMessage_Response) (err error) {
 
-	it := f.Datastore.List(&models.User{})
+	it := f.Datastore.List(ctx, &models.User{})
 	// TODO(duncan): Random limit to stop this going crazy
 	for range 1000 {
 		entity := &models.User{}

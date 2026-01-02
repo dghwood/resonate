@@ -41,7 +41,7 @@ func (f *Add) Execute(
 	// TODO(duncan): I need to validate the ID is correct
 
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&follow)
+	err = f.Datastore.Put(ctx, &follow)
 	if err != nil {
 		return
 	}

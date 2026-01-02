@@ -24,7 +24,7 @@ func main() {
 	ds := datastoreService.NewFirestoreDatastore(projectID, databaseId)
 	fetch := fetchService.New()
 
-	it := ds.List(&models.Podcast{})
+	it := ds.List(context.Background(), &models.Podcast{})
 	for range 100 {
 		model := models.Podcast{}
 		err := it.Next(&model)
@@ -49,12 +49,12 @@ func main() {
 			log.Error(err)
 			return
 		}
-		err = ds.PutMulti(episodes)
+		err = ds.PutMulti(context.Background(), episodes)
 		if err != nil {
 			log.Error(err)
 			return
 		}
-		err = ds.Put(&model)
+		err = ds.Put(context.Background(), &model)
 		if err != nil {
 			log.Error(err)
 			return

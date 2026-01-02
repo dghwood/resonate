@@ -1,6 +1,7 @@
 package firestore
 
 import (
+	"context"
 	"testing"
 
 	firestore "cloud.google.com/go/datastore"
@@ -36,7 +37,7 @@ func TestPut(t *testing.T) {
 	podcast.ImageUrl = "https://example.com/image.png"
 	podcast.Url = "https://example.com/podcast.rss"
 
-	err := ds.Put(&podcast)
+	err := ds.Put(context.Background(), &podcast)
 	if err != nil {
 		t.Errorf("Put() error = %v", err)
 	}
@@ -48,7 +49,7 @@ func TestGet(t *testing.T) {
 	podcast := models.Podcast{}
 	podcast.Id = "123"
 
-	err := ds.Get(&podcast)
+	err := ds.Get(context.Background(), &podcast)
 	if err != nil {
 		t.Errorf("Get() error = %v", err)
 	}
@@ -81,7 +82,7 @@ func TestPutMulti(t *testing.T) {
 	podcast2.Id = "456"
 	podcast2.Title = "Test Podcast 2"
 	podcasts := []*models.Podcast{&podcast1, &podcast2}
-	err := ds.PutMulti(podcasts)
+	err := ds.PutMulti(context.Background(), podcasts)
 	if err != nil {
 		t.Errorf("PutMulti() error = %v", err)
 	}
@@ -95,7 +96,7 @@ func TestGetMulti(t *testing.T) {
 	podcast2 := models.Podcast{}
 	podcast2.Id = "456"
 	podcasts := []*models.Podcast{&podcast1, &podcast2}
-	err := ds.GetMulti(podcasts)
+	err := ds.GetMulti(context.Background(), podcasts)
 	if err != nil {
 		t.Errorf("GetMulti() error = %v", err)
 	}
@@ -128,14 +129,14 @@ func TestListForIds(t *testing.T) {
 	episode3 := newEpisode("789", "456", 3)
 
 	episodes := []*models.Episode{episode1, episode2, episode3}
-	err := ds.PutMulti(episodes)
+	err := ds.PutMulti(context.Background(), episodes)
 	if err != nil {
 		t.Errorf("PutMulti() error = %v", err)
 	}
 
 	// Test they are in there
 	episode := newEpisodeId("123")
-	err = ds.Get(episode)
+	err = ds.Get(context.Background(), episode)
 	if err != nil {
 		t.Errorf("Get() error = %v", err)
 	}
@@ -147,6 +148,7 @@ func TestListForIds(t *testing.T) {
 	}
 
 	it := ds.ListForIds(
+		context.Background(),
 		datastore.ListForIdsParams{
 			Ids:          []string{"123"},
 			IdFieldNum:   episode1.GetPodcastIdFieldNum(),

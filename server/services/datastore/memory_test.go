@@ -1,6 +1,7 @@
 package datastore
 
 import (
+	"context"
 	"testing"
 
 	"github.com/dghwood/resonate/models"
@@ -12,14 +13,15 @@ func TestMemoryDatastore(t *testing.T) {
 	model.Title = "Test Podcast"
 
 	ds := NewMemoryDatastore()
-	err := ds.Put(&model)
+	ctx := context.Background()
+	err := ds.Put(ctx, &model)
 	if err != nil {
 		t.Errorf("Put() error = %v", err)
 	}
 
 	returnedModel := models.Podcast{}
 	returnedModel.Id = "123"
-	err = ds.Get(&returnedModel)
+	err = ds.Get(context.Background(), &returnedModel)
 	if err != nil {
 		t.Errorf("Get() error = %v", err)
 	}
@@ -44,7 +46,7 @@ func TestMemoryMultiDatastore(t *testing.T) {
 	modelsToPut := []*models.Podcast{&model0, &model1}
 
 	ds := NewMemoryDatastore()
-	err := ds.PutMulti(modelsToPut)
+	err := ds.PutMulti(context.Background(), modelsToPut)
 	if err != nil {
 		t.Errorf("Put() error = %v", err)
 	}
@@ -55,7 +57,7 @@ func TestMemoryMultiDatastore(t *testing.T) {
 	returnedModel1.Id = "321"
 	returnedModels := []*models.Podcast{&returnedModel0, &returnedModel1}
 
-	err = ds.GetMulti(returnedModels)
+	err = ds.GetMulti(context.Background(), returnedModels)
 	if err != nil {
 		t.Errorf("Get() error = %v", err)
 	}
@@ -84,7 +86,7 @@ func TestMemoryListIdsDatastore(t *testing.T) {
 	modelsToPut := []*models.Episode{&model0, &model1, &model2}
 
 	ds := NewMemoryDatastore()
-	err := ds.PutMulti(modelsToPut)
+	err := ds.PutMulti(context.Background(), modelsToPut)
 
 	if err != nil {
 		t.Errorf("Put() error = %v", err)
@@ -92,6 +94,7 @@ func TestMemoryListIdsDatastore(t *testing.T) {
 
 	model := models.Episode{}
 	iter := ds.ListForIds(
+		context.Background(),
 		ListForIdsParams{
 			Ids:          []string{"2"},
 			IdFieldNum:   model.GetPodcastIdFieldNum(),

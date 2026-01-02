@@ -47,13 +47,13 @@ func (f *Get) Execute(
 	response *proto.GetFeedMessage_Response) (err error) {
 
 	log.Infof("Execute:%s", loggedInUser.Id)
-	podcastIds, err := getUserSubscriptionEpisodeIds(loggedInUser.Id, f.Datastore)
+	podcastIds, err := getUserSubscriptionEpisodeIds(ctx, loggedInUser.Id, f.Datastore)
 	if err != nil {
 		log.Error(err)
 		return
 	}
 	log.Infof("Found %d subscriptions", len(podcastIds))
-	episodes, err := getEpisodesForPodcastIds(podcastIds, f.Datastore)
+	episodes, err := getEpisodesForPodcastIds(ctx, podcastIds, f.Datastore)
 	if err != nil {
 		log.Error(err)
 		return
@@ -74,6 +74,7 @@ func (f *Get) Execute(
 }
 
 func getEpisodesForPodcastIds(
+	ctx context.Context,
 	podcastIds []string,
 	ds datastore.Datastore) ([]*models.Episode, error) {
 	episodes := make([]*models.Episode, 0)
@@ -83,6 +84,7 @@ func getEpisodesForPodcastIds(
 	model := models.Episode{}
 
 	it := ds.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          podcastIds,
 			IdFieldNum:   model.GetPodcastIdFieldNum(),
@@ -110,10 +112,12 @@ func getEpisodesForPodcastIds(
 }
 
 func getUserSubscriptionEpisodeIds(
+	ctx context.Context,
 	userId string,
 	ds datastore.Datastore) ([]string, error) {
 	model := models.Subscription{}
 	it := ds.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          []string{userId},
 			IdFieldNum:   model.GetUserIdFieldNum(),

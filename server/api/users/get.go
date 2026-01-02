@@ -36,7 +36,7 @@ func (f *Get) Execute(
 	user := models.User{}
 	user.Id = userId
 
-	err = f.Datastore.Get(&user)
+	err = f.Datastore.Get(ctx, &user)
 	if err != nil {
 		return
 	}

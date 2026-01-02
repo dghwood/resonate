@@ -72,8 +72,8 @@ func (f *FirestoreDatastore) Close() {
 	f.client.Close()
 }
 
-func (f *FirestoreDatastore) Put(entity models.Model) (err error) {
-	ctx, _ := getContext(10)
+func (f *FirestoreDatastore) Put(ctx context.Context, entity models.Model) (err error) {
+	// ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
 	log.Infof("Putting key: %s", key)
@@ -81,8 +81,8 @@ func (f *FirestoreDatastore) Put(entity models.Model) (err error) {
 	return
 }
 
-func (f *FirestoreDatastore) Get(entity models.Model) (err error) {
-	ctx, _ := getContext(10)
+func (f *FirestoreDatastore) Get(ctx context.Context, entity models.Model) (err error) {
+	// ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
 	log.Infof("Getting key: %s", key)
@@ -96,12 +96,12 @@ func (f *FirestoreDatastore) Get(entity models.Model) (err error) {
 	return
 }
 
-func (f *FirestoreDatastore) PutMulti(src any) (err error) {
+func (f *FirestoreDatastore) PutMulti(ctx context.Context, src any) (err error) {
 	entities := reflect.ValueOf(src)
 	if entities.Kind() != reflect.Slice {
 		return datastore.ErrorParameterNotCorrect
 	}
-	ctx, _ := getContext(10)
+	// ctx, _ := getContext(10)
 	// TODO(duncan): What is the right number here
 	//.              Also you could just increase the timeout
 	const batchSize = 100
@@ -129,35 +129,13 @@ func (f *FirestoreDatastore) PutMulti(src any) (err error) {
 	}
 	return
 }
-func (f *FirestoreDatastore) _PutMulti(src any) (err error) {
+
+func (f *FirestoreDatastore) GetMulti(ctx context.Context, src any) (err error) {
 	entities := reflect.ValueOf(src)
 	if entities.Kind() != reflect.Slice {
 		return datastore.ErrorParameterNotCorrect
 	}
-	ctx, _ := getContext(10)
-	keys := make([]*firestore.Key, entities.Len())
-	dbModels := make([]DatabaseModel, entities.Len())
-
-	// Turn this into a batch operation
-
-	for i := 0; i < entities.Len(); i++ {
-		entity := entities.Index(i).Interface().(models.Model)
-		model := DatabaseModel{Model: entity}
-		dbModels[i] = model
-		key := model.Key()
-		keys[i] = key
-	}
-	_, err = f.client.PutMulti(ctx, keys, dbModels)
-	// TODO(duncan): This can be a multierror and one can succeed whilst others fail
-	return
-}
-
-func (f *FirestoreDatastore) GetMulti(src any) (err error) {
-	entities := reflect.ValueOf(src)
-	if entities.Kind() != reflect.Slice {
-		return datastore.ErrorParameterNotCorrect
-	}
-	ctx, _ := getContext(10)
+	// ctx, _ := getContext(10)
 	keys := make([]*firestore.Key, entities.Len())
 	dbModels := make([]DatabaseModel, entities.Len())
 
@@ -176,9 +154,10 @@ func (f *FirestoreDatastore) GetMulti(src any) (err error) {
 
 // TODO(duncan): Handle deleted?
 func (f *FirestoreDatastore) List(
+	ctx context.Context,
 	entity models.Model) (iter datastore.Iterator) {
 
-	ctx, _ := getContext(10)
+	// ctx, _ := getContext(10)
 	query := firestore.NewQuery(models.Kind(entity))
 	return &FirestoreIterator{
 		Iterator: f.client.Run(ctx, query),
@@ -186,6 +165,7 @@ func (f *FirestoreDatastore) List(
 }
 
 func (f *FirestoreDatastore) ListForIds(
+	ctx context.Context,
 	params datastore.ListForIdsParams) (iter datastore.Iterator) {
 
 	ids := params.Ids
@@ -201,7 +181,7 @@ func (f *FirestoreDatastore) ListForIds(
 	for i, id := range ids {
 		anyIds[i] = id
 	}
-	ctx, _ := getContext(10)
+	// ctx, _ := getContext(10)
 	query := firestore.NewQuery(models.Kind(entity))
 	query = query.FilterField(
 		getFieldName(idFieldNum),

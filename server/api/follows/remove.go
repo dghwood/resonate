@@ -37,7 +37,7 @@ func (f *Remove) Execute(
 	models.Merge(&follow.UserFollowMessage, request.Follow)
 
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&follow)
+	err = f.Datastore.Put(ctx, &follow)
 	if err != nil {
 		return
 	}

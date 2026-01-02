@@ -37,7 +37,7 @@ func (f *Top) Execute(
 	// Easier to do this in memory for now
 	message := &models.User{}
 	users := make([]*models.User, 0)
-	it := f.Datastore.List(message)
+	it := f.Datastore.List(ctx, message)
 	for range 1000 {
 		entity := &models.User{}
 		err := it.Next(entity)
@@ -59,7 +59,7 @@ func (f *Top) Execute(
 		userContacts := &models.UserContacts{}
 		userContacts.SetIdFromUserId(loggedInUser.Id)
 		userContacts.Contacts = request.Contacts
-		err = f.Datastore.Put(userContacts)
+		err = f.Datastore.Put(ctx, userContacts)
 		if err != nil {
 			log.Error(err)
 			return

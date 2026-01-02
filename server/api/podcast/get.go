@@ -40,7 +40,7 @@ func (f *Get) Execute(
 	model.Id = id
 	log.Info("fetching podcast with id: ", id)
 	// Try the database, should I try requesting
-	podcastErr := f.Datastore.Get(&model)
+	podcastErr := f.Datastore.Get(ctx, &model)
 	if podcastErr == nil {
 		response.Podcast = &model.PodcastMessage
 		return

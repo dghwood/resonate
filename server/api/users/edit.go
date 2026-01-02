@@ -40,7 +40,7 @@ func (f *Edit) Execute(
 	user := models.User{}
 	user.Id = loggedInUser.Id
 	log.Infof("fetching user %s", user.Id)
-	err = f.Datastore.Get(&user)
+	err = f.Datastore.Get(ctx, &user)
 	if err != nil {
 		return
 	}
@@ -56,7 +56,7 @@ func (f *Edit) Execute(
 	// This only overrides populated fields I hope
 	models.Merge(&user.UserMessage, &updatedUser)
 	log.Infof("updating user %s", &user)
-	err = f.Datastore.Put(&user)
+	err = f.Datastore.Put(ctx, &user)
 	if err != nil {
 		return
 	}

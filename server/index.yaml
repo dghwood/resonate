@@ -3,13 +3,7 @@ indexes:
 # gcloud datastore indexes create index.yaml --database rxyz-db --project=resonates-xyz
 - kind: 'resonate.EpisodeMessage'
   properties:
-  - name: 'f2'
-  - name: 'f8'
-  - name: meta.is_deleted
-    direction: desc
-
-- kind: resonate.EpisodeMessage
-  properties:
+  - name: f2
   - name: meta.is_deleted
   - name: f8
     direction: desc

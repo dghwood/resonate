@@ -52,6 +52,7 @@ func (f *List) Execute(
 		idFieldNum = model.GetFollowedUserIdFieldNum()
 	}
 	follows := f.Datastore.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          []string{request.UserId},
 			IdFieldNum:   idFieldNum,
@@ -93,7 +94,7 @@ func (f *List) Execute(
 		return
 	}
 	// Now get the users
-	err = f.Datastore.GetMulti(users)
+	err = f.Datastore.GetMulti(ctx, users)
 	for _, follow := range response.Follows {
 		for _, user := range users {
 			if isFollowed {

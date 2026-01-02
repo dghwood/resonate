@@ -20,7 +20,7 @@ func TestList(t *testing.T) {
 			model.UserId = "456"
 		}
 
-		ds.Put(&model)
+		ds.Put(context.Background(), &model)
 	}
 	list := &List{Datastore: ds}
 	request := list.RequestProto()

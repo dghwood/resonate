@@ -45,6 +45,7 @@ func (f *List) Execute(
 	}
 
 	it := f.Datastore.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          []string{request.UserId},
 			IdFieldNum:   model.GetUserIdFieldNum(),
@@ -83,7 +84,7 @@ func (f *List) Execute(
 		return
 	}
 	// Now get the podcast
-	err = f.Datastore.GetMulti(podcasts)
+	err = f.Datastore.GetMulti(ctx, podcasts)
 	if err != nil {
 		log.Errorf("getPodcasts %s", err)
 		return

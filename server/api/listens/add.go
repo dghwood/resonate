@@ -42,7 +42,7 @@ func (f *Add) Execute(
 	models.Merge(&listen.UserListenMessage, request.Listen)
 	log.Info(&listen)
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&listen)
+	err = f.Datastore.Put(ctx, &listen)
 	if err != nil {
 		log.Error(err)
 		return

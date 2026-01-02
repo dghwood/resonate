@@ -39,12 +39,12 @@ func (f *Remove) Execute(
 	// Check the podcast exists
 	podcast := models.Podcast{}
 	podcast.Id = subscription.PodcastId
-	err = f.Datastore.Get(&podcast)
+	err = f.Datastore.Get(ctx, &podcast)
 	if err != nil {
 		return
 	}
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&subscription)
+	err = f.Datastore.Put(ctx, &subscription)
 	if err != nil {
 		return
 	}
@@ -56,7 +56,7 @@ func (f *Remove) Execute(
 		// Don't let it go to zero
 		podcast.NumSubscriptions = 0
 	}
-	err = f.Datastore.Put(&podcast)
+	err = f.Datastore.Put(ctx, &podcast)
 	if err != nil {
 		return
 	}

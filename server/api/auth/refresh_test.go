@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -19,7 +20,7 @@ func TestRefreshTokensGet(t *testing.T) {
 
 	tokens := models.RefreshTokens{}
 	tokens.UserId = "6a4c9ded42a558b2854648fea3f49872"
-	err := datastore.Get(&tokens)
+	err := datastore.Get(context.Background(), &tokens)
 	if err != nil {
 		t.Error(err)
 	}

@@ -60,7 +60,7 @@ func (f Login) Execute(
 	loginAttempt := models.LoginAttempt{}
 	loginAttempt.PhoneNumber = phoneNumber
 
-	err = f.Datastore.Get(&loginAttempt)
+	err = f.Datastore.Get(ctx, &loginAttempt)
 	if err != nil {
 		log.Infof("Login attempt error %s", err)
 		return
@@ -77,7 +77,7 @@ func (f Login) Execute(
 	// Check the password
 	if loginAttempt.Password != password {
 		loginAttempt.NumAttempts += 1
-		err = f.Datastore.Put(&loginAttempt)
+		err = f.Datastore.Put(ctx, &loginAttempt)
 		if err != nil {
 			return
 		}
@@ -88,7 +88,7 @@ func (f Login) Execute(
 	user.SetIdFromPhoneNumber(phoneNumber)
 
 	// Get the user if they already exist
-	it := f.Datastore.ListForIds(datastore.ListForIdsParams{
+	it := f.Datastore.ListForIds(ctx, datastore.ListForIdsParams{
 		Ids:        []string{utils.HashPhoneNumber(phoneNumber)},
 		IdFieldNum: user.GetEncryptedPhoneNumberFieldNum(),
 		Entity:     user,
@@ -105,7 +105,7 @@ func (f Login) Execute(
 
 	// Add the new user since they don't exist
 	if !userExists {
-		err = f.Datastore.Put(user)
+		err = f.Datastore.Put(ctx, user)
 		if err != nil {
 			return
 		}
@@ -123,7 +123,7 @@ func (f Login) Execute(
 
 	if userExists {
 		// User exists, so load their refreshTokens
-		refreshErr := f.Datastore.Get(&refreshTokens)
+		refreshErr := f.Datastore.Get(ctx, &refreshTokens)
 		if refreshErr != nil &&
 			refreshErr != datastore.ErrorEntityNotFound {
 			return refreshErr
@@ -132,7 +132,7 @@ func (f Login) Execute(
 
 	refreshTokens.Tokens = append(refreshTokens.Tokens, refreshToken)
 
-	err = f.Datastore.Put(&refreshTokens)
+	err = f.Datastore.Put(ctx, &refreshTokens)
 	if err != nil {
 		return
 	}

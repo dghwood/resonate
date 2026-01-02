@@ -60,7 +60,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 			fmt.Sprintf("User %d", i),
 			profileImageUrl)
 	}
-	err = ds.PutMulti(users)
+	err = ds.PutMulti(context.Background(), users)
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +76,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 			follow.UserId = users[i].Id
 			follow.FollowUtcTimestampMs = time.Now().UTC().UnixMilli()
 			follow.FollowedUserId = users[j].Id
-			ds.Put(&follow)
+			ds.Put(context.Background(), &follow)
 		}
 	}
 	// Add some podcasts (these are real)
@@ -112,7 +112,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 			subscribe.Id = fmt.Sprintf("%s-%s", user.Id, podcast.Id)
 			subscribe.UserId = user.Id
 			subscribe.PodcastId = podcast.Id
-			err = ds.Put(&subscribe)
+			err = ds.Put(context.Background(), &subscribe)
 			if err != nil {
 				panic(err)
 			}
@@ -128,7 +128,7 @@ func NewMockDatastore(f *fetch.Client, is imagestore.Imagestore) *datastore.Memo
 					listen.UserId = user.Id
 					listen.EpisodeId = episode.Id
 					listen.ListenTimestamp = episode.PublishTimestamp
-					err = ds.Put(&listen)
+					err = ds.Put(context.Background(), &listen)
 					if err != nil {
 						panic(err)
 					}

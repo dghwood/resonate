@@ -9,6 +9,7 @@ package datastore
 import (
 	// "context"
 
+	"context"
 	"errors"
 
 	"github.com/dghwood/resonate/models"
@@ -38,12 +39,12 @@ type ListForIdsParams struct {
 }
 
 type Datastore interface {
-	Put(entity models.Model) (err error)
-	Get(entity models.Model) (err error)
-	List(entity models.Model) (iter Iterator)
-	PutMulti(entities any) (err error)
-	GetMulti(entities any) (err error)
+	Put(ctx context.Context, entity models.Model) (err error)
+	Get(ctx context.Context, entity models.Model) (err error)
+	List(ctx context.Context, entity models.Model) (iter Iterator)
+	PutMulti(ctx context.Context, entities any) (err error)
+	GetMulti(ctx context.Context, entities any) (err error)
 	// This needs to implicitly filter for deleted I think
-	ListForIds(params ListForIdsParams) (iter Iterator)
+	ListForIds(ctx context.Context, params ListForIdsParams) (iter Iterator)
 	Close()
 }

@@ -38,7 +38,7 @@ func TestListDb(t *testing.T) {
 	// then this should return 0
 	podcast := models.Podcast{}
 	podcast.Id = "124"
-	ds.Put(&podcast)
+	ds.Put(context.Background(), &podcast)
 
 	api := List{
 		Datastore: ds,

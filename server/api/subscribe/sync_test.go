@@ -11,7 +11,7 @@ import (
 
 func TestSyncExecute(t *testing.T) {
 	ds := datastore.NewMemoryDatastore()
-	ds.Put(&models.Subscription{
+	ds.Put(context.Background(), &models.Subscription{
 		UserSubscriptionMessage: proto.UserSubscriptionMessage{
 			Id:        "1",
 			UserId:    "123",
@@ -21,7 +21,7 @@ func TestSyncExecute(t *testing.T) {
 			},
 		},
 	})
-	ds.Put(&models.Subscription{
+	ds.Put(context.Background(), &models.Subscription{
 		UserSubscriptionMessage: proto.UserSubscriptionMessage{
 			Id:        "2",
 			UserId:    "123",
@@ -31,7 +31,7 @@ func TestSyncExecute(t *testing.T) {
 			},
 		},
 	})
-	ds.Put(&models.Subscription{
+	ds.Put(context.Background(), &models.Subscription{
 		UserSubscriptionMessage: proto.UserSubscriptionMessage{
 			Id:        "3",
 			UserId:    "123",

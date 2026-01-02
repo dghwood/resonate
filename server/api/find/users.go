@@ -53,7 +53,7 @@ func (f *Users) Execute(
 	}
 
 	model := &models.User{}
-	it := f.Datastore.ListForIds(datastore.ListForIdsParams{
+	it := f.Datastore.ListForIds(ctx, datastore.ListForIdsParams{
 		Ids: encyptedPhoneNumbers,
 		// TODO(duncan): I should probably have diff
 		// encyrption for ID vs. search ID

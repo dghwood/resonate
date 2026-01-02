@@ -37,7 +37,7 @@ func (f *Remove) Execute(
 	models.Merge(&Listen.UserListenMessage, request.Listen)
 
 	// Try the database, should I try requesting
-	err = f.Datastore.Put(&Listen)
+	err = f.Datastore.Put(ctx, &Listen)
 	if err != nil {
 		return
 	}

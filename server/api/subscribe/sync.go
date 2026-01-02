@@ -40,6 +40,7 @@ func (f *Sync) Execute(
 	authorativeSubscriptions := make(map[string]*proto.UserSubscriptionMessage)
 	model := &models.Subscription{}
 	it := f.Datastore.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:            []string{loggedInUser.Id},
 			IdFieldNum:     model.GetUserIdFieldNum(),
@@ -93,7 +94,7 @@ func (f *Sync) Execute(
 	}
 
 	if len(podcastModels) > 0 {
-		err := f.Datastore.GetMulti(podcastModels)
+		err := f.Datastore.GetMulti(ctx, podcastModels)
 		if err != nil {
 			log.Errorf("error getting podcasts %s", err)
 			return err

@@ -54,6 +54,7 @@ func (f *List) Execute(
 	// TODO(duncan): Do I need to have permissions here?
 	model := models.Listen{}
 	it := f.Datastore.ListForIds(
+		ctx,
 		datastore.ListForIdsParams{
 			Ids:          []string{userId},
 			IdFieldNum:   model.GetUserIdFieldNum(),
@@ -93,7 +94,7 @@ func (f *List) Execute(
 		return
 	}
 	// Now get the episodes
-	err = f.Datastore.GetMulti(episodes)
+	err = f.Datastore.GetMulti(ctx, episodes)
 	if err != nil {
 		return
 	}
