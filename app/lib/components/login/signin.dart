@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/login/formatters.dart';
 import 'package:resonate/router/navigation.dart';
 
 /* Flow 
@@ -160,6 +162,10 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
           Form(
             key: _formKey,
             child: TextFormField(
+              // inputFormatters: [
+              //   FilteringTextInputFormatter.digitsOnly,
+              //   PhoneNumberFormatterUS(),
+              // ],
               decoration: InputDecoration(labelText: 'Phone #'),
               keyboardType: TextInputType.phone,
               validator: (value) {
