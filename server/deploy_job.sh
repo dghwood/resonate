@@ -3,9 +3,8 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-gcloud builds submit --pack \
-  env=GOOGLE_BUILDABLE="./jobs/podcasts/main.go" \
-  image="northamerica-northeast1-docker.pkg.dev/resonates-xyz/cloud-run-source-deploy/rxyz-podcasts" \
+gcloud builds submit \
+  --pack=env=GOOGLE_BUILDABLE="./jobs/podcasts/main.go",image="northamerica-northeast1-docker.pkg.dev/resonates-xyz/cloud-run-source-deploy/rxyz-podcasts" \
   --project=resonates-xyz
 
 gcloud run jobs deploy rxyz-podcasts \

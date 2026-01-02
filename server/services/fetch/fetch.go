@@ -92,6 +92,7 @@ func (c *Client) Post(ctx context.Context, request Request) (resp []byte, err er
 }
 
 func (c *Client) post(ctx context.Context, request Request) (resp []byte, err error) {
+
 	req, err := http.NewRequestWithContext(ctx, "POST", request.Url, bytes.NewBuffer(request.Body))
 	addHeaders(req, request.Headers)
 	if err != nil {
