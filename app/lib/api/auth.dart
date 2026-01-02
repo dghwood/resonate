@@ -14,6 +14,7 @@ import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
+import 'package:resonate/utils/cookie.dart';
 
 Logger _log = Logger('api/auth');
 
@@ -290,9 +291,15 @@ class AuthUser extends ChangeNotifier {
   Future<void> loadFromStorage() async {
     try {
       setStatusAndNotify(AuthUserStatus.loading);
+      // check whether the cookies are avaiable
+      // this will be true for app
+      if (!hasAuthCookie()) {
+        throw Exception('No cookies available');
+      }
       // These error out if they doesn't exist
       var userId = await _secureDatabase.readKey(secureStorageUserIdKey);
       await _secureDatabase.read(secureStorageUserKey(userId), _user);
+
       _log.info('user: $_user');
       setStatusAndNotify(AuthUserStatus.signedIn);
     } on Exception catch (_) {

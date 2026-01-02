@@ -9,6 +9,11 @@ final Logger _log = Logger('/services/http/cookie_jar');
 class BetterPersistCookieJar extends PersistCookieJar {
   BetterPersistCookieJar({required Storage storage}) : super(storage: storage);
 
+  Future<bool> hasAuthCookie(Uri url) async {
+    var cookies = await loadForRequest(url);
+    return cookies.any((c) => c.name == 'Access-Token-Available');
+  }
+
   Future<bool> actuallyLoadForRequest(
     Map<String, String> headers,
     Uri url,

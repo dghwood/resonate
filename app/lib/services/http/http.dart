@@ -2,6 +2,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:resonate/errors/errors.dart';
 import 'package:resonate/services/http/cookie_jar.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
 

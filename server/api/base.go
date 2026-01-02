@@ -88,11 +88,11 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		// Set another non-http cookie just to check if this exists in the
 		// front end on web.
 		http.SetCookie(w, &http.Cookie{
-			Name:   "Access-Token-Available",
-			Value:  "true",
-			Secure: true,
+			Name:  "Access-Token-Available",
+			Value: "true",
+			// Secure: true,
 			MaxAge: 3600 * 24 * 365 * 100,
-			Path:   "/api",
+			Path:   "/", // Keep this generic so I can read it
 		})
 	}
 	refreshToken := internalInfo.GetRefreshToken()
@@ -112,11 +112,11 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 		// Set another non-http cookie just to check if this exists in the
 		// front end on web.
 		http.SetCookie(w, &http.Cookie{
-			Name:   "Refresh-Token-Available",
-			Value:  "true",
-			Secure: true,
+			Name:  "Refresh-Token-Available",
+			Value: "true",
+			// Secure: true,
 			MaxAge: 3600 * 24 * 365 * 100,
-			Path:   "/api",
+			Path:   "/",
 		})
 	}
 }
