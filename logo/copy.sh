@@ -3,6 +3,8 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Background Color: 39713eff, 
+
 # There are a bunch of places images are stored in the project 
 #
 # Android 
