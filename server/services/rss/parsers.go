@@ -14,8 +14,12 @@ import (
 )
 
 var pubDateFormats = []string{
-	"Mon, 02 Jan 2006 15:04:05 -0700",
 	"Mon, 2 Jan 2006 15:04:05 -0700",
+	time.RFC1123,  // "Sat, 03 Jan 2026 08:00:00 GMT"
+	time.RFC1123Z, // "Sat, 03 Jan 2026 08:00:00 +0000"
+	time.RFC3339,  // "2026-01-03T08:00:00Z"
+	time.DateTime, // "2006-01-02 15:04:05"
+	time.DateOnly, // "2006-01-02"
 }
 
 // TODO(duncan): Should this raise an error

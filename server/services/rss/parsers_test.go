@@ -47,6 +47,7 @@ func TestParsePubDateTimeSeconds(t *testing.T) {
 		// This fails
 		"Tue, 1 Apr 2025 07:05:00 +0000",
 		"Tue, 01 Apr 2025 07:05:00 +0000",
+		"Sat, 03 Jan 2026 08:00:00 GMT",
 	}
 
 	for _, value := range values {
