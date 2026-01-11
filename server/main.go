@@ -6,6 +6,7 @@ import (
 
 	"github.com/dghwood/resonate/api"
 	"github.com/dghwood/resonate/constants"
+	"github.com/dghwood/resonate/flags"
 	cacheService "github.com/dghwood/resonate/services/cachestore/cloudstorage"
 	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
 	fetchService "github.com/dghwood/resonate/services/fetch"
@@ -48,6 +49,8 @@ func main() {
 			return
 		}
 	}
+
+	flags.Parse()
 
 	var projectID = constants.CLOUD_PROJECT_ID
 	var databaseId = constants.CLOUD_DATABASE_ID
@@ -134,6 +137,13 @@ func main() {
 	api.Attach(&find.Users{
 		Datastore: datastore,
 	}, "/api/find/users")
+
+	// Add quick handle for settings
+	http.HandleFunc("/features", func(w http.ResponseWriter, r *http.Request) {
+		bytes, _ := flags.Print()
+		w.Header().Set("Content-Type", "text/plain")
+		w.Write(bytes)
+	})
 
 	log.Info("listening on port " + port + "...")
 	log.Error(http.ListenAndServe(":"+port, nil))

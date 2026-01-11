@@ -2,3 +2,7 @@
 # This is copied from build in the flutter 
 # directory
 web
+# Allow these env files, since I want to keep 
+# track of feature enablement.
+!features.dev.env
+!features.prod.env

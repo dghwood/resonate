@@ -10,4 +10,5 @@ gcloud builds submit \
 gcloud run jobs deploy rxyz-podcasts \
     --region="northamerica-northeast1" \
     --image="northamerica-northeast1-docker.pkg.dev/resonates-xyz/cloud-run-source-deploy/rxyz-podcasts" \
+    --env-vars-file features.prod.env \
     --project=resonates-xyz

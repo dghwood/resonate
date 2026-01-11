@@ -9,4 +9,5 @@ gcloud run deploy rxyz-app \
 --min-instances=0 \
 --max-instances=1 \
 --no-invoker-iam-check \
+--env-vars-file features.prod.env \
 --project=resonates-xyz
