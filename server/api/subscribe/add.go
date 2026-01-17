@@ -46,8 +46,18 @@ func (f *Add) Execute(
 	podcast.Id = subscription.PodcastId
 	err = f.Datastore.Get(ctx, &podcast)
 	if err != nil {
-		log.Error(err)
-		return
+		// If the podcast doesn't exist, check if it's provided in the request
+		if request.Subscription.Podcast != nil {
+			models.Merge(&podcast.PodcastMessage, request.Subscription.Podcast)
+			err = f.Datastore.Put(ctx, &podcast)
+			if err != nil {
+				log.Error(err)
+				return
+			}
+		} else {
+			log.Error(err)
+			return
+		}
 	}
 	// Try the database, should I try requesting
 	err = f.Datastore.Put(ctx, &subscription)

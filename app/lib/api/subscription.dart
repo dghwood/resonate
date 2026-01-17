@@ -285,7 +285,7 @@ class SubscriptionApi extends ChangeNotifier {
       return ApiResult.ok(_subscriptions[podcastId]!);
     }
 
-    var subscription = _createSubscription(podcastId);
+    var subscription = _createSubscription(podcastId).copyWithPodcast(podcast);
     _log.info('created_subscription::${subscription.id}');
 
     // TODO(duncanwood): Do I need to make sure I have a local copy of the

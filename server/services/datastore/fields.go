@@ -104,8 +104,10 @@ func GetFields(message models.Model) (item DatastoreItem) {
 		// meta is not set..
 		meta = &pb.StorageMetadataMessage{}
 		meta.CreatedTimestamp = utils.Now()
+		meta.UpdatedTimestamp = utils.Now()
+	} else if meta.UpdatedTimestamp == 0 {
+		meta.UpdatedTimestamp = utils.Now()
 	}
-	meta.UpdatedTimestamp = utils.Now()
 	item.Meta = meta
 	return
 }

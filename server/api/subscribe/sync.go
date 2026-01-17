@@ -62,23 +62,63 @@ func (f *Sync) Execute(
 	}
 
 	subcriptionClientMap := make(map[string]bool)
+	updatedSubscriptions := make([]*models.Subscription, 0)
+	podcastsToSave := make(map[string]*models.Podcast)
+
 	for _, subscription := range request.GetSubscriptions() {
 		subcriptionClientMap[subscription.GetId()] = true
 		// If the subscription does exist ()
 		dbSubscription, ok := authorativeSubscriptions[subscription.PodcastId]
+
+		clientIsAuthority := false
 		if !ok {
 			// Not in DB
 			if !subscription.GetMetadata().GetIsDeleted() {
 				// Add if not deleted
-				authorativeSubscriptions[subscription.PodcastId] = subscription
+				clientIsAuthority = true
 			}
-			continue
-		}
-		// Reconcile the two versions
-		if subscription.GetMetadata().GetUpdatedTimestamp() >
+		} else if subscription.GetMetadata().GetUpdatedTimestamp() >
 			dbSubscription.GetMetadata().GetUpdatedTimestamp() {
 			// client is the authority
+			clientIsAuthority = true
+		}
+
+		if clientIsAuthority {
 			authorativeSubscriptions[subscription.PodcastId] = subscription
+
+			// Deep copy for saving to datastore so we don't overwrite
+			// the timestamps in the response pointers if the datastore
+			// layer updates them.
+			subCopy := models.Subscription{}
+			models.Merge(&subCopy.UserSubscriptionMessage, subscription)
+
+			updatedSubscriptions = append(updatedSubscriptions, &subCopy)
+			if subscription.Podcast != nil {
+				podcastsToSave[subscription.PodcastId] = &models.Podcast{
+					PodcastMessage: *subscription.Podcast,
+				}
+			}
+		}
+	}
+
+	if len(podcastsToSave) > 0 {
+		toPut := make([]*models.Podcast, 0)
+		for _, p := range podcastsToSave {
+			toPut = append(toPut, p)
+		}
+		if len(toPut) > 0 {
+			err = f.Datastore.PutMulti(ctx, toPut)
+			if err != nil {
+				log.Errorf("failed to put podcasts: %s", err)
+			}
+		}
+	}
+
+	if len(updatedSubscriptions) > 0 {
+		err = f.Datastore.PutMulti(ctx, updatedSubscriptions)
+		if err != nil {
+			log.Errorf("failed to put subscriptions: %s", err)
+			return err
 		}
 	}
 
@@ -97,10 +137,14 @@ func (f *Sync) Execute(
 		err := f.Datastore.GetMulti(ctx, podcastModels)
 		if err != nil {
 			log.Errorf("error getting podcasts %s", err)
-			return err
+			// Ignore error if podcasts are missing, as it is just enrichment
 		}
-		for _, podcast := range podcastModels {
-			authorativeSubscriptions[podcast.Id].Podcast = &podcast.PodcastMessage
+		for i := range podcastModels {
+			podcast := podcastModels[i]
+			// Only attach if it was successfully loaded (has a title)
+			if podcast.Title != "" {
+				authorativeSubscriptions[podcast.Id].Podcast = &podcast.PodcastMessage
+			}
 		}
 		log.Infof("loaded %d podcasts", len(podcastModels))
 	}
