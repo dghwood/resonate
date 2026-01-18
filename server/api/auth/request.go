@@ -2,18 +2,19 @@ package auth
 
 import (
 	"context"
-	"log"
-	"time"
 
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/services/sms"
 	"github.com/dghwood/resonate/utils"
 )
 
 type Request struct {
-	Datastore datastore.Datastore
+	Datastore       datastore.Datastore
+	SmsVerification sms.Verification
 }
 
 func (f Request) RequireSignIn() bool { return false }
@@ -42,27 +43,33 @@ func (f Request) Execute(
 	// Send a text with the password
 	phoneNumber := request.PhoneNumber
 	email := request.Email
-	log.Printf("Requesting login for number: %s or email: %s", phoneNumber, email)
+	log.Infof("Requesting login for number: %s or email: %s", phoneNumber, email)
 
 	if !utils.IsValidPhoneNumber(phoneNumber) {
 		// The front end should deal with this
-		log.Println("Invalid phone number")
+		log.Info("Invalid phone number")
 		return errors.ERROR_INTERNAL
 	}
 
-	// TODO(duncan): Make this 5 configurable?
-	password := utils.GenerateRandomNumberString(5)
-
-	loginAttempt := models.LoginAttempt{}
-	loginAttempt.PhoneNumber = phoneNumber
-	loginAttempt.Password = password
-	loginAttempt.ExpiryUtcTimestamp = time.Now().Add(15 * time.Minute).UTC().Unix()
-
-	err = f.Datastore.Put(ctx, &loginAttempt)
+	err = f.SmsVerification.Send(phoneNumber)
 	if err != nil {
+		log.Error(err)
 		return
 	}
-	// TODO(duncan): Remove this in production
-	log.Printf("Sending login request to %s with password: %s", phoneNumber, password)
+
+	// TODO(duncan): Make this 5 configurable?
+	// password := utils.GenerateRandomNumberString(5)
+
+	// loginAttempt := models.LoginAttempt{}
+	// loginAttempt.PhoneNumber = phoneNumber
+	// loginAttempt.Password = password
+	// loginAttempt.ExpiryUtcTimestamp = time.Now().Add(10 * time.Minute).UTC().Unix()
+
+	// err = f.Datastore.Put(ctx, &loginAttempt)
+	// if err != nil {
+	// 	return
+	// }
+	// // TODO(duncan): Remove this in production
+	// log.Infof("Sending login request to %s with password: %s", phoneNumber, password)
 	return
 }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/command.dart';
-import 'package:resonate/api/errors.dart';
-import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
-import 'package:resonate/components/login/formatters.dart';
 import 'package:resonate/router/navigation.dart';
 
 /* Flow 
@@ -22,8 +18,11 @@ Logger _log = Logger('SignInComponent');
 
 class LoginInfo {
   String email = '';
-  String phoneNumber = '';
+  String? countryCode;
+  String? phoneNumber;
   String verificationCode = '';
+
+  String get validPhoneNumber => '$countryCode$phoneNumber';
 }
 
 class SigninComponent2 extends StatefulWidget {
@@ -56,17 +55,37 @@ class _SigninComponent2State extends State<SigninComponent2> {
           Center(
             child: Column(
               children: [
-                Expanded(flex: 5, child: Center(child: Text('RESONATES'))),
+                Expanded(
+                  flex: 5,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/logo_inverted_512.png",
+                          width: 120,
+                          height: 120,
+                        ),
+                        Text('RESONATES'),
+                      ],
+                    ),
+                  ),
+                ),
                 Expanded(
                   flex: 1,
-                  child: TextButton(
-                    child: Text('LOGIN'),
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        child: Text('LOGIN'),
+                        onPressed: () {
+                          _pageController.nextPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -140,18 +159,22 @@ class SignInRequestComponent extends StatefulWidget {
 
 class _SignInRequestComponentState extends State<SignInRequestComponent> {
   String _phoneNumber = '';
+  String _countryCode = '+1';
+
   final _formKey = GlobalKey<FormState>();
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      widget.loginInfo.countryCode = _countryCode;
       widget.loginInfo.phoneNumber = _phoneNumber;
-      widget._command.execute(_phoneNumber);
+      widget._command.execute(widget.loginInfo.validPhoneNumber);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    _log.info('phoneNumber: ${widget.loginInfo.validPhoneNumber}');
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Column(
@@ -161,29 +184,78 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
         children: [
           Form(
             key: _formKey,
-            child: TextFormField(
-              // inputFormatters: [
-              //   FilteringTextInputFormatter.digitsOnly,
-              //   PhoneNumberFormatterUS(),
-              // ],
-              decoration: InputDecoration(labelText: 'Phone #'),
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your phone number';
-                }
-                if (!RegExp(r'^[\d\-]+$').hasMatch(value)) {
-                  return 'Please enter a valid phone';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _phoneNumber = value ?? '';
-              },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 56,
+                  child: DropdownButtonFormField<String>(
+                    initialValue: widget.loginInfo.countryCode ?? '+1',
+                    items: [
+                      DropdownMenuItem<String>(
+                        value: "+1",
+                        child: Text("+1", textAlign: TextAlign.center),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "+44",
+                        child: Text("+44", textAlign: TextAlign.center),
+                      ),
+                    ],
+                    onSaved: (value) {
+                      if (value != null) {
+                        setState(() {
+                          _countryCode = value;
+                        });
+                      }
+                    },
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        setState(() {
+                          _countryCode = value;
+                        });
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ), // Add some spacing between the dropdown and text field
+                Expanded(
+                  flex: 5,
+                  child: TextFormField(
+                    initialValue: widget.loginInfo.phoneNumber,
+                    decoration: InputDecoration(labelText: 'Phone #'),
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      if (!RegExp(r'^[\d\-]+$').hasMatch(value)) {
+                        return 'Please enter a valid phone';
+                      }
+                      if (value.replaceAll(RegExp(r'[^\d]+'), '').length !=
+                          10) {
+                        return 'Wrong number of digits';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      if (value != null) {
+                        setState(() => _phoneNumber = value);
+                      }
+                    },
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _phoneNumber = value);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
-
-          TextButton(onPressed: _submit, child: Text('Sign In')),
+          // FilledButton(onPressed: onPressed, child: child)
+          FilledButton(onPressed: _submit, child: Text('Next')),
         ],
       ),
     );
@@ -256,19 +328,32 @@ class SignInValidateComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (loginInfo.phoneNumber == null) {
+      return TextButton(
+        onPressed: () {
+          pageController.previousPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        },
+        child: Text('Try Again'),
+      );
+    }
+    var phoneNumber = loginInfo.phoneNumber ?? '';
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 16,
       children: [
-        Text(loginInfo.phoneNumber),
+        Text(phoneNumber),
         VerificationCodeField(
           autofocus: true,
           enabled: true,
-          length: 5,
+          length: 6,
           onFilled: (value) {
-            _log.info('$value::${loginInfo.phoneNumber}');
-            command.execute(loginInfo.phoneNumber, value);
+            _log.info('$value::${loginInfo.validPhoneNumber}');
+            command.execute(loginInfo.validPhoneNumber, value);
           },
           spaceBetween: 16,
           matchingPattern: RegExp(r'^\d+$'),

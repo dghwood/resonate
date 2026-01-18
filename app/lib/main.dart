@@ -53,6 +53,8 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(
                 brightness: Brightness.dark,
                 seedColor: Colors.lightBlueAccent,
+                // seedColor: Color.fromARGB(255, 57, 113, 62),
+                // seedColor: Colors.white,
               ),
             ),
             routerConfig: appRouter(authUser),

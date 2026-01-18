@@ -9,13 +9,15 @@ import (
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
 	"github.com/dghwood/resonate/services/datastore"
+	"github.com/dghwood/resonate/services/sms"
 	"github.com/dghwood/resonate/utils"
 
 	token "github.com/dghwood/resonate/auth"
 )
 
 type Login struct {
-	Datastore datastore.Datastore
+	Datastore       datastore.Datastore
+	SmsVerification sms.Verification
 }
 
 func (f Login) RequireSignIn() bool { return false }
@@ -57,32 +59,38 @@ func (f Login) Execute(
 		return errors.ERROR_INTERNAL
 	}
 
-	loginAttempt := models.LoginAttempt{}
-	loginAttempt.PhoneNumber = phoneNumber
-
-	err = f.Datastore.Get(ctx, &loginAttempt)
+	err = f.SmsVerification.Validate(phoneNumber, password)
 	if err != nil {
-		log.Infof("Login attempt error %s", err)
+		log.Error(err)
 		return
 	}
 
-	// TODO(duncan): 3 attemps hardcoded?
-	if loginAttempt.NumAttempts >= 3 {
-		return errors.ERROR_TOO_MANY_ATTEMPTS
-	}
-	// Check the expiry
-	if loginAttempt.ExpiryUtcTimestamp < time.Now().UTC().Unix() {
-		return errors.ERROR_TIME_EXPIRED
-	}
-	// Check the password
-	if loginAttempt.Password != password {
-		loginAttempt.NumAttempts += 1
-		err = f.Datastore.Put(ctx, &loginAttempt)
-		if err != nil {
-			return
-		}
-		return errors.ERROR_INVALID_CREDENTIALS
-	}
+	// loginAttempt := models.LoginAttempt{}
+	// loginAttempt.PhoneNumber = phoneNumber
+
+	// err = f.Datastore.Get(ctx, &loginAttempt)
+	// if err != nil {
+	// 	log.Infof("Login attempt error %s", err)
+	// 	return
+	// }
+
+	// // TODO(duncan): 3 attemps hardcoded?
+	// if loginAttempt.NumAttempts >= 3 {
+	// 	return errors.ERROR_TOO_MANY_ATTEMPTS
+	// }
+	// // Check the expiry
+	// if loginAttempt.ExpiryUtcTimestamp < time.Now().UTC().Unix() {
+	// 	return errors.ERROR_TIME_EXPIRED
+	// }
+	// // Check the password
+	// if loginAttempt.Password != password {
+	// 	loginAttempt.NumAttempts += 1
+	// 	err = f.Datastore.Put(ctx, &loginAttempt)
+	// 	if err != nil {
+	// 		return
+	// 	}
+	// 	return errors.ERROR_INVALID_CREDENTIALS
+	// }
 	// Now the user is authenticated
 	user := &models.User{}
 	user.SetIdFromPhoneNumber(phoneNumber)
@@ -95,8 +103,6 @@ func (f Login) Execute(
 		Limit:      1,
 	})
 	userErr := it.Next(user)
-	log.Infof("userErr %s", userErr)
-	log.Info(user)
 	if userErr != nil && userErr != datastore.IteratorDone {
 		log.Infof("Error getting user: %s", userErr)
 		return userErr
