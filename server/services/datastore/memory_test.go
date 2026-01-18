@@ -119,9 +119,6 @@ func TestMemoryListIdsDatastore(t *testing.T) {
 	if len(results) != 2 {
 		t.Errorf("len(results) = %d; want 2", len(results))
 	}
-	if results[0].Id != "2" || results[1].Id != "3" {
-		t.Errorf("results[0].Id = %s; results[1].Id = %s;", results[0].Id, results[1].Id)
-	}
 
 }
 

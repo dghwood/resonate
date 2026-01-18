@@ -39,9 +39,13 @@ func (ds *MemoryDatastore) getDb(entity models.Model) memoryDatabase {
 	return db
 }
 
-func (ds *MemoryDatastore) Put(ctx context.Context, entity models.Model) error {
+func (ds *MemoryDatastore) Put(ctx context.Context, entity models.Model) (err error) {
 	database := ds.getDb(entity)
-	database.Data[entity.GetId()] = GetFields(entity)
+	fields, err := GetFields(entity)
+	if err != nil {
+		return err
+	}
+	database.Data[entity.GetId()] = fields
 
 	return nil
 }
@@ -55,7 +59,7 @@ func (ds *MemoryDatastore) Get(ctx context.Context, entity models.Model) error {
 	return ErrorEntityNotFound
 }
 
-func (ds *MemoryDatastore) PutMulti(ctx context.Context, src any) error {
+func (ds *MemoryDatastore) PutMulti(ctx context.Context, src any) (err error) {
 	entities := reflect.ValueOf(src)
 	if entities.Kind() != reflect.Slice {
 		return ErrorParameterNotCorrect
@@ -63,7 +67,11 @@ func (ds *MemoryDatastore) PutMulti(ctx context.Context, src any) error {
 	for i := 0; i < entities.Len(); i++ {
 		entity := entities.Index(i).Interface().(models.Model)
 		database := ds.getDb(entity)
-		database.Data[entity.GetId()] = GetFields(entity)
+		fields, err := GetFields(entity)
+		if err != nil {
+			return err
+		}
+		database.Data[entity.GetId()] = fields
 	}
 	return nil
 }

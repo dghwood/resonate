@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/utils"
@@ -43,7 +44,11 @@ func getIndex(fd protoreflect.FieldDescriptor) bool {
 	return false
 }
 
-func GetFields(message models.Model) (item DatastoreItem) {
+func GetFields(message models.Model) (item DatastoreItem, err error) {
+	if message.GetId() == "" {
+		err = fmt.Errorf("id is empty")
+		return
+	}
 	fields := make([]Field, 0)
 
 	message.ProtoReflect().Range(
@@ -103,9 +108,11 @@ func GetFields(message models.Model) (item DatastoreItem) {
 	if meta == nil {
 		// meta is not set..
 		meta = &pb.StorageMetadataMessage{}
-		meta.CreatedTimestamp = utils.Now()
+		meta.SetCreatedTimestamp(utils.Now())
+		meta.SetUpdatedTimestamp(utils.Now())
+	} else if meta.GetUpdatedTimestamp() == 0 {
+		meta.SetUpdatedTimestamp(utils.Now())
 	}
-	meta.UpdatedTimestamp = utils.Now()
 	item.Meta = meta
 	return
 }

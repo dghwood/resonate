@@ -76,7 +76,10 @@ func (d *DatabaseModel) Key() *firestore.Key {
 }
 
 func (d *DatabaseModel) Save() (props []firestore.Property, err error) {
-	item := datastore.GetFields(d.Model)
+	item, err := datastore.GetFields(d.Model)
+	if err != nil {
+		return
+	}
 	// The fields won't include meta
 	for _, field := range item.Fields {
 		property := fieldToProperty(field)

@@ -61,6 +61,8 @@ func (f *Sync) Execute(
 		authorativeListens[model.EpisodeId] = &model.UserListenMessage
 	}
 
+	// Note: These are indexed by episodeId
+	listensToUpdate := make([]string, 0)
 	subcriptionClientMap := make(map[string]bool)
 	for _, listen := range request.GetListens() {
 		subcriptionClientMap[listen.GetId()] = true
@@ -71,6 +73,8 @@ func (f *Sync) Execute(
 			if !listen.GetMetadata().GetIsDeleted() {
 				// Add if not deleted
 				authorativeListens[listen.GetEpisodeId()] = listen
+				// Need to update DB
+				listensToUpdate = append(listensToUpdate, listen.GetEpisodeId())
 			}
 			continue
 		}
@@ -79,6 +83,28 @@ func (f *Sync) Execute(
 			dbListen.GetMetadata().GetUpdatedTimestamp() {
 			// client is the authority
 			authorativeListens[listen.GetEpisodeId()] = listen
+			// Update DB
+			listensToUpdate = append(listensToUpdate, listen.GetEpisodeId())
+		}
+	}
+
+	// For any updates from the client sync them to the server
+	if len(listensToUpdate) > 0 {
+		log.Infof("Updating DB with %d listens", len(listensToUpdate))
+		listens := make([]*models.UserListen, len(listensToUpdate))
+		for i, episodeId := range listensToUpdate {
+			message, ok := authorativeListens[episodeId]
+			if !ok {
+				continue
+			}
+			model := &models.UserListen{}
+			models.Merge(model, message)
+			listens[i] = model
+		}
+		err = f.Datastore.PutMulti(ctx, listens)
+		if err != nil {
+			log.Errorf("error updating listens %s", err)
+			return err
 		}
 	}
 

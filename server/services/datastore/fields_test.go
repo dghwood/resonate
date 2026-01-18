@@ -18,11 +18,15 @@ func TestMessageName(t *testing.T) {
 
 func TestFieldName(t *testing.T) {
 	model := models.Subscription{}
-	model.UserId = "123"
+	model.Id = "123"
+	model.UserId = "456"
 
-	item := GetFields(&model)
+	item, err := GetFields(&model)
+	if err != nil {
+		t.Errorf("GetFields() error = %v", err)
+	}
 
-	if item.Fields[0].Name != "user_id" {
+	if item.Fields[1].Name != "user_id" {
 		t.Errorf("FieldName() = %s; want user_id", item.Fields[0].Name)
 	}
 }
@@ -36,10 +40,13 @@ func TestFields(t *testing.T) {
 		UpdatedTimestamp: 1,
 	}
 
-	fields := GetFields(&model)
+	fields, err := GetFields(&model)
+	if err != nil {
+		t.Errorf("GetFields() error = %v", err)
+	}
 
 	retrievedModel := models.UserListen{}
-	err := RetrieveFields(fields, &retrievedModel)
+	err = RetrieveFields(fields, &retrievedModel)
 	if err != nil {
 		t.Errorf("RetrieveFields() error = %v", err)
 	}
@@ -71,11 +78,14 @@ func TestRepeatedFields(t *testing.T) {
 			ExpiryUtcTimestamp: 2,
 		},
 	}
-	item := GetFields(&repeatedProto)
+	item, err := GetFields(&repeatedProto)
+	if err != nil {
+		t.Errorf("GetFields() error = %v", err)
+	}
 
 	retrievedProto := models.RefreshTokens{}
 
-	err := RetrieveFields(item, &retrievedProto)
+	err = RetrieveFields(item, &retrievedProto)
 	if err != nil {
 		t.Errorf("RetrieveFields() error = %v", err)
 	}
@@ -102,9 +112,12 @@ func TestPodcast(t *testing.T) {
 	podcast.Description = "This is a test podcast"
 	podcast.ImageUrl = "https://example.com/image.png"
 	podcast.Url = "https://example.com/podcast.rss"
-	fields := GetFields(&podcast)
+	fields, err := GetFields(&podcast)
+	if err != nil {
+		t.Errorf("GetFields() error = %v", err)
+	}
 	retrievedPodcast := models.Podcast{}
-	err := RetrieveFields(fields, &retrievedPodcast)
+	err = RetrieveFields(fields, &retrievedPodcast)
 	if err != nil {
 		t.Errorf("RetrieveFields() error = %v", err)
 	}

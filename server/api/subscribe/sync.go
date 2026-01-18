@@ -61,6 +61,9 @@ func (f *Sync) Execute(
 		authorativeSubscriptions[model.PodcastId] = &model.UserSubscriptionMessage
 	}
 
+	// This is actually a list of podcastIds
+	// which should be 1:1
+	subscriptionsIdsToUpdate := make([]string, 0)
 	subcriptionClientMap := make(map[string]bool)
 	for _, subscription := range request.GetSubscriptions() {
 		subcriptionClientMap[subscription.GetId()] = true
@@ -70,7 +73,9 @@ func (f *Sync) Execute(
 			// Not in DB
 			if !subscription.GetMetadata().GetIsDeleted() {
 				// Add if not deleted
+				// Also need to add to the DB
 				authorativeSubscriptions[subscription.PodcastId] = subscription
+				subscriptionsIdsToUpdate = append(subscriptionsIdsToUpdate, subscription.PodcastId)
 			}
 			continue
 		}
@@ -79,6 +84,33 @@ func (f *Sync) Execute(
 			dbSubscription.GetMetadata().GetUpdatedTimestamp() {
 			// client is the authority
 			authorativeSubscriptions[subscription.PodcastId] = subscription
+
+			// Need to update the DB
+			// There might be a situation where the subscriptionIds are different?
+			// But I think I specifically generate the subscriptionId
+			// to be the userId-podcastId so almost definitely not.
+			subscriptionsIdsToUpdate = append(subscriptionsIdsToUpdate, subscription.PodcastId)
+		}
+	}
+
+	// If there are db subscriptions I need to update do that here.
+	if len(subscriptionsIdsToUpdate) > 0 {
+		log.Infof("Updating DB with %d subscriptions", len(subscriptionsIdsToUpdate))
+		log.Info("subscriptionsIdsToUpdate", subscriptionsIdsToUpdate)
+		subscriptions := make([]*models.Subscription, len(subscriptionsIdsToUpdate))
+		for i, podcastId := range subscriptionsIdsToUpdate {
+			message, ok := authorativeSubscriptions[podcastId]
+			if !ok {
+				continue
+			}
+			model := &models.Subscription{}
+			models.Merge(model, message)
+			subscriptions[i] = model
+		}
+		err = f.Datastore.PutMulti(ctx, subscriptions)
+		if err != nil {
+			log.Errorf("error updating subscriptions %s", err)
+			return err
 		}
 	}
 
