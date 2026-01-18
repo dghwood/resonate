@@ -13,6 +13,10 @@ import (
 	imagestoreService "github.com/dghwood/resonate/services/imagestore/cloudstorage"
 	searchService "github.com/dghwood/resonate/services/search"
 	"github.com/dghwood/resonate/services/secrets"
+	"github.com/dghwood/resonate/services/sms"
+
+	smsMemoryVerificationService "github.com/dghwood/resonate/services/sms/memory"
+	smsTwilioVerificationService "github.com/dghwood/resonate/services/sms/twilio"
 
 	"github.com/dghwood/resonate/api/auth"
 	"github.com/dghwood/resonate/api/feed"
@@ -60,14 +64,23 @@ func main() {
 	imagestore := imagestoreService.NewStorageCachestore(constants.CLOUD_STORAGE_BUCKET_IMAGES)
 	datastore := datastoreService.NewFirestoreDatastore(projectID, databaseId)
 	searchApi := searchService.NewTaddySearch(fetch)
+	// SMS
+	var smsVerification sms.Verification
+	if flags.FLAGS.EnableSms {
+		smsVerification = smsTwilioVerificationService.NewTwilioVerification()
+	} else {
+		smsVerification = smsMemoryVerificationService.NewMemoryVerification()
+	}
 
 	// Login API endpoints
 	api.Attach(&auth.Login{
-		Datastore: datastore}, "/api/login")
+		SmsVerification: smsVerification,
+		Datastore:       datastore}, "/api/login")
 	api.Attach(&auth.Refresh{
 		Datastore: datastore}, "/api/login/refresh")
 	api.Attach(&auth.Request{
-		Datastore: datastore}, "/api/login/request")
+		SmsVerification: smsVerification,
+		Datastore:       datastore}, "/api/login/request")
 
 	// Podcast
 	api.Attach(&podcast.Get{

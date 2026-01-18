@@ -6,3 +6,4 @@ web
 # track of feature enablement.
 !features.dev.env
 !features.prod.env
+creds.json
