@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart' as justAudio;
 
 Logger _log = Logger('services/player');
@@ -148,6 +149,9 @@ class PlayerService implements AbstractPlayerService {
   @override
   Future<bool> load(Episode episode, {Duration? startDuration}) async {
     _log.info('load::${episode.audioUrl}');
+    // Set up the audio session speech category
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech());
 
     // There seems to be a bug, where if the player is not
     // stopped before you call this, it will just play the

@@ -166,20 +166,22 @@ class PodcastPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var scrollController = ScrollController();
     var podcastStream = _podcastApi.get(podcastId).asBroadcastStream();
-    return CustomScrollView(
-      controller: scrollController,
-      slivers: [
-        SliverPersistentHeader(
-          delegate: PodcastHeaderDelegate(stream: podcastStream),
-          pinned: true,
-        ),
+    return SafeArea(
+      child: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverPersistentHeader(
+            delegate: PodcastHeaderDelegate(stream: podcastStream),
+            pinned: true,
+          ),
 
-        PodcastEpisodeInfiniteListComponent(
-          scrollController: scrollController,
-          podcastId: podcastId,
-          // refreshFunc: () => _podcastApi.list(podcastId),
-        ),
-      ],
+          PodcastEpisodeInfiniteListComponent(
+            scrollController: scrollController,
+            podcastId: podcastId,
+            // refreshFunc: () => _podcastApi.list(podcastId),
+          ),
+        ],
+      ),
     );
   }
 }
