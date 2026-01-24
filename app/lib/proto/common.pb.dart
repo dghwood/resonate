@@ -17,6 +17,8 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+export 'common.pbenum.dart';
+
 class StorageMetadataMessage extends $pb.GeneratedMessage {
   factory StorageMetadataMessage({
     $core.bool? isDeleted,

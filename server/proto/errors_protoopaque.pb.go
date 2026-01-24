@@ -25,11 +25,12 @@ const (
 type ErrorEnum int32
 
 const (
-	ErrorEnum_ERROR_UNKNOWN                ErrorEnum = 0
-	ErrorEnum_ERROR_INTERNAL               ErrorEnum = 1
-	ErrorEnum_ERROR_PERMISSION_DENIED      ErrorEnum = 2
-	ErrorEnum_ERROR_INVALID_CREDENTIALS    ErrorEnum = 3
-	ErrorEnum_ERROR_TOO_MANY_ATTEMPTS      ErrorEnum = 4
+	ErrorEnum_ERROR_UNKNOWN           ErrorEnum = 0
+	ErrorEnum_ERROR_INTERNAL          ErrorEnum = 1
+	ErrorEnum_ERROR_PERMISSION_DENIED ErrorEnum = 2
+	// Couldn't log you in with the creds provided
+	ErrorEnum_ERROR_INVALID_CREDENTIALS ErrorEnum = 3
+	ErrorEnum_ERROR_TOO_MANY_ATTEMPTS   ErrorEnum = 4
 	ErrorEnum_ERROR_TIME_EXPIRED           ErrorEnum = 5
 	ErrorEnum_ERROR_UPLOAD_SIZE_EXCEEDED   ErrorEnum = 6
 	ErrorEnum_ERROR_UPDATE_CLIENT_REQUIRED ErrorEnum = 7

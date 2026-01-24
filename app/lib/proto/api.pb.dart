@@ -197,11 +197,13 @@ class RequestInfo extends $pb.GeneratedMessage {
     $core.String? userId,
     InternalInfo? internalInfo,
     $core.String? clientVersion,
+    $0.ClientPlatform? clientPlatform,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
     if (internalInfo != null) result.internalInfo = internalInfo;
     if (clientVersion != null) result.clientVersion = clientVersion;
+    if (clientPlatform != null) result.clientPlatform = clientPlatform;
     return result;
   }
 
@@ -222,6 +224,11 @@ class RequestInfo extends $pb.GeneratedMessage {
     ..aOM<InternalInfo>(2, _omitFieldNames ? '' : 'internalInfo',
         subBuilder: InternalInfo.create)
     ..aOS(3, _omitFieldNames ? '' : 'clientVersion')
+    ..e<$0.ClientPlatform>(
+        4, _omitFieldNames ? '' : 'clientPlatform', $pb.PbFieldType.OE,
+        defaultOrMaker: $0.ClientPlatform.CLIENT_PLATFORM_UNKNOWN,
+        valueOf: $0.ClientPlatform.valueOf,
+        enumValues: $0.ClientPlatform.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -272,6 +279,15 @@ class RequestInfo extends $pb.GeneratedMessage {
   $core.bool hasClientVersion() => $_has(2);
   @$pb.TagNumber(3)
   void clearClientVersion() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $0.ClientPlatform get clientPlatform => $_getN(3);
+  @$pb.TagNumber(4)
+  set clientPlatform($0.ClientPlatform value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasClientPlatform() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearClientPlatform() => $_clearField(4);
 }
 
 class RefreshAuthMessage_Request extends $pb.GeneratedMessage {

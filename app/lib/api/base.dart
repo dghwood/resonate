@@ -80,6 +80,13 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
 
   final String _baseUrl = BASE_URL;
 
+  RequestInfo createRequestInfo() {
+    return RequestInfo(
+      clientPlatform: CLIENT_PLATFORM,
+      clientVersion: CLIENT_VERSION,
+    );
+  }
+
   @override
   Future<void> execute(Req request, Res response, {int numAttempts = 0}) async {
     if (numAttempts > 3) {
@@ -88,7 +95,7 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
         message: 'Invalid credentials',
       );
     }
-    var requestInfo = RequestInfo(clientVersion: CLIENT_VERSION);
+    var requestInfo = createRequestInfo();
     final url = Uri.parse('$_baseUrl/$_path');
     if (_authUser != null) {
       // Note: AuthTokens are implemented via the HTTP Service cookies.

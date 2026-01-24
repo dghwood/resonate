@@ -1,5 +1,25 @@
 import 'package:flutter/foundation.dart';
+import 'package:resonate/proto/common.pbenum.dart';
 import 'package:universal_io/io.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
+
+// class DeviceInfo {
+//   DeviceInfo() {
+//     init();
+//   }
+
+//   Future<void> init() async {
+//     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+//     if (Platform.isAndroid) {
+//       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+//       androidInfo.
+
+//     } else if (Platform.isIOS) {
+//       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
+//     }
+//   }
+// }
 
 String get BASE_URL {
   if (kReleaseMode) {
@@ -12,3 +32,15 @@ String get BASE_URL {
 }
 
 const String CLIENT_VERSION = String.fromEnvironment("CLIENT_VERSION");
+
+ClientPlatform get CLIENT_PLATFORM {
+  if (kIsWeb) {
+    return ClientPlatform.CLIENT_PLATFORM_WEB;
+  } else if (Platform.isAndroid) {
+    return ClientPlatform.CLIENT_PLATFORM_ANDROID;
+  } else if (Platform.isIOS) {
+    return ClientPlatform.CLIENT_PLATFORM_IOS;
+  } else {
+    return ClientPlatform.CLIENT_PLATFORM_UNKNOWN;
+  }
+}

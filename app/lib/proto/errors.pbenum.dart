@@ -21,6 +21,8 @@ class ErrorEnum extends $pb.ProtobufEnum {
       ErrorEnum._(1, _omitEnumNames ? '' : 'ERROR_INTERNAL');
   static const ErrorEnum ERROR_PERMISSION_DENIED =
       ErrorEnum._(2, _omitEnumNames ? '' : 'ERROR_PERMISSION_DENIED');
+
+  /// Couldn't log you in with the creds provided
   static const ErrorEnum ERROR_INVALID_CREDENTIALS =
       ErrorEnum._(3, _omitEnumNames ? '' : 'ERROR_INVALID_CREDENTIALS');
   static const ErrorEnum ERROR_TOO_MANY_ATTEMPTS =

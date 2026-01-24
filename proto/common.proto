@@ -25,6 +25,13 @@ extend google.protobuf.FieldOptions {
     bool index = 50000;
 }
 
+enum ClientPlatform {
+    CLIENT_PLATFORM_UNKNOWN = 0;
+    CLIENT_PLATFORM_ANDROID = 1; 
+    CLIENT_PLATFORM_IOS = 2; 
+    CLIENT_PLATFORM_WEB = 3;
+}
+
 message StorageMetadataMessage {
     bool is_deleted = 1;
     // In milliseconds since epoch, UTC time

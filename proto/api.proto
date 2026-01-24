@@ -21,6 +21,7 @@ message RequestInfo {
     string user_id = 1; 
     InternalInfo internal_info = 2;
     string client_version = 3;
+    ClientPlatform client_platform = 4;
 }
 
 // Used to refresh access tokens

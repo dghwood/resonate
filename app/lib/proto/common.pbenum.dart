@@ -9,3 +9,35 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
 // ignore_for_file: non_constant_identifier_names
+
+import 'dart:core' as $core;
+
+import 'package:protobuf/protobuf.dart' as $pb;
+
+class ClientPlatform extends $pb.ProtobufEnum {
+  static const ClientPlatform CLIENT_PLATFORM_UNKNOWN =
+      ClientPlatform._(0, _omitEnumNames ? '' : 'CLIENT_PLATFORM_UNKNOWN');
+  static const ClientPlatform CLIENT_PLATFORM_ANDROID =
+      ClientPlatform._(1, _omitEnumNames ? '' : 'CLIENT_PLATFORM_ANDROID');
+  static const ClientPlatform CLIENT_PLATFORM_IOS =
+      ClientPlatform._(2, _omitEnumNames ? '' : 'CLIENT_PLATFORM_IOS');
+  static const ClientPlatform CLIENT_PLATFORM_WEB =
+      ClientPlatform._(3, _omitEnumNames ? '' : 'CLIENT_PLATFORM_WEB');
+
+  static const $core.List<ClientPlatform> values = <ClientPlatform>[
+    CLIENT_PLATFORM_UNKNOWN,
+    CLIENT_PLATFORM_ANDROID,
+    CLIENT_PLATFORM_IOS,
+    CLIENT_PLATFORM_WEB,
+  ];
+
+  static final $core.List<ClientPlatform?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static ClientPlatform? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const ClientPlatform._(super.value, super.name);
+}
+
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

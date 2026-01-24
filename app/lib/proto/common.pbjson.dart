@@ -14,6 +14,23 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use clientPlatformDescriptor instead')
+const ClientPlatform$json = {
+  '1': 'ClientPlatform',
+  '2': [
+    {'1': 'CLIENT_PLATFORM_UNKNOWN', '2': 0},
+    {'1': 'CLIENT_PLATFORM_ANDROID', '2': 1},
+    {'1': 'CLIENT_PLATFORM_IOS', '2': 2},
+    {'1': 'CLIENT_PLATFORM_WEB', '2': 3},
+  ],
+};
+
+/// Descriptor for `ClientPlatform`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List clientPlatformDescriptor = $convert.base64Decode(
+    'Cg5DbGllbnRQbGF0Zm9ybRIbChdDTElFTlRfUExBVEZPUk1fVU5LTk9XThAAEhsKF0NMSUVOVF'
+    '9QTEFURk9STV9BTkRST0lEEAESFwoTQ0xJRU5UX1BMQVRGT1JNX0lPUxACEhcKE0NMSUVOVF9Q'
+    'TEFURk9STV9XRUIQAw==');
+
 @$core.Deprecated('Use storageMetadataMessageDescriptor instead')
 const StorageMetadataMessage$json = {
   '1': 'StorageMetadataMessage',

@@ -37,6 +37,53 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ClientPlatform int32
+
+const (
+	ClientPlatform_CLIENT_PLATFORM_UNKNOWN ClientPlatform = 0
+	ClientPlatform_CLIENT_PLATFORM_ANDROID ClientPlatform = 1
+	ClientPlatform_CLIENT_PLATFORM_IOS     ClientPlatform = 2
+	ClientPlatform_CLIENT_PLATFORM_WEB     ClientPlatform = 3
+)
+
+// Enum value maps for ClientPlatform.
+var (
+	ClientPlatform_name = map[int32]string{
+		0: "CLIENT_PLATFORM_UNKNOWN",
+		1: "CLIENT_PLATFORM_ANDROID",
+		2: "CLIENT_PLATFORM_IOS",
+		3: "CLIENT_PLATFORM_WEB",
+	}
+	ClientPlatform_value = map[string]int32{
+		"CLIENT_PLATFORM_UNKNOWN": 0,
+		"CLIENT_PLATFORM_ANDROID": 1,
+		"CLIENT_PLATFORM_IOS":     2,
+		"CLIENT_PLATFORM_WEB":     3,
+	}
+)
+
+func (x ClientPlatform) Enum() *ClientPlatform {
+	p := new(ClientPlatform)
+	*p = x
+	return p
+}
+
+func (x ClientPlatform) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ClientPlatform) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_common_proto_enumTypes[0].Descriptor()
+}
+
+func (ClientPlatform) Type() protoreflect.EnumType {
+	return &file_proto_common_proto_enumTypes[0]
+}
+
+func (x ClientPlatform) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
 type StorageMetadataMessage struct {
 	state     protoimpl.MessageState `protogen:"hybrid.v1"`
 	IsDeleted bool                   `protobuf:"varint,1,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
@@ -3095,76 +3142,83 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
 	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12,\n" +
 	"\x12playing_episode_id\x18\x03 \x01(\tR\x10playingEpisodeId\x12-\n" +
-	"\x13up_next_episode_ids\x18\x04 \x03(\tR\x10upNextEpisodeIds:5\n" +
+	"\x13up_next_episode_ids\x18\x04 \x03(\tR\x10upNextEpisodeIds*|\n" +
+	"\x0eClientPlatform\x12\x1b\n" +
+	"\x17CLIENT_PLATFORM_UNKNOWN\x10\x00\x12\x1b\n" +
+	"\x17CLIENT_PLATFORM_ANDROID\x10\x01\x12\x17\n" +
+	"\x13CLIENT_PLATFORM_IOS\x10\x02\x12\x17\n" +
+	"\x13CLIENT_PLATFORM_WEB\x10\x03:5\n" +
 	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
+var file_proto_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_common_proto_goTypes = []any{
-	(*StorageMetadataMessage)(nil),            // 0: resonate.StorageMetadataMessage
-	(*PodcastMessage)(nil),                    // 1: resonate.PodcastMessage
-	(*EpisodeMessage)(nil),                    // 2: resonate.EpisodeMessage
-	(*TokenMessage)(nil),                      // 3: resonate.TokenMessage
-	(*LoginAttempt)(nil),                      // 4: resonate.LoginAttempt
-	(*UserStorageMessage)(nil),                // 5: resonate.UserStorageMessage
-	(*RefreshTokensMessage)(nil),              // 6: resonate.RefreshTokensMessage
-	(*UserMessage)(nil),                       // 7: resonate.UserMessage
-	(*PublicUserMessage)(nil),                 // 8: resonate.PublicUserMessage
-	(*UserFollowMessage)(nil),                 // 9: resonate.UserFollowMessage
-	(*UserSubscriptionMessage)(nil),           // 10: resonate.UserSubscriptionMessage
-	(*UserListenMessage)(nil),                 // 11: resonate.UserListenMessage
-	(*UserFeedItemEpisodeMessage)(nil),        // 12: resonate.UserFeedItemEpisodeMessage
-	(*UserFeedItemRecommendationMessage)(nil), // 13: resonate.UserFeedItemRecommendationMessage
-	(*UserFeedItemMessage)(nil),               // 14: resonate.UserFeedItemMessage
-	(*UserFeedMessage)(nil),                   // 15: resonate.UserFeedMessage
-	(*SearchResultMessage)(nil),               // 16: resonate.SearchResultMessage
-	(*SearchResultsMessage)(nil),              // 17: resonate.SearchResultsMessage
-	(*UserDownloadMessage)(nil),               // 18: resonate.UserDownloadMessage
-	(*UserContactsMessage)(nil),               // 19: resonate.UserContactsMessage
-	(*UserContactMessage)(nil),                // 20: resonate.UserContactMessage
-	(*SettingsMessage)(nil),                   // 21: resonate.SettingsMessage
-	(*PlaylistMessage)(nil),                   // 22: resonate.PlaylistMessage
-	(*descriptorpb.FieldOptions)(nil),         // 23: google.protobuf.FieldOptions
+	(ClientPlatform)(0),                       // 0: resonate.ClientPlatform
+	(*StorageMetadataMessage)(nil),            // 1: resonate.StorageMetadataMessage
+	(*PodcastMessage)(nil),                    // 2: resonate.PodcastMessage
+	(*EpisodeMessage)(nil),                    // 3: resonate.EpisodeMessage
+	(*TokenMessage)(nil),                      // 4: resonate.TokenMessage
+	(*LoginAttempt)(nil),                      // 5: resonate.LoginAttempt
+	(*UserStorageMessage)(nil),                // 6: resonate.UserStorageMessage
+	(*RefreshTokensMessage)(nil),              // 7: resonate.RefreshTokensMessage
+	(*UserMessage)(nil),                       // 8: resonate.UserMessage
+	(*PublicUserMessage)(nil),                 // 9: resonate.PublicUserMessage
+	(*UserFollowMessage)(nil),                 // 10: resonate.UserFollowMessage
+	(*UserSubscriptionMessage)(nil),           // 11: resonate.UserSubscriptionMessage
+	(*UserListenMessage)(nil),                 // 12: resonate.UserListenMessage
+	(*UserFeedItemEpisodeMessage)(nil),        // 13: resonate.UserFeedItemEpisodeMessage
+	(*UserFeedItemRecommendationMessage)(nil), // 14: resonate.UserFeedItemRecommendationMessage
+	(*UserFeedItemMessage)(nil),               // 15: resonate.UserFeedItemMessage
+	(*UserFeedMessage)(nil),                   // 16: resonate.UserFeedMessage
+	(*SearchResultMessage)(nil),               // 17: resonate.SearchResultMessage
+	(*SearchResultsMessage)(nil),              // 18: resonate.SearchResultsMessage
+	(*UserDownloadMessage)(nil),               // 19: resonate.UserDownloadMessage
+	(*UserContactsMessage)(nil),               // 20: resonate.UserContactsMessage
+	(*UserContactMessage)(nil),                // 21: resonate.UserContactMessage
+	(*SettingsMessage)(nil),                   // 22: resonate.SettingsMessage
+	(*PlaylistMessage)(nil),                   // 23: resonate.PlaylistMessage
+	(*descriptorpb.FieldOptions)(nil),         // 24: google.protobuf.FieldOptions
 }
 var file_proto_common_proto_depIdxs = []int32{
-	2,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
-	0,  // 1: resonate.PodcastMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 2: resonate.EpisodeMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 3: resonate.LoginAttempt.metadata:type_name -> resonate.StorageMetadataMessage
-	7,  // 4: resonate.UserStorageMessage.user:type_name -> resonate.UserMessage
-	3,  // 5: resonate.UserStorageMessage.access_token:type_name -> resonate.TokenMessage
-	3,  // 6: resonate.UserStorageMessage.refresh_token:type_name -> resonate.TokenMessage
-	3,  // 7: resonate.RefreshTokensMessage.tokens:type_name -> resonate.TokenMessage
-	0,  // 8: resonate.RefreshTokensMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	10, // 9: resonate.UserMessage.subscriptions:type_name -> resonate.UserSubscriptionMessage
-	11, // 10: resonate.UserMessage.listens:type_name -> resonate.UserListenMessage
-	9,  // 11: resonate.UserMessage.following:type_name -> resonate.UserFollowMessage
-	0,  // 12: resonate.UserMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 13: resonate.UserFollowMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	8,  // 14: resonate.UserFollowMessage.user:type_name -> resonate.PublicUserMessage
-	0,  // 15: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	1,  // 16: resonate.UserSubscriptionMessage.podcast:type_name -> resonate.PodcastMessage
-	2,  // 17: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
-	0,  // 18: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	2,  // 19: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
-	8,  // 20: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
-	2,  // 21: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
-	1,  // 22: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
-	8,  // 23: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
-	8,  // 24: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
-	12, // 25: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
-	13, // 26: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
-	14, // 27: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
-	0,  // 28: resonate.UserFeedMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	1,  // 29: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
-	7,  // 30: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
-	2,  // 31: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
-	16, // 32: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
-	0,  // 33: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	20, // 34: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
-	0,  // 35: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 36: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	0,  // 37: resonate.PlaylistMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	23, // 38: resonate.index:extendee -> google.protobuf.FieldOptions
+	3,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
+	1,  // 1: resonate.PodcastMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 2: resonate.EpisodeMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 3: resonate.LoginAttempt.metadata:type_name -> resonate.StorageMetadataMessage
+	8,  // 4: resonate.UserStorageMessage.user:type_name -> resonate.UserMessage
+	4,  // 5: resonate.UserStorageMessage.access_token:type_name -> resonate.TokenMessage
+	4,  // 6: resonate.UserStorageMessage.refresh_token:type_name -> resonate.TokenMessage
+	4,  // 7: resonate.RefreshTokensMessage.tokens:type_name -> resonate.TokenMessage
+	1,  // 8: resonate.RefreshTokensMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	11, // 9: resonate.UserMessage.subscriptions:type_name -> resonate.UserSubscriptionMessage
+	12, // 10: resonate.UserMessage.listens:type_name -> resonate.UserListenMessage
+	10, // 11: resonate.UserMessage.following:type_name -> resonate.UserFollowMessage
+	1,  // 12: resonate.UserMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 13: resonate.UserFollowMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	9,  // 14: resonate.UserFollowMessage.user:type_name -> resonate.PublicUserMessage
+	1,  // 15: resonate.UserSubscriptionMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	2,  // 16: resonate.UserSubscriptionMessage.podcast:type_name -> resonate.PodcastMessage
+	3,  // 17: resonate.UserListenMessage.episode:type_name -> resonate.EpisodeMessage
+	1,  // 18: resonate.UserListenMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	3,  // 19: resonate.UserFeedItemEpisodeMessage.episode:type_name -> resonate.EpisodeMessage
+	9,  // 20: resonate.UserFeedItemEpisodeMessage.user_listens:type_name -> resonate.PublicUserMessage
+	3,  // 21: resonate.UserFeedItemRecommendationMessage.episode:type_name -> resonate.EpisodeMessage
+	2,  // 22: resonate.UserFeedItemRecommendationMessage.podcast:type_name -> resonate.PodcastMessage
+	9,  // 23: resonate.UserFeedItemRecommendationMessage.user_listens:type_name -> resonate.PublicUserMessage
+	9,  // 24: resonate.UserFeedItemRecommendationMessage.user_subscriptions:type_name -> resonate.PublicUserMessage
+	13, // 25: resonate.UserFeedItemMessage.episode_item:type_name -> resonate.UserFeedItemEpisodeMessage
+	14, // 26: resonate.UserFeedItemMessage.recommended_items:type_name -> resonate.UserFeedItemRecommendationMessage
+	15, // 27: resonate.UserFeedMessage.items:type_name -> resonate.UserFeedItemMessage
+	1,  // 28: resonate.UserFeedMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	2,  // 29: resonate.SearchResultMessage.podcast:type_name -> resonate.PodcastMessage
+	8,  // 30: resonate.SearchResultMessage.user:type_name -> resonate.UserMessage
+	3,  // 31: resonate.SearchResultMessage.episode:type_name -> resonate.EpisodeMessage
+	17, // 32: resonate.SearchResultsMessage.results:type_name -> resonate.SearchResultMessage
+	1,  // 33: resonate.UserDownloadMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	21, // 34: resonate.UserContactsMessage.contacts:type_name -> resonate.UserContactMessage
+	1,  // 35: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 36: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	1,  // 37: resonate.PlaylistMessage.metadata:type_name -> resonate.StorageMetadataMessage
+	24, // 38: resonate.index:extendee -> google.protobuf.FieldOptions
 	39, // [39:39] is the sub-list for method output_type
 	39, // [39:39] is the sub-list for method input_type
 	39, // [39:39] is the sub-list for extension type_name
@@ -3182,13 +3236,14 @@ func file_proto_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   23,
 			NumExtensions: 1,
 			NumServices:   0,
 		},
 		GoTypes:           file_proto_common_proto_goTypes,
 		DependencyIndexes: file_proto_common_proto_depIdxs,
+		EnumInfos:         file_proto_common_proto_enumTypes,
 		MessageInfos:      file_proto_common_proto_msgTypes,
 		ExtensionInfos:    file_proto_common_proto_extTypes,
 	}.Build()

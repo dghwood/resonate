@@ -89,6 +89,14 @@ const RequestInfo$json = {
       '10': 'internalInfo'
     },
     {'1': 'client_version', '3': 3, '4': 1, '5': 9, '10': 'clientVersion'},
+    {
+      '1': 'client_platform',
+      '3': 4,
+      '4': 1,
+      '5': 14,
+      '6': '.resonate.ClientPlatform',
+      '10': 'clientPlatform'
+    },
   ],
 };
 
@@ -96,7 +104,8 @@ const RequestInfo$json = {
 final $typed_data.Uint8List requestInfoDescriptor = $convert.base64Decode(
     'CgtSZXF1ZXN0SW5mbxIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSPwoNaW50ZXJuYWxfaW5mbx'
     'gCIAEoCzIaLnJlc29uYXRlLmFwaS5JbnRlcm5hbEluZm9SDGludGVybmFsSW5mbxIlCg5jbGll'
-    'bnRfdmVyc2lvbhgDIAEoCVINY2xpZW50VmVyc2lvbg==');
+    'bnRfdmVyc2lvbhgDIAEoCVINY2xpZW50VmVyc2lvbhJBCg9jbGllbnRfcGxhdGZvcm0YBCABKA'
+    '4yGC5yZXNvbmF0ZS5DbGllbnRQbGF0Zm9ybVIOY2xpZW50UGxhdGZvcm0=');
 
 @$core.Deprecated('Use refreshAuthMessageDescriptor instead')
 const RefreshAuthMessage$json = {
