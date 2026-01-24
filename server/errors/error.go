@@ -55,4 +55,9 @@ var (
 		Enum:    proto.ErrorEnum_ERROR_UPLOAD_SIZE_EXCEEDED,
 		Message: "The upload size has exceeded the limit.",
 	}
+
+	ERROR_UPDATE_CLIENT_REQUIRED = Error{
+		Enum:    proto.ErrorEnum_ERROR_UPDATE_CLIENT_REQUIRED,
+		Message: "The client version is out of date, update.",
+	}
 )

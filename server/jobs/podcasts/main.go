@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/dghwood/resonate/constants"
+	"github.com/dghwood/resonate/flags"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/services/datastore"
@@ -14,11 +14,12 @@ import (
 	"github.com/dghwood/resonate/services/secrets"
 )
 
-var projectID = constants.CLOUD_PROJECT_ID
-var databaseId = constants.CLOUD_DATABASE_ID
-
 func main() {
-	secrets.AccessSecrets(constants.CLOUD_SECRETS_KEY)
+
+	projectID := flags.FLAGS.CloudProjectId
+	databaseId := flags.FLAGS.CloudDatabaseId
+	flags.Parse()
+	secrets.AccessSecrets(flags.FLAGS.CloudSecretsKey)
 	numSkipped := 0
 	numCompleted := 0
 	ds := datastoreService.NewFirestoreDatastore(projectID, databaseId)

@@ -91,3 +91,17 @@ func TestApi(t *testing.T) {
 		t.Errorf("failed to set Access-Control-Allow-Origin")
 	}
 }
+
+func TestIsAppVersionValid(t *testing.T) {
+	versions := map[string]bool{
+		"0.0.0.0+10":              true,
+		"0.0.0.0+1":               false,
+		"100.700.712.7123+712312": true,
+		"100.700.712.7123+1":      false,
+	}
+	for version, valid := range versions {
+		if isAppVersionValid(version, 5) != valid {
+			t.Errorf("failed to validate version %s", version)
+		}
+	}
+}

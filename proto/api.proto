@@ -19,8 +19,8 @@ message ResponseInfo {
 }
 message RequestInfo {
     string user_id = 1; 
-    // TokenMessage access_token = 2; 
     InternalInfo internal_info = 2;
+    string client_version = 3;
 }
 
 // Used to refresh access tokens

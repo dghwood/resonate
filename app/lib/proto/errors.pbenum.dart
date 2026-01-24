@@ -29,6 +29,8 @@ class ErrorEnum extends $pb.ProtobufEnum {
       ErrorEnum._(5, _omitEnumNames ? '' : 'ERROR_TIME_EXPIRED');
   static const ErrorEnum ERROR_UPLOAD_SIZE_EXCEEDED =
       ErrorEnum._(6, _omitEnumNames ? '' : 'ERROR_UPLOAD_SIZE_EXCEEDED');
+  static const ErrorEnum ERROR_UPDATE_CLIENT_REQUIRED =
+      ErrorEnum._(7, _omitEnumNames ? '' : 'ERROR_UPDATE_CLIENT_REQUIRED');
 
   static const $core.List<ErrorEnum> values = <ErrorEnum>[
     ERROR_UNKNOWN,
@@ -38,10 +40,11 @@ class ErrorEnum extends $pb.ProtobufEnum {
     ERROR_TOO_MANY_ATTEMPTS,
     ERROR_TIME_EXPIRED,
     ERROR_UPLOAD_SIZE_EXCEEDED,
+    ERROR_UPDATE_CLIENT_REQUIRED,
   ];
 
   static final $core.List<ErrorEnum?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 6);
+      $pb.ProtobufEnum.$_initByValueList(values, 7);
   static ErrorEnum? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

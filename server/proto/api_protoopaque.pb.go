@@ -226,11 +226,12 @@ func (b0 ResponseInfo_builder) Build() *ResponseInfo {
 }
 
 type RequestInfo struct {
-	state                   protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_UserId       string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
-	xxx_hidden_InternalInfo *InternalInfo          `protobuf:"bytes,2,opt,name=internal_info,json=internalInfo,proto3"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_InternalInfo  *InternalInfo          `protobuf:"bytes,2,opt,name=internal_info,json=internalInfo,proto3"`
+	xxx_hidden_ClientVersion string                 `protobuf:"bytes,3,opt,name=client_version,json=clientVersion,proto3"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *RequestInfo) Reset() {
@@ -272,12 +273,23 @@ func (x *RequestInfo) GetInternalInfo() *InternalInfo {
 	return nil
 }
 
+func (x *RequestInfo) GetClientVersion() string {
+	if x != nil {
+		return x.xxx_hidden_ClientVersion
+	}
+	return ""
+}
+
 func (x *RequestInfo) SetUserId(v string) {
 	x.xxx_hidden_UserId = v
 }
 
 func (x *RequestInfo) SetInternalInfo(v *InternalInfo) {
 	x.xxx_hidden_InternalInfo = v
+}
+
+func (x *RequestInfo) SetClientVersion(v string) {
+	x.xxx_hidden_ClientVersion = v
 }
 
 func (x *RequestInfo) HasInternalInfo() bool {
@@ -294,9 +306,9 @@ func (x *RequestInfo) ClearInternalInfo() {
 type RequestInfo_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	UserId string
-	// TokenMessage access_token = 2;
-	InternalInfo *InternalInfo
+	UserId        string
+	InternalInfo  *InternalInfo
+	ClientVersion string
 }
 
 func (b0 RequestInfo_builder) Build() *RequestInfo {
@@ -305,6 +317,7 @@ func (b0 RequestInfo_builder) Build() *RequestInfo {
 	_, _ = b, x
 	x.xxx_hidden_UserId = b.UserId
 	x.xxx_hidden_InternalInfo = b.InternalInfo
+	x.xxx_hidden_ClientVersion = b.ClientVersion
 	return m0
 }
 
@@ -8954,10 +8967,11 @@ const file_proto_api_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12#\n" +
 	"\rerror_message\x18\x02 \x01(\tR\ferrorMessage\x12)\n" +
 	"\x05error\x18\x03 \x01(\x0e2\x13.resonate.ErrorEnumR\x05error\x12?\n" +
-	"\rinternal_info\x18\x04 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"g\n" +
+	"\rinternal_info\x18\x04 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"\x8e\x01\n" +
 	"\vRequestInfo\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12?\n" +
-	"\rinternal_info\x18\x02 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\"\xb5\x02\n" +
+	"\rinternal_info\x18\x02 \x01(\v2\x1a.resonate.api.InternalInfoR\finternalInfo\x12%\n" +
+	"\x0eclient_version\x18\x03 \x01(\tR\rclientVersion\"\xb5\x02\n" +
 	"\x12RefreshAuthMessage\x12B\n" +
 	"\arequest\x18\x01 \x01(\v2(.resonate.api.RefreshAuthMessage.RequestR\arequest\x12E\n" +
 	"\bresponse\x18\x02 \x01(\v2).resonate.api.RefreshAuthMessage.ResponseR\bresponse\x1aG\n" +

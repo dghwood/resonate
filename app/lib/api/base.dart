@@ -13,12 +13,13 @@ import 'package:resonate/utils/constants.dart';
 Logger _log = Logger("api/base");
 
 class ApiException implements Exception {
-  ApiException(this.message);
-  final String message;
+  ApiException(this.errorEnum, {this.message});
+  final String? message;
+  final ErrorEnum errorEnum;
 
   @override
   String toString() {
-    return 'ApiException: $message';
+    return 'ApiException: $errorEnum::$message';
   }
 }
 
@@ -76,14 +77,18 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
   final AuthUser? _authUser;
   final AbstractHttpService _client;
   final String _path;
-  // TODO(duncan): This needs to be configurable
 
   final String _baseUrl = BASE_URL;
 
   @override
   Future<void> execute(Req request, Res response, {int numAttempts = 0}) async {
-    if (numAttempts > 3) throw ApiException('too many attempts failed');
-    var requestInfo = RequestInfo();
+    if (numAttempts > 3) {
+      throw ApiException(
+        ErrorEnum.ERROR_INVALID_CREDENTIALS,
+        message: 'Invalid credentials',
+      );
+    }
+    var requestInfo = RequestInfo(clientVersion: CLIENT_VERSION);
     final url = Uri.parse('$_baseUrl/$_path');
     if (_authUser != null) {
       // Note: AuthTokens are implemented via the HTTP Service cookies.
@@ -110,10 +115,16 @@ class ServerApi<Req extends ApiRequest, Res extends ApiResponse>
             case ApiError():
               // Signout..
               _authUser?.signout();
-              throw ApiException(response.responseInfo.errorMessage);
+              throw ApiException(
+                response.responseInfo.error,
+                message: response.responseInfo.errorMessage,
+              );
           }
         default:
-          throw ApiException(response.responseInfo.errorMessage);
+          throw ApiException(
+            response.responseInfo.error,
+            message: response.responseInfo.errorMessage,
+          );
       }
     }
   }

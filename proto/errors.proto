@@ -8,8 +8,11 @@ enum ErrorEnum {
     ERROR_UNKNOWN = 0; 
     ERROR_INTERNAL = 1; 
     ERROR_PERMISSION_DENIED = 2;
+    // Couldn't log you in with the creds provided 
     ERROR_INVALID_CREDENTIALS = 3;
     ERROR_TOO_MANY_ATTEMPTS = 4;
+    // 
     ERROR_TIME_EXPIRED = 5;
     ERROR_UPLOAD_SIZE_EXCEEDED = 6;
+    ERROR_UPDATE_CLIENT_REQUIRED = 7;
 }

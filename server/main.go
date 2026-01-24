@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/dghwood/resonate/api"
-	"github.com/dghwood/resonate/constants"
 	"github.com/dghwood/resonate/flags"
 	cacheService "github.com/dghwood/resonate/services/cachestore/cloudstorage"
 	datastoreService "github.com/dghwood/resonate/services/datastore/firestore"
@@ -37,8 +36,9 @@ func main() {
 	if len(port) == 0 {
 		port = "8080"
 	}
+	flags.Parse()
 	// Loads the Env Variables from the Secrets Manager
-	secrets.AccessSecrets(constants.CLOUD_SECRETS_KEY)
+	secrets.AccessSecrets(flags.FLAGS.CloudSecretsKey)
 
 	env_variables := []string{
 		"USER_ID_SALT",
@@ -54,14 +54,12 @@ func main() {
 		}
 	}
 
-	flags.Parse()
+	var projectID = flags.FLAGS.CloudProjectId
+	var databaseId = flags.FLAGS.CloudDatabaseId
 
-	var projectID = constants.CLOUD_PROJECT_ID
-	var databaseId = constants.CLOUD_DATABASE_ID
-
-	cachestore := cacheService.NewStorageCachestore(constants.CLOUD_STORAGE_BUCKET_CACHE)
+	cachestore := cacheService.NewStorageCachestore(flags.FLAGS.CloudStorageBucketCache)
 	fetch := fetchService.NewCached(cachestore)
-	imagestore := imagestoreService.NewStorageCachestore(constants.CLOUD_STORAGE_BUCKET_IMAGES)
+	imagestore := imagestoreService.NewStorageCachestore(flags.FLAGS.CloudStorageBucketImages)
 	datastore := datastoreService.NewFirestoreDatastore(projectID, databaseId)
 	searchApi := searchService.NewTaddySearch(fetch)
 	// SMS

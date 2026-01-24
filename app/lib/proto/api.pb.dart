@@ -196,10 +196,12 @@ class RequestInfo extends $pb.GeneratedMessage {
   factory RequestInfo({
     $core.String? userId,
     InternalInfo? internalInfo,
+    $core.String? clientVersion,
   }) {
     final result = create();
     if (userId != null) result.userId = userId;
     if (internalInfo != null) result.internalInfo = internalInfo;
+    if (clientVersion != null) result.clientVersion = clientVersion;
     return result;
   }
 
@@ -219,6 +221,7 @@ class RequestInfo extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'userId')
     ..aOM<InternalInfo>(2, _omitFieldNames ? '' : 'internalInfo',
         subBuilder: InternalInfo.create)
+    ..aOS(3, _omitFieldNames ? '' : 'clientVersion')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -250,7 +253,6 @@ class RequestInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearUserId() => $_clearField(1);
 
-  /// TokenMessage access_token = 2;
   @$pb.TagNumber(2)
   InternalInfo get internalInfo => $_getN(1);
   @$pb.TagNumber(2)
@@ -261,6 +263,15 @@ class RequestInfo extends $pb.GeneratedMessage {
   void clearInternalInfo() => $_clearField(2);
   @$pb.TagNumber(2)
   InternalInfo ensureInternalInfo() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get clientVersion => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set clientVersion($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasClientVersion() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearClientVersion() => $_clearField(3);
 }
 
 class RefreshAuthMessage_Request extends $pb.GeneratedMessage {

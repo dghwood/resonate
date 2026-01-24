@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"regexp"
+	"strconv"
 
 	"github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
+	"github.com/dghwood/resonate/flags"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -46,6 +49,7 @@ func returnError[R ApiResponseInterface](
 	err errors.Error,
 	response R) {
 	response.GetResponseInfo().Error = err.Enum
+	response.GetResponseInfo().ErrorMessage = err.Message
 	writeProto(r, w, response)
 }
 
@@ -121,6 +125,28 @@ func writeInternalInfo(internalInfo *proto.InternalInfo, w http.ResponseWriter) 
 	}
 }
 
+func isAppVersionValid(version string, lowestVersion int) (valid bool) {
+	// Version info is of the form 1.0.1+2
+	// Where +2 will be a number that increments
+	if version == "" {
+		return
+	}
+	// Extract regex
+	pattern := regexp.MustCompile(`\d+\.\d+\.\d+\+(\d+)`)
+	matches := pattern.FindStringSubmatch(version)
+	if matches == nil {
+		return
+	}
+	versionNum, err := strconv.Atoi(matches[1])
+	if err != nil {
+		return
+	}
+	if versionNum < lowestVersion {
+		return
+	}
+	return true
+}
+
 func handle[
 	request ApiRequestInterface,
 	response ApiResponseInterface](
@@ -146,6 +172,15 @@ func handle[
 
 		response := f.ResponseProto()
 		requestInfo := request.GetRequestInfo()
+		// Check if app is an old version
+
+		if !isAppVersionValid(
+			requestInfo.GetClientVersion(),
+			flags.FLAGS.LowestCompatibleClientVersion) {
+			log.Error(errors.ERROR_UPDATE_CLIENT_REQUIRED)
+			returnError(r, w, errors.ERROR_UPDATE_CLIENT_REQUIRED, response)
+			return
+		}
 		populateInternalInfo(r, requestInfo)
 		userId, err := auth.ValidUserIdFromToken(requestInfo.GetInternalInfo().GetAccessToken())
 
