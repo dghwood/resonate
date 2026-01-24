@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package resonate.logging; 
+
+import "proto/common.proto";
+import "proto/errors.proto";
+
+option go_package = "github.com/dghwood/resonate/proto";
+
+/* Logging Messages 
+
+*/ 
+
+// Next Tag: 9
+message ApiEventMessage {
+    int64 timestamp_usec = 1; 
+    // Get this from "cloud.google.com/go/compute/metadata" on startup
+    string instance_id = 8;
+    // Need to add a binary version for the SERVER
+    string binary_version = 9;
+    string api_path = 2;
+    RequestInfo request_info = 3; 
+    ResponseInfo response_info = 4;
+    // X-Cloud-Trace-Context header 
+    string trace_id = 5;  
+    // X-Forwarded-For
+    repeated string ips = 6; 
+    // Duration to process request in microseconds
+    int64 duration_usec = 7; 
+}
