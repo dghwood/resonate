@@ -1,12 +1,10 @@
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:resonate/errors/errors.dart';
 import 'package:resonate/services/http/cookie_jar.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
-import 'package:cronet_http/cronet_http.dart';
-import 'package:universal_io/io.dart';
+import 'package:resonate/services/http/client.dart'
+    if (dart.library.io) 'package:resonate/services/http/android_client.dart';
 
 Logger _log = Logger('services/http');
 
@@ -23,19 +21,7 @@ class HttpService implements AbstractHttpService {
     : cookieJar = BetterPersistCookieJar(
         storage: SecureCookieStorage(secureDatabase: secureDatabse),
       ) {
-    if (Platform.isAndroid & kDebugMode) {
-      // https://github.com/dart-lang/http/issues/458
-      // Dart doesn't work well will custom certificates
-      final engine = CronetEngine.build(
-        cacheMode: CacheMode.memory,
-        cacheMaxSize: 2 * 1024 * 1024,
-        userAgent: 'resonates.xyz',
-      );
-      _client = CronetClient.fromCronetEngine(engine, closeEngine: true);
-    } else {
-      // The default for release.
-      _client = http.Client();
-    }
+    _client = HttpClientImpl().customHttpClient;
   }
 
   late final http.Client _client;
