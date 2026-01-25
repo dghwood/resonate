@@ -134,11 +134,19 @@ class ListenApi {
   }
 
   Future<ApiResult<Iterable<UserListen>>> listLocal({User? user}) async {
-    // Do I need to check with the server?
     try {
       var result = await _database.list();
-      return ApiResult.ok(result);
+      var resultList = result.toList();
+      resultList.sort((a, b) {
+        // Sort by listen timestamp, latest first
+        // TODO(duncan): Do this in the database
+        return b.listenTimestamp.compareTo(a.listenTimestamp);
+      });
+
+      // _log.info('LISTEN TIMESTAMPS: ${result.map((e) => e.listenTimestamp)}');
+      return ApiResult.ok(resultList);
     } on Exception catch (e) {
+      _log.warning(e);
       return ApiResult.error(e);
     }
   }
@@ -284,37 +292,36 @@ class ListensApi {
   Future<ApiResult<Iterable<UserListen>>> get() async {
     var listenApi = _authUser.listenApi;
     var result = await listenApi.listLocal();
-    _log.info('got $result');
     switch (result) {
       case ApiOk():
         break;
       case ApiError():
+        _log.warning(result.error);
         return ApiResult.error(result.error);
     }
 
     var listens = result.value;
     var episodeIds = listens.map((s) => s.episodeId);
-    _log.info('for episodeIds: ${episodeIds.length}');
     var episodeResult = await _episodeApi.getMany(episodeIds);
-    _log.info('got $episodeResult');
 
     switch (episodeResult) {
       case ApiOk():
         break;
       case ApiError():
+        _log.warning(episodeResult.error);
         return ApiResult.error(episodeResult.error);
     }
-    Map<String, UserListen> listensMap = {};
-    for (var listen in listens) {
-      listensMap[listen.episodeId] = listen;
-    }
+    Map<String, Episode> episodeMap = {};
     for (var episode in episodeResult.value) {
-      var listen = listensMap[episode.id];
-      if (listen == null) continue;
-      listensMap[episode.id] = listen.copyWithEpisode(episode);
+      episodeMap[episode.id] = episode;
     }
-    // TODO(duncan): I need to sort this list..
-    return ApiResult.ok(listensMap.values);
+    return ApiResult.ok(
+      listens.map((l) {
+        var episode = episodeMap[l.episodeId];
+        if (episode == null) return l;
+        return l.copyWithEpisode(episode);
+      }),
+    );
   }
 }
 

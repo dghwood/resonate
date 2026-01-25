@@ -4,7 +4,6 @@ import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';
-import 'package:resonate/models/models.dart';
 
 Logger _log = Logger('components/common/listens');
 
