@@ -31,6 +31,10 @@ func Now() int64 {
 	// TODO(duncan): Should this be seconds / milliseconds?
 	return ToTimestamp(time.Now())
 }
+func NowUsec() int64 {
+	return time.Now().UTC().UnixMicro()
+}
+
 func TimestampDelta(before int64, after int64) time.Duration {
 	return FromTimestamp(after).Sub(FromTimestamp(before))
 }

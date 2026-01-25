@@ -2,11 +2,13 @@ package api
 
 import (
 	"context"
-	"encoding/json"
+	// "encoding/json"
 	"io"
 	"net/http"
 	"regexp"
 	"strconv"
+
+	json "google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/dghwood/resonate/auth"
 	"github.com/dghwood/resonate/errors"
@@ -14,6 +16,7 @@ import (
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
+	"github.com/dghwood/resonate/utils"
 	pb "google.golang.org/protobuf/proto"
 )
 
@@ -43,14 +46,35 @@ type ApiInterface[request ApiRequestInterface, response ApiResponseInterface] in
 	RequireSignIn() bool
 }
 
+func writeEventMessage(apiEventMessage *proto.ApiEventMessage) {
+	apiEventMessage.SetResponseTimestampUsec(utils.NowUsec())
+	// Clear internal info before logging, since it's mainly auth tokens
+	apiEventMessage.GetRequestInfo().ClearInternalInfo()
+	options := json.MarshalOptions{
+		UseProtoNames:  true,
+		UseEnumNumbers: true,
+	}
+	// TODO(duncan): This is really annoying, but for int64 this emits
+	//               strings rather than ints.
+	eventMessage, jsonErr := options.Marshal(apiEventMessage)
+	if jsonErr != nil {
+		log.Error(jsonErr)
+		return
+	}
+	log.Info(string(eventMessage))
+}
 func returnError[R ApiResponseInterface](
 	r *http.Request,
 	w http.ResponseWriter,
 	err errors.Error,
+	apiEventMessage *proto.ApiEventMessage,
 	response R) {
-	response.GetResponseInfo().Error = err.Enum
-	response.GetResponseInfo().ErrorMessage = err.Message
+
+	response.GetResponseInfo().SetError(err.Enum)
+	response.GetResponseInfo().SetErrorMessage(err.Message)
+
 	writeProto(r, w, response)
+	writeEventMessage(apiEventMessage)
 }
 
 func populateInternalInfo(r *http.Request, requestInfo *proto.RequestInfo) {
@@ -164,13 +188,24 @@ func handle[
 		log.Info(r.URL.Path)
 
 		request := f.RequestProto()
+		response := f.ResponseProto()
 		err := parseProto(r, request)
 		if err != nil {
 			log.Error(err)
+			// Return an error?
 			return
 		}
 
-		response := f.ResponseProto()
+		apiEventMessage := &proto.ApiEventMessage{
+			ApiPath:       r.URL.Path,
+			TimestampUsec: utils.NowUsec(),
+			TraceId:       r.Header.Get("X-Cloud-Trace-Context"),
+			Ips:           r.Header.Get("X-Forwarded-For"),
+			RequestInfo:   request.GetRequestInfo(),
+			ResponseInfo:  response.GetResponseInfo(),
+			// BinaryVersion: flags.FLAGS.Version,
+		}
+
 		requestInfo := request.GetRequestInfo()
 		// Check if app is an old version
 
@@ -178,7 +213,7 @@ func handle[
 			requestInfo.GetClientVersion(),
 			flags.FLAGS.LowestCompatibleClientVersion) {
 			log.Error(errors.ERROR_UPDATE_CLIENT_REQUIRED)
-			returnError(r, w, errors.ERROR_UPDATE_CLIENT_REQUIRED, response)
+			returnError(r, w, errors.ERROR_UPDATE_CLIENT_REQUIRED, apiEventMessage, response)
 			return
 		}
 		populateInternalInfo(r, requestInfo)
@@ -190,7 +225,7 @@ func handle[
 			if errors.Is(err, errors.ERROR_TIME_EXPIRED) {
 				returnErr = errors.ERROR_TIME_EXPIRED
 			}
-			returnError(r, w, returnErr, response)
+			returnError(r, w, returnErr, apiEventMessage, response)
 			return
 		}
 
@@ -222,7 +257,9 @@ func handle[
 			response.GetResponseInfo().SetSuccess(true)
 		}
 		writeProto(r, w, response)
-		log.Info(response.GetResponseInfo())
+
+		// Logging for API Event Message
+		writeEventMessage(apiEventMessage)
 	}
 }
 func Attach[request ApiRequestInterface, response ApiResponseInterface](
@@ -236,7 +273,12 @@ func writeProto(
 	response pb.Message) {
 	if r.URL.Query().Has("json") {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
+		jsonResponse, err := json.Marshal(response)
+		if err != nil {
+			log.Error("failed to marshal response", err)
+		}
+		w.Write(jsonResponse)
+		// json.NewEncoder(w).Encode(response)
 		return
 	}
 	responseBytes, err := pb.Marshal(response)
