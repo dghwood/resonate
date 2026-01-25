@@ -9,6 +9,7 @@ import 'package:resonate/mock_http.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/providers.dart';
 import 'package:resonate/router/routes.dart';
+import 'package:resonate/services/logger.dart';
 import 'package:resonate/test_page.dart';
 import 'package:resonate/utils/time.dart';
 
@@ -21,11 +22,15 @@ void main() async {
     androidNotificationOngoing: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
-
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.loggerName}: ${record.message}');
-  });
+  AppLogger.instance.init();
+  // Logger.root.level = Level.ALL;
+  // // Move this to the AppLogger
+  // Logger.root.onRecord.listen((record) {
+  //   var statement =
+  //       '${record.level.name}: ${record.loggerName}: ${record.message}';
+  //   AppLogger.instance.add(statement);
+  //   print(statement);
+  // });
   // GoRouter and it's silly changes.
   GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const MyApp());

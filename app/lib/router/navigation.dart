@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/components/tabs/pages/followers.dart';
+import 'package:resonate/components/tabs/pages/logging.dart';
 import 'package:resonate/models/models.dart';
 
 final Logger _log = Logger('Navigate');
@@ -42,6 +43,17 @@ class Navigate {
       MaterialPageRoute(
         builder: (context) {
           return FollowersPageComponent(user: user);
+        },
+      ),
+    );
+  }
+
+  void toLoggingPage() {
+    // This doesn't need to be a route
+    Navigator.of(_context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return LoggingComponent();
         },
       ),
     );

@@ -106,3 +106,46 @@ class ImageComponent extends StatelessWidget {
     );
   }
 }
+
+class ExpandableTextComponent extends StatefulWidget {
+  /* Expandable Text Component
+
+    Limits the text to a certain number of lines. 
+    And expands on tap.
+  */
+  const ExpandableTextComponent({
+    super.key,
+    required this.text,
+    this.style,
+    this.maxLines = 3,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final int maxLines;
+
+  @override
+  State<ExpandableTextComponent> createState() =>
+      _ExpandableTextComponentState();
+}
+
+class _ExpandableTextComponentState extends State<ExpandableTextComponent> {
+  bool expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          expanded = !expanded;
+        });
+      },
+      child: Text(
+        widget.text,
+        style: widget.style,
+        maxLines: expanded ? null : widget.maxLines,
+        overflow: expanded ? null : TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
