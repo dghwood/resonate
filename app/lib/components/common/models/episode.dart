@@ -49,6 +49,7 @@ class EpisodeComponent extends StatelessWidget {
                   height: 12,
                 ),
                 Text('${listens.elementAt(0).publicUser!.name} listened..'),
+                // TODO(duncan): Add when the listened to it.
               ],
             ),
           Row(

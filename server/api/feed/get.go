@@ -84,7 +84,7 @@ func (f *Get) Execute(
 	// Sort the items by something custom
 	slices.SortFunc(userFeed.Items, func(
 		a, b *proto.UserFeedItemMessage) int {
-		return getTimestampForComparison(a) - getTimestampForComparison(b)
+		return getTimestampForComparison(b) - getTimestampForComparison(a)
 	})
 
 	// Construct the feed
