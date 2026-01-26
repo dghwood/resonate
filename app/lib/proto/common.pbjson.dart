@@ -31,6 +31,21 @@ final $typed_data.Uint8List clientPlatformDescriptor = $convert.base64Decode(
     '9QTEFURk9STV9BTkRST0lEEAESFwoTQ0xJRU5UX1BMQVRGT1JNX0lPUxACEhcKE0NMSUVOVF9Q'
     'TEFURk9STV9XRUIQAw==');
 
+@$core.Deprecated('Use feedItemTypeDescriptor instead')
+const FeedItemType$json = {
+  '1': 'FeedItemType',
+  '2': [
+    {'1': 'FEED_ITEM_UNKNOWN', '2': 0},
+    {'1': 'FEED_ITEM_SUBSCRIPTION', '2': 1},
+    {'1': 'FEED_ITEM_FOLLOWER_LISTEN', '2': 2},
+  ],
+};
+
+/// Descriptor for `FeedItemType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List feedItemTypeDescriptor = $convert.base64Decode(
+    'CgxGZWVkSXRlbVR5cGUSFQoRRkVFRF9JVEVNX1VOS05PV04QABIaChZGRUVEX0lURU1fU1VCU0'
+    'NSSVBUSU9OEAESHQoZRkVFRF9JVEVNX0ZPTExPV0VSX0xJU1RFThAC');
+
 @$core.Deprecated('Use storageMetadataMessageDescriptor instead')
 const StorageMetadataMessage$json = {
   '1': 'StorageMetadataMessage',
@@ -506,6 +521,14 @@ const UserListenMessage$json = {
       '10': 'episode'
     },
     {
+      '1': 'public_user',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.PublicUserMessage',
+      '10': 'publicUser'
+    },
+    {
       '1': 'metadata',
       '3': 8,
       '4': 1,
@@ -522,8 +545,10 @@ final $typed_data.Uint8List userListenMessageDescriptor = $convert.base64Decode(
     'UYAVIGdXNlcklkEiMKCmVwaXNvZGVfaWQYAyABKAlCBIC1GAFSCWVwaXNvZGVJZBIvChBsaXN0'
     'ZW5fdGltZXN0YW1wGAQgASgDQgSAtRgBUg9saXN0ZW5UaW1lc3RhbXASGAoHc2Vjb25kcxgFIA'
     'EoA1IHc2Vjb25kcxIiCgljb21wbGV0ZWQYBiABKAhCBIC1GAFSCWNvbXBsZXRlZBIyCgdlcGlz'
-    'b2RlGAcgASgLMhgucmVzb25hdGUuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPAoIbWV0YWRhdG'
-    'EYCCABKAsyIC5yZXNvbmF0ZS5TdG9yYWdlTWV0YWRhdGFNZXNzYWdlUghtZXRhZGF0YQ==');
+    'b2RlGAcgASgLMhgucmVzb25hdGUuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPAoLcHVibGljX3'
+    'VzZXIYCSABKAsyGy5yZXNvbmF0ZS5QdWJsaWNVc2VyTWVzc2FnZVIKcHVibGljVXNlchI8Cght'
+    'ZXRhZGF0YRgIIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VSCG1ldGFkYX'
+    'Rh');
 
 @$core.Deprecated('Use userFeedItemEpisodeMessageDescriptor instead')
 const UserFeedItemEpisodeMessage$json = {
@@ -542,18 +567,26 @@ const UserFeedItemEpisodeMessage$json = {
       '3': 2,
       '4': 3,
       '5': 11,
-      '6': '.resonate.PublicUserMessage',
+      '6': '.resonate.UserListenMessage',
       '10': 'userListens'
+    },
+    {
+      '1': 'feed_item_type',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.resonate.FeedItemType',
+      '10': 'feedItemType'
     },
   ],
 };
 
 /// Descriptor for `UserFeedItemEpisodeMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userFeedItemEpisodeMessageDescriptor =
-    $convert.base64Decode(
-        'ChpVc2VyRmVlZEl0ZW1FcGlzb2RlTWVzc2FnZRIyCgdlcGlzb2RlGAEgASgLMhgucmVzb25hdG'
-        'UuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPgoMdXNlcl9saXN0ZW5zGAIgAygLMhsucmVzb25h'
-        'dGUuUHVibGljVXNlck1lc3NhZ2VSC3VzZXJMaXN0ZW5z');
+final $typed_data.Uint8List userFeedItemEpisodeMessageDescriptor = $convert.base64Decode(
+    'ChpVc2VyRmVlZEl0ZW1FcGlzb2RlTWVzc2FnZRIyCgdlcGlzb2RlGAEgASgLMhgucmVzb25hdG'
+    'UuRXBpc29kZU1lc3NhZ2VSB2VwaXNvZGUSPgoMdXNlcl9saXN0ZW5zGAIgAygLMhsucmVzb25h'
+    'dGUuVXNlckxpc3Rlbk1lc3NhZ2VSC3VzZXJMaXN0ZW5zEjwKDmZlZWRfaXRlbV90eXBlGAMgAS'
+    'gOMhYucmVzb25hdGUuRmVlZEl0ZW1UeXBlUgxmZWVkSXRlbVR5cGU=');
 
 @$core.Deprecated('Use userFeedItemRecommendationMessageDescriptor instead')
 const UserFeedItemRecommendationMessage$json = {

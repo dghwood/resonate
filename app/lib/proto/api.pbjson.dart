@@ -1691,6 +1691,13 @@ const GetFeedMessage_Request$json = {
       '5': 3,
       '10': 'beforeTimestampMs'
     },
+    {
+      '1': 'include_followers',
+      '3': 4,
+      '4': 1,
+      '5': 8,
+      '10': 'includeFollowers'
+    },
   ],
 };
 
@@ -1721,12 +1728,13 @@ const GetFeedMessage_Response$json = {
 final $typed_data.Uint8List getFeedMessageDescriptor = $convert.base64Decode(
     'Cg5HZXRGZWVkTWVzc2FnZRI+CgdyZXF1ZXN0GAEgASgLMiQucmVzb25hdGUuYXBpLkdldEZlZW'
     'RNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSPwoHcmVwb25zZRgCIAEoCzIlLnJlc29uYXRlLmFw'
-    'aS5HZXRGZWVkTWVzc2FnZS5SZXNwb25zZVIHcmVwb25zZRqQAQoHUmVxdWVzdBI8CgxyZXF1ZX'
+    'aS5HZXRGZWVkTWVzc2FnZS5SZXNwb25zZVIHcmVwb25zZRq9AQoHUmVxdWVzdBI8CgxyZXF1ZX'
     'N0X2luZm8YASABKAsyGS5yZXNvbmF0ZS5hcGkuUmVxdWVzdEluZm9SC3JlcXVlc3RJbmZvEhcK'
     'B3VzZXJfaWQYAiABKAlSBnVzZXJJZBIuChNiZWZvcmVfdGltZXN0YW1wX21zGAMgASgDUhFiZW'
-    'ZvcmVUaW1lc3RhbXBNcxp6CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVz'
-    'b25hdGUuYXBpLlJlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEi0KBGZlZWQYAiABKAsyGS5yZX'
-    'NvbmF0ZS5Vc2VyRmVlZE1lc3NhZ2VSBGZlZWQ=');
+    'ZvcmVUaW1lc3RhbXBNcxIrChFpbmNsdWRlX2ZvbGxvd2VycxgEIAEoCFIQaW5jbHVkZUZvbGxv'
+    'd2Vycxp6CghSZXNwb25zZRI/Cg1yZXNwb25zZV9pbmZvGAEgASgLMhoucmVzb25hdGUuYXBpLl'
+    'Jlc3BvbnNlSW5mb1IMcmVzcG9uc2VJbmZvEi0KBGZlZWQYAiABKAsyGS5yZXNvbmF0ZS5Vc2Vy'
+    'RmVlZE1lc3NhZ2VSBGZlZWQ=');
 
 @$core.Deprecated('Use addFollowMessageDescriptor instead')
 const AddFollowMessage$json = {

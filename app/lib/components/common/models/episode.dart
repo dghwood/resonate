@@ -9,15 +9,23 @@ import 'package:resonate/components/common/models/download.dart';
 import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/router/navigation.dart';
 import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/episode');
 
 class EpisodeComponent extends StatelessWidget {
-  const EpisodeComponent({super.key, required this.episode});
+  const EpisodeComponent({
+    super.key,
+    required this.episode,
+    this.feedItemType = FeedItemType.FEED_ITEM_SUBSCRIPTION,
+    this.listens = const [],
+  });
 
   final Episode episode;
+  final FeedItemType feedItemType;
+  final Iterable<UserListen> listens;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +36,21 @@ class EpisodeComponent extends StatelessWidget {
         spacing: 8,
         children: [
           // Header
+          if (feedItemType == FeedItemType.FEED_ITEM_FOLLOWER_LISTEN &&
+              listens.isNotEmpty &&
+              listens.elementAt(0).publicUser != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 4,
+              children: [
+                ProfileImageComponent(
+                  listens.elementAt(0).publicUser!.imageUrl,
+                  width: 12,
+                  height: 12,
+                ),
+                Text('${listens.elementAt(0).publicUser!.name} listened..'),
+              ],
+            ),
           Row(
             spacing: 8,
             children: [

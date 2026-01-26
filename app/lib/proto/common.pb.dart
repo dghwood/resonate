@@ -15,6 +15,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'common.pbenum.dart';
+
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'common.pbenum.dart';
@@ -1415,6 +1417,7 @@ class UserListenMessage extends $pb.GeneratedMessage {
     $core.bool? completed,
     EpisodeMessage? episode,
     StorageMetadataMessage? metadata,
+    PublicUserMessage? publicUser,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -1425,6 +1428,7 @@ class UserListenMessage extends $pb.GeneratedMessage {
     if (completed != null) result.completed = completed;
     if (episode != null) result.episode = episode;
     if (metadata != null) result.metadata = metadata;
+    if (publicUser != null) result.publicUser = publicUser;
     return result;
   }
 
@@ -1451,6 +1455,8 @@ class UserListenMessage extends $pb.GeneratedMessage {
         subBuilder: EpisodeMessage.create)
     ..aOM<StorageMetadataMessage>(8, _omitFieldNames ? '' : 'metadata',
         subBuilder: StorageMetadataMessage.create)
+    ..aOM<PublicUserMessage>(9, _omitFieldNames ? '' : 'publicUser',
+        subBuilder: PublicUserMessage.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1549,16 +1555,29 @@ class UserListenMessage extends $pb.GeneratedMessage {
   void clearMetadata() => $_clearField(8);
   @$pb.TagNumber(8)
   StorageMetadataMessage ensureMetadata() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  PublicUserMessage get publicUser => $_getN(8);
+  @$pb.TagNumber(9)
+  set publicUser(PublicUserMessage value) => $_setField(9, value);
+  @$pb.TagNumber(9)
+  $core.bool hasPublicUser() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearPublicUser() => $_clearField(9);
+  @$pb.TagNumber(9)
+  PublicUserMessage ensurePublicUser() => $_ensure(8);
 }
 
 class UserFeedItemEpisodeMessage extends $pb.GeneratedMessage {
   factory UserFeedItemEpisodeMessage({
     EpisodeMessage? episode,
-    $core.Iterable<PublicUserMessage>? userListens,
+    $core.Iterable<UserListenMessage>? userListens,
+    FeedItemType? feedItemType,
   }) {
     final result = create();
     if (episode != null) result.episode = episode;
     if (userListens != null) result.userListens.addAll(userListens);
+    if (feedItemType != null) result.feedItemType = feedItemType;
     return result;
   }
 
@@ -1577,9 +1596,14 @@ class UserFeedItemEpisodeMessage extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<EpisodeMessage>(1, _omitFieldNames ? '' : 'episode',
         subBuilder: EpisodeMessage.create)
-    ..pc<PublicUserMessage>(
+    ..pc<UserListenMessage>(
         2, _omitFieldNames ? '' : 'userListens', $pb.PbFieldType.PM,
-        subBuilder: PublicUserMessage.create)
+        subBuilder: UserListenMessage.create)
+    ..e<FeedItemType>(
+        3, _omitFieldNames ? '' : 'feedItemType', $pb.PbFieldType.OE,
+        defaultOrMaker: FeedItemType.FEED_ITEM_UNKNOWN,
+        valueOf: FeedItemType.valueOf,
+        enumValues: FeedItemType.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1618,8 +1642,18 @@ class UserFeedItemEpisodeMessage extends $pb.GeneratedMessage {
   EpisodeMessage ensureEpisode() => $_ensure(0);
 
   /// These are social items relating to followed users
+  /// And will include the public user message
   @$pb.TagNumber(2)
-  $pb.PbList<PublicUserMessage> get userListens => $_getList(1);
+  $pb.PbList<UserListenMessage> get userListens => $_getList(1);
+
+  @$pb.TagNumber(3)
+  FeedItemType get feedItemType => $_getN(2);
+  @$pb.TagNumber(3)
+  set feedItemType(FeedItemType value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasFeedItemType() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFeedItemType() => $_clearField(3);
 }
 
 class UserFeedItemRecommendationMessage extends $pb.GeneratedMessage {
@@ -1783,6 +1817,7 @@ class UserFeedItemMessage extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   UserFeedItemEpisodeMessage ensureEpisodeItem() => $_ensure(0);
 
+  /// I'm not using this at the moment..
   @$pb.TagNumber(2)
   $pb.PbList<UserFeedItemRecommendationMessage> get recommendedItems =>
       $_getList(1);

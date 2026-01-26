@@ -39,5 +39,32 @@ class ClientPlatform extends $pb.ProtobufEnum {
   const ClientPlatform._(super.value, super.name);
 }
 
+class FeedItemType extends $pb.ProtobufEnum {
+  static const FeedItemType FEED_ITEM_UNKNOWN =
+      FeedItemType._(0, _omitEnumNames ? '' : 'FEED_ITEM_UNKNOWN');
+
+  /// This item is in the feed, because it's subscribed.
+  static const FeedItemType FEED_ITEM_SUBSCRIPTION =
+      FeedItemType._(1, _omitEnumNames ? '' : 'FEED_ITEM_SUBSCRIPTION');
+
+  /// This item is in the feed, because a friend listened
+  /// to it.
+  static const FeedItemType FEED_ITEM_FOLLOWER_LISTEN =
+      FeedItemType._(2, _omitEnumNames ? '' : 'FEED_ITEM_FOLLOWER_LISTEN');
+
+  static const $core.List<FeedItemType> values = <FeedItemType>[
+    FEED_ITEM_UNKNOWN,
+    FEED_ITEM_SUBSCRIPTION,
+    FEED_ITEM_FOLLOWER_LISTEN,
+  ];
+
+  static final $core.List<FeedItemType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static FeedItemType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const FeedItemType._(super.value, super.name);
+}
+
 const $core.bool _omitEnumNames =
     $core.bool.fromEnvironment('protobuf.omit_enum_names');

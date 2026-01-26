@@ -6716,8 +6716,10 @@ type GetFeedMessage_Request struct {
 	UserId      string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	// Used for requesting the n+1 page of feed items
 	BeforeTimestampMs int64 `protobuf:"varint,3,opt,name=before_timestamp_ms,json=beforeTimestampMs,proto3" json:"before_timestamp_ms,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Whether to include followers listens or not
+	IncludeFollowers bool `protobuf:"varint,4,opt,name=include_followers,json=includeFollowers,proto3" json:"include_followers,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *GetFeedMessage_Request) Reset() {
@@ -6766,6 +6768,13 @@ func (x *GetFeedMessage_Request) GetBeforeTimestampMs() int64 {
 	return 0
 }
 
+func (x *GetFeedMessage_Request) GetIncludeFollowers() bool {
+	if x != nil {
+		return x.IncludeFollowers
+	}
+	return false
+}
+
 func (x *GetFeedMessage_Request) SetRequestInfo(v *RequestInfo) {
 	x.RequestInfo = v
 }
@@ -6776,6 +6785,10 @@ func (x *GetFeedMessage_Request) SetUserId(v string) {
 
 func (x *GetFeedMessage_Request) SetBeforeTimestampMs(v int64) {
 	x.BeforeTimestampMs = v
+}
+
+func (x *GetFeedMessage_Request) SetIncludeFollowers(v bool) {
+	x.IncludeFollowers = v
 }
 
 func (x *GetFeedMessage_Request) HasRequestInfo() bool {
@@ -6796,6 +6809,8 @@ type GetFeedMessage_Request_builder struct {
 	UserId      string
 	// Used for requesting the n+1 page of feed items
 	BeforeTimestampMs int64
+	// Whether to include followers listens or not
+	IncludeFollowers bool
 }
 
 func (b0 GetFeedMessage_Request_builder) Build() *GetFeedMessage_Request {
@@ -6805,6 +6820,7 @@ func (b0 GetFeedMessage_Request_builder) Build() *GetFeedMessage_Request {
 	x.RequestInfo = b.RequestInfo
 	x.UserId = b.UserId
 	x.BeforeTimestampMs = b.BeforeTimestampMs
+	x.IncludeFollowers = b.IncludeFollowers
 	return m0
 }
 
@@ -9153,14 +9169,15 @@ const file_proto_api_proto_rawDesc = "" +
 	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\x1a\x82\x01\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x125\n" +
-	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\"\xa0\x03\n" +
+	"\alistens\x18\x02 \x03(\v2\x1b.resonate.UserListenMessageR\alistens\"\xcd\x03\n" +
 	"\x0eGetFeedMessage\x12>\n" +
 	"\arequest\x18\x01 \x01(\v2$.resonate.api.GetFeedMessage.RequestR\arequest\x12?\n" +
-	"\areponse\x18\x02 \x01(\v2%.resonate.api.GetFeedMessage.ResponseR\areponse\x1a\x90\x01\n" +
+	"\areponse\x18\x02 \x01(\v2%.resonate.api.GetFeedMessage.ResponseR\areponse\x1a\xbd\x01\n" +
 	"\aRequest\x12<\n" +
 	"\frequest_info\x18\x01 \x01(\v2\x19.resonate.api.RequestInfoR\vrequestInfo\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12.\n" +
-	"\x13before_timestamp_ms\x18\x03 \x01(\x03R\x11beforeTimestampMs\x1az\n" +
+	"\x13before_timestamp_ms\x18\x03 \x01(\x03R\x11beforeTimestampMs\x12+\n" +
+	"\x11include_followers\x18\x04 \x01(\bR\x10includeFollowers\x1az\n" +
 	"\bResponse\x12?\n" +
 	"\rresponse_info\x18\x01 \x01(\v2\x1a.resonate.api.ResponseInfoR\fresponseInfo\x12-\n" +
 	"\x04feed\x18\x02 \x01(\v2\x19.resonate.UserFeedMessageR\x04feed\"\x9a\x03\n" +

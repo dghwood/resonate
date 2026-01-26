@@ -1,9 +1,10 @@
 // All timestamps will be in UTC
 import 'package:fixnum/fixnum.dart';
 
-DateTime fromProtoTimestamp(Int64 timestamp) {
+DateTime fromProtoTimestamp(Int64 timestamp, {bool isMilli = false}) {
+  // Assumes this is in unix seconds
   return DateTime.fromMillisecondsSinceEpoch(
-    timestamp.toInt() * 1000,
+    timestamp.toInt() * (isMilli ? 1 : 1000),
     isUtc: true,
   );
 }

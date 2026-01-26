@@ -307,6 +307,8 @@ message GetFeedMessage {
         string user_id = 2; 
         // Used for requesting the n+1 page of feed items
         int64 before_timestamp_ms = 3; 
+        // Whether to include followers listens or not 
+        bool include_followers = 4;
     }
     message Response {
         ResponseInfo response_info = 1; 

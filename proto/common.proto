@@ -163,14 +163,26 @@ message UserListenMessage {
     int64 seconds = 5;
     bool completed = 6 [(index) = true];
     EpisodeMessage episode = 7; // this is optional, used for feed items
+    PublicUserMessage public_user = 9; // this is optional, used for feed items
 
     StorageMetadataMessage metadata = 8;
+}
+
+enum FeedItemType {
+    FEED_ITEM_UNKNOWN = 0; 
+    // This item is in the feed, because it's subscribed. 
+    FEED_ITEM_SUBSCRIPTION = 1; 
+    // This item is in the feed, because a friend listened 
+    // to it. 
+    FEED_ITEM_FOLLOWER_LISTEN = 2;
 }
 
 message UserFeedItemEpisodeMessage {
     EpisodeMessage episode = 1;
     // These are social items relating to followed users
-    repeated PublicUserMessage user_listens = 2;
+    // And will include the public user message
+    repeated UserListenMessage user_listens = 2;
+    FeedItemType feed_item_type = 3;
 } 
 message UserFeedItemRecommendationMessage {
     EpisodeMessage episode = 1; 
@@ -181,6 +193,7 @@ message UserFeedItemRecommendationMessage {
 
 message UserFeedItemMessage {
     UserFeedItemEpisodeMessage episode_item = 1; 
+    // I'm not using this at the moment.. 
     repeated UserFeedItemRecommendationMessage recommended_items = 2; 
 }
 

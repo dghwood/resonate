@@ -17,8 +17,14 @@ import 'package:resonate/storage/feed.dart';
 final Logger _log = Logger("/api/feed");
 
 class GetFeedApiRequest extends ApiRequest<GetFeedMessage_Request> {
-  GetFeedApiRequest()
-    : super(GetFeedMessage_Request(requestInfo: RequestInfo()));
+  GetFeedApiRequest({String? userId, bool? includeFollowers})
+    : super(
+        GetFeedMessage_Request(
+          userId: userId,
+          includeFollowers: includeFollowers,
+          requestInfo: RequestInfo(),
+        ),
+      );
 
   @override
   set requestInfo(RequestInfo info) =>
@@ -88,7 +94,10 @@ class GetFeedApi extends ChangeNotifier {
       * But paging with throw on offline error.. 
     
   */
-  Stream<ApiResult<UserFeed>> get({DateTime? before}) async* {
+  Stream<ApiResult<UserFeed>> get({
+    DateTime? before,
+    bool includeFollowers = false,
+  }) async* {
     if (!_authUser.isSignedIn) {
       yield ApiResult.error(UserNotSignedInError());
       return;
@@ -108,11 +117,14 @@ class GetFeedApi extends ChangeNotifier {
       }
     }
     try {
-      var request = GetFeedApiRequest();
-      request.requestPb.userId = userId;
+      var request = GetFeedApiRequest(
+        userId: userId,
+        includeFollowers: includeFollowers,
+      );
       var response = GetFeedApiResponse();
       await _server.execute(request, response);
       feed = UserFeed.fromMessage(response.responsePb.feed);
+      // TODO(duncan): Hmm.. this wil be weird with the friends flag
       await _database.put(feed);
       _log.info("feed refreshed");
       yield ApiResult.ok(feed);

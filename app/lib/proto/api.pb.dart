@@ -4768,11 +4768,13 @@ class GetFeedMessage_Request extends $pb.GeneratedMessage {
     RequestInfo? requestInfo,
     $core.String? userId,
     $fixnum.Int64? beforeTimestampMs,
+    $core.bool? includeFollowers,
   }) {
     final result = create();
     if (requestInfo != null) result.requestInfo = requestInfo;
     if (userId != null) result.userId = userId;
     if (beforeTimestampMs != null) result.beforeTimestampMs = beforeTimestampMs;
+    if (includeFollowers != null) result.includeFollowers = includeFollowers;
     return result;
   }
 
@@ -4793,6 +4795,7 @@ class GetFeedMessage_Request extends $pb.GeneratedMessage {
         subBuilder: RequestInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'userId')
     ..aInt64(3, _omitFieldNames ? '' : 'beforeTimestampMs')
+    ..aOB(4, _omitFieldNames ? '' : 'includeFollowers')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4847,6 +4850,16 @@ class GetFeedMessage_Request extends $pb.GeneratedMessage {
   $core.bool hasBeforeTimestampMs() => $_has(2);
   @$pb.TagNumber(3)
   void clearBeforeTimestampMs() => $_clearField(3);
+
+  /// Whether to include followers listens or not
+  @$pb.TagNumber(4)
+  $core.bool get includeFollowers => $_getBF(3);
+  @$pb.TagNumber(4)
+  set includeFollowers($core.bool value) => $_setBool(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasIncludeFollowers() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIncludeFollowers() => $_clearField(4);
 }
 
 class GetFeedMessage_Response extends $pb.GeneratedMessage {

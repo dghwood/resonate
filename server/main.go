@@ -38,7 +38,11 @@ func main() {
 	}
 	flags.Parse()
 	// Loads the Env Variables from the Secrets Manager
-	secrets.AccessSecrets(flags.FLAGS.CloudSecretsKey)
+	err := secrets.AccessSecrets(flags.FLAGS.CloudSecretsKey)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 
 	env_variables := []string{
 		"USER_ID_SALT",

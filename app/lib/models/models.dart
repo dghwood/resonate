@@ -412,6 +412,9 @@ class UserListen extends StorageModel<UserListenMessage> {
   String get userId => _message.userId;
   String get episodeId => _message.episodeId;
   int get listenTimestamp => _message.listenTimestamp.toInt();
+  // TODO(duncan): This is currently in milli seconds, but standard is seconds!!!
+  DateTime get listenDateTime =>
+      fromProtoTimestamp(_message.listenTimestamp, isMilli: true);
   int get seconds => _message.seconds.toInt();
   bool get completed => _message.completed;
   Episode? get episode =>
@@ -422,6 +425,11 @@ class UserListen extends StorageModel<UserListenMessage> {
     message.episode = episode.toMessage();
     return UserListen.fromMessage(message);
   }
+
+  PublicUser? get publicUser =>
+      _message.hasPublicUser()
+          ? PublicUser.fromMessage(_message.publicUser)
+          : null;
 
   void dropEpisode() {
     _message.clearEpisode();
@@ -552,6 +560,9 @@ class UserFeedItemEpisode extends BaseModel<UserFeedItemEpisodeMessage> {
   Uint8List get descriptor => userFeedItemEpisodeMessageDescriptor;
 
   Episode get episode => Episode.fromMessage(_message.episode);
+  FeedItemType get feedItemType => _message.feedItemType;
+  Iterable<UserListen> get listens =>
+      _message.userListens.map((l) => UserListen.fromMessage(l));
 }
 
 class UserFeedItemRecommendation

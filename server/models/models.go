@@ -109,6 +109,14 @@ func (p *UserListen) New() Model {
 	return &UserListen{}
 }
 
+func (p *UserListen) GetUserIdFieldNum() int32 {
+	return 2
+}
+
+func (p *UserListen) GetListenTimestampFieldNum() int32 {
+	return 4
+}
+
 // StorageMetadata
 type StorageMetadata struct {
 	proto.StorageMetadataMessage

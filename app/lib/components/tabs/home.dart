@@ -83,7 +83,7 @@ class FeedComponent
       builder: (context, _) {
         _log.info("FeedComponent::listenable");
         return StreamBuilder(
-          stream: feedApi.get(),
+          stream: feedApi.get(includeFollowers: true),
           builder: (context, snapshot) {
             _log.info("FeedComponent::stream::${snapshot.connectionState}");
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -110,6 +110,7 @@ class FeedComponent
             if (items.isEmpty) {
               return Icon(Icons.spoke);
             }
+            _log.info("FeedComponent::items::${items.length}");
             return ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
@@ -118,7 +119,11 @@ class FeedComponent
                   return Text('Recommendations not implemented');
                 }
                 var episodeItem = item.episodeItem!;
-                return EpisodeComponent(episode: episodeItem.episode);
+                return EpisodeComponent(
+                  episode: episodeItem.episode,
+                  listens: episodeItem.listens,
+                  feedItemType: episodeItem.feedItemType,
+                );
               },
             );
           },
