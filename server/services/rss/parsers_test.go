@@ -132,3 +132,32 @@ func TestXMlParse(t *testing.T) {
 	}
 
 }
+
+func TestParseNPRFeed(t *testing.T) {
+	xmlString := `<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:podcast="https://podcastindex.org/namespace/1.0" version="2.0">
+<channel>
+<title>The NPR Politics Podcast</title>
+<item>
+<title>Another government shutdown looms -- what you need to know</title>
+<description>
+<![CDATA[ <p class="p1">After immigration officials killed two people in Minneapolis this month, congressional Democrats demanded funding for immigration action be separated from other government funding. That's leading to a potential, partial, government shutdown. We unpack the latest from Capitol Hill.<p class="p1"><br><p class="p1">Then, why did the FBI raid Fulton County, Ga.'s election center this week, and what does it have to do with President Trump's continued false claims that the 2020 presidential election was stolen?<p class="p1"><br><p class="p1">And, we bid a fond farewell to one of our podcast stalwarts.<p class="p1"><br><p class="p1">This episode: senior White House correspondent Tamara Keith, congressional reporter Sam Gringlas, immigration policy correspondent Ximena Bustillo, political reporter Stephen Fowler, senior political editor & correspondent Domenico Montanaro, and political correspondent Sarah McCammon.<p class="p1"><br><p class="p1">This podcast was produced and edited by Casey Morell & Bria Suggs.<p class="p1"><br><p class="p1">Our executive producer is Muthoni Muturi.<p class="p2"><br><p class="p1">Listen to every episode of the NPR Politics Podcast sponsor-free, unlock access to bonus episodes with more from the NPR Politics team, and support public media when you sign up for The NPR Politics Podcast+ at <a href="http://plus.npr.org/politics"target="_blank" >plus.npr.org/politics</a>.<p class="p2"><br/><br/>Learn more about sponsor message choices: <a href="https://podcastchoices.com/adchoices">podcastchoices.com/adchoices</a><br/><br/><a href="https://www.npr.org/about-npr/179878450/privacy-policy">NPR Privacy Policy</a> ]]>
+</description>
+<pubDate>Fri, 30 Jan 2026 21:16:42 +0000</pubDate>
+<guid isPermaLink="false">c95921bb-71c2-4145-8fcd-8217d23889aa</guid>
+<content:encoded>
+<![CDATA[ <p class="p1">After immigration officials killed two people in Minneapolis this month, congressional Democrats demanded funding for immigration action be separated from other government funding. That's leading to a potential, partial, government shutdown. We unpack the latest from Capitol Hill.<p class="p1"><br><p class="p1">Then, why did the FBI raid Fulton County, Ga.'s election center this week, and what does it have to do with President Trump's continued false claims that the 2020 presidential election was stolen?<p class="p1"><br><p class="p1">And, we bid a fond farewell to one of our podcast stalwarts.<p class="p1"><br><p class="p1">This episode: senior White House correspondent Tamara Keith, congressional reporter Sam Gringlas, immigration policy correspondent Ximena Bustillo, political reporter Stephen Fowler, senior political editor & correspondent Domenico Montanaro, and political correspondent Sarah McCammon.<p class="p1"><br><p class="p1">This podcast was produced and edited by Casey Morell & Bria Suggs.<p class="p1"><br><p class="p1">Our executive producer is Muthoni Muturi.<p class="p2"><br><p class="p1">Listen to every episode of the NPR Politics Podcast sponsor-free, unlock access to bonus episodes with more from the NPR Politics team, and support public media when you sign up for The NPR Politics Podcast+ at <a href="http://plus.npr.org/politics"target="_blank" >plus.npr.org/politics</a>.<p class="p2"><br/><br/>Learn more about sponsor message choices: <a href="https://podcastchoices.com/adchoices">podcastchoices.com/adchoices</a><br/><br/><a href="https://www.npr.org/about-npr/179878450/privacy-policy">NPR Privacy Policy</a> ]]>
+</content:encoded>
+</item>
+</channel>
+</rss>
+`
+	rssFeed := &RSSFeed{}
+	err := xml.Unmarshal([]byte(xmlString), &rssFeed)
+	if err != nil {
+		t.Error(err)
+	}
+	if rssFeed.Channel.Item[0].Description == "" {
+		t.Error("description is empty")
+	}
+
+}

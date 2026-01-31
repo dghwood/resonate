@@ -109,7 +109,11 @@ func parseEpisode(podcast *models.Podcast, rssItem RSSItem, episode *models.Epis
 	episode.Id = fmt.Sprintf("%s::%s", trim(podcast.Id), trim(rssItem.Guid))
 	episode.Title = trim(rssItem.Title)
 	episode.PodcastId = trim(podcast.Id)
-	episode.Description = stripHtmlTags(rssItem.Description)
+	description := trim(rssItem.Summary)
+	if description == "" {
+		description = trim(rssItem.Description)
+	}
+	episode.Description = stripHtmlTags(description)
 	episode.DurationSeconds = parseDurationSeconds(rssItem.Duration)
 	episode.AudioUrl = trim(rssItem.AudioUrl.Url)
 	episode.ImageUrl = trim(podcast.ImageUrl)

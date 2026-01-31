@@ -30,7 +30,8 @@ type RSSItem struct {
 	Title         string       `xml:"title"`
 	Link          string       `xml:"link"`
 	PubDate       string       `xml:"pubDate"`
-	Description   string       `xml:"summary"`
+	Summary       string       `xml:"summary"`
+	Description   string       `xml:"description"`
 	Author        string       `xml:"author"`
 	AudioUrl      RssEnclosure `xml:"enclosure"`
 	Guid          string       `xml:"guid"`
