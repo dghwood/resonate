@@ -277,3 +277,19 @@ class _SwitchComponentState extends State<SwitchComponent> {
     );
   }
 }
+
+class LogoComponent extends StatelessWidget {
+  const LogoComponent({super.key, this.width = 120, this.height = 120});
+
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/logo_inverted_512.png",
+      width: width,
+      height: height,
+    );
+  }
+}

@@ -32,7 +32,17 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (context, _) {
           return [
             SliverAppBar(
-              title: Text('RESONATES'),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 4,
+                children: [
+                  LogoComponent(height: 32, width: 32),
+                  Text(
+                    'RESONATES',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
+              ),
               floating: true,
               actions: [
                 IconButton(
@@ -51,17 +61,28 @@ class _HomePageState extends State<HomePage> {
                 scrollController: ScrollController(),
               ),
             ),
-            SliverToBoxAdapter(child: Divider()),
+            SliverToBoxAdapter(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ];
         },
         body: Column(
           spacing: 5,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
+            // Container(child: SizedBox(height: 8)),
             Row(
               children: [
-                Text("FEED", style: Theme.of(context).textTheme.labelMedium),
+                Text("FEED", style: Theme.of(context).textTheme.labelLarge),
                 Spacer(),
                 SwitchComponent(
                   enabled: socialEnabledListener.value,

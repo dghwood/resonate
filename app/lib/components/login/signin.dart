@@ -6,6 +6,7 @@ import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/router/navigation.dart';
 
 /* Flow 
@@ -60,14 +61,7 @@ class _SigninComponent2State extends State<SigninComponent2> {
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/logo_inverted_512.png",
-                          width: 120,
-                          height: 120,
-                        ),
-                        Text('RESONATES'),
-                      ],
+                      children: [LogoComponent(), Text('RESONATES')],
                     ),
                   ),
                 ),
@@ -174,7 +168,6 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
 
   @override
   Widget build(BuildContext context) {
-    _log.info('phoneNumber: ${widget.loginInfo.validPhoneNumber}');
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Column(

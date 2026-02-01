@@ -99,7 +99,8 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
     );
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
       height: widget.height,
       child: Column(
         spacing: 5,
@@ -108,7 +109,7 @@ class _SubscriptionGridComponentState extends State<SubscriptionGridComponent> {
           if (widget.showTitle)
             Text(
               'SUBSCRIPTIONS',
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           Expanded(
             child: FutureBuilder(
