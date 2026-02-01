@@ -70,7 +70,7 @@ class _PublicUserProfileAppBarState extends State<PublicUserProfileAppBar> {
         child: Row(
           spacing: 16,
           children: [
-            ProfileImageComponent(widget.user.imageUrl, width: 32, height: 32),
+            ProfileImageComponent(widget.user, width: 32, height: 32),
             // ImageComponent(widget.user.imageUrl, height: 32),
             Text(widget.user.name),
           ],
@@ -243,7 +243,7 @@ class PublicUserHeaderComponent extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(64),
-            child: ImageComponent(user.imageUrl, height: 120, width: 120),
+            child: ProfileImageComponent(user, height: 120, width: 120),
           ),
           Expanded(
             child: Column(

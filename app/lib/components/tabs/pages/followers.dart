@@ -12,9 +12,7 @@ class FollowersPageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [ProfileImageComponent(user.imageUrl), Text(user.name)],
-        ),
+        title: Row(children: [ProfileImageComponent(user), Text(user.name)]),
       ),
       body: DefaultTabController(
         length: 2,

@@ -21,6 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ValueNotifier<bool> socialEnabledListener = ValueNotifier(true);
+
   @override
   Widget build(BuildContext context) {
     var authUser = context.read<AuthUser>();
@@ -57,8 +59,30 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 8),
-            Text("FEED", style: Theme.of(context).textTheme.labelMedium),
-            Expanded(child: FeedComponent(feedApi: authUser.feedApi)),
+            Row(
+              children: [
+                Text("FEED", style: Theme.of(context).textTheme.labelMedium),
+                Spacer(),
+                SwitchComponent(
+                  enabled: socialEnabledListener.value,
+                  icon: Icon(Icons.person),
+                  onChanged: (enabled) {
+                    socialEnabledListener.value = enabled;
+                  },
+                ),
+              ],
+            ),
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: socialEnabledListener,
+                builder: (context, value, child) {
+                  return FeedComponent(
+                    includeFollowers: value,
+                    feedApi: authUser.feedApi,
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -66,26 +90,25 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class FeedComponent
-        // extends RefreshIndicatorComponent<Stream<ApiResult<UserFeed>>> {
-        extends
-        StatelessWidget {
-  const FeedComponent({super.key, required this.feedApi});
-  // : super(value: () => feedApi.get());
+class FeedComponent extends StatelessWidget {
+  const FeedComponent({
+    super.key,
+    required this.feedApi,
+    this.includeFollowers = false,
+  });
 
+  final bool includeFollowers;
   final GetFeedApi feedApi;
 
   @override
   Widget build(BuildContext context) {
-    _log.info("FeedComponent::build");
     return ListenableBuilder(
       listenable: feedApi,
       builder: (context, _) {
-        _log.info("FeedComponent::listenable");
+        _log.info('includeFollowers::$includeFollowers');
         return StreamBuilder(
-          stream: feedApi.get(includeFollowers: true),
+          stream: feedApi.get(includeFollowers: includeFollowers),
           builder: (context, snapshot) {
-            _log.info("FeedComponent::stream::${snapshot.connectionState}");
             if (snapshot.connectionState == ConnectionState.waiting) {
               return SkeletonLoadingComponent(
                 enabled: true,
@@ -110,7 +133,6 @@ class FeedComponent
             if (items.isEmpty) {
               return Icon(Icons.spoke);
             }
-            _log.info("FeedComponent::items::${items.length}");
             return ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {

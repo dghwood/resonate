@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:resonate/models/models.dart';
 import 'package:resonate/utils/constants.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -46,23 +48,82 @@ class SkeletonLoadingComponent extends StatelessWidget {
   }
 }
 
-class ProfileImageComponent extends StatelessWidget {
-  const ProfileImageComponent(
-    this.src, {
+class StackedProfileImageComponent extends StatelessWidget {
+  const StackedProfileImageComponent({
     super.key,
-    this.width = 24,
-    this.height = 24,
+    required this.users,
+    required this.radius,
+    this.borderWidth = 1,
   });
-
-  final String src;
-  final double width;
-  final double height;
+  final Iterable<PublicUser?> users;
+  final double radius;
+  final double borderWidth;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(width > height ? width : height),
-      child: ImageComponent(src, width: width, height: height),
+    if (users.isEmpty) return Container();
+    return Stack(
+      children: [
+        SizedBox(
+          height: radius,
+          width: radius + (users.length - 1) * radius / 2,
+        ),
+        ...List.generate(users.length, (index) {
+          var user = users.elementAt(index);
+          return Positioned(
+            left: index * radius / 2,
+            child: ProfileImageComponent(
+              user,
+              width: radius,
+              height: radius,
+              borderWidth: borderWidth,
+            ),
+          );
+        }),
+      ],
+    );
+  }
+}
+
+class ProfileImageComponent extends StatelessWidget {
+  const ProfileImageComponent(
+    this.user, {
+    super.key,
+    this.width = 24,
+    this.height = 24,
+    this.borderWidth = 2,
+  });
+
+  final PublicUser? user;
+  // final String src;
+  final double width;
+  final double height;
+  final double borderWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    var radius = width > height ? width : height;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: borderWidth,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      width: width,
+      height: height,
+      child:
+          user != null
+              ? ImageComponent(
+                user!.imageUrl,
+                width: width,
+                height: height,
+                radius: radius,
+              )
+              // TODO(duncan): Default to something
+              //               better.
+              : SizedBox(),
     );
   }
 }
@@ -74,12 +135,15 @@ class ImageComponent extends StatelessWidget {
     this.width,
     this.height,
     this.radius = 0,
+    this.errorBuilder,
   });
 
   final double? width;
   final double? height;
   final double radius;
+  final Widget Function(BuildContext context)? errorBuilder;
   final String src;
+
   @override
   Widget build(BuildContext context) {
     var prefix = '';
@@ -93,15 +157,39 @@ class ImageComponent extends StatelessWidget {
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
-      child: Image.network(
-        '$prefix$src',
-        width: width,
-        height: height,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          _log.warning(error);
-          return Icon(Icons.image, size: width);
-        },
+      child: Container(
+        // width: width,
+        // height: height,
+        // decoration: BoxDecoration(
+        //   color: Colors.white, // Color of the area inside the border
+        //   border: Border.all(
+        //     color:
+        //         Theme.of(
+        //           context,
+        //         ).colorScheme.primary, // Color of the border line
+        //     width: borderWidth, // Thickness of the border line
+        //   ),
+        //   borderRadius: BorderRadius.circular(radius), // Radius of the corners
+        // ),
+        color: Theme.of(context).colorScheme.surface,
+        child: Image.network(
+          '$prefix$src',
+          width: width,
+          height: height,
+          fit: BoxFit.cover,
+          // Adding this for mWeb where cross orgin issues are
+          // very common
+          webHtmlElementStrategy:
+              kIsWeb
+                  ? WebHtmlElementStrategy.fallback
+                  : WebHtmlElementStrategy.never,
+          errorBuilder: (context, error, stackTrace) {
+            _log.warning(error);
+            return errorBuilder != null
+                ? errorBuilder!(context)
+                : Icon(Icons.error_outline, size: width);
+          },
+        ),
       ),
     );
   }
@@ -146,6 +234,46 @@ class _ExpandableTextComponentState extends State<ExpandableTextComponent> {
         maxLines: expanded ? null : widget.maxLines,
         overflow: expanded ? null : TextOverflow.ellipsis,
       ),
+    );
+  }
+}
+
+class SwitchComponent extends StatefulWidget {
+  const SwitchComponent({
+    super.key,
+    this.icon,
+    this.enabled = false,
+    required this.onChanged,
+  });
+
+  final Icon? icon;
+  final Function(bool enabled) onChanged;
+  final bool enabled;
+
+  @override
+  State<SwitchComponent> createState() => _SwitchComponentState();
+}
+
+class _SwitchComponentState extends State<SwitchComponent> {
+  bool? _enabled;
+  @override
+  Widget build(BuildContext context) {
+    var enabled = _enabled ?? widget.enabled;
+    var icons = WidgetStateProperty<Icon?>.fromMap(
+      <WidgetStatesConstraint, Icon?>{
+        WidgetState.selected: widget.icon,
+        WidgetState.any: widget.icon,
+      },
+    );
+    return Switch(
+      thumbIcon: icons,
+      onChanged: (val) {
+        setState(() {
+          _enabled = val;
+          widget.onChanged(val);
+        });
+      },
+      value: enabled,
     );
   }
 }

@@ -47,7 +47,7 @@ func (f *Get) Execute(
 	request *proto.GetFeedMessage_Request,
 	response *proto.GetFeedMessage_Response) (err error) {
 
-	log.Infof("Execute:%s", loggedInUser.Id)
+	log.Infof("Feed::Execute::%s::%t", loggedInUser.Id, request.IncludeFollowers)
 	podcastIds, err := getUserSubscriptionEpisodeIds(ctx, loggedInUser.Id, f.Datastore)
 	if err != nil {
 		log.Error(err)
@@ -79,15 +79,38 @@ func (f *Get) Execute(
 
 	feedItems := GetFriendsFeed(ctx, loggedInUser.Id, f.Datastore)
 	log.Infof("Found %d follower episodes", len(feedItems))
-	// Now I need to merge with the current feed
-	userFeed.Items = append(userFeed.Items, feedItems...)
-	// Sort the items by something custom
+	if len(feedItems) == 0 {
+		return
+	}
+	// I need to merge them accounting for duplicates
+	feedItemMap := make(map[string]*proto.UserFeedItemMessage)
+	// Subscriptions have prio
+	for _, feedItem := range userFeed.Items {
+		episodeId := feedItem.GetEpisodeItem().GetEpisode().GetId()
+		feedItemMap[episodeId] = feedItem
+	}
+	// friend items need to be merged
+	for _, feedItem := range feedItems {
+		episodeId := feedItem.GetEpisodeItem().GetEpisode().GetId()
+		if item, ok := feedItemMap[episodeId]; ok {
+			// Merge subscription & friend listen
+			// Which i think is just changing the type?
+			item.EpisodeItem.SetFeedItemType(proto.FeedItemType_FEED_ITEM_SUBSCRIPTION)
+			feedItemMap[episodeId] = item
+		} else {
+			feedItemMap[episodeId] = feedItem
+		}
+	}
+	items := make([]*proto.UserFeedItemMessage, 0, len(feedItemMap))
+	for _, item := range feedItemMap {
+		items = append(items, item)
+	}
+	userFeed.Items = items
+	// Sort the items by timestamps
 	slices.SortFunc(userFeed.Items, func(
 		a, b *proto.UserFeedItemMessage) int {
 		return getTimestampForComparison(b) - getTimestampForComparison(a)
 	})
-
-	// Construct the feed
 	return
 }
 

@@ -15,6 +15,40 @@ import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/episode');
 
+class SocialHeaderEpisodeComponent extends StatelessWidget {
+  const SocialHeaderEpisodeComponent({super.key, required this.listens});
+
+  final Iterable<UserListen> listens;
+
+  final double width = 28;
+  final double height = 28;
+
+  @override
+  Widget build(BuildContext context) {
+    if (listens.isEmpty) return Container();
+    var listen = listens.elementAt(0);
+    var user = listen.publicUser;
+    if (user == null) return Container();
+    var text = user.name;
+    if (listens.length > 1) {
+      text += ' and ${listens.length - 1} others';
+    }
+    text += ' listened';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      spacing: 8,
+      children: [
+        StackedProfileImageComponent(
+          borderWidth: 1.5,
+          radius: width > height ? width : height,
+          users: listens.take(3).map((l) => l.publicUser),
+        ),
+        Text(text, style: Theme.of(context).textTheme.labelMedium),
+      ],
+    );
+  }
+}
+
 class EpisodeComponent extends StatelessWidget {
   const EpisodeComponent({
     super.key,
@@ -29,29 +63,22 @@ class EpisodeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 2,
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+          ),
+        ),
+      ),
+      // color: Theme.of(context).colorScheme.surfaceContainer,
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+      // margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
-          // Header
-          if (feedItemType == FeedItemType.FEED_ITEM_FOLLOWER_LISTEN &&
-              listens.isNotEmpty &&
-              listens.elementAt(0).publicUser != null)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              spacing: 4,
-              children: [
-                ProfileImageComponent(
-                  listens.elementAt(0).publicUser!.imageUrl,
-                  width: 12,
-                  height: 12,
-                ),
-                Text('${listens.elementAt(0).publicUser!.name} listened..'),
-                // TODO(duncan): Add when the listened to it.
-              ],
-            ),
           Row(
             spacing: 8,
             children: [
@@ -59,7 +86,7 @@ class EpisodeComponent extends StatelessWidget {
                 onTap: () => Navigate(context).toPodcast(episode.podcastId),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: ImageComponent(episode.imageUrl, height: 60),
+                  child: ImageComponent(episode.imageUrl, height: 70),
                 ),
               ),
 
@@ -88,6 +115,7 @@ class EpisodeComponent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Row(
+            spacing: 8,
             children: [
               PlayIconComponent(
                 key: Key('play-icon-component-${episode.id}'),
@@ -97,15 +125,16 @@ class EpisodeComponent extends StatelessWidget {
               ),
               if (context.read<SettingsApi>().settings.enablePlaylist)
                 PlaylistAddIcon(episode: episode, playerApi: context.read()),
-              if (!kIsWeb)
+              if (!kIsWeb || false)
                 DownloadIconComponent(
                   downloadApi: context.read<AuthUser>().downloadApi,
                   episode: episode,
                 ),
+              Expanded(child: SocialHeaderEpisodeComponent(listens: listens)),
             ],
           ),
           // Text(episode.audioUrl),
-          Divider(),
+          // Divider(),
         ],
       ),
     );
