@@ -1,6 +1,8 @@
 indexes:
 # Update indexes
 # gcloud datastore indexes create index.yaml --database rxyz-db --project=resonates-xyz
+
+# Feed 
 - kind: 'resonate.EpisodeMessage'
   properties:
   - name: f2
@@ -8,7 +10,24 @@ indexes:
   - name: f8
     direction: desc
 
+# List Users 
 - kind: resonate.UserMessage
   properties:
   - name: meta.is_deleted
   - name: f11
+
+# List followers
+- kind: resonate.UserFollowMessage 
+  properties: 
+  - name: f2 
+  - name: meta.is_deleted 
+  - name: f4 
+    direction: desc
+
+# List following
+- kind: resonate.UserFollowMessage 
+  properties: 
+  - name: f3 
+  - name: meta.is_deleted 
+  - name: f4 
+    direction: desc
