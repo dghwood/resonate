@@ -51,10 +51,11 @@ func (f *List) Execute(
 	if isFollowed {
 		idFieldNum = model.GetFollowedUserIdFieldNum()
 	}
+	log.Infof("idFieldNum: %d", idFieldNum)
 	follows := f.Datastore.ListForIds(
 		ctx,
 		datastore.ListForIdsParams{
-			Ids:          []string{request.UserId},
+			Ids:          []string{userId},
 			IdFieldNum:   idFieldNum,
 			SortFieldNum: model.GetFollowTimestampFieldNum(),
 			Entity:       &model,
@@ -71,6 +72,7 @@ func (f *List) Execute(
 			break
 		}
 		if err != nil {
+			log.Error(err)
 			return err
 		}
 		response.Follows = append(
@@ -85,6 +87,7 @@ func (f *List) Execute(
 			users = append(users, user)
 		}
 	}
+	log.Infof("Got %d users", len(response.Follows))
 
 	if more {
 		response.Cursor = &follows.Cursor().QueryCursor

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resonate/api/command.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/result.dart';
-import 'package:resonate/components/common/command.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/utils.dart';

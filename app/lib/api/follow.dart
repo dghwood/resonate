@@ -34,6 +34,7 @@ class FollowApi {
     return UserFollow(
       userId: _authUser.user!.id,
       followedUserId: userId,
+      followUtcTimestamp: DateTime.now(),
       metadata: StorageMetadata.now(),
     );
   }
@@ -119,6 +120,9 @@ class FollowApi {
     var response = ListFollowApiResponse();
     try {
       await _listServer.execute(request, response);
+      _log.info(
+        'Found ${response.follows.length} follows:: isFollowed: $isFollowed',
+      );
       // await _followsDatabase.putAll(response.follows);
       return IterableApiResult.ok(
         response.follows,

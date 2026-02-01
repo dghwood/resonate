@@ -444,11 +444,15 @@ class UserFollow extends StorageModel<UserFollowMessage> {
   UserFollow({
     required String userId,
     required String followedUserId,
+    required DateTime followUtcTimestamp,
     StorageMetadata? metadata,
   }) : super(
          UserFollowMessage(
            id: '$userId-$followedUserId',
            userId: userId,
+           followUtcTimestampMs: $fixnum.Int64(
+             followUtcTimestamp.toUtc().millisecondsSinceEpoch,
+           ),
            followedUserId: followedUserId,
            metadata: metadata?.toMessage(),
          ),

@@ -40,7 +40,6 @@ class HttpService implements AbstractHttpService {
       if (!kIsWeb) {
         await cookieJar.actuallyLoadForRequest(headers, url);
       }
-      _log.info('headers::$headers');
       var response = await _client.post(url, headers: headers, body: body);
       if (response.statusCode != 200) {
         throw HttpServiceException(
