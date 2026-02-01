@@ -44,3 +44,10 @@ ClientPlatform get CLIENT_PLATFORM {
     return ClientPlatform.CLIENT_PLATFORM_UNKNOWN;
   }
 }
+
+// Whether to enable the feature to upload contacts
+// from the user's phone book.
+const bool ENABLED_CONTACTS = bool.fromEnvironment(
+  "ENABLED_CONTACTS",
+  defaultValue: false,
+);

@@ -1,4 +1,3 @@
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
-import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
@@ -17,15 +15,12 @@ import 'package:resonate/api/settings.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/api/upload.dart';
 import 'package:resonate/api/user.dart';
-import 'package:resonate/mock_http.dart';
 import 'package:resonate/services/contacts.dart';
-import 'package:resonate/services/http/cookie_jar.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
-import 'package:resonate/storage/playlist.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),

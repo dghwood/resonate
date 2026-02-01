@@ -100,9 +100,39 @@ class ProfileImageComponent extends StatelessWidget {
   final double height;
   final double borderWidth;
 
+  Widget getImageComponent(BuildContext context, double radius) {
+    var u = user;
+    if (u == null) {
+      return SizedBox();
+    }
+    var imageUrl = u.imageUrl;
+    if (imageUrl == '') {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: Container(
+          width: radius,
+          height: radius,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+          child: Center(
+            child: Text(u.name, maxLines: 2, overflow: TextOverflow.ellipsis),
+          ),
+        ),
+      );
+    }
+    return ImageComponent(
+      user!.imageUrl,
+      width: width,
+      height: height,
+      radius: radius,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var radius = width > height ? width : height;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -113,17 +143,7 @@ class ProfileImageComponent extends StatelessWidget {
       ),
       width: width,
       height: height,
-      child:
-          user != null
-              ? ImageComponent(
-                user!.imageUrl,
-                width: width,
-                height: height,
-                radius: radius,
-              )
-              // TODO(duncan): Default to something
-              //               better.
-              : SizedBox(),
+      child: getImageComponent(context, radius),
     );
   }
 }

@@ -13,10 +13,11 @@ class UserTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: ImageComponent(user.imageUrl),
-        ),
+        leading: ProfileImageComponent(user, width: 48, height: 48),
+        // leading: ClipRRect(
+        //   borderRadius: BorderRadius.circular(10),
+        //   child: ImageComponent(user.imageUrl),
+        // ),
         title: Text(user.name),
         onTap: () {
           Navigate(context).toPublicProfile(user.id);

@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/search.dart';
-// import 'package:resonate/components/common/find_users.dart';
 import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/models/podcast.dart';
-import 'package:resonate/components/common/models/subscribe.dart';
 import 'package:resonate/components/common/models/user.dart';
-import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/router/navigation.dart';
+import 'package:resonate/utils/constants.dart';
 
 final Logger _log = Logger('components/tabs/search');
 
@@ -242,19 +238,23 @@ class UserSearchPageComponent extends StatelessWidget {
 
         return Column(
           children: [
-            ContactsPermissionComponent(
-              searchContactsApi: searchContactsApi,
-              onDone: (result) {
-                switch (result) {
-                  case ApiOk():
-                    if (result.value) controller.onSubmit(null);
-                    break;
-                  case ApiError():
-                    context.read<ErrorService>().report(context, result.error);
-                    break;
-                }
-              },
-            ),
+            if (ENABLED_CONTACTS)
+              ContactsPermissionComponent(
+                searchContactsApi: searchContactsApi,
+                onDone: (result) {
+                  switch (result) {
+                    case ApiOk():
+                      if (result.value) controller.onSubmit(null);
+                      break;
+                    case ApiError():
+                      context.read<ErrorService>().report(
+                        context,
+                        result.error,
+                      );
+                      break;
+                  }
+                },
+              ),
             Expanded(
               child: FutureBuilder(
                 future: future,

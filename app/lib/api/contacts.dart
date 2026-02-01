@@ -6,6 +6,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/http/http.dart';
+import 'package:resonate/utils/constants.dart';
 import 'package:resonate/utils/search.dart';
 
 final Logger _log = Logger('api/episode');
@@ -154,11 +155,13 @@ class SearchContactsApi {
     if (_contacts.isNotEmpty) return IterableApiResult.ok(_contacts);
     Iterable<UserContact> contacts = [];
 
-    try {
-      // This will error out if no permission
-      contacts = await _contactsService.getContacts();
-    } on Exception catch (e) {
-      _log.info(e);
+    if (ENABLED_CONTACTS) {
+      try {
+        // This will error out if no permission
+        contacts = await _contactsService.getContacts();
+      } on Exception catch (e) {
+        _log.info(e);
+      }
     }
 
     try {
