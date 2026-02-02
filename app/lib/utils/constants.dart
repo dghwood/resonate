@@ -51,3 +51,8 @@ const bool ENABLED_CONTACTS = bool.fromEnvironment(
   "ENABLED_CONTACTS",
   defaultValue: false,
 );
+
+const bool ENABLE_DOWNLOADS = bool.fromEnvironment(
+  "ENABLE_DOWNLOADS",
+  defaultValue: false,
+);

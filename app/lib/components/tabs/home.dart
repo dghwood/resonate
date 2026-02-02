@@ -155,6 +155,7 @@ class FeedComponent extends StatelessWidget {
               return Icon(Icons.spoke);
             }
             return ListView.builder(
+              padding: EdgeInsets.all(0),
               itemCount: items.length,
               itemBuilder: (context, index) {
                 var item = items.elementAt(index);

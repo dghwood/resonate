@@ -9,6 +9,7 @@ import 'package:resonate/components/common/infinite_scroll.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/models/podcast.dart';
 import 'package:resonate/components/common/models/user.dart';
+import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/utils/constants.dart';
 
@@ -57,44 +58,131 @@ class SearchPageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textEditingController = SearchEditingController();
-    return Scaffold(
-      appBar: AppBar(
-        title: SearchBar(
-          controller: textEditingController.controller,
-          leading: Icon(Icons.search),
-          trailing: [
-            IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: textEditingController.clear,
-            ),
-          ],
-          hintText: 'Search podcasts & users..',
-          autoFocus: true,
-          // onChanged: textEditingController.onChange,
-          onSubmitted: textEditingController.onSubmit,
-        ),
-      ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            TabBar(tabs: [Tab(text: 'Podcasts'), Tab(text: 'Users')]),
-            Expanded(
-              child: TabBarView(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: NestedScrollView(
+        headerSliverBuilder: (context, _) {
+          return [
+            SliverAppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 4,
                 children: [
-                  PodcastSearchPageComponent(
-                    controller: textEditingController,
-                    searchApi: context.read(),
-                  ),
-                  UserSearchPageComponent(
-                    controller: textEditingController,
-                    searchContactsApi: context.read(),
+                  // LogoComponent(height: 32, width: 32),
+                  Text(
+                    'SEARCH',
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],
+              ),
+              floating: true,
+              actions: [],
+            ),
+            SliverToBoxAdapter(),
+          ];
+        },
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchBar(
+                controller: textEditingController.controller,
+                leading: Icon(Icons.search),
+                trailing: [
+                  IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: textEditingController.clear,
+                  ),
+                ],
+                hintText: 'Search podcasts & users..',
+                autoFocus: true,
+                // onChanged: textEditingController.onChange,
+                onSubmitted: textEditingController.onSubmit,
+              ),
+            ),
+            Expanded(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    TabBar(tabs: [Tab(text: 'Podcasts'), Tab(text: 'Users')]),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          PodcastSearchPageComponent(
+                            controller: textEditingController,
+                            searchApi: context.read(),
+                          ),
+                          UserSearchPageComponent(
+                            controller: textEditingController,
+                            searchContactsApi: context.read(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 4,
+          children: [
+            LogoComponent(height: 32, width: 32),
+            Text('SEARCH', style: Theme.of(context).textTheme.labelMedium),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchBar(
+              controller: textEditingController.controller,
+              leading: Icon(Icons.search),
+              trailing: [
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: textEditingController.clear,
+                ),
+              ],
+              hintText: 'Search podcasts & users..',
+              autoFocus: true,
+              // onChanged: textEditingController.onChange,
+              onSubmitted: textEditingController.onSubmit,
+            ),
+          ),
+          Expanded(
+            child: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  TabBar(tabs: [Tab(text: 'Podcasts'), Tab(text: 'Users')]),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        PodcastSearchPageComponent(
+                          controller: textEditingController,
+                          searchApi: context.read(),
+                        ),
+                        UserSearchPageComponent(
+                          controller: textEditingController,
+                          searchContactsApi: context.read(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -11,6 +11,7 @@ import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/router/navigation.dart';
+import 'package:resonate/utils/constants.dart';
 import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/episode');
@@ -125,7 +126,7 @@ class EpisodeComponent extends StatelessWidget {
               ),
               if (context.read<SettingsApi>().settings.enablePlaylist)
                 PlaylistAddIcon(episode: episode, playerApi: context.read()),
-              if (!kIsWeb || false)
+              if (!kIsWeb && ENABLE_DOWNLOADS)
                 DownloadIconComponent(
                   downloadApi: context.read<AuthUser>().downloadApi,
                   episode: episode,

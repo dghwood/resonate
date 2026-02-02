@@ -59,23 +59,38 @@ class _PublicUserProfileAppBarState extends State<PublicUserProfileAppBar> {
   @override
   Widget build(BuildContext context) {
     if (!show) {
-      return SliverAppBar(pinned: true, floating: true);
+      return SliverAppBar(
+        // title: Text('PROFILE', style: Theme.of(context).textTheme.labelMedium),
+        pinned: true,
+        floating: true,
+      );
     }
 
     return SliverAppBar(
       pinned: true,
       floating: true,
-      title: Opacity(
-        opacity: opacity,
-        child: Row(
-          spacing: 16,
-          children: [
-            ProfileImageComponent(widget.user, width: 32, height: 32),
-            // ImageComponent(widget.user.imageUrl, height: 32),
-            Text(widget.user.name),
-          ],
-        ),
-      ),
+      title:
+          opacity > 0.01
+              ? Opacity(
+                opacity: opacity,
+                child: Row(
+                  spacing: 16,
+                  children: [
+                    ProfileImageComponent(widget.user, width: 32, height: 32),
+                    // ImageComponent(widget.user.imageUrl, height: 32),
+                    Text(widget.user.name),
+                  ],
+                ),
+              )
+              : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'PROFILE',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
+              ),
       actions: [
         IconButton(
           icon: Icon(Icons.settings),
