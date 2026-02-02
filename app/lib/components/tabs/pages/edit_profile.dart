@@ -20,12 +20,14 @@ class EditProfileComponent extends StatefulWidget {
     super.key,
     required this.authUser,
     required this.uploadApi,
+    this.onDone,
   }) {
     command = authUser.editCommand();
   }
 
   final AuthUser authUser;
   final UploadApi uploadApi;
+  final Function(User user)? onDone;
   late final ApiResultNotifier1<User, User> command;
 
   @override
@@ -42,7 +44,7 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
       formKey.currentState!.save();
       var name = nameEditingController.text;
       // if newImageUrl is null it won't update the image.
-      widget.command.execute(User(name: name, imageUrl: newImageUrl));
+      widget.command.execute(User(name: name.trim(), imageUrl: newImageUrl));
     }
   }
 
@@ -75,51 +77,57 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
     );
   }
 
+  Widget init(BuildContext context, {Exception? error}) {
+    if (error != null) {
+      context.read<ErrorService>().report(context, error);
+    }
+    var imageUrl = newImageUrl ?? widget.authUser.user?.imageUrl;
+
+    return Form(
+      key: formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          spacing: 16,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            imageUrl != null && imageUrl != ''
+                ? InkWell(
+                  child: ImageComponent(
+                    imageUrl,
+                    height: 250,
+                    width: 250,
+                    radius: 250,
+                  ),
+                  onTap: () => onPressed(context),
+                )
+                : IconButton(
+                  icon: Icon(Icons.person),
+                  iconSize: 150,
+                  onPressed: () => onPressed(context),
+                ),
+            TextFormField(
+              maxLength: 64,
+              controller: nameEditingController,
+              decoration: InputDecoration(labelText: 'Name'),
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = widget.authUser.user!;
     nameEditingController.text = user.name;
-
-    Widget init(BuildContext context, {Exception? error}) {
-      if (error != null) {
-        context.read<ErrorService>().report(context, error);
-      }
-      var imageUrl = newImageUrl ?? widget.authUser.user?.imageUrl;
-
-      return Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            spacing: 16,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              imageUrl != null && imageUrl != ''
-                  ? InkWell(
-                    child: ImageComponent(
-                      imageUrl,
-                      height: 250,
-                      width: 250,
-                      radius: 250,
-                    ),
-                    onTap: () => onPressed(context),
-                  )
-                  : IconButton(
-                    icon: Icon(Icons.person),
-                    iconSize: 150,
-                    onPressed: () => onPressed(context),
-                  ),
-              TextFormField(
-                maxLength: 64,
-                controller: nameEditingController,
-                decoration: InputDecoration(labelText: 'Name'),
-                keyboardType: TextInputType.name,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -133,7 +141,9 @@ class _EditProfileComponentState extends State<EditProfileComponent> {
           loading: (_) => LoadingSpinnerComponent(),
           done: (context, result) => init(context),
           onDone: (result) {
-            if (Navigator.canPop(context)) {
+            if (widget.onDone != null) {
+              widget.command.clear();
+            } else if (Navigator.canPop(context)) {
               Navigator.pop(context);
             } else {
               Navigate(context).toProfilePage();

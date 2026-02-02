@@ -160,6 +160,12 @@ func main() {
 		w.Write(bytes)
 	})
 
+	// signout handler
+	// http.HandleFunc("/api/signout", func(w http.ResponseWriter, r *http.Request) {
+	//  // I don't think this works
+	// 	w.Header().Set("Clear-Site-Data", "cookies")
+	// })
+
 	log.Info("listening on port " + port + "...")
 	log.Error(http.ListenAndServe(":"+port, nil))
 }

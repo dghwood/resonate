@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/api/command.dart';
-import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/feed.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
-import 'package:resonate/api/settings.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
@@ -329,12 +327,17 @@ class AuthUser extends ChangeNotifier {
   Future<ApiResult<bool>> signout() async {
     _log.info('signout');
     try {
-      var userId = _userStorage.user.id;
-      await _secureDatabase.delete(userId);
+      var userId = user!.id;
+      _log.info(userId);
+      await _secureDatabase.delete('user');
       _userStorage.reset();
+      // _log.info('call server::$BASE_URL');
+      // var response = await http.get(Uri.parse('$BASE_URL/api/signout'));
+      // _log.info(response);
       setStatusAndNotify(AuthUserStatus.signedOut);
       return ApiResult.ok(true);
     } on Exception catch (e) {
+      _log.info('signout error $e');
       return ApiResult.error(e);
     }
   }
