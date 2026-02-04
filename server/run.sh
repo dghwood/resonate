@@ -5,7 +5,7 @@ set -e
 # Set up env feature flags 
 set -a
 source features.dev.env
-source twilio.test.env
+# source twilio.test.env
 set +a
 # Start set nginx for local dev
 sudo nginx -s quit 

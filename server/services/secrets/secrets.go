@@ -12,9 +12,12 @@ import (
 )
 
 type Secrets struct {
-	TADDY_API_KEY string `json:"TADDY_API_KEY"`
-	USER_ID_SALT  string `json:"USER_ID_SALT"`
-	TADDY_USER_ID string `json:"TADDY_USER_ID"`
+	TADDY_API_KEY      string `json:"TADDY_API_KEY"`
+	USER_ID_SALT       string `json:"USER_ID_SALT"`
+	TADDY_USER_ID      string `json:"TADDY_USER_ID"`
+	TWILIO_ACCOUNT_SID string `json:"TWILIO_ACCOUNT_SID"`
+	TWILIO_AUTH_TOKEN  string `json:"TWILIO_AUTH_TOKEN"`
+	TWILIO_SERVICE_SID string `json:"TWILIO_SERVICE_SID"`
 }
 
 func AccessSecrets(version string) (err error) {
@@ -57,6 +60,9 @@ func AccessSecrets(version string) (err error) {
 	os.Setenv("TADDY_API_KEY", secrets.TADDY_API_KEY)
 	os.Setenv("USER_ID_SALT", secrets.USER_ID_SALT)
 	os.Setenv("TADDY_USER_ID", secrets.TADDY_USER_ID)
+	os.Setenv("TWILIO_ACCOUNT_SID", secrets.TWILIO_ACCOUNT_SID)
+	os.Setenv("TWILIO_AUTH_TOKEN", secrets.TWILIO_AUTH_TOKEN)
+	os.Setenv("TWILIO_SERVICE_SID", secrets.TWILIO_SERVICE_SID)
 
 	return nil
 }
