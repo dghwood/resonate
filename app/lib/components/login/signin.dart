@@ -169,7 +169,7 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         spacing: 16,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -178,10 +178,13 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
           Form(
             key: _formKey,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 8,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 56,
+                Expanded(
+                  flex: 1,
+                  // width: 56,
                   child: DropdownButtonFormField<String>(
                     initialValue: widget.loginInfo.countryCode ?? '+1',
                     items: [
@@ -210,9 +213,6 @@ class _SignInRequestComponentState extends State<SignInRequestComponent> {
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 16,
-                ), // Add some spacing between the dropdown and text field
                 Expanded(
                   flex: 5,
                   child: TextFormField(

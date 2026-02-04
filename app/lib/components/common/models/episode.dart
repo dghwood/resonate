@@ -17,12 +17,17 @@ import 'package:resonate/utils/time.dart';
 Logger _log = Logger('components/common/episode');
 
 class SocialHeaderEpisodeComponent extends StatelessWidget {
-  const SocialHeaderEpisodeComponent({super.key, required this.listens});
+  const SocialHeaderEpisodeComponent({
+    super.key,
+    required this.listens,
+    required this.feedItemType,
+  });
 
   final Iterable<UserListen> listens;
+  final FeedItemType feedItemType;
 
-  final double width = 28;
-  final double height = 28;
+  final double width = 24;
+  final double height = 24;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +44,24 @@ class SocialHeaderEpisodeComponent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       spacing: 8,
       children: [
+        feedItemType == FeedItemType.FEED_ITEM_SUBSCRIPTION
+            ? Text(
+              'SUBSCRIPTION',
+              style: Theme.of(context).textTheme.labelSmall,
+            )
+            : Text('FOLLOWED', style: Theme.of(context).textTheme.labelSmall),
+        Spacer(),
         StackedProfileImageComponent(
           borderWidth: 1.5,
           radius: width > height ? width : height,
           users: listens.take(3).map((l) => l.publicUser),
         ),
-        Text(text, style: Theme.of(context).textTheme.labelMedium),
+        Text(
+          text,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
       ],
     );
   }
@@ -80,6 +97,10 @@ class EpisodeComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
+          SocialHeaderEpisodeComponent(
+            listens: listens,
+            feedItemType: feedItemType,
+          ),
           Row(
             spacing: 8,
             children: [
@@ -131,7 +152,6 @@ class EpisodeComponent extends StatelessWidget {
                   downloadApi: context.read<AuthUser>().downloadApi,
                   episode: episode,
                 ),
-              Expanded(child: SocialHeaderEpisodeComponent(listens: listens)),
             ],
           ),
           // Text(episode.audioUrl),

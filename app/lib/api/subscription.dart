@@ -288,9 +288,13 @@ class SubscriptionApi extends ChangeNotifier {
     var subscription = _createSubscription(podcastId);
     _log.info('created_subscription::${subscription.id}');
 
-    // TODO(duncanwood): Do I need to make sure I have a local copy of the
-    // podcast, in theory if I've got the podcastId then I should have stored
-    // it already?
+    try {
+      // Add the podcast to the db so you have a cache.
+      await _podcastDatabase.put(podcast);
+    } on Exception catch (e) {
+      _log.severe(e);
+      return ApiResult.error(e);
+    }
 
     var request = AddSubscriptionApiRequest();
     var response = AddSubscriptionApiResponse();

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/errors.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
@@ -170,11 +171,54 @@ class PodcastPage extends StatelessWidget {
       child: CustomScrollView(
         controller: scrollController,
         slivers: [
-          SliverPersistentHeader(
-            delegate: PodcastHeaderDelegate(stream: podcastStream),
+          SliverAppBar(
             pinned: true,
+            title: StreamBuilder(
+              stream: podcastStream,
+              builder: (context, snapshot) {
+                var podcast = Podcast(id: '', title: 'Loading....');
+                if (snapshot.connectionState == ConnectionState.done) {
+                  var result = snapshot.requireData;
+                  switch (result) {
+                    case ApiOk():
+                      podcast = result.value;
+                      _log.info('loaded podcast id:: ${podcast.id}');
+                    case ApiError():
+                      _log.warning(result.error);
+                      context.read<ErrorService>().report(
+                        context,
+                        result.error,
+                      );
+                      podcast = Podcast(id: '', title: '${result.error}');
+                  }
+                }
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        podcast.title.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ),
+
+                    if (podcast.id != '')
+                      SubscribeButtonComponent(
+                        icon: true,
+                        podcast: podcast,
+                        subscriptionApi:
+                            context.read<AuthUser>().subscriptionApi,
+                      ),
+                  ],
+                );
+              },
+            ),
           ),
 
+          // SliverPersistentHeader(
+          //   delegate: PodcastHeaderDelegate(stream: podcastStream),
+          //   pinned: true,
+          // ),
           PodcastEpisodeInfiniteListComponent(
             scrollController: scrollController,
             podcastId: podcastId,

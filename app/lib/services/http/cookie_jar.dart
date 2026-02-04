@@ -20,12 +20,11 @@ class BetterPersistCookieJar extends PersistCookieJar {
   ) async {
     try {
       final cookies = await loadForRequest(url);
-      _log.info(cookies);
+      _log.info('has ${cookies.length} cookies');
       if (cookies.isNotEmpty) {
         headers['Cookie'] = cookies
             .map((c) => '${c.name}=${c.value}')
             .join('; ');
-        _log.info('headers $headers');
       }
     } on DatabaseNotFoundException catch (_) {
       // Don't worry about not finding any cookies.

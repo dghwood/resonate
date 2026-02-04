@@ -84,13 +84,13 @@ func (f *Get) Execute(
 	}
 	// I need to merge them accounting for duplicates
 	feedItemMap := make(map[string]*proto.UserFeedItemMessage)
-	// Subscriptions have prio
-	for _, feedItem := range userFeed.Items {
+	// follows have prio
+	for _, feedItem := range feedItems {
 		episodeId := feedItem.GetEpisodeItem().GetEpisode().GetId()
 		feedItemMap[episodeId] = feedItem
 	}
-	// friend items need to be merged
-	for _, feedItem := range feedItems {
+	// subscriptions items need to be merged
+	for _, feedItem := range userFeed.Items {
 		episodeId := feedItem.GetEpisodeItem().GetEpisode().GetId()
 		if item, ok := feedItemMap[episodeId]; ok {
 			// Merge subscription & friend listen
