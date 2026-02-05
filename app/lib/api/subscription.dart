@@ -6,6 +6,7 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
+import 'package:resonate/proto/import_opml.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/storage/podcast.dart';
@@ -167,6 +168,45 @@ class SyncSubscriptionApiServer
        );
 }
 
+class ImportOpmlApiRequest extends ApiRequest<ImportOpmlMessage_Request> {
+  ImportOpmlApiRequest({List<int>? opmlBytes})
+    : super(
+        ImportOpmlMessage_Request(
+          requestInfo: RequestInfo(),
+          opmlBytes: opmlBytes,
+        ),
+      );
+
+  @override
+  set requestInfo(RequestInfo info) {
+    requestPb.requestInfo.mergeFromMessage(info);
+  }
+}
+
+class ImportOpmlApiResponse extends ApiResponse<ImportOpmlMessage_Response> {
+  ImportOpmlApiResponse() : super(ImportOpmlMessage_Response());
+
+  @override
+  ResponseInfo get responseInfo => responsePb.responseInfo;
+
+  Iterable<UserSubscription> get subscriptions =>
+      responsePb.subscriptions.map((s) => UserSubscription.fromMessage(s));
+}
+
+class ImportOpmlApiServer
+    extends ServerApi<ImportOpmlApiRequest, ImportOpmlApiResponse> {
+  ImportOpmlApiServer({
+    required AbstractHttpService client,
+    required AuthUser authUser,
+  }) : super(
+         ImportOpmlApiRequest(),
+         ImportOpmlApiResponse(),
+         'api/subscribe/import',
+         authUser: authUser,
+         client: client,
+       );
+}
+
 class SubscriptionApi extends ChangeNotifier {
   SubscriptionApi({
     required AbstractHttpService client,
@@ -185,6 +225,10 @@ class SubscriptionApi extends ChangeNotifier {
          client: client,
          authUser: authUser,
        ),
+       _importServer = ImportOpmlApiServer(
+         client: client,
+         authUser: authUser,
+       ),
        _podcastDatabase = PodcastDatabase(databaseService),
        //  _podcastDatabase = PodcastDatabase(databaseService),
        _subscriptionDatabase = SubscriptionDatabase(databaseService);
@@ -193,6 +237,7 @@ class SubscriptionApi extends ChangeNotifier {
   final AddSubscriptionApiServer _subscribeServer;
   final RemoveSubscriptionApiServer _unsubscribeServer;
   final SyncSubscriptionApiServer _syncServer;
+  final ImportOpmlApiServer _importServer;
   final SubscriptionDatabase _subscriptionDatabase;
   // For adding podcasts to the database
   // when syncing.
@@ -354,6 +399,32 @@ class SubscriptionApi extends ChangeNotifier {
     _subscriptions.remove(podcastId);
     notifyListeners();
     return ApiResult.ok(true);
+  }
+
+  Future<ApiResult<Iterable<UserSubscription>>> importOpml(
+    List<int> opmlBytes,
+  ) async {
+    var request = ImportOpmlApiRequest(opmlBytes: opmlBytes);
+    var response = ImportOpmlApiResponse();
+    try {
+      await _importServer.execute(request, response);
+      var subscriptions = response.subscriptions;
+
+      // Update local database
+      await _subscriptionDatabase.putAll(subscriptions);
+
+      // Update local cache
+      for (final sub in subscriptions) {
+        _subscriptions[sub.podcastId] = sub;
+      }
+
+      notifyListeners();
+      _log.info('Imported ${subscriptions.length} subscriptions from OPML');
+      return ApiResult.ok(subscriptions);
+    } on Exception catch (e) {
+      _log.severe('Failed to import OPML: $e');
+      return ApiResult.error(e);
+    }
   }
 }
 
