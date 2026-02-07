@@ -410,6 +410,23 @@ class SubscriptionApi extends ChangeNotifier {
       await _importServer.execute(request, response);
       var subscriptions = response.subscriptions;
 
+      // PR Comment 2777522947: add podcast messages to podcast db and remove them from subscription messages
+      var podcasts = <Podcast>[];
+      for (var sub in subscriptions) {
+        if (sub.podcast != null) {
+          podcasts.add(sub.podcast!);
+        }
+      }
+      if (podcasts.isNotEmpty) {
+        _log.info("Batch adding ${podcasts.length} podcasts from OPML");
+        await _podcastDatabase.putAll(podcasts);
+      }
+
+      // Remove podcast from subscription messages before saving to subscription db
+      for (var sub in subscriptions) {
+        sub.dropPodcast();
+      }
+
       // Update local database
       await _subscriptionDatabase.putAll(subscriptions);
 
