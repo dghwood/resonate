@@ -44,7 +44,7 @@ dependencies:
   url_launcher: ^6.3.2
   shared_preferences: ^2.5.3
   cookie_jar: ^4.0.8
-  just_audio_background: ^0.0.1-beta.17
+  audio_service: ^0.18.17
   vector_math: ^2.2.0
   universal_html: ^2.3.0
   universal_io: ^2.3.1

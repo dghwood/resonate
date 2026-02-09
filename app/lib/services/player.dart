@@ -3,7 +3,7 @@
 */
 import 'dart:async';
 
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:audio_session/audio_session.dart';
@@ -43,24 +43,24 @@ class PlayerProgress {
   final PlayerState playerState;
 
   double get percentProgress {
-    if (progressDuration == null || duration == null) {
+    if (progressDuration == null || duration == null || duration == Duration.zero) {
       return 0;
     }
-    return progressDuration!.inMilliseconds / duration!.inMilliseconds;
+    return progressDuration.inMilliseconds / duration!.inMilliseconds;
   }
 
   double get percentBuffered {
-    if (bufferedDuration == null || duration == null) {
+    if (bufferedDuration == null || duration == null || duration == Duration.zero) {
       return 0;
     }
-    return bufferedDuration!.inMilliseconds / duration!.inMilliseconds;
+    return bufferedDuration.inMilliseconds / duration!.inMilliseconds;
   }
 
   Duration get remainingDuration {
     if (progressDuration == null || duration == null) {
       return Duration.zero;
     }
-    return duration! - progressDuration!;
+    return duration! - progressDuration;
   }
 
   Duration calculateProgressDuration(double percent) {
@@ -85,148 +85,122 @@ class PlayerProgress {
 
 class PlayerService implements AbstractPlayerService {
   PlayerService() {
-    _player = justAudio.AudioPlayer();
     _stateStreamController = StreamController<PlayerState>.broadcast(
       onListen: () => state,
     );
     _persistentProgressStreamController =
         StreamController<PlayerProgress>.broadcast(onListen: () => progress);
-    // _setupProgressStream();
-    _player.playerStateStream.listen((_) => _onStateChange());
-    _player.processingStateStream.listen((_) => _onStateChange());
+
+    _init();
   }
 
-  late final StreamController<PlayerProgress>
-  _persistentProgressStreamController;
+  final Completer<ResonateAudioHandler> _handlerCompleter = Completer();
+  ResonateAudioHandler? _handler;
+
+  StreamSubscription? _playbackSubscription;
+  StreamSubscription? _progressSubscription;
+
+  Future<void> _init() async {
+    final handler = await AudioService.init(
+      builder: () => ResonateAudioHandler(),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.resonate.audio',
+        androidNotificationChannelName: 'Resonate Audio Playback',
+        androidNotificationOngoing: true,
+      ),
+    );
+
+    _playbackSubscription = handler.playbackState.listen((_) => _onStateChange());
+    _progressSubscription = handler.progress.listen((p) {
+      _persistentProgressStreamController.add(p);
+    });
+
+    _handler = handler;
+    _handlerCompleter.complete(handler);
+  }
+
+  late final StreamController<PlayerProgress> _persistentProgressStreamController;
   late final StreamController<PlayerState> _stateStreamController;
-  // StreamController<PlayerProgress>? _progressStreamController;
 
   @override
   void dispose() {
-    _player.dispose();
+    _playbackSubscription?.cancel();
+    _progressSubscription?.cancel();
     _stateStreamController.close();
     _persistentProgressStreamController.close();
-    // _progressStreamController?.close();
   }
 
   void _onStateChange() {
     var s = state;
     _log.info('onStateChange::$s');
-    _timer?.cancel();
-    switch (s) {
-      case PlayerState.init:
-      case PlayerState.paused:
-      case PlayerState.finished:
-        break;
-      case PlayerState.playing:
-      case PlayerState.loading:
-        _timer = Timer.periodic(Duration(seconds: 1), _onTick);
-        break;
-    }
     _stateStreamController.add(s);
-    _persistentProgressStreamController.add(progress);
   }
-
-  Timer? _timer;
-  void _onTick(_) {
-    // _progressStreamController?.add(progress);
-    _persistentProgressStreamController.add(progress);
-  }
-
-  // Future<bool> _setupProgressStream() async {
-  //   await _progressStreamController?.close();
-  //   _progressStreamController = StreamController<PlayerProgress>.broadcast(
-  //     onListen: () => progress,
-  //   );
-  //   return true;
-  // }
-
-  late final justAudio.AudioPlayer _player;
-
-  Duration? _episodeDuration;
-  String? _currentEpisodeId;
 
   @override
   Future<bool> load(Episode episode, {Duration? startDuration}) async {
     _log.info('load::${episode.audioUrl}');
-    // Set up the audio session speech category
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
 
-    // There seems to be a bug, where if the player is not
-    // stopped before you call this, it will just play the
-    // same episode regardless of the audioSource.
-    if (_player.playing) {
-      _persistentProgressStreamController.add(progress);
-      await _player.stop();
-    }
-    _currentEpisodeId = episode.id;
-    _episodeDuration = await _player.setAudioSource(
-      justAudio.AudioSource.uri(
-        Uri.parse(episode.audioUrl),
-        tag: MediaItem(
-          id: episode.id,
-          title: episode.title,
-          duration: episode.duration,
-          // TODO(duncan): I need the podcast name here..
-          artUri: episode.imageUrl != '' ? Uri.parse(episode.imageUrl) : null,
-        ),
-      ),
-      initialPosition: startDuration,
-    );
-    // await _setupProgressStream();
-    // _player.play();
+    final handler = await _handlerCompleter.future;
+    await handler.loadEpisode(episode, startDuration: startDuration);
     return true;
   }
 
   @override
   Future<void> pause() async {
-    await _player.pause();
+    final handler = await _handlerCompleter.future;
+    await handler.pause();
   }
 
   @override
   Future<void> play() async {
-    await _player.play();
-  }
-
-  PlayerProgress _progress({bool switchingAudio = false}) {
-    return PlayerProgress(
-      episodeId: _currentEpisodeId ?? 'unknown',
-      progressDuration: _player.position,
-      bufferedDuration: _player.bufferedPosition,
-      duration: _episodeDuration,
-      playerState: state,
-    );
+    final handler = await _handlerCompleter.future;
+    await handler.play();
   }
 
   @override
   PlayerProgress get progress {
-    return _progress();
+    if (_handler == null) {
+       return PlayerProgress(
+         bufferedDuration: Duration.zero,
+         progressDuration: Duration.zero,
+         episodeId: 'unknown',
+         playerState: PlayerState.init,
+       );
+    }
+    return _handler!.currentProgress;
   }
 
   @override
   Future<void> seek(Duration duration) async {
-    await _player.seek(duration);
+    final handler = await _handlerCompleter.future;
+    await handler.seek(duration);
   }
 
   @override
   Future<void> stop() async {
-    await _player.stop();
+    final handler = await _handlerCompleter.future;
+    await handler.stop();
   }
 
   @override
   PlayerState get state {
-    switch (_player.processingState) {
-      case justAudio.ProcessingState.completed:
+    if (_handler == null) return PlayerState.init;
+    final playing = _handler!.playbackState.value.playing;
+    final processingState = _handler!.playbackState.value.processingState;
+
+    switch (processingState) {
+      case AudioProcessingState.completed:
         return PlayerState.finished;
-      case justAudio.ProcessingState.ready:
-        return _player.playerState.playing
-            ? PlayerState.playing
-            : PlayerState.paused;
-      case justAudio.ProcessingState.buffering:
-      case justAudio.ProcessingState.loading:
+      case AudioProcessingState.ready:
+        return playing ? PlayerState.playing : PlayerState.paused;
+      case AudioProcessingState.buffering:
+      case AudioProcessingState.loading:
         return PlayerState.loading;
-      case justAudio.ProcessingState.idle:
+      case AudioProcessingState.idle:
+        return PlayerState.init;
+      default:
         return PlayerState.init;
     }
   }
@@ -238,7 +212,118 @@ class PlayerService implements AbstractPlayerService {
 
   @override
   Stream<PlayerProgress> streamProgress() {
-    // return _progressStreamController!.stream;
     return _persistentProgressStreamController.stream;
+  }
+}
+
+class ResonateAudioHandler extends BaseAudioHandler with SeekHandler {
+  final _player = justAudio.AudioPlayer();
+  final _progressController = StreamController<PlayerProgress>.broadcast();
+
+  Stream<PlayerProgress> get progress => _progressController.stream;
+
+  ResonateAudioHandler() {
+    _player.playbackEventStream.listen((event) {
+      playbackState.add(_transformEvent(event));
+    });
+
+    _player.processingStateStream.listen((state) {
+       if (state == justAudio.ProcessingState.completed) {
+         playbackState.add(playbackState.value.copyWith(
+           processingState: AudioProcessingState.completed,
+         ));
+       }
+    });
+
+    _player.positionStream.listen((position) {
+      _progressController.add(currentProgress);
+    });
+  }
+
+  PlayerProgress get currentProgress {
+    return PlayerProgress(
+      episodeId: mediaItem.value?.id ?? 'unknown',
+      progressDuration: _player.position,
+      bufferedDuration: _player.bufferedPosition,
+      duration: _player.duration,
+      playerState: _state,
+    );
+  }
+
+  PlayerState get _state {
+    switch (_player.processingState) {
+      case justAudio.ProcessingState.completed:
+        return PlayerState.finished;
+      case justAudio.ProcessingState.ready:
+        return _player.playing ? PlayerState.playing : PlayerState.paused;
+      case justAudio.ProcessingState.buffering:
+      case justAudio.ProcessingState.loading:
+        return PlayerState.loading;
+      case justAudio.ProcessingState.idle:
+        return PlayerState.init;
+    }
+  }
+
+  Future<void> loadEpisode(Episode episode, {Duration? startDuration}) async {
+    final item = MediaItem(
+      id: episode.id,
+      album: episode.podcastId,
+      title: episode.title,
+      duration: episode.duration,
+      artUri: episode.imageUrl.isNotEmpty ? Uri.parse(episode.imageUrl) : null,
+      extras: {'audioUrl': episode.audioUrl},
+    );
+    mediaItem.add(item);
+
+    await _player.setAudioSource(
+      justAudio.AudioSource.uri(
+        Uri.parse(episode.audioUrl),
+      ),
+      initialPosition: startDuration,
+    );
+  }
+
+  @override
+  Future<void> play() => _player.play();
+
+  @override
+  Future<void> pause() => _player.pause();
+
+  @override
+  Future<void> seek(Duration position) => _player.seek(position);
+
+  @override
+  Future<void> stop() async {
+    await _player.stop();
+    await super.stop();
+  }
+
+  PlaybackState _transformEvent(justAudio.PlaybackEvent event) {
+    return PlaybackState(
+      controls: [
+        MediaControl.rewind,
+        if (_player.playing) MediaControl.pause else MediaControl.play,
+        MediaControl.stop,
+        MediaControl.fastForward,
+      ],
+      systemActions: const {
+        MediaAction.seek,
+        MediaAction.seekForward,
+        MediaAction.seekBackward,
+      },
+      androidCompactActionIndices: const [0, 1, 3],
+      processingState: const {
+        justAudio.ProcessingState.idle: AudioProcessingState.idle,
+        justAudio.ProcessingState.loading: AudioProcessingState.loading,
+        justAudio.ProcessingState.buffering: AudioProcessingState.buffering,
+        justAudio.ProcessingState.ready: AudioProcessingState.ready,
+        justAudio.ProcessingState.completed: AudioProcessingState.completed,
+      }[_player.processingState]!,
+      playing: _player.playing,
+      updatePosition: _player.position,
+      bufferedPosition: _player.bufferedPosition,
+      speed: _player.speed,
+      queueIndex: event.currentIndex,
+    );
   }
 }
