@@ -431,6 +431,7 @@ const UserFollowMessage$json = {
       '3': 4,
       '4': 1,
       '5': 3,
+      '8': {},
       '10': 'followUtcTimestampMs'
     },
     {
@@ -456,10 +457,10 @@ const UserFollowMessage$json = {
 final $typed_data.Uint8List userFollowMessageDescriptor = $convert.base64Decode(
     'ChFVc2VyRm9sbG93TWVzc2FnZRIOCgJpZBgBIAEoCVICaWQSHQoHdXNlcl9pZBgCIAEoCUIEgL'
     'UYAVIGdXNlcklkEi4KEGZvbGxvd2VkX3VzZXJfaWQYAyABKAlCBIC1GAFSDmZvbGxvd2VkVXNl'
-    'cklkEjUKF2ZvbGxvd191dGNfdGltZXN0YW1wX21zGAQgASgDUhRmb2xsb3dVdGNUaW1lc3RhbX'
-    'BNcxI8CghtZXRhZGF0YRgFIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1lc3NhZ2VS'
-    'CG1ldGFkYXRhEi8KBHVzZXIYBiABKAsyGy5yZXNvbmF0ZS5QdWJsaWNVc2VyTWVzc2FnZVIEdX'
-    'Nlcg==');
+    'cklkEjsKF2ZvbGxvd191dGNfdGltZXN0YW1wX21zGAQgASgDQgSAtRgBUhRmb2xsb3dVdGNUaW'
+    '1lc3RhbXBNcxI8CghtZXRhZGF0YRgFIAEoCzIgLnJlc29uYXRlLlN0b3JhZ2VNZXRhZGF0YU1l'
+    'c3NhZ2VSCG1ldGFkYXRhEi8KBHVzZXIYBiABKAsyGy5yZXNvbmF0ZS5QdWJsaWNVc2VyTWVzc2'
+    'FnZVIEdXNlcg==');
 
 @$core.Deprecated('Use userSubscriptionMessageDescriptor instead')
 const UserSubscriptionMessage$json = {

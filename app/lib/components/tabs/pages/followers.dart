@@ -18,7 +18,7 @@ class FollowersPageComponent extends StatelessWidget {
         length: 2,
         child: Column(
           children: [
-            TabBar(tabs: [Tab(text: 'Followers'), Tab(text: 'Following')]),
+            TabBar(tabs: [Tab(text: 'Following'), Tab(text: 'Followers')]),
             Expanded(
               child: TabBarView(
                 children: [

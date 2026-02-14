@@ -3172,12 +3172,12 @@ const file_proto_common_proto_rawDesc = "" +
 	"\rnum_followers\x18\x04 \x01(\x03R\fnumFollowers\x12#\n" +
 	"\rnum_following\x18\x05 \x01(\x03R\fnumFollowing\x12\x1f\n" +
 	"\vnum_listens\x18\x06 \x01(\x03R\n" +
-	"numListens\"\x98\x02\n" +
+	"numListens\"\x9e\x02\n" +
 	"\x11UserFollowMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12.\n" +
-	"\x10followed_user_id\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\x0efollowedUserId\x125\n" +
-	"\x17follow_utc_timestamp_ms\x18\x04 \x01(\x03R\x14followUtcTimestampMs\x12<\n" +
+	"\x10followed_user_id\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\x0efollowedUserId\x12;\n" +
+	"\x17follow_utc_timestamp_ms\x18\x04 \x01(\x03B\x04\x80\xb5\x18\x01R\x14followUtcTimestampMs\x12<\n" +
 	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12/\n" +
 	"\x04user\x18\x06 \x01(\v2\x1b.resonate.PublicUserMessageR\x04user\"\xdf\x01\n" +
 	"\x17UserSubscriptionMessage\x12\x0e\n" +

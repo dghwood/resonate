@@ -188,7 +188,7 @@ class FollowListComponent extends StatelessWidget {
             }
             var user = follow.user!;
             return ListTile(
-              leading: ImageComponent(user.imageUrl),
+              leading: ProfileImageComponent(user, width: 48, height: 48),
               title: Text(user.name),
               // TODO(duncan): For long lists this might be really slow
               trailing:

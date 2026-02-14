@@ -142,7 +142,7 @@ message UserFollowMessage {
     string id = 1;
     string user_id = 2 [(index) = true];
     string followed_user_id = 3 [(index) = true];
-    int64 follow_utc_timestamp_ms = 4;
+    int64 follow_utc_timestamp_ms = 4 [(index) = true];
     StorageMetadataMessage metadata = 5; 
     PublicUserMessage user = 6; // optional user 
 }
