@@ -2,6 +2,8 @@ package api
 
 import (
 	"context"
+	"fmt"
+
 	// "encoding/json"
 	"io"
 	"net/http"
@@ -61,7 +63,7 @@ func writeEventMessage(apiEventMessage *proto.ApiEventMessage) {
 		log.Error(jsonErr)
 		return
 	}
-	log.Info(string(eventMessage))
+	fmt.Println(string(eventMessage))
 }
 func returnError[R ApiResponseInterface](
 	r *http.Request,

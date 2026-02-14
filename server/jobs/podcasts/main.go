@@ -16,9 +16,10 @@ import (
 
 func main() {
 
+	flags.Parse()
 	projectID := flags.FLAGS.CloudProjectId
 	databaseId := flags.FLAGS.CloudDatabaseId
-	flags.Parse()
+
 	secrets.AccessSecrets(flags.FLAGS.CloudSecretsKey)
 	numSkipped := 0
 	numCompleted := 0
