@@ -474,3 +474,16 @@ message SearchTopContactsMessage {
         repeated PublicUserMessage users = 2; 
     }
 }
+
+message ImportOpmlMessage {
+    message Request {
+        RequestInfo request_info = 1;
+        bytes opml_bytes = 2;
+    }
+    message Response {
+        ResponseInfo response_info = 1;
+        repeated UserSubscriptionMessage subscriptions = 2;
+    }
+    Request request = 1;
+    Response response = 2;
+}

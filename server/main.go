@@ -101,6 +101,10 @@ func main() {
 		Datastore: datastore}, "/api/subscribe/remove")
 	api.Attach(&subscribe.Sync{
 		Datastore: datastore}, "/api/subscribe/sync")
+	api.Attach(&subscribe.Import{
+		Datastore:   datastore,
+		FetchClient: fetch,
+		Cachestore:  cachestore}, "/api/subscribe/import")
 
 	// Follows
 	api.Attach(&follows.List{
