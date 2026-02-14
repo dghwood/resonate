@@ -5,13 +5,15 @@ import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/playlist.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/storage/playlist.dart';
 
 import 'package:resonate/services/player.dart';
 
 Logger _log = Logger('api/player');
 
 enum PlayerLoadingState { init, loading, complete }
+
+// State of the player
+enum PlayerApiState { init, resumable, playing, loading, paused, finished }
 
 class PlayerApi extends ChangeNotifier {
   PlayerApi({
@@ -44,6 +46,24 @@ class PlayerApi extends ChangeNotifier {
   final AuthUser? _authUser;
   final PlaylistApi _playlistApi;
   PlaylistApi get playlistApi => _playlistApi;
+
+  PlayerApiState get state {
+    switch (_playerService.state) {
+      case PlayerState.init:
+        if (getPlayingEpisode() != null) {
+          return PlayerApiState.resumable;
+        }
+        return PlayerApiState.init;
+      case PlayerState.playing:
+        return PlayerApiState.playing;
+      case PlayerState.loading:
+        return PlayerApiState.loading;
+      case PlayerState.paused:
+        return PlayerApiState.paused;
+      case PlayerState.finished:
+        return PlayerApiState.finished;
+    }
+  }
 
   Episode? getPlayingEpisode() => _playlistApi.playing;
   // This is kinda special since it gets killed when i new episode plays.
@@ -92,8 +112,6 @@ class PlayerApi extends ChangeNotifier {
     return true;
   }
 
-  PlayerState get state => _playerService.state;
-
   void _logProgress() {
     if (getPlayingEpisode() == null) return;
     // This will hit the server
@@ -132,7 +150,6 @@ class PlayerApi extends ChangeNotifier {
   Future<void> forward(Duration duration) async {
     _log.info('forward');
     var currentDuration = _playerService.progress.progressDuration;
-    if (currentDuration == null) return;
     await seek(currentDuration + duration);
   }
 

@@ -16,7 +16,7 @@ class PlayButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (_playerApi.state) {
-      case PlayerState.playing:
+      case PlayerApiState.playing:
         return IconButton(
           iconSize: size,
           icon: Icon(Icons.pause_rounded),
@@ -24,8 +24,9 @@ class PlayButtonComponent extends StatelessWidget {
             _playerApi.pause();
           },
         );
-      case PlayerState.init:
-      case PlayerState.paused:
+      case PlayerApiState.init:
+      case PlayerApiState.resumable:
+      case PlayerApiState.paused:
         return IconButton(
           iconSize: size,
           icon: Icon(Icons.play_arrow_rounded),
@@ -34,11 +35,11 @@ class PlayButtonComponent extends StatelessWidget {
           },
         );
 
-      case PlayerState.loading:
+      case PlayerApiState.loading:
         // TODO(duncan): Center this somehow?
         return LoadingSpinnerComponent(size: size);
 
-      case PlayerState.finished:
+      case PlayerApiState.finished:
         return Icon(Icons.done, size: size);
     }
   }

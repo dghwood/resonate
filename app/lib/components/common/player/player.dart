@@ -6,10 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/settings.dart';
-import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
 import 'package:resonate/components/common/player/playlist.dart';
-import 'package:resonate/components/common/reordable_listview.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player.dart';
@@ -58,7 +56,7 @@ class PlayerComponent extends StatelessWidget {
     return ListenableBuilder(
       listenable: _playerApi,
       builder: (context, _) {
-        if (_playerApi.state == PlayerState.init) {
+        if (_playerApi.state == PlayerApiState.init) {
           return Text('Nothing Playing');
         }
         var episode = _playerApi.getPlayingEpisode()!;
