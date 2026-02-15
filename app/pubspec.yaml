@@ -51,6 +51,7 @@ dependencies:
   audio_session: ^0.2.2
   cronet_http: ^1.6.0
   device_info_plus: ^12.3.0
+  file_picker: ^10.3.10
 
 dev_dependencies:
   build_runner: ^2.4.0

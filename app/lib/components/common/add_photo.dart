@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/components/common/loading.dart';
+import 'package:resonate/services/files/files.dart';
 import 'package:vector_math/vector_math_64.dart' as vector_math;
 
 import 'dart:ui' as ui;
@@ -68,11 +69,13 @@ class ProfileImage extends ChangeNotifier {
     return true;
   }
 
-  Future<bool> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) return false;
-    imageBytes = await image.readAsBytes();
+  Future<bool> pickImage({bool useCamera = false}) async {
+    var bytes =
+        useCamera
+            ? await FileService.pickImageFromCamera()
+            : await FileService.pickImageFromGallery();
+    if (bytes.isEmpty) return false;
+    imageBytes = bytes;
     notifyListeners();
     return true;
   }

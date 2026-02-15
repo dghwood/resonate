@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:resonate/api/base.dart';
 import 'package:resonate/proto/errors.pbenum.dart';
 
+// TODO(duncan): Rename notification service
 class ErrorService {
   ErrorService();
 
@@ -29,6 +30,7 @@ class ErrorService {
   _snackBarController;
 
   void report(BuildContext context, Exception error) {
+    if (!context.mounted) return;
     // TODO(duncan): Not sure this actually checks
     var scaffold = ScaffoldMessenger.maybeOf(context);
     if (scaffold == null) return;
@@ -38,4 +40,20 @@ class ErrorService {
       _snackBarController = scaffold.showSnackBar(buildMessage(error));
     });
   }
+
+  // This is not for errors
+  void notify(BuildContext context, String message) {
+    if (!context.mounted) return;
+    var scaffold = ScaffoldMessenger.maybeOf(context);
+    if (scaffold == null) return;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      // Close any open snackbars
+      scaffold.hideCurrentSnackBar();
+      _snackBarController = scaffold.showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    });
+  }
+
+  static final ErrorService instance = ErrorService();
 }

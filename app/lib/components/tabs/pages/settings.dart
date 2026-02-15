@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/settings.dart';
-import 'package:resonate/components/tabs/pages/base.dart';
+import 'package:resonate/components/common/opml.dart';
 import 'package:resonate/router/navigation.dart';
-import 'package:resonate/services/logger.dart';
 import 'package:resonate/utils/constants.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -25,6 +25,9 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             title: Text('Client Version'),
             subtitle: Text(CLIENT_VERSION),
+          ),
+          OpmlComponent(
+            subscriptionApi: context.read<AuthUser>().subscriptionApi,
           ),
         ],
       ),

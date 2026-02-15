@@ -66,9 +66,11 @@ func (f *Import) Execute(
 	//    Note: They may already be subscribed..
 	podcasts := make([]*models.Podcast, len(rssUrls))
 	for i, rssUrl := range rssUrls {
+		podcast := &models.Podcast{}
 		// Does this set the Url field as well ?
-		podcasts[i].SetIdFromUrl(rssUrl)
-		podcasts[i].SetUrl(rssUrl)
+		podcast.SetIdFromUrl(rssUrl)
+		podcast.SetUrl(rssUrl)
+		podcasts[i] = podcast
 	}
 
 	missingPodcastIndexes := make([]int, 0)
