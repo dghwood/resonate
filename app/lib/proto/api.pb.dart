@@ -7487,6 +7487,224 @@ class SearchTopContactsMessage extends $pb.GeneratedMessage {
   static SearchTopContactsMessage? _defaultInstance;
 }
 
+class ImportOpmlMessage_Request extends $pb.GeneratedMessage {
+  factory ImportOpmlMessage_Request({
+    RequestInfo? requestInfo,
+    $core.List<$core.int>? opmlBytes,
+  }) {
+    final result = create();
+    if (requestInfo != null) result.requestInfo = requestInfo;
+    if (opmlBytes != null) result.opmlBytes = opmlBytes;
+    return result;
+  }
+
+  ImportOpmlMessage_Request._();
+
+  factory ImportOpmlMessage_Request.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ImportOpmlMessage_Request.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportOpmlMessage.Request',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<RequestInfo>(1, _omitFieldNames ? '' : 'requestInfo',
+        subBuilder: RequestInfo.create)
+    ..a<$core.List<$core.int>>(
+        2, _omitFieldNames ? '' : 'opmlBytes', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage_Request clone() =>
+      ImportOpmlMessage_Request()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage_Request copyWith(
+          void Function(ImportOpmlMessage_Request) updates) =>
+      super.copyWith((message) => updates(message as ImportOpmlMessage_Request))
+          as ImportOpmlMessage_Request;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage_Request create() => ImportOpmlMessage_Request._();
+  @$core.override
+  ImportOpmlMessage_Request createEmptyInstance() => create();
+  static $pb.PbList<ImportOpmlMessage_Request> createRepeated() =>
+      $pb.PbList<ImportOpmlMessage_Request>();
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage_Request getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ImportOpmlMessage_Request>(create);
+  static ImportOpmlMessage_Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RequestInfo get requestInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set requestInfo(RequestInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequestInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequestInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  RequestInfo ensureRequestInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get opmlBytes => $_getN(1);
+  @$pb.TagNumber(2)
+  set opmlBytes($core.List<$core.int> value) => $_setBytes(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasOpmlBytes() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearOpmlBytes() => $_clearField(2);
+}
+
+class ImportOpmlMessage_Response extends $pb.GeneratedMessage {
+  factory ImportOpmlMessage_Response({
+    ResponseInfo? responseInfo,
+    $core.Iterable<$0.UserSubscriptionMessage>? subscriptions,
+  }) {
+    final result = create();
+    if (responseInfo != null) result.responseInfo = responseInfo;
+    if (subscriptions != null) result.subscriptions.addAll(subscriptions);
+    return result;
+  }
+
+  ImportOpmlMessage_Response._();
+
+  factory ImportOpmlMessage_Response.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ImportOpmlMessage_Response.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportOpmlMessage.Response',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ResponseInfo>(1, _omitFieldNames ? '' : 'responseInfo',
+        subBuilder: ResponseInfo.create)
+    ..pc<$0.UserSubscriptionMessage>(
+        2, _omitFieldNames ? '' : 'subscriptions', $pb.PbFieldType.PM,
+        subBuilder: $0.UserSubscriptionMessage.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage_Response clone() =>
+      ImportOpmlMessage_Response()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage_Response copyWith(
+          void Function(ImportOpmlMessage_Response) updates) =>
+      super.copyWith(
+              (message) => updates(message as ImportOpmlMessage_Response))
+          as ImportOpmlMessage_Response;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage_Response create() => ImportOpmlMessage_Response._();
+  @$core.override
+  ImportOpmlMessage_Response createEmptyInstance() => create();
+  static $pb.PbList<ImportOpmlMessage_Response> createRepeated() =>
+      $pb.PbList<ImportOpmlMessage_Response>();
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage_Response getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ImportOpmlMessage_Response>(create);
+  static ImportOpmlMessage_Response? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ResponseInfo get responseInfo => $_getN(0);
+  @$pb.TagNumber(1)
+  set responseInfo(ResponseInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasResponseInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResponseInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ResponseInfo ensureResponseInfo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$0.UserSubscriptionMessage> get subscriptions => $_getList(1);
+}
+
+class ImportOpmlMessage extends $pb.GeneratedMessage {
+  factory ImportOpmlMessage({
+    ImportOpmlMessage_Request? request,
+    ImportOpmlMessage_Response? response,
+  }) {
+    final result = create();
+    if (request != null) result.request = request;
+    if (response != null) result.response = response;
+    return result;
+  }
+
+  ImportOpmlMessage._();
+
+  factory ImportOpmlMessage.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ImportOpmlMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ImportOpmlMessage',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'resonate.api'),
+      createEmptyInstance: create)
+    ..aOM<ImportOpmlMessage_Request>(1, _omitFieldNames ? '' : 'request',
+        subBuilder: ImportOpmlMessage_Request.create)
+    ..aOM<ImportOpmlMessage_Response>(2, _omitFieldNames ? '' : 'response',
+        subBuilder: ImportOpmlMessage_Response.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage clone() => ImportOpmlMessage()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ImportOpmlMessage copyWith(void Function(ImportOpmlMessage) updates) =>
+      super.copyWith((message) => updates(message as ImportOpmlMessage))
+          as ImportOpmlMessage;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage create() => ImportOpmlMessage._();
+  @$core.override
+  ImportOpmlMessage createEmptyInstance() => create();
+  static $pb.PbList<ImportOpmlMessage> createRepeated() =>
+      $pb.PbList<ImportOpmlMessage>();
+  @$core.pragma('dart2js:noInline')
+  static ImportOpmlMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ImportOpmlMessage>(create);
+  static ImportOpmlMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ImportOpmlMessage_Request get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(ImportOpmlMessage_Request value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => $_clearField(1);
+  @$pb.TagNumber(1)
+  ImportOpmlMessage_Request ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ImportOpmlMessage_Response get response => $_getN(1);
+  @$pb.TagNumber(2)
+  set response(ImportOpmlMessage_Response value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasResponse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResponse() => $_clearField(2);
+  @$pb.TagNumber(2)
+  ImportOpmlMessage_Response ensureResponse() => $_ensure(1);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

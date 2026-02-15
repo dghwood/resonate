@@ -182,3 +182,27 @@ func TestListForIds(t *testing.T) {
 		t.Errorf("PodcastId = %s; want 123", retrievedEpisodes[1].PodcastId)
 	}
 }
+
+func TestConvertError(t *testing.T) {
+	fErrs := make(firestore.MultiError, 2)
+	fErrs[0] = firestore.ErrNoSuchEntity
+	fErrs[1] = nil
+
+	err := convertError(fErrs)
+	if err == nil {
+		t.Errorf("convertError() error = %v", err)
+	}
+	merr, ok := err.(datastore.MultiError)
+	if !ok {
+		t.Errorf("convertError() error = %v", err)
+	}
+	if len(merr) != 2 {
+		t.Errorf("convertError() error = %v", err)
+	}
+	if merr[0] != datastore.ErrorEntityNotFound {
+		t.Errorf("convertError() error = %v", err)
+	}
+	if merr[1] != nil {
+		t.Errorf("convertError() error = %v", err)
+	}
+}

@@ -2,8 +2,8 @@ package podcast
 
 import (
 	"context"
-	"time"
 
+	"github.com/dghwood/resonate/api/apiutils"
 	"github.com/dghwood/resonate/log"
 	"github.com/dghwood/resonate/models"
 	"github.com/dghwood/resonate/proto"
@@ -134,29 +134,6 @@ func (f *List) Execute(
 		response.Cursor = &cursor.QueryCursor
 
 	}
-	go f.asyncSyncToDatabase(podcast, episodes)
+	go apiutils.AsyncSyncToDatabase(f.Datastore, podcast, episodes)
 	return
-}
-
-// This is creating a bit of a race condition when the
-// user goes to subscribe, since if this hasn't finished the
-// subscribe add won't successfully run.
-// although it will get picked up on sync.
-func (f *List) asyncSyncToDatabase(
-	podcast *models.Podcast,
-	episodes []*models.Episode,
-) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*60)
-	defer cancel()
-	// TODO(duncan): This takes too long
-	if err := f.Datastore.PutMulti(ctx, episodes); err != nil {
-		log.Errorf("putting episodes error : %s", err)
-		return
-	}
-	// Put the episode after the podcast since you want to update
-	// the fetch date, latest episode timestamp
-	log.Info("putting podcast")
-	if err := f.Datastore.Put(ctx, podcast); err != nil {
-		log.Errorf("putting podcast error : %s", err)
-	}
 }

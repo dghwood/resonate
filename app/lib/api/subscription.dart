@@ -6,7 +6,6 @@ import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
-import 'package:resonate/proto/import_opml.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/storage/podcast.dart';
@@ -225,10 +224,7 @@ class SubscriptionApi extends ChangeNotifier {
          client: client,
          authUser: authUser,
        ),
-       _importServer = ImportOpmlApiServer(
-         client: client,
-         authUser: authUser,
-       ),
+       _importServer = ImportOpmlApiServer(client: client, authUser: authUser),
        _podcastDatabase = PodcastDatabase(databaseService),
        //  _podcastDatabase = PodcastDatabase(databaseService),
        _subscriptionDatabase = SubscriptionDatabase(databaseService);
@@ -410,21 +406,18 @@ class SubscriptionApi extends ChangeNotifier {
       await _importServer.execute(request, response);
       var subscriptions = response.subscriptions;
 
-      // PR Comment 2777522947: add podcast messages to podcast db and remove them from subscription messages
       var podcasts = <Podcast>[];
       for (var sub in subscriptions) {
         if (sub.podcast != null) {
           podcasts.add(sub.podcast!);
+          // Drop the podcasts from the subscription message
+          sub.dropPodcast();
         }
       }
+      // Add the podcasts to the database
       if (podcasts.isNotEmpty) {
         _log.info("Batch adding ${podcasts.length} podcasts from OPML");
         await _podcastDatabase.putAll(podcasts);
-      }
-
-      // Remove podcast from subscription messages before saving to subscription db
-      for (var sub in subscriptions) {
-        sub.dropPodcast();
       }
 
       // Update local database

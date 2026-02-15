@@ -7,10 +7,11 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"time"
+
+	"github.com/dghwood/resonate/log"
 )
 
 /*
@@ -53,7 +54,7 @@ func GenerateRandomNumberString(length int) string {
 	b := make([]byte, length)
 	_, err := rand.Read(b)
 	if err != nil {
-		log.Println("Error generating random number:", err)
+		log.Infof("Error generating random number:", err)
 		return ""
 	}
 	for i := range b {
@@ -90,7 +91,7 @@ func GenerateUniqueID() string {
 	bytes := make([]byte, 16)
 	_, err := rand.Read(bytes)
 	if err != nil {
-		log.Println("Error generating unique ID:", err)
+		log.Infof("Error generating unique ID:", err)
 		return ""
 	}
 	return hex.EncodeToString(bytes)
@@ -106,7 +107,7 @@ func Base64Encode(s string) string {
 func Base64DecodeBytes(s string) (data []byte, err error) {
 	data, err = base64.StdEncoding.DecodeString(s)
 	if err != nil {
-		log.Println("Error decoding base64 string:", err)
+		log.Infof("Error decoding base64 string:", err)
 		return
 	}
 	return

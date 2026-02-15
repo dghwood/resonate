@@ -2579,3 +2579,77 @@ final $typed_data.Uint8List searchTopContactsMessageDescriptor = $convert.base64
     '9uc2USPwoNcmVzcG9uc2VfaW5mbxgBIAEoCzIaLnJlc29uYXRlLmFwaS5SZXNwb25zZUluZm9S'
     'DHJlc3BvbnNlSW5mbxIxCgV1c2VycxgCIAMoCzIbLnJlc29uYXRlLlB1YmxpY1VzZXJNZXNzYW'
     'dlUgV1c2Vycw==');
+
+@$core.Deprecated('Use importOpmlMessageDescriptor instead')
+const ImportOpmlMessage$json = {
+  '1': 'ImportOpmlMessage',
+  '2': [
+    {
+      '1': 'request',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ImportOpmlMessage.Request',
+      '10': 'request'
+    },
+    {
+      '1': 'response',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ImportOpmlMessage.Response',
+      '10': 'response'
+    },
+  ],
+  '3': [ImportOpmlMessage_Request$json, ImportOpmlMessage_Response$json],
+};
+
+@$core.Deprecated('Use importOpmlMessageDescriptor instead')
+const ImportOpmlMessage_Request$json = {
+  '1': 'Request',
+  '2': [
+    {
+      '1': 'request_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.RequestInfo',
+      '10': 'requestInfo'
+    },
+    {'1': 'opml_bytes', '3': 2, '4': 1, '5': 12, '10': 'opmlBytes'},
+  ],
+};
+
+@$core.Deprecated('Use importOpmlMessageDescriptor instead')
+const ImportOpmlMessage_Response$json = {
+  '1': 'Response',
+  '2': [
+    {
+      '1': 'response_info',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.api.ResponseInfo',
+      '10': 'responseInfo'
+    },
+    {
+      '1': 'subscriptions',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.resonate.UserSubscriptionMessage',
+      '10': 'subscriptions'
+    },
+  ],
+};
+
+/// Descriptor for `ImportOpmlMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List importOpmlMessageDescriptor = $convert.base64Decode(
+    'ChFJbXBvcnRPcG1sTWVzc2FnZRJBCgdyZXF1ZXN0GAEgASgLMicucmVzb25hdGUuYXBpLkltcG'
+    '9ydE9wbWxNZXNzYWdlLlJlcXVlc3RSB3JlcXVlc3QSRAoIcmVzcG9uc2UYAiABKAsyKC5yZXNv'
+    'bmF0ZS5hcGkuSW1wb3J0T3BtbE1lc3NhZ2UuUmVzcG9uc2VSCHJlc3BvbnNlGmYKB1JlcXVlc3'
+    'QSPAoMcmVxdWVzdF9pbmZvGAEgASgLMhkucmVzb25hdGUuYXBpLlJlcXVlc3RJbmZvUgtyZXF1'
+    'ZXN0SW5mbxIdCgpvcG1sX2J5dGVzGAIgASgMUglvcG1sQnl0ZXMalAEKCFJlc3BvbnNlEj8KDX'
+    'Jlc3BvbnNlX2luZm8YASABKAsyGi5yZXNvbmF0ZS5hcGkuUmVzcG9uc2VJbmZvUgxyZXNwb25z'
+    'ZUluZm8SRwoNc3Vic2NyaXB0aW9ucxgCIAMoCzIhLnJlc29uYXRlLlVzZXJTdWJzY3JpcHRpb2'
+    '5NZXNzYWdlUg1zdWJzY3JpcHRpb25z');

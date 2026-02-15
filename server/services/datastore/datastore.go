@@ -11,10 +11,19 @@ import (
 
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/dghwood/resonate/models"
 	// "google.golang.org/protobuf/proto"
 )
+
+// This is the same implementation as firestore has
+type MultiError []error
+
+// This implements the Error interface
+func (m MultiError) Error() string {
+	return fmt.Sprintf("%d errors", len(m))
+}
 
 var (
 	ErrorEntityNotFound      = errors.New("Datastore entity not found")

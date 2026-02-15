@@ -81,14 +81,33 @@ func (f *FirestoreDatastore) Put(ctx context.Context, entity models.Model) (err 
 	return
 }
 
+func convertError(err error) error {
+	if err == nil {
+		return nil
+	}
+	if errors.Is(err, firestore.ErrNoSuchEntity) {
+		return datastore.ErrorEntityNotFound
+	}
+	// Convert the multi error
+	if merr, ok := err.(firestore.MultiError); ok {
+		multiError := make(datastore.MultiError, len(merr))
+		for i, e := range merr {
+			multiError[i] = convertError(e)
+		}
+		return multiError
+	}
+	return err
+}
+
 func (f *FirestoreDatastore) Get(ctx context.Context, entity models.Model) (err error) {
 	// ctx, _ := getContext(10)
 	model := DatabaseModel{Model: entity}
 	key := model.Key()
 	log.Infof("Getting key: %s", key)
-	err = f.client.Get(ctx, key, &model)
-	if errors.Is(err, firestore.ErrNoSuchEntity) {
-		return datastore.ErrorEntityNotFound
+	fErr := f.client.Get(ctx, key, &model)
+	err = convertError(fErr)
+	if err != nil {
+		return
 	}
 	if entity.GetMetadata() != nil && entity.GetMetadata().IsDeleted {
 		return datastore.ErrorEntityDeleted
@@ -147,8 +166,8 @@ func (f *FirestoreDatastore) GetMulti(ctx context.Context, src any) (err error) 
 		keys[i] = key
 		// TODO(duncan): Handled deleted entities
 	}
-	err = f.client.GetMulti(ctx, keys, dbModels)
-	// TODO(duncan): This can be a multierror and one can succeed whilst others fail
+	fErr := f.client.GetMulti(ctx, keys, dbModels)
+	err = convertError(fErr)
 	return
 }
 
