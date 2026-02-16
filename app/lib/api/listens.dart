@@ -8,7 +8,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
-import 'package:resonate/services/player.dart';
+import 'package:resonate/services/player/player.dart';
 import 'package:resonate/storage/episode.dart';
 import 'package:resonate/storage/listens.dart';
 

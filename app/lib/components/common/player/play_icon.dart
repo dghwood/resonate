@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
-import 'package:resonate/services/player.dart';
+import 'package:resonate/services/player/player.dart';
 
 class PlayButtonComponent extends StatelessWidget {
   const PlayButtonComponent({

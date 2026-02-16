@@ -6,7 +6,7 @@ import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/playlist.dart';
 import 'package:resonate/models/models.dart';
 
-import 'package:resonate/services/player.dart';
+import 'package:resonate/services/player/player.dart';
 
 Logger _log = Logger('api/player');
 

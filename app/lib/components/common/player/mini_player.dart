@@ -4,7 +4,7 @@ import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
 import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/common/utils.dart';
-import 'package:resonate/services/player.dart';
+import 'package:resonate/services/player/player.dart';
 
 final Logger _log = Logger('components/common/player/mini_player');
 

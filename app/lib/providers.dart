@@ -19,7 +19,7 @@ import 'package:resonate/services/contacts.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http/http.dart';
-import 'package:resonate/services/player.dart';
+import 'package:resonate/services/player/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
 
 final _baseProviders = [
