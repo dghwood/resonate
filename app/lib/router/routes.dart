@@ -231,8 +231,10 @@ class _AppShellComponentState extends State<AppShellComponent> {
   }
 
   Future<ApiResult<bool>> _setupPostLogin() async {
+    var user = widget.authUser.user;
+    if (user == null) return ApiResult.error(Exception('User not found'));
     try {
-      await widget.databaseService.init(widget.authUser);
+      await widget.databaseService.init(user.id);
       _log.info('db done');
       // TODO(duncan): Sync the user message
       await widget.authUser.subscriptionApi.init();
