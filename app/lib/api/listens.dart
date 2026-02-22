@@ -101,6 +101,12 @@ class ListenApi {
        _authUser = authUser,
        _episodeDatabase = EpisodeDatabase(databaseService);
 
+  static final ListenApi instance = ListenApi(
+    authUser: AuthUser.instance,
+    httpService: HttpService.instance,
+    databaseService: DatabaseService.instance,
+  );
+
   final AddListenApiServer _addServer;
   final ListenDatabase _database;
   final EpisodeDatabase _episodeDatabase;
@@ -290,7 +296,7 @@ class ListensApi {
   }
 
   Future<ApiResult<Iterable<UserListen>>> get() async {
-    var listenApi = _authUser.listenApi;
+    var listenApi = ListenApi.instance;
     var result = await listenApi.listLocal();
     switch (result) {
       case ApiOk():

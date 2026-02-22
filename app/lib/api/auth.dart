@@ -4,14 +4,13 @@ import 'package:resonate/api/base.dart';
 import 'package:resonate/api/command.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/feed.dart';
-import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/result.dart';
 import 'package:resonate/api/subscription.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
-import 'package:resonate/services/secure_database/secure_database.dart';
+import 'package:resonate/services/secure_database/secure_proto_database.dart';
 import 'package:resonate/utils/cookie.dart';
 
 Logger _log = Logger('api/auth');
@@ -256,11 +255,7 @@ class AuthUser extends ChangeNotifier {
       databaseService: databaseService,
       authUser: this,
     );
-    listenApi = ListenApi(
-      authUser: this,
-      databaseService: databaseService,
-      httpService: httpService,
-    );
+    // listenApi = ListenApi.instance;
     _editUserApi = EditUserApi(
       httpClient: httpService,
       secureDatabase: secureDatabase,
@@ -277,8 +272,14 @@ class AuthUser extends ChangeNotifier {
     loadFromStorage();
   }
 
+  static final AuthUser instance = AuthUser(
+    httpService: HttpService.instance,
+    secureDatabase: SecureProtoDatabase.instance,
+    databaseService: DatabaseService.instance,
+  );
+
   late final SubscriptionApi subscriptionApi;
-  late final ListenApi listenApi;
+  // final ListenApi listenApi = ListenApi.instance;
   late final DownloadApi downloadApi;
   late final EditUserApi _editUserApi;
   late final GetFeedApi feedApi;

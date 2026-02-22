@@ -24,6 +24,10 @@ class HttpService implements AbstractHttpService {
     _client = HttpClientImpl().customHttpClient;
   }
 
+  static final HttpService instance = HttpService(
+    secureDatabse: SecureDatabase.instance,
+  );
+
   late final http.Client _client;
   final BetterPersistCookieJar cookieJar;
 

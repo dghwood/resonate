@@ -30,4 +30,6 @@ class SecureDatabase implements AbstractSecureDatabase {
     // TODO: implement write
     throw UnimplementedError();
   }
+
+  static final SecureDatabase instance = SecureDatabase();
 }

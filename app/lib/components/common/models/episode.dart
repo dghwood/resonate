@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/models/download.dart';
@@ -143,6 +144,7 @@ class EpisodeComponent extends StatelessWidget {
                 key: Key('play-icon-component-${episode.id}'),
                 playerApi: context.read(),
                 authUser: context.read(),
+                listenApi: ListenApi.instance,
                 episode: episode,
               ),
               if (context.read<SettingsApi>().settings.enablePlaylist)
@@ -182,6 +184,7 @@ class EpisodeComponent extends StatelessWidget {
               key: Key('play-icon-component-${episode.id}'),
               playerApi: context.read(),
               authUser: context.read(),
+              listenApi: ListenApi.instance,
               episode: episode,
             ),
             IconButton(icon: Icon(Icons.star), onPressed: () {}),

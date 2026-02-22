@@ -58,6 +58,8 @@ class DatabaseService implements AbstractDatabaseService {
       _factory = kIsWeb ? idb.idbFactoryNative : idb.idbFactorySqflite;
     }
   }
+
+  static final DatabaseService instance = DatabaseService();
   // eg. idb.getIdbFactorySqflite(databaseFactory);
   late final idb.IdbFactory _factory;
 
@@ -78,6 +80,7 @@ class DatabaseService implements AbstractDatabaseService {
 
   @override
   void registerStore(String storeName, UpgradeFunction upgradeFunction) {
+    _log.info('registerStore::$storeName');
     _upgradeFunctions[storeName] = upgradeFunction;
   }
 
@@ -91,7 +94,7 @@ class DatabaseService implements AbstractDatabaseService {
       '$userId.$databaseName',
       version: databaseVersion,
       onUpgradeNeeded: (idb.VersionChangeEvent versionChangeEvent) async {
-        _log.info('onUpgradeNeeded');
+        _log.info('onUpgradeNeeded::${_upgradeFunctions.keys.toList()}');
         for (var upgradeFunction in _upgradeFunctions.values) {
           _log.info('Running upgrade function for store');
           try {

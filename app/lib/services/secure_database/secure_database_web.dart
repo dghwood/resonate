@@ -41,4 +41,6 @@ class SecureDatabase implements AbstractSecureDatabase {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
   }
+
+  static final SecureDatabase instance = SecureDatabase();
 }

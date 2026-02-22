@@ -55,4 +55,6 @@ class SecureDatabase implements AbstractSecureDatabase {
       throw SystemStorageError('Failed to delete all from secure storage: $e');
     }
   }
+
+  static final SecureDatabase instance = SecureDatabase();
 }

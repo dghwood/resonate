@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/playlist.dart';
 import 'package:resonate/models/models.dart';
 
@@ -83,7 +84,7 @@ class PlayerApi extends ChangeNotifier {
       progress,
     ) {
       // _log.info('adding::listen::${episode.title}::${DateTime.now().second}');
-      _authUser?.listenApi.add(episode, progress, server: false);
+      ListenApi.instance.add(episode, progress, server: false);
     });
   }
 
@@ -95,7 +96,7 @@ class PlayerApi extends ChangeNotifier {
     }
     _loadingState = PlayerLoadingState.loading;
     // Check for listens..
-    var listen = _authUser?.listenApi.get(episode.id);
+    var listen = ListenApi.instance.get(episode.id);
     var startDuration =
         listen != null ? Duration(seconds: listen.seconds) : null;
 
@@ -115,7 +116,7 @@ class PlayerApi extends ChangeNotifier {
   void _logProgress() {
     if (getPlayingEpisode() == null) return;
     // This will hit the server
-    _authUser?.listenApi.add(getPlayingEpisode()!, _playerService.progress);
+    ListenApi.instance.add(getPlayingEpisode()!, _playerService.progress);
   }
 
   Future<void> play() async {

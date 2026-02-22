@@ -149,6 +149,7 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
           databaseService: context.read(),
           playlistApi: context.read(),
           navigationShell: navigationShell,
+          listenApi: ListenApi.instance,
         );
       },
       branches: [
@@ -212,12 +213,14 @@ class AppShellComponent extends StatefulWidget {
     required this.databaseService,
     required this.playlistApi,
     required this.authUser,
+    required this.listenApi,
   });
 
   final StatefulNavigationShell navigationShell;
   final AuthUser authUser;
   final AbstractDatabaseService databaseService;
   final PlaylistApi playlistApi;
+  final ListenApi listenApi;
 
   @override
   State<AppShellComponent> createState() => _AppShellComponentState();
@@ -239,7 +242,7 @@ class _AppShellComponentState extends State<AppShellComponent> {
       // TODO(duncan): Sync the user message
       await widget.authUser.subscriptionApi.init();
       _log.info('subs done');
-      await widget.authUser.listenApi.init();
+      widget.listenApi.init();
       _log.info('listens done');
       await widget.authUser.downloadApi.init();
       _log.info('download done');

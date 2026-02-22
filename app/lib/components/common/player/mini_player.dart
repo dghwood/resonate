@@ -26,7 +26,7 @@ class BottomPlayerComponent extends StatelessWidget {
           listenable: _playerApi,
           builder: (context, _) {
             _log.info(_playerApi.state);
-            if (_playerApi.state == PlayerState.init &&
+            if (_playerApi.state == PlayerApiState.init &&
                 _playerApi.getPlayingEpisode() == null) {
               return SizedBox();
             }

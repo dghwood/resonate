@@ -21,30 +21,22 @@ import 'package:resonate/api/errors.dart';
 import 'package:resonate/services/http/http.dart';
 import 'package:resonate/services/player/player.dart';
 import 'package:resonate/services/secure_database/secure_database.dart';
+import 'package:resonate/services/secure_database/secure_proto_database.dart';
 
 final _baseProviders = [
   Provider<ErrorService>(create: (context) => ErrorService()),
-  Provider<AbstractSecureDatabase>(create: (context) => SecureDatabase()),
-  // Provider<AbstractHttpService>(create: (context) => mockHttpService),
-  Provider<AbstractHttpService>(
-    create: (context) => HttpService(secureDatabse: context.read()),
+  Provider<AbstractSecureDatabase>(
+    create: (context) => SecureDatabase.instance,
   ),
+  // Provider<AbstractHttpService>(create: (context) => mockHttpService),
+  Provider<AbstractHttpService>(create: (context) => HttpService.instance),
   Provider<SecureProtoDatabase>(
-    create: (context) => SecureProtoDatabase(secureDatabase: context.read()),
+    create: (context) => SecureProtoDatabase.instance,
   ),
   Provider<AbstractDatabaseService>(
-    create:
-        (context) =>
-            DatabaseService(kIsWeb ? idbFactoryNative : idbFactorySqflite),
+    create: (context) => DatabaseService.instance,
   ),
-  ChangeNotifierProvider<AuthUser>(
-    create:
-        (context) => AuthUser(
-          secureDatabase: context.read(),
-          httpService: context.read(),
-          databaseService: context.read(),
-        ),
-  ),
+  ChangeNotifierProvider<AuthUser>(create: (context) => AuthUser.instance),
 ];
 final providers =
     _baseProviders +
@@ -53,7 +45,7 @@ final providers =
         create:
             (context) => SettingsApi(
               // httpService: context.read(),
-              // authUser: context.read(),
+              // authUser: AuthUser.instance,
               databaseService: context.read(),
             ),
       ),
@@ -62,14 +54,14 @@ final providers =
       Provider<SearchApi>(
         create:
             (context) =>
-                SearchApi(authUser: context.read(), client: context.read()),
+                SearchApi(authUser: AuthUser.instance, client: context.read()),
       ),
       Provider<PodcastApi>(
         // Needed this so that the DB is setup
         lazy: false,
         create: (context) {
           return PodcastApi(
-            authUser: context.read(),
+            authUser: AuthUser.instance,
             httpService: context.read(),
             databaseService: context.read(),
           );
@@ -80,7 +72,7 @@ final providers =
         lazy: false,
         create: (context) {
           return GetEpisodeApi(
-            authUser: context.read(),
+            authUser: AuthUser.instance,
             httpService: context.read(),
             databaseService: context.read(),
           );
@@ -99,7 +91,7 @@ final providers =
         create:
             (context) => PlayerApi(
               playlistApi: context.read(),
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               playerService: PlayerService(),
             ),
       ),
@@ -107,7 +99,7 @@ final providers =
         create:
             (context) => SubscriptionsApi(
               httpService: context.read(),
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               podcastApi: context.read(),
             ),
       ),
@@ -115,7 +107,7 @@ final providers =
         create:
             (context) => ListensApi(
               httpService: context.read(),
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               episodeApi: context.read(),
             ),
       ),
@@ -126,25 +118,25 @@ final providers =
       //       (context) => GetFeedApi(
       //         httpService: context.read(),
       //         databaseService: context.read(),
-      //         authUser: context.read(),
+      //         authUser: AuthUser.instance,
       //       ),
       // ),
       Provider<DownloadsApi>(
         create:
             (context) => DownloadsApi(
               episodeApi: context.read(),
-              authUser: context.read(),
+              authUser: AuthUser.instance,
             ),
       ),
       Provider<UploadApi>(
         create:
             (context) =>
-                UploadApi(authUser: context.read(), client: context.read()),
+                UploadApi(authUser: AuthUser.instance, client: context.read()),
       ),
       Provider<SearchContactsApi>(
         create:
             (context) => SearchContactsApi(
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               client: context.read(),
               contactsSerivce: MockContacts(),
             ),
@@ -152,7 +144,7 @@ final providers =
       Provider<PublicUserApi>(
         create:
             (context) => PublicUserApi(
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               httpService: context.read(),
             ),
       ),
@@ -160,7 +152,7 @@ final providers =
         lazy: false,
         create:
             (context) => FollowApi(
-              authUser: context.read(),
+              authUser: AuthUser.instance,
               client: context.read(),
               databaseService: context.read(),
             ),
