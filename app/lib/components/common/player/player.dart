@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
+import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
@@ -237,10 +238,11 @@ class PlayIconNotifier extends ChangeNotifier {
   PlayIconNotifier({
     required this.playerApi,
     required this.episode,
+    required this.listenApi,
     required this.authUser,
   }) {
     _duration = episode.duration;
-    var userListen = authUser.listenApi.get(episode.id);
+    var userListen = listenApi.get(episode.id);
     if (userListen == null) return;
     _log.info('found user listen ${episode.title}');
     _duration = episode.duration - Duration(seconds: userListen.seconds);
@@ -256,6 +258,7 @@ class PlayIconNotifier extends ChangeNotifier {
   }
   final PlayerApi playerApi;
   final Episode episode;
+  final ListenApi listenApi;
   final AuthUser authUser;
   PlayIconNotifierStatus _status = PlayIconNotifierStatus.init;
   PlayIconNotifierStatus get status => _status;
@@ -297,15 +300,18 @@ class PlayIconComponent extends StatelessWidget {
     super.key,
     required this.playerApi,
     required this.episode,
+    required this.listenApi,
     required this.authUser,
   }) {
     notifier = PlayIconNotifier(
       playerApi: playerApi,
       episode: episode,
       authUser: authUser,
+      listenApi: listenApi,
     );
   }
 
+  final ListenApi listenApi;
   final PlayerApi playerApi;
   final Episode episode;
   final AuthUser authUser;
