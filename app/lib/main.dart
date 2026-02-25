@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
@@ -14,13 +13,6 @@ import 'package:resonate/test_page.dart';
 import 'package:resonate/utils/time.dart';
 
 void main() async {
-  // https://pub.dev/packages/just_audio_background
-  // Requires more setup in .xml
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
   WidgetsFlutterBinding.ensureInitialized();
   AppLogger.instance.init();
   // Logger.root.level = Level.ALL;
