@@ -6,6 +6,7 @@ import 'package:resonate/api/result.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/download.dart';
+import 'package:idb_sqflite/idb_sqflite.dart';
 import 'package:resonate/storage/download.dart';
 import 'package:resonate/storage/episode.dart';
 
@@ -15,10 +16,14 @@ class DownloadApi {
   DownloadApi({
     required AuthUser authUser,
     required AbstractDatabaseService databaseService,
-  }) : _authUser = authUser,
-       _downloadManager = DownloadManager(),
-       _episodeDatabase = EpisodeDatabase(databaseService),
-       _downloadDatabase = DownloadDatabase(databaseService);
+  })  : _authUser = authUser,
+        _downloadManager = DownloadManager(databaseService: databaseService),
+        _episodeDatabase = EpisodeDatabase(databaseService),
+        _downloadDatabase = DownloadDatabase(databaseService) {
+    databaseService.registerStore('files', (e) {
+      e.database.createObjectStore('files', keyPath: 'path');
+    });
+  }
 
   final AuthUser _authUser;
   final DownloadManager _downloadManager;
@@ -144,8 +149,8 @@ class DownloadsApi {
   const DownloadsApi({
     required AuthUser authUser,
     required GetEpisodeApi episodeApi,
-  }) : _authUser = authUser,
-       _episodeApi = episodeApi;
+  })  : _authUser = authUser,
+        _episodeApi = episodeApi;
 
   final AuthUser _authUser;
   final GetEpisodeApi _episodeApi;
