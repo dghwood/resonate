@@ -6,7 +6,6 @@ import 'package:resonate/api/contacts.dart';
 import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/follow.dart';
-import 'package:resonate/api/local.dart';
 import 'package:resonate/api/listens.dart';
 import 'package:resonate/api/player.dart';
 import 'package:resonate/api/playlist.dart';
@@ -75,11 +74,6 @@ final providers =
             databaseService: context.read(),
           );
         },
-      ),
-      Provider<LocalPodcastApi>(
-        create:
-            (context) =>
-                LocalPodcastApi(databaseService: context.read()),
       ),
       Provider<GetEpisodeApi>(
         // Needed this so that the DB is setup
