@@ -1,4 +1,4 @@
-import 'dart:isolate';
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/database.dart';
@@ -20,8 +20,8 @@ class LocalPodcastApi {
   Future<void> syncPodcast(String feedUrl) async {
     _log.info('syncPodcast:: $feedUrl');
     try {
-      // Use Isolate.run to perform fetch and parse in a separate isolate
-      final result = await Isolate.run(() => RssService.fetchAndParseRSS(feedUrl));
+      // Use compute to perform fetch and parse in a separate isolate
+      final result = await compute(RssService.fetchAndParseRSS, feedUrl);
 
       final podcast = result.$1;
       final episodes = result.$2;
