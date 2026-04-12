@@ -5,13 +5,12 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/listens.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
 import 'package:resonate/components/common/player/playlist.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
-import 'package:resonate/services/player/player.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/player');
@@ -19,7 +18,7 @@ Logger _log = Logger('components/common/player');
 class PlayerComponentPage extends StatelessWidget {
   const PlayerComponentPage({super.key, required this.playerApi});
 
-  final PlayerApi playerApi;
+  final AudioHandlerService playerApi;
 
   @override
   Widget build(BuildContext context) {
@@ -40,27 +39,28 @@ class PlayerComponentPage extends StatelessWidget {
       showDragHandle: true,
       context: context,
       builder: (context) {
-        return PlayerComponentPage(playerApi: context.read());
+        return PlayerComponentPage(playerApi: AudioHandlerService.instance);
       },
     );
   }
 }
 
 class PlayerComponent extends StatelessWidget {
-  const PlayerComponent({super.key, required PlayerApi playerApi})
+  const PlayerComponent({super.key, required AudioHandlerService playerApi})
     : _playerApi = playerApi;
 
-  final PlayerApi _playerApi;
+  final AudioHandlerService _playerApi;
 
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: _playerApi,
+      // This needs to rebuild when the episode changes
+      listenable: _playerApi.playlist,
       builder: (context, _) {
-        if (_playerApi.state == PlayerApiState.init) {
-          return Text('Nothing Playing');
+        var episode = _playerApi.playlist.episode;
+        if (episode == null) {
+          return Text('No Episode');
         }
-        var episode = _playerApi.getPlayingEpisode()!;
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Center(
@@ -99,7 +99,7 @@ class PlayerComponent extends StatelessWidget {
                       icon: Icon(Icons.replay_10),
                       iconSize: 32,
                       onPressed: () {
-                        _playerApi.forward(Duration(seconds: -10));
+                        _playerApi.seekRelative(Duration(seconds: -10));
                       },
                     ),
                     PlayButtonComponent(playerApi: _playerApi, size: 64),
@@ -107,7 +107,7 @@ class PlayerComponent extends StatelessWidget {
                       iconSize: 32,
                       icon: Icon(Icons.forward_30),
                       onPressed: () {
-                        _playerApi.forward(Duration(seconds: 30));
+                        _playerApi.seekRelative(Duration(seconds: 30));
                       },
                     ),
                   ],
@@ -127,7 +127,7 @@ class PlayerComponent extends StatelessWidget {
       showDragHandle: true,
       context: context,
       builder: (context) {
-        return PlayerComponent(playerApi: context.read());
+        return PlayerComponent(playerApi: AudioHandlerService.instance);
       },
     );
   }
@@ -141,11 +141,11 @@ class PlayerComponent extends StatelessWidget {
 class PlayerSliderComponent extends StatefulWidget {
   const PlayerSliderComponent({
     super.key,
-    required PlayerApi playerApi,
+    required AudioHandlerService playerApi,
     required this.episode,
   }) : _playerApi = playerApi;
 
-  final PlayerApi _playerApi;
+  final AudioHandlerService _playerApi;
   final Episode episode;
 
   @override
@@ -153,21 +153,21 @@ class PlayerSliderComponent extends StatefulWidget {
 }
 
 class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
-  PlayerProgress? _playerProgress;
+  late AudioHandlerServiceState _playerProgress;
+  StreamSubscription<AudioHandlerServiceState>? _progressSubscription;
+  // Value displayed to the user
   double _value = 0.0;
-  StreamSubscription<PlayerProgress>? _progressSubscription;
 
   @override
   void initState() {
     super.initState();
-    _progressSubscription = widget._playerApi
-        .subscribeToEpisodeProgress(widget.episode.id)
-        .listen((progress) {
-          setState(() {
-            _playerProgress = progress;
-            _value = progress.percentProgress;
-          });
-        });
+    _playerProgress = widget._playerApi.state;
+    _progressSubscription = widget._playerApi.positionStream.listen((state) {
+      setState(() {
+        _playerProgress = state;
+        _value = state.episodeState?.percentProgress ?? 0.0;
+      });
+    });
   }
 
   @override
@@ -178,14 +178,8 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
 
   @override
   Widget build(BuildContext context) {
-    var progress =
-        _playerProgress ??
-        PlayerProgress(
-          bufferedDuration: Duration.zero,
-          progressDuration: Duration.zero,
-          episodeId: widget.episode.id,
-          playerState: PlayerState.init,
-        );
+    var progress = _playerProgress.episodeState;
+    if (progress == null) return Container();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -200,9 +194,10 @@ class _PlayerSliderComponentState extends State<PlayerSliderComponent> {
             onChangeEnd: (newValue) {
               setState(() {
                 _value = newValue;
-              });
-              widget._playerApi.seekProportional(newValue).then((_) {
-                _progressSubscription?.resume();
+                var newDuration = progress.calculateProgressDuration(_value);
+                widget._playerApi.seek(newDuration).then((_) {
+                  _progressSubscription?.resume();
+                });
               });
             },
             onChanged: (newValue) {
@@ -251,12 +246,12 @@ class PlayIconNotifier extends ChangeNotifier {
       _status = PlayIconNotifierStatus.finished;
     }
 
-    if (playerApi.getPlayingEpisode() == episode) {
+    if (playerApi.playlist.episode == episode) {
       listen();
     }
     // playerApi.addListener(listener)
   }
-  final PlayerApi playerApi;
+  final AudioHandlerService playerApi;
   final Episode episode;
   final ListenApi listenApi;
   final AuthUser authUser;
@@ -264,28 +259,24 @@ class PlayIconNotifier extends ChangeNotifier {
   PlayIconNotifierStatus get status => _status;
   Duration _duration = Duration.zero;
   Duration get duration => _duration;
-  StreamSubscription<PlayerProgress>? _progressStream;
+  StreamSubscription<AudioHandlerServiceState>? _progressStream;
   PlayerState _playerState = PlayerState.init;
   PlayerState get playerState => _playerState;
 
-  void _onProgress(PlayerProgress progress) {
-    if (progress.duration == null) return;
-    _playerState = progress.playerState;
+  void _onProgress(AudioHandlerServiceState state) {
+    var progress = state.episodeState;
+    if (progress == null) return;
+    _playerState = state.playerState;
     _status = PlayIconNotifierStatus.listening;
-    _duration =
-        progress.duration != null
-            ? progress.duration! - (progress.progressDuration)
-            : Duration.zero;
-    if (progress.completed) {
+    _duration = progress.remainingDuration;
+    if (state.playerState == PlayerState.finished) {
       _status = PlayIconNotifierStatus.finished;
     }
     notifyListeners();
   }
 
   void listen() {
-    _progressStream = playerApi
-        .subscribeToEpisodeProgress(episode.id)
-        .listen(_onProgress);
+    _progressStream = playerApi.positionStream.listen(_onProgress);
   }
 
   @override
@@ -295,6 +286,10 @@ class PlayIconNotifier extends ChangeNotifier {
   }
 }
 
+/* PlayIconComponent 
+
+  Mainly used on EpisodeComponent to play the episode
+*/
 class PlayIconComponent extends StatelessWidget {
   PlayIconComponent({
     super.key,
@@ -312,20 +307,14 @@ class PlayIconComponent extends StatelessWidget {
   }
 
   final ListenApi listenApi;
-  final PlayerApi playerApi;
+  final AudioHandlerService playerApi;
   final Episode episode;
   final AuthUser authUser;
   late final PlayIconNotifier notifier;
 
   void _onPressed() async {
-    // var currentEpisode = playerApi.getPlayingEpisode();
-    // if (currentEpisode != null && episode.id == currentEpisode.id) {
-    //   return;
-    // }
-    if (await playerApi.load(episode)) {
-      await playerApi.play();
-      notifier.listen();
-    }
+    await playerApi.playlist.play(episode);
+    notifier.listen();
   }
 
   @override

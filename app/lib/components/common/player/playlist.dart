@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/loading.dart';
 import 'package:resonate/components/common/reordable_listview.dart';
 import 'package:resonate/components/common/utils.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 
 class PlaylistComponent extends StatefulWidget {
   const PlaylistComponent({
@@ -13,7 +11,7 @@ class PlaylistComponent extends StatefulWidget {
     required this.controller,
   });
 
-  final PlayerApi playerApi;
+  final AudioHandlerService playerApi;
   final PageController controller;
 
   @override
@@ -23,7 +21,7 @@ class PlaylistComponent extends StatefulWidget {
 class _PlaylistComponentState extends State<PlaylistComponent> {
   @override
   Widget build(BuildContext context) {
-    var playlistApi = widget.playerApi.playlistApi;
+    var playlistApi = widget.playerApi.playlist;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -35,12 +33,12 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
           ),
         ),
         ListenableBuilder(
-          listenable: widget.playerApi,
+          listenable: playlistApi,
           builder: (context, _) {
-            if (widget.playerApi.getPlayingEpisode() == null) {
+            var episode = playlistApi.episode;
+            if (episode == null) {
               return Text('Nothing playing');
             }
-            var episode = widget.playerApi.getPlayingEpisode()!;
             return ListTile(
               leading: ImageComponent(episode.imageUrl, radius: 10),
               title: Text(episode.title),
@@ -56,7 +54,7 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
         ),
         Expanded(
           child: FutureBuilder(
-            future: playlistApi.list(),
+            future: Future.value(playlistApi.episodes),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return LoadingSpinnerComponent();
@@ -71,12 +69,12 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
                     (episode) => ListTile(
                       onTap: () async {
                         // Add playing Episode (if any to playlist)
-                        playlistApi.replace(
-                          episode,
-                          widget.playerApi.getPlayingEpisode(),
-                        );
+                        // playlistApi.replace(
+                        //   episode,
+                        //   widget.playerApi.getPlayingEpisode(),
+                        // );
                         // Start playing it
-                        await widget.playerApi.load(episode);
+                        await playlistApi.play(episode);
                         setState(() {});
                       },
                       key: Key(episode.id),

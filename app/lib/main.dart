@@ -1,35 +1,29 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 // import 'package:just_audio_background/just_audio_background.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/listens.dart';
-import 'package:resonate/components/common/utils.dart';
-import 'package:resonate/mock_http.dart';
-import 'package:resonate/models/models.dart';
 import 'package:resonate/providers.dart';
 import 'package:resonate/router/routes.dart';
 import 'package:resonate/services/logger.dart';
 import 'package:resonate/services/player/audio_handler.dart';
 import 'package:resonate/test_page.dart';
-import 'package:resonate/utils/time.dart';
 
 void main() async {
   // https://pub.dev/packages/just_audio_background
   // Requires more setup in .xml
 
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
+  // await JustAudioBackground.init(
+  //   androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+  //   androidNotificationChannelName: 'Audio playback',
+  //   androidNotificationOngoing: true,
+  // );
 
   WidgetsFlutterBinding.ensureInitialized();
 
   AppLogger.instance.init();
+  await AudioHandlerService.create();
 
   // GoRouter and it's silly changes.
   GoRouter.optionURLReflectsImperativeAPIs = true;

@@ -22,6 +22,7 @@ import 'package:resonate/components/tabs/search.dart';
 import 'package:resonate/router/navigation.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/services/database.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 
 final Logger _log = Logger('router');
 
@@ -147,7 +148,7 @@ GoRouter appRouter(AuthUser authUser) => GoRouter(
         return AppShellComponent(
           authUser: context.read(),
           databaseService: context.read(),
-          playlistApi: context.read(),
+          playlistApi: AudioHandlerService.instance,
           navigationShell: navigationShell,
           listenApi: ListenApi.instance,
         );
@@ -219,7 +220,7 @@ class AppShellComponent extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
   final AuthUser authUser;
   final AbstractDatabaseService databaseService;
-  final PlaylistApi playlistApi;
+  final AudioHandlerService playlistApi;
   final ListenApi listenApi;
 
   @override
@@ -274,7 +275,9 @@ class _AppShellComponentState extends State<AppShellComponent> {
         }
         return Scaffold(
           body: widget.navigationShell,
-          bottomSheet: BottomPlayerComponent(playerApi: context.read()),
+          bottomSheet: BottomPlayerComponent(
+            playerApi: AudioHandlerService.instance,
+          ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: widget.navigationShell.currentIndex,
             onTap:

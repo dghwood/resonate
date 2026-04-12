@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/components/common/player/play_icon.dart';
 import 'package:resonate/components/common/player/player.dart';
 import 'package:resonate/components/common/utils.dart';
-import 'package:resonate/services/player/player.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 
 final Logger _log = Logger('components/common/player/mini_player');
 
 class BottomPlayerComponent extends StatelessWidget {
-  const BottomPlayerComponent({super.key, required PlayerApi playerApi})
-    : _playerApi = playerApi;
+  const BottomPlayerComponent({
+    super.key,
+    required AudioHandlerService playerApi,
+  }) : _playerApi = playerApi;
 
-  final PlayerApi _playerApi;
+  final AudioHandlerService _playerApi;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +24,16 @@ class BottomPlayerComponent extends StatelessWidget {
       onClosing: () {},
       builder: (context) {
         return ListenableBuilder(
-          listenable: _playerApi,
+          // This needs to rebuild when the episode changes
+          listenable: _playerApi.playlist,
           builder: (context, _) {
             _log.info(_playerApi.state);
-            if (_playerApi.state == PlayerApiState.init &&
-                _playerApi.getPlayingEpisode() == null) {
+
+            var episode = _playerApi.playlist.episode;
+            if (episode == null) {
               return SizedBox();
             }
 
-            var episode = _playerApi.getPlayingEpisode()!;
             return Container(
               alignment: Alignment.bottomCenter,
               width: double.infinity,
@@ -58,13 +60,10 @@ class BottomPlayerComponent extends StatelessWidget {
                       ),
                     ),
                     StreamBuilder(
-                      stream: _playerApi.subscribeToEpisodeProgress(episode.id),
-                      builder: (context, asyncSnapshot) {
-                        var value = 0.0;
-                        if (asyncSnapshot.hasData) {
-                          var data = asyncSnapshot.requireData;
-                          value = data.percentProgress;
-                        }
+                      stream: _playerApi.positionStream,
+                      builder: (context, snapshot) {
+                        var value =
+                            snapshot.data?.episodeState?.percentProgress ?? 0.0;
                         return LinearProgressIndicator(value: value);
                       },
                     ),

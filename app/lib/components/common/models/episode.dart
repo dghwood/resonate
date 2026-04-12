@@ -12,6 +12,7 @@ import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/common.pb.dart';
 import 'package:resonate/router/navigation.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 import 'package:resonate/utils/constants.dart';
 import 'package:resonate/utils/time.dart';
 
@@ -142,13 +143,16 @@ class EpisodeComponent extends StatelessWidget {
             children: [
               PlayIconComponent(
                 key: Key('play-icon-component-${episode.id}'),
-                playerApi: context.read(),
+                playerApi: AudioHandlerService.instance,
                 authUser: context.read(),
                 listenApi: ListenApi.instance,
                 episode: episode,
               ),
               if (context.read<SettingsApi>().settings.enablePlaylist)
-                PlaylistAddIcon(episode: episode, playerApi: context.read()),
+                PlaylistAddIcon(
+                  episode: episode,
+                  playerApi: AudioHandlerService.instance,
+                ),
               if (!kIsWeb && ENABLE_DOWNLOADS)
                 DownloadIconComponent(
                   downloadApi: context.read<AuthUser>().downloadApi,
@@ -160,42 +164,6 @@ class EpisodeComponent extends StatelessWidget {
           // Divider(),
         ],
       ),
-    );
-    return Column(
-      children: [
-        ListTile(
-          leading: GestureDetector(
-            onTap: () {
-              Navigate(context).toPodcast(episode.podcastId);
-            },
-            child: ImageComponent(episode.imageUrl),
-          ),
-          title: Text(episode.title),
-          subtitle: Text(
-            episode.description,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Text(formatTimeAgo(episode.publishDateTime)),
-        Row(
-          children: [
-            PlayIconComponent(
-              key: Key('play-icon-component-${episode.id}'),
-              playerApi: context.read(),
-              authUser: context.read(),
-              listenApi: ListenApi.instance,
-              episode: episode,
-            ),
-            IconButton(icon: Icon(Icons.star), onPressed: () {}),
-            PlaylistAddIcon(episode: episode, playerApi: context.read()),
-            DownloadIconComponent(
-              downloadApi: context.read<AuthUser>().downloadApi,
-              episode: episode,
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
@@ -214,7 +182,7 @@ class PlaylistAddIcon extends StatefulWidget {
   });
 
   final Episode episode;
-  final PlayerApi playerApi;
+  final AudioHandlerService playerApi;
 
   @override
   State<PlaylistAddIcon> createState() => _PlaylistAddIconState();
@@ -223,7 +191,7 @@ class PlaylistAddIcon extends StatefulWidget {
 class _PlaylistAddIconState extends State<PlaylistAddIcon> {
   @override
   Widget build(BuildContext context) {
-    var playlistApi = widget.playerApi.playlistApi;
+    var playlistApi = widget.playerApi.playlist;
     if (playlistApi.has(widget.episode)) {
       return IconButton(
         icon: Icon(Icons.playlist_remove),
