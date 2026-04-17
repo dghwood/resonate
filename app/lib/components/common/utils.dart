@@ -193,6 +193,7 @@ class ImageComponent extends StatelessWidget {
         // ),
         color: Theme.of(context).colorScheme.surface,
         child: Image.network(
+          key: Key(src),
           '$prefix$src',
           width: width,
           height: height,
@@ -204,7 +205,7 @@ class ImageComponent extends StatelessWidget {
                   ? WebHtmlElementStrategy.fallback
                   : WebHtmlElementStrategy.never,
           errorBuilder: (context, error, stackTrace) {
-            _log.warning(error);
+            // _log.warning(error);
             return errorBuilder != null
                 ? errorBuilder!(context)
                 : Icon(Icons.error_outline, size: width);
