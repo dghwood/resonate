@@ -4,7 +4,6 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:resonate/api/auth.dart';
 import 'package:resonate/api/listens.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/api/settings.dart';
 import 'package:resonate/components/common/models/download.dart';
 import 'package:resonate/components/common/player/player.dart';

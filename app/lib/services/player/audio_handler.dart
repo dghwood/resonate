@@ -8,6 +8,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:just_audio/just_audio.dart' hide PlayerState;
+import 'package:rxdart/rxdart.dart';
 
 Logger _log = Logger('services/player/audio_service');
 
@@ -32,6 +33,16 @@ class AudioHandlerServiceEpisodeState {
   final Duration episodeDuration;
   final Episode episode;
   final int queueIndex;
+
+  // Whether the episode is completed
+  //
+  // Can I calcalculate this like this honestly?
+  bool get completed {
+    if (progressDuration.inMilliseconds == 0) {
+      return false;
+    }
+    return progressDuration > episodeDuration - Duration(seconds: 10);
+  }
 
   double get percentProgress {
     if (episodeDuration.inMilliseconds == 0) return 0.0;
@@ -119,17 +130,37 @@ class AudioHandlerService extends BaseAudioHandler
           // },
         );
     _player.playbackEventStream.map(_transformEvent).pipe(playbackState);
-    _player.playbackEventStream.listen((_) {
-      // For general playback state changes
-      _stateStreamController.add(state);
-    });
+    _player.playbackEventStream.listen(onPlaybackEventStream);
     _player.sequenceStateStream.listen(onSequenceStream);
     _player.currentIndexStream.distinct().listen(onIndexChange);
   }
 
+  void onPlaybackEventStream(PlaybackEvent event) {
+    var s = state;
+    _stateStreamController.add(s);
+    _addListen(s);
+  }
+
+  Future<bool> _addListen(AudioHandlerServiceState s) async {
+    var episodeState = s.episodeState;
+    if (episodeState == null) return false;
+    await listenApi.add(episodeState);
+    return true;
+  }
+
+  bool _setup = false;
   Future<void> init() async {
+    if (_setup) return;
+    _setup = true;
     await playlist.init();
     AudioService.position.listen(onPositionChange);
+    AudioService.position
+        .throttleTime(
+          Duration(milliseconds: 500),
+          trailing: true,
+          leading: false,
+        )
+        .listen(onDelayedPositionChange);
   }
 
   AudioHandlerServiceState get state {
@@ -184,9 +215,9 @@ class AudioHandlerService extends BaseAudioHandler
     // Load the listen if it exists, set the vol low
     // otherwise the player will 'skip'
     await _player.setVolume(0);
-    // var result = listenApi.get(episode.id);
-    // var duration = result?.seconds;
-    var duration = null;
+    var result = listenApi.get(episode.id);
+    var duration = result?.seconds;
+    // var duration = null;
     if (duration != null) {
       await _player.seek(Duration(seconds: duration), index: index);
     }
@@ -196,6 +227,12 @@ class AudioHandlerService extends BaseAudioHandler
   // Fired when the position of the playing episode changes.
   void onPositionChange(Duration duration) {
     _positionStreamController.add(state);
+  }
+
+  // Fired only every 500ms
+  void onDelayedPositionChange(Duration duration) {
+    _log.info('onDelayedPositionChange::$duration');
+    _addListen(state);
   }
 
   void onSequenceStream(SequenceState sequenceState) async {
@@ -294,11 +331,13 @@ class AudioHandlerService extends BaseAudioHandler
     // _persistentProgressStreamController.close();
   }
 
+  static Future<AudioHandlerService>? _audioHandlerFuture;
   static AudioHandlerService? _audioHandler;
   static AudioHandlerService get instance => _audioHandler!;
 
-  static Future<AudioHandlerService> create() async {
-    if (_audioHandler != null) return _audioHandler!;
+  // I think this is getting called multiple times
+  // But hasn't finished, so init's again.
+  static Future<AudioHandlerService> _create() async {
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration.speech());
     var audioHandler = await AudioService.init(
@@ -312,5 +351,11 @@ class AudioHandlerService extends BaseAudioHandler
     await audioHandler.init();
     _audioHandler = audioHandler;
     return audioHandler;
+  }
+
+  static Future<AudioHandlerService> create() async {
+    if (_audioHandlerFuture != null) return await _audioHandlerFuture!;
+    _audioHandlerFuture = _create();
+    return await _audioHandlerFuture!;
   }
 }

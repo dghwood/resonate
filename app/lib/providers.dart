@@ -7,7 +7,6 @@ import 'package:resonate/api/download.dart';
 import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/follow.dart';
 import 'package:resonate/api/listens.dart';
-import 'package:resonate/api/player.dart';
 import 'package:resonate/api/playlist.dart';
 import 'package:resonate/api/podcast.dart';
 import 'package:resonate/api/search.dart';
@@ -85,14 +84,6 @@ final providers =
             (context) => PlaylistApi(
               databaseService: context.read(),
               episodeApi: context.read(),
-            ),
-      ),
-      ChangeNotifierProvider<PlayerApi>(
-        create:
-            (context) => PlayerApi(
-              playlistApi: context.read(),
-              authUser: AuthUser.instance,
-              playerService: PlayerService(),
             ),
       ),
       ChangeNotifierProvider<SubscriptionsApi>(

@@ -8,7 +8,7 @@ import 'package:resonate/models/models.dart';
 import 'package:resonate/proto/api.pb.dart' hide QueryCursor;
 import 'package:resonate/services/database.dart';
 import 'package:resonate/services/http/http.dart';
-import 'package:resonate/services/player/player.dart';
+import 'package:resonate/services/player/audio_handler.dart';
 import 'package:resonate/storage/episode.dart';
 import 'package:resonate/storage/listens.dart';
 
@@ -191,7 +191,10 @@ class ListenApi {
     }
   }
 
-  UserListen _createListen(String episodeId, PlayerProgress progress) {
+  UserListen _createListen(
+    String episodeId,
+    AudioHandlerServiceEpisodeState progress,
+  ) {
     if (!_authUser.isSignedIn) throw UserNotSignedInError();
     return UserListen(
       id: '${_authUser.user!.id}-$episodeId',
@@ -209,10 +212,11 @@ class ListenApi {
   Map<String, bool> _episodePuts = {};
 
   Future<ApiResult<UserListen>> add(
-    Episode episode,
-    PlayerProgress progress, {
+    AudioHandlerServiceEpisodeState progress, {
     bool server = true,
   }) async {
+    _log.info('add listen');
+    var episode = progress.episode;
     String episodeId = episode.id;
     UserListen listen;
     // Add to DB
