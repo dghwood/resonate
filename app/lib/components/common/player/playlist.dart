@@ -8,59 +8,42 @@ class PlaylistComponent extends StatefulWidget {
   const PlaylistComponent({
     super.key,
     required this.playerApi,
-    required this.controller,
+    // required this.controller,
   });
 
   final AudioHandlerService playerApi;
-  final PageController controller;
+  // final PageController controller;
 
   @override
   State<PlaylistComponent> createState() => _PlaylistComponentState();
+
+  static void show(BuildContext context) {
+    showBottomSheet(
+      // isScrollControlled: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(maxHeight: 320),
+      enableDrag: true,
+      context: context,
+      builder: (context) {
+        return PlaylistComponent(playerApi: AudioHandlerService.instance);
+      },
+    );
+  }
 }
 
 class _PlaylistComponentState extends State<PlaylistComponent> {
   @override
   Widget build(BuildContext context) {
     var playlistApi = widget.playerApi.playlist;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Text(
-            'NOW PLAYING',
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-        ListenableBuilder(
-          listenable: playlistApi,
-          builder: (context, _) {
-            var episode = playlistApi.episode;
-            if (episode == null) {
-              return Text('Nothing playing');
-            }
-            return ListTile(
-              leading: ImageComponent(episode.imageUrl, radius: 10),
-              title: Text(episode.title),
-            );
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Text(
-            'PLAYLIST',
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-        Expanded(
-          child: FutureBuilder(
-            future: Future.value(playlistApi.episodes),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return LoadingSpinnerComponent();
-              }
-              var episodes = snapshot.requireData.toList();
-              return ReordableListviewComponent(
+    return ListenableBuilder(
+      listenable: playlistApi,
+      builder: (context, _) {
+        var episodes = playlistApi.episodes;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ReordableListviewComponent(
                 items: episodes,
                 onReorder: (oldIndex, newIndex) async {
                   await playlistApi.reorder(oldIndex, newIndex);
@@ -68,24 +51,19 @@ class _PlaylistComponentState extends State<PlaylistComponent> {
                 builder:
                     (episode) => ListTile(
                       onTap: () async {
-                        // Add playing Episode (if any to playlist)
-                        // playlistApi.replace(
-                        //   episode,
-                        //   widget.playerApi.getPlayingEpisode(),
-                        // );
-                        // Start playing it
                         await playlistApi.play(episode);
-                        setState(() {});
+                        // setState(() {});
                       },
+                      selected: episode == playlistApi.episode,
                       key: Key(episode.id),
                       leading: ImageComponent(episode.imageUrl, radius: 10),
                       title: Text(episode.title),
                     ),
-              );
-            },
-          ),
-        ),
-      ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

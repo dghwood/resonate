@@ -51,7 +51,11 @@ class BottomPlayerComponent extends StatelessWidget {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          leading: ImageComponent(episode.imageUrl, radius: 10),
+                          leading: ImageComponent(
+                            episode.imageUrl,
+                            radius: 10,
+                            key: Key(episode.id),
+                          ),
                           trailing: PlayButtonComponent(
                             playerApi: _playerApi,
                             size: 32,

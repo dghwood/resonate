@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:resonate/mock_http.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player/util.dart';
 
+Logger _log = Logger('services/player/playlist');
+
 class AudioHandlerServicePlaylist extends ChangeNotifier {
-  AudioHandlerServicePlaylist(this._player);
+  AudioHandlerServicePlaylist(this._player) {
+    _player.currentIndexStream.distinct().listen(onIndexChange);
+  }
   final AudioPlayer _player;
+
+  // I need to notify when the episode changes
+  void onIndexChange(_) {
+    notifyListeners();
+  }
 
   // Which episode is playing
   int get index => _player.currentIndex ?? 0;
@@ -50,14 +59,25 @@ class AudioHandlerServicePlaylist extends ChangeNotifier {
 
   Future<void> play(Episode episode) async {
     var i = _episodes.indexOf(episode);
+    var currentIndex = index;
+    if (i == currentIndex) {
+      // Episode currently playing
+      return;
+    }
     if (i == -1) {
       // add to playlist
-      _episodes.insert(index, episode);
+      _episodes.insert(currentIndex, episode);
       await _player.insertAudioSource(0, toAudioSource(episode));
     } else {
-      await reorder(i, index);
+      await reorder(i, currentIndex);
     }
-    await _player.play();
+    if (_player.playing) {
+      // If the player is already playing you need to seek
+      await _player.seek(Duration.zero, index: currentIndex);
+    } else {
+      // But that doesn't work if the player is not playing
+      await _player.play();
+    }
     notifyListeners();
   }
 

@@ -10,6 +10,7 @@ import 'package:resonate/components/common/models/subscriptions.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/mock_http.dart';
 import 'package:resonate/models/models.dart';
+import 'package:resonate/utils/constants.dart';
 
 final Logger _log = Logger('components/tabs/home');
 
@@ -51,6 +52,13 @@ class _HomePageState extends State<HomePage> {
                   },
                   icon: Icon(Icons.refresh),
                 ),
+                if (ENABLE_PLAYLIST)
+                  IconButton(
+                    onPressed: () {
+                      // TODO(duncan): Launch playlist
+                    },
+                    icon: Icon(Icons.playlist_play),
+                  ),
               ],
             ),
             SliverToBoxAdapter(

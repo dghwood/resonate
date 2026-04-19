@@ -11,9 +11,88 @@ import 'package:resonate/components/common/player/playlist.dart';
 import 'package:resonate/components/common/utils.dart';
 import 'package:resonate/models/models.dart';
 import 'package:resonate/services/player/audio_handler.dart';
+import 'package:resonate/utils/constants.dart';
 import 'package:resonate/utils/time.dart';
 
 Logger _log = Logger('components/common/player');
+
+class PlayerComponentAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  const PlayerComponentAppBar({super.key, required this.controller});
+
+  final PageController controller;
+  // Mandatory for PreferredSizeWidget
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  State<PlayerComponentAppBar> createState() => _PlayerComponentAppBarState();
+}
+
+class _PlayerComponentAppBarState extends State<PlayerComponentAppBar> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(onPageController);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(onPageController);
+    super.dispose();
+  }
+
+  int _pageIndex = 0;
+  void onPageController() {
+    setState(() {
+      var page = widget.controller.page;
+      if (page != null) {
+        _pageIndex = page.round();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        _pageIndex == 0 ? 'NOW PLAYING' : 'PLAYLIST',
+        style: Theme.of(context).textTheme.labelMedium,
+      ),
+      leading: SizedBox(),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.play_circle),
+          onPressed:
+              _pageIndex == 0
+                  ? null
+                  : () {
+                    widget.controller.animateToPage(
+                      0,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.linear,
+                    );
+                  },
+        ),
+        if (ENABLE_PLAYLIST)
+          IconButton(
+            icon: Icon(Icons.playlist_play),
+            onPressed:
+                _pageIndex == 1
+                    ? null
+                    : () {
+                      widget.controller.animateToPage(
+                        1,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.linear,
+                      );
+                    },
+          ),
+      ],
+    );
+  }
+}
 
 class PlayerComponentPage extends StatelessWidget {
   const PlayerComponentPage({super.key, required this.playerApi});
@@ -23,13 +102,17 @@ class PlayerComponentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = PageController();
-    return PageView(
-      controller: controller,
-      children: [
-        PlayerComponent(playerApi: playerApi),
-        if (context.read<SettingsApi>().settings.enablePlaylist)
-          PlaylistComponent(playerApi: playerApi, controller: controller),
-      ],
+    return Scaffold(
+      appBar: PlayerComponentAppBar(controller: controller),
+      // body: PlayerComponent(playerApi: playerApi),
+      body: PageView(
+        controller: controller,
+        onPageChanged: (newIndex) {},
+        children: [
+          PlayerComponent(playerApi: playerApi),
+          if (ENABLE_PLAYLIST) PlaylistComponent(playerApi: playerApi),
+        ],
+      ),
     );
   }
 
@@ -46,10 +129,14 @@ class PlayerComponentPage extends StatelessWidget {
 }
 
 class PlayerComponent extends StatelessWidget {
-  const PlayerComponent({super.key, required AudioHandlerService playerApi})
-    : _playerApi = playerApi;
+  const PlayerComponent({
+    super.key,
+    // required this.controller,
+    required AudioHandlerService playerApi,
+  }) : _playerApi = playerApi;
 
   final AudioHandlerService _playerApi;
+  // final PageController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -121,16 +208,16 @@ class PlayerComponent extends StatelessWidget {
     );
   }
 
-  static void show(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      showDragHandle: true,
-      context: context,
-      builder: (context) {
-        return PlayerComponent(playerApi: AudioHandlerService.instance);
-      },
-    );
-  }
+  // static void show(BuildContext context) {
+  //   showModalBottomSheet(
+  //     isScrollControlled: true,
+  //     showDragHandle: true,
+  //     context: context,
+  //     builder: (context) {
+  //       return PlayerComponent(playerApi: AudioHandlerService.instance);
+  //     },
+  //   );
+  // }
 }
 
 /* PlayerSliderComponent 

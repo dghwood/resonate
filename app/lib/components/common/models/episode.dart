@@ -147,7 +147,7 @@ class EpisodeComponent extends StatelessWidget {
                 listenApi: ListenApi.instance,
                 episode: episode,
               ),
-              if (context.read<SettingsApi>().settings.enablePlaylist)
+              if (ENABLE_PLAYLIST)
                 PlaylistAddIcon(
                   episode: episode,
                   playerApi: AudioHandlerService.instance,

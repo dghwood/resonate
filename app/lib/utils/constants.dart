@@ -56,3 +56,8 @@ const bool ENABLE_DOWNLOADS = bool.fromEnvironment(
   "ENABLE_DOWNLOADS",
   defaultValue: false,
 );
+
+const bool ENABLE_PLAYLIST = bool.fromEnvironment(
+  "ENABLE_PLAYLIST",
+  defaultValue: true,
+);
