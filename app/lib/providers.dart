@@ -42,39 +42,29 @@ final providers =
     [
       Provider<SettingsApi>(
         create:
-            (context) => SettingsApi(
-              // httpService: context.read(),
-              // authUser: AuthUser.instance,
-              databaseService: context.read(),
-            ),
+            (context) => SettingsApi(databaseService: DatabaseService.instance),
       ),
 
       // API
       Provider<SearchApi>(
         create:
-            (context) =>
-                SearchApi(authUser: AuthUser.instance, client: context.read()),
+            (context) => SearchApi(
+              authUser: AuthUser.instance,
+              client: HttpService.instance,
+            ),
       ),
       Provider<PodcastApi>(
         // Needed this so that the DB is setup
         lazy: false,
         create: (context) {
-          return PodcastApi(
-            authUser: AuthUser.instance,
-            httpService: context.read(),
-            databaseService: context.read(),
-          );
+          return PodcastApi.instance;
         },
       ),
       Provider<GetEpisodeApi>(
         // Needed this so that the DB is setup
         lazy: false,
         create: (context) {
-          return GetEpisodeApi(
-            authUser: AuthUser.instance,
-            httpService: context.read(),
-            databaseService: context.read(),
-          );
+          return GetEpisodeApi.instance;
         },
       ),
 
@@ -82,53 +72,45 @@ final providers =
         lazy: false,
         create:
             (context) => PlaylistApi(
-              databaseService: context.read(),
-              episodeApi: context.read(),
+              databaseService: DatabaseService.instance,
+              episodeApi: GetEpisodeApi.instance,
             ),
       ),
       ChangeNotifierProvider<SubscriptionsApi>(
         create:
             (context) => SubscriptionsApi(
-              httpService: context.read(),
+              httpService: HttpService.instance,
               authUser: AuthUser.instance,
-              podcastApi: context.read(),
+              podcastApi: PodcastApi.instance,
             ),
       ),
       Provider<ListensApi>(
         create:
             (context) => ListensApi(
-              httpService: context.read(),
+              httpService: HttpService.instance,
               authUser: AuthUser.instance,
-              episodeApi: context.read(),
+              episodeApi: GetEpisodeApi.instance,
             ),
       ),
-      // Provider<GetFeedApi>(
-      //   // Needed this so that the DB is setup
-      //   lazy: false,
-      //   create:
-      //       (context) => GetFeedApi(
-      //         httpService: context.read(),
-      //         databaseService: context.read(),
-      //         authUser: AuthUser.instance,
-      //       ),
-      // ),
       Provider<DownloadsApi>(
         create:
             (context) => DownloadsApi(
-              episodeApi: context.read(),
+              episodeApi: GetEpisodeApi.instance,
               authUser: AuthUser.instance,
             ),
       ),
       Provider<UploadApi>(
         create:
-            (context) =>
-                UploadApi(authUser: AuthUser.instance, client: context.read()),
+            (context) => UploadApi(
+              authUser: AuthUser.instance,
+              client: HttpService.instance,
+            ),
       ),
       Provider<SearchContactsApi>(
         create:
             (context) => SearchContactsApi(
               authUser: AuthUser.instance,
-              client: context.read(),
+              client: HttpService.instance,
               contactsSerivce: MockContacts(),
             ),
       ),
@@ -136,7 +118,7 @@ final providers =
         create:
             (context) => PublicUserApi(
               authUser: AuthUser.instance,
-              httpService: context.read(),
+              httpService: HttpService.instance,
             ),
       ),
       Provider<FollowApi>(
@@ -144,8 +126,8 @@ final providers =
         create:
             (context) => FollowApi(
               authUser: AuthUser.instance,
-              client: context.read(),
-              databaseService: context.read(),
+              client: HttpService.instance,
+              databaseService: DatabaseService.instance,
             ),
       ),
     ];

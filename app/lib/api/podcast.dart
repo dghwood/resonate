@@ -263,6 +263,12 @@ class PodcastApi {
     }
   }
 
+  static final PodcastApi instance = PodcastApi(
+    authUser: AuthUser.instance,
+    httpService: HttpService.instance,
+    databaseService: DatabaseService.instance,
+  );
+
   // Stream<ApiResult<Podcast>> get(String podcastId, {onlyLocal = false}) async* {
   //   _log.info('get::$podcastId');
   //   var request = GetPodcastApiRequest();

@@ -97,4 +97,10 @@ class GetEpisodeApi {
       return ApiResult.error(e);
     }
   }
+
+  static final GetEpisodeApi instance = GetEpisodeApi(
+    authUser: AuthUser.instance,
+    httpService: HttpService.instance,
+    databaseService: DatabaseService.instance,
+  );
 }
