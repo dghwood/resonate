@@ -52,13 +52,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   icon: Icon(Icons.refresh),
                 ),
-                if (ENABLE_PLAYLIST)
-                  IconButton(
-                    onPressed: () {
-                      // TODO(duncan): Launch playlist
-                    },
-                    icon: Icon(Icons.playlist_play),
-                  ),
               ],
             ),
             SliverToBoxAdapter(
