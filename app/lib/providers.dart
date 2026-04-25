@@ -67,15 +67,6 @@ final providers =
           return GetEpisodeApi.instance;
         },
       ),
-
-      Provider<PlaylistApi>(
-        lazy: false,
-        create:
-            (context) => PlaylistApi(
-              databaseService: DatabaseService.instance,
-              episodeApi: GetEpisodeApi.instance,
-            ),
-      ),
       ChangeNotifierProvider<SubscriptionsApi>(
         create:
             (context) => SubscriptionsApi(

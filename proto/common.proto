@@ -249,3 +249,11 @@ message PlaylistMessage {
     string playing_episode_id = 3;
     repeated string up_next_episode_ids = 4;
 }
+
+message Playlist2Message {
+    string id = 1 [(index) = true];
+    string user_id = 2 [(index) = true];
+    int64 episode_index = 3;
+    repeated string episode_ids = 4;
+    StorageMetadataMessage metadata = 5;
+}

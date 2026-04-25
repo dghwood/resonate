@@ -248,6 +248,7 @@ class _AppShellComponentState extends State<AppShellComponent> {
       await widget.authUser.downloadApi.init();
       _log.info('download done');
       await widget.playlistApi.init();
+      await AudioHandlerService.instance.init();
       // _log.info('playlist done');
     } on Exception catch (e) {
       return ApiResult.error(e);

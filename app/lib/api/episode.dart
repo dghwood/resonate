@@ -57,6 +57,15 @@ class GetEpisodeApi {
   final GetEpisodeApiServer _server;
   final EpisodeDatabase _database;
 
+  Future<bool> put(Episode episode) async {
+    try {
+      await _database.put(episode);
+      return true;
+    } on Exception catch (e) {
+      return false;
+    }
+  }
+
   Stream<ApiResult<Episode>> get(String episodeId) async* {
     var request = GetEpisodeApiRequest();
     request.requestPb.episodeId = episodeId;

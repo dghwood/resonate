@@ -3061,6 +3061,130 @@ func (b0 PlaylistMessage_builder) Build() *PlaylistMessage {
 	return m0
 }
 
+type Playlist2Message struct {
+	state         protoimpl.MessageState  `protogen:"hybrid.v1"`
+	Id            string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                  `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	EpisodeIndex  int64                   `protobuf:"varint,3,opt,name=episode_index,json=episodeIndex,proto3" json:"episode_index,omitempty"`
+	EpisodeIds    []string                `protobuf:"bytes,4,rep,name=episode_ids,json=episodeIds,proto3" json:"episode_ids,omitempty"`
+	Metadata      *StorageMetadataMessage `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Playlist2Message) Reset() {
+	*x = Playlist2Message{}
+	mi := &file_proto_common_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Playlist2Message) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Playlist2Message) ProtoMessage() {}
+
+func (x *Playlist2Message) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_common_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Playlist2Message) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Playlist2Message) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *Playlist2Message) GetEpisodeIndex() int64 {
+	if x != nil {
+		return x.EpisodeIndex
+	}
+	return 0
+}
+
+func (x *Playlist2Message) GetEpisodeIds() []string {
+	if x != nil {
+		return x.EpisodeIds
+	}
+	return nil
+}
+
+func (x *Playlist2Message) GetMetadata() *StorageMetadataMessage {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *Playlist2Message) SetId(v string) {
+	x.Id = v
+}
+
+func (x *Playlist2Message) SetUserId(v string) {
+	x.UserId = v
+}
+
+func (x *Playlist2Message) SetEpisodeIndex(v int64) {
+	x.EpisodeIndex = v
+}
+
+func (x *Playlist2Message) SetEpisodeIds(v []string) {
+	x.EpisodeIds = v
+}
+
+func (x *Playlist2Message) SetMetadata(v *StorageMetadataMessage) {
+	x.Metadata = v
+}
+
+func (x *Playlist2Message) HasMetadata() bool {
+	if x == nil {
+		return false
+	}
+	return x.Metadata != nil
+}
+
+func (x *Playlist2Message) ClearMetadata() {
+	x.Metadata = nil
+}
+
+type Playlist2Message_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Id           string
+	UserId       string
+	EpisodeIndex int64
+	EpisodeIds   []string
+	Metadata     *StorageMetadataMessage
+}
+
+func (b0 Playlist2Message_builder) Build() *Playlist2Message {
+	m0 := &Playlist2Message{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.Id = b.Id
+	x.UserId = b.UserId
+	x.EpisodeIndex = b.EpisodeIndex
+	x.EpisodeIds = b.EpisodeIds
+	x.Metadata = b.Metadata
+	return m0
+}
+
 var file_proto_common_proto_extTypes = []protoimpl.ExtensionInfo{
 	{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
@@ -3235,7 +3359,14 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12<\n" +
 	"\bmetadata\x18\x02 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata\x12,\n" +
 	"\x12playing_episode_id\x18\x03 \x01(\tR\x10playingEpisodeId\x12-\n" +
-	"\x13up_next_episode_ids\x18\x04 \x03(\tR\x10upNextEpisodeIds*|\n" +
+	"\x13up_next_episode_ids\x18\x04 \x03(\tR\x10upNextEpisodeIds\"\xcb\x01\n" +
+	"\x10Playlist2Message\x12\x14\n" +
+	"\x02id\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x02id\x12\x1d\n" +
+	"\auser_id\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\x06userId\x12#\n" +
+	"\repisode_index\x18\x03 \x01(\x03R\fepisodeIndex\x12\x1f\n" +
+	"\vepisode_ids\x18\x04 \x03(\tR\n" +
+	"episodeIds\x12<\n" +
+	"\bmetadata\x18\x05 \x01(\v2 .resonate.StorageMetadataMessageR\bmetadata*|\n" +
 	"\x0eClientPlatform\x12\x1b\n" +
 	"\x17CLIENT_PLATFORM_UNKNOWN\x10\x00\x12\x1b\n" +
 	"\x17CLIENT_PLATFORM_ANDROID\x10\x01\x12\x17\n" +
@@ -3248,7 +3379,7 @@ const file_proto_common_proto_rawDesc = "" +
 	"\x05index\x12\x1d.google.protobuf.FieldOptions\x18І\x03 \x01(\bR\x05indexB#Z!github.com/dghwood/resonate/protob\x06proto3"
 
 var file_proto_common_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_proto_common_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_proto_common_proto_goTypes = []any{
 	(ClientPlatform)(0),                       // 0: resonate.ClientPlatform
 	(FeedItemType)(0),                         // 1: resonate.FeedItemType
@@ -3275,7 +3406,8 @@ var file_proto_common_proto_goTypes = []any{
 	(*UserContactMessage)(nil),                // 22: resonate.UserContactMessage
 	(*SettingsMessage)(nil),                   // 23: resonate.SettingsMessage
 	(*PlaylistMessage)(nil),                   // 24: resonate.PlaylistMessage
-	(*descriptorpb.FieldOptions)(nil),         // 25: google.protobuf.FieldOptions
+	(*Playlist2Message)(nil),                  // 25: resonate.Playlist2Message
+	(*descriptorpb.FieldOptions)(nil),         // 26: google.protobuf.FieldOptions
 }
 var file_proto_common_proto_depIdxs = []int32{
 	4,  // 0: resonate.PodcastMessage.episodes:type_name -> resonate.EpisodeMessage
@@ -3318,12 +3450,13 @@ var file_proto_common_proto_depIdxs = []int32{
 	2,  // 37: resonate.UserContactsMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	2,  // 38: resonate.SettingsMessage.metadata:type_name -> resonate.StorageMetadataMessage
 	2,  // 39: resonate.PlaylistMessage.metadata:type_name -> resonate.StorageMetadataMessage
-	25, // 40: resonate.index:extendee -> google.protobuf.FieldOptions
-	41, // [41:41] is the sub-list for method output_type
-	41, // [41:41] is the sub-list for method input_type
-	41, // [41:41] is the sub-list for extension type_name
-	40, // [40:41] is the sub-list for extension extendee
-	0,  // [0:40] is the sub-list for field type_name
+	2,  // 40: resonate.Playlist2Message.metadata:type_name -> resonate.StorageMetadataMessage
+	26, // 41: resonate.index:extendee -> google.protobuf.FieldOptions
+	42, // [42:42] is the sub-list for method output_type
+	42, // [42:42] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	41, // [41:42] is the sub-list for extension extendee
+	0,  // [0:41] is the sub-list for field type_name
 }
 
 func init() { file_proto_common_proto_init() }
@@ -3337,7 +3470,7 @@ func file_proto_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_common_proto_rawDesc), len(file_proto_common_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   23,
+			NumMessages:   24,
 			NumExtensions: 1,
 			NumServices:   0,
 		},

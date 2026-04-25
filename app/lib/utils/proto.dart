@@ -94,15 +94,34 @@ class DatabaseProtoStoreUtils<T extends GeneratedMessage> {
           if (!isRepeated) {
             _message.setField(field.number, Int64(value as int));
           } else {
-            _message.setField(
-              field.number,
-              (value as List<Object?>).map((i) => Int64(i! as int)),
-            );
+            _log.info("setting repeated field");
+            _message
+                .getField(field.number)
+                .addAll(
+                  (value as List<Object?>).map((i) => Int64((i! as int))),
+                );
+            // _message.setField(
+            //   field.number,
+            //   (value as List<Object?>).map((i) => Int64(i! as int)),
+            // );
           }
         case FieldDescriptorProto_Type.TYPE_STRING:
+          if (isRepeated) {
+            _message
+                .getField(field.number)
+                .addAll((value as List<Object?>).map((i) => i! as String));
+          } else {
+            _message.setField(field.number, value);
+          }
         case FieldDescriptorProto_Type.TYPE_BOOL:
           // TODO(duncan): I bet I need to cast the List..
-          _message.setField(field.number, value);
+          if (isRepeated) {
+            _message
+                .getField(field.number)
+                .addAll((value as List<Object?>).map((i) => i! as bool));
+          } else {
+            _message.setField(field.number, value);
+          }
         case FieldDescriptorProto_Type.TYPE_MESSAGE:
           var builder = _message.info_.fieldInfo[field.number]!.subBuilder!;
           if (!isRepeated) {

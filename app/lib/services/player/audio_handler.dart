@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:audio_session/audio_session.dart';
+import 'package:resonate/api/episode.dart';
 import 'package:resonate/api/listens.dart';
+import 'package:resonate/services/database.dart';
 import 'package:resonate/services/player/playlist.dart';
 import 'package:resonate/services/player/util.dart';
 
@@ -109,7 +111,12 @@ class AudioHandlerService extends BaseAudioHandler
       _episodeChangeStreamController.stream;
 
   AudioHandlerService({required this.listenApi}) {
-    playlist = AudioHandlerServicePlaylist(_player);
+    _log.info('AudioHandlerService::constructor');
+    playlist = AudioHandlerServicePlaylist(
+      player: _player,
+      episodeApi: GetEpisodeApi.instance,
+      databaseService: DatabaseService.instance,
+    );
     _stateStreamController =
         StreamController<AudioHandlerServiceState>.broadcast(
           // onListen: () {
@@ -348,7 +355,7 @@ class AudioHandlerService extends BaseAudioHandler
         androidNotificationOngoing: true,
       ),
     );
-    await audioHandler.init();
+
     _audioHandler = audioHandler;
     return audioHandler;
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 import 'package:resonate/proto/common.pbenum.dart';
 import 'package:universal_io/io.dart';
+
+Logger _log = Logger('/utils/constants');
 // import 'package:device_info_plus/device_info_plus.dart';
 
 // class DeviceInfo {
@@ -24,7 +27,7 @@ import 'package:universal_io/io.dart';
 String get BASE_URL {
   if (kReleaseMode) {
     return const String.fromEnvironment("BASE_URL");
-  } else if (Platform.isAndroid) {
+  } else if (Platform.isAndroid && !kIsWeb) {
     // Android uses 10.0.2.2 for localhost
     return 'https://10.0.2.2';
   }

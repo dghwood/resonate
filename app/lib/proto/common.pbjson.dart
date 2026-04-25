@@ -886,3 +886,29 @@ final $typed_data.Uint8List playlistMessageDescriptor = $convert.base64Decode(
     'gLMiAucmVzb25hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGESLAoScGxheWlu'
     'Z19lcGlzb2RlX2lkGAMgASgJUhBwbGF5aW5nRXBpc29kZUlkEi0KE3VwX25leHRfZXBpc29kZV'
     '9pZHMYBCADKAlSEHVwTmV4dEVwaXNvZGVJZHM=');
+
+@$core.Deprecated('Use playlist2MessageDescriptor instead')
+const Playlist2Message$json = {
+  '1': 'Playlist2Message',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'id'},
+    {'1': 'user_id', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'userId'},
+    {'1': 'episode_index', '3': 3, '4': 1, '5': 3, '10': 'episodeIndex'},
+    {'1': 'episode_ids', '3': 4, '4': 3, '5': 9, '10': 'episodeIds'},
+    {
+      '1': 'metadata',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.resonate.StorageMetadataMessage',
+      '10': 'metadata'
+    },
+  ],
+};
+
+/// Descriptor for `Playlist2Message`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List playlist2MessageDescriptor = $convert.base64Decode(
+    'ChBQbGF5bGlzdDJNZXNzYWdlEhQKAmlkGAEgASgJQgSAtRgBUgJpZBIdCgd1c2VyX2lkGAIgAS'
+    'gJQgSAtRgBUgZ1c2VySWQSIwoNZXBpc29kZV9pbmRleBgDIAEoA1IMZXBpc29kZUluZGV4Eh8K'
+    'C2VwaXNvZGVfaWRzGAQgAygJUgplcGlzb2RlSWRzEjwKCG1ldGFkYXRhGAUgASgLMiAucmVzb2'
+    '5hdGUuU3RvcmFnZU1ldGFkYXRhTWVzc2FnZVIIbWV0YWRhdGE=');

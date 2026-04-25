@@ -692,6 +692,37 @@ class Settings extends StorageModel<SettingsMessage> {
       StorageMetadata.fromMessage(_message.metadata);
 }
 
+class Playlist2 extends StorageModel<Playlist2Message> {
+  Playlist2({
+    required String id,
+    Iterable<String>? episodeIds,
+    int? episodeIndex,
+  }) : super(
+         Playlist2Message(
+           id: id,
+           episodeIds: episodeIds,
+           episodeIndex:
+               episodeIndex == null ? null : $fixnum.Int64(episodeIndex),
+         ),
+       );
+
+  @override
+  String get id => _message.id;
+
+  @override
+  Uint8List get descriptor => playlist2MessageDescriptor;
+
+  @override
+  StorageMetadata get metadata =>
+      StorageMetadata.fromMessage(_message.metadata);
+
+  int get episodeIndex => _message.episodeIndex.toInt();
+
+  Iterable<String> get episodeIds => _message.episodeIds;
+
+  Playlist2.fromMessage(super.message);
+}
+
 class Playlist extends StorageModel<PlaylistMessage> {
   Playlist({required String id}) : super(PlaylistMessage(id: id));
 
